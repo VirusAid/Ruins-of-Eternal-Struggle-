@@ -83,20 +83,20 @@ void PATH_INFO::init_user_dir( std::string dir )
 #if defined(_WIN32)
         user_dir = getenv_or_abort( "LOCALAPPDATA" );
         // On Windows userdir without dot
-        dir = std::string( user_dir ) + "/cataclysm-tlg/";
+        dir = std::string( user_dir ) + "/ruins-of-eternal-struggle/";
 #elif defined(MACOSX)
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/Library/Application Support/Cataclysm-TLG/";
+        dir = std::string( user_dir ) + "/Library/Application Support/Ruins-of-Eternal-Struggle/";
 #elif defined(USE_XDG_DIR)
         if( ( user_dir = getenv( "XDG_DATA_HOME" ) ) ) {
-            dir = std::string( user_dir ) + "/cataclysm-tlg/";
+            dir = std::string( user_dir ) + "/ruins-of-eternal-struggle/";
         } else {
             user_dir = getenv_or_abort( "HOME" );
-            dir = std::string( user_dir ) + "/.local/share/cataclysm-tlg/";
+            dir = std::string( user_dir ) + "/.local/share/ruins-of-eternal-struggle/";
         }
 #else
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/.cataclysm-tlg/";
+        dir = std::string( user_dir ) + "/.ruins-of-eternal-struggle/";
 #endif
     }
 
@@ -115,7 +115,7 @@ void PATH_INFO::set_standard_filenames()
 
     if( !base_path_value.empty() ) {
 #if defined(DATA_DIR_PREFIX)
-        datadir_value = base_path_value + "share/cataclysm-tlg/";
+        datadir_value = base_path_value + "share/ruins-of-eternal-struggle/";
         prefix = datadir_value;
         prefix_path = datadir_path_value;
 #else
@@ -151,10 +151,10 @@ void PATH_INFO::set_standard_filenames()
     const char *user_dir;
     std::string dir;
     if( ( user_dir = getenv( "XDG_CONFIG_HOME" ) ) ) {
-        dir = std::string( user_dir ) + "/cataclysm-tlg/";
+        dir = std::string( user_dir ) + "/ruins-of-eternal-struggle/";
     } else {
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/.config/cataclysm-tlg/";
+        dir = std::string( user_dir ) + "/.config/ruins-of-eternal-struggle/";
     }
     config_dir_value = dir;
     config_dir_path_value = cata_path{ cata_path::root_path::config, std::filesystem::path{} };
@@ -482,7 +482,7 @@ std::string PATH_INFO::title( const holiday current_holiday )
     std::string theme_fallback = theme_basepath + "en.title";
 
     if( !get_option<bool>( "ENABLE_ASCII_TITLE" ) ) {
-        return _( "Cataclysm: The Last Generation" );
+        return _( "Ruins of Eternal Struggle" );
     }
 
     if( x_in_y( 5, 100 ) ) {

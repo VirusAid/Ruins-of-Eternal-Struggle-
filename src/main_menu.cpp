@@ -53,6 +53,10 @@
 #include "wcwidth.h"
 #include "worldfactory.h"
 
+#if defined(TILES)
+#include "sdltiles.h"
+#endif
+
 static const mod_id MOD_INFORMATION_tlg( "tlg" );
 
 enum class main_menu_opts : int {
@@ -125,8 +129,8 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
         }
         ret.push_back( utf8_width_notags( text.c_str() ) );
 
-        std::string temp = shortcut_text( iSel == i ? hilite( c_yellow ) : c_yellow, vItems[i] );
-        text += string_format( "[%s]", colorize( temp, iSel == i ? hilite( c_white ) : c_white ) );
+        std::string temp = shortcut_text( iSel == i ? hilite( c_light_red ) : c_light_red, vItems[i] );
+        text += string_format( "«%s»", colorize( temp, iSel == i ? hilite( c_white ) : c_dark_gray ) );
     }
 
     int text_width = utf8_width_notags( text.c_str() );
@@ -134,7 +138,7 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
         offset.y -= std::ceil( text_width / getmaxx( w_in ) );
     }
 
-    std::vector<std::string> menu_txt = foldstring( text, getmaxx( w_in ), ']' );
+    std::vector<std::string> menu_txt = foldstring( text, getmaxx( w_in ), ' ' );
 
     int y_off = 0;
     int sel_opt = 0;
@@ -146,9 +150,9 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
         }
         std::vector<std::string> tmp_chars = utf8_display_split( remove_color_tags( txt ) );
         for( int x = 0; static_cast<size_t>( x ) < tmp_chars.size(); x++ ) {
-            if( tmp_chars[x] == "[" ) {
+            if( tmp_chars[x] == "\u00AB" ) {
                 for( int x2 = x; static_cast<size_t>( x2 ) < tmp_chars.size(); x2++ ) {
-                    if( tmp_chars[x2] == "]" ) {
+                    if( tmp_chars[x2] == "\u00BB" ) {
                         inclusive_rectangle<point> rec( win_offset + offset + point( x, y_off ),
                                                         win_offset + offset + point( x2, y_off ) );
                         main_menu_button_map.emplace_back( rec, sel_opt++ );
@@ -291,28 +295,58 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     int window_width = getmaxx( w_open );
     int window_height = getmaxy( w_open );
 
-    // Draw horizontal line
-    mvwhline( w_open, point( 1, window_height - 4 ), c_white, LINE_OXOX, window_width - 2 );
+#if !defined(TILES)
+    // ── Post-apocalyptic border decoration (curses only) ──
+    // Top border with ruined aesthetic
+    for( int x = 0; x < window_width; x++ ) {
+        mvwputch( w_open, point( x, 0 ), c_dark_gray, LINE_OXOX );
+    }
+    mvwputch( w_open, point( 0, 0 ), c_dark_gray, LINE_OXXO );
+    mvwputch( w_open, point( window_width - 1, 0 ), c_dark_gray, LINE_OOXX );
 
+    // Side borders
+    for( int y = 1; y < window_height - 1; y++ ) {
+        mvwputch( w_open, point( 0, y ), c_dark_gray, LINE_XOXO );
+        mvwputch( w_open, point( window_width - 1, y ), c_dark_gray, LINE_XOXO );
+    }
+
+    // Bottom border
+    for( int x = 0; x < window_width; x++ ) {
+        mvwputch( w_open, point( x, window_height - 1 ), c_dark_gray, LINE_OXOX );
+    }
+    mvwputch( w_open, point( 0, window_height - 1 ), c_dark_gray, LINE_XXOO );
+    mvwputch( w_open, point( window_width - 1, window_height - 1 ), c_dark_gray, LINE_XOOX );
+
+    // Decorative separator line above menu items
+    for( int x = 1; x < window_width - 1; x++ ) {
+        mvwputch( w_open, point( x, window_height - 5 ), c_dark_gray, LINE_OXOX );
+    }
+    mvwputch( w_open, point( 0, window_height - 5 ), c_dark_gray, LINE_XXXO );
+    mvwputch( w_open, point( window_width - 1, window_height - 5 ), c_dark_gray, LINE_XXOX );
+#endif
+
+    // Status/hint area
     if( iSel == getopt( main_menu_opts::NEWCHAR ) ) {
-        center_print( w_open, window_height - 2, c_yellow, vNewGameHints[sel2] );
+        center_print( w_open, window_height - 3, c_yellow, vNewGameHints[sel2] );
     } else {
-        center_print( w_open, window_height - 2, c_red,
+        center_print( w_open, window_height - 3, c_dark_gray,
                       _( "Bugs?  Suggestions?  Use links in MOTD to report them." ) );
     }
 
-    center_print( w_open, window_height - 1, c_light_cyan, string_format( _( "Tip of the day: %s" ),
-                  vdaytip ) );
+    center_print( w_open, window_height - 2, c_dark_gray,
+                  string_format( _( "» %s «" ), vdaytip ) );
 
-    int iLine = 0;
+    int iLine = 1;
+#if !defined(TILES)
     const int iOffsetX = ( window_width - FULL_SCREEN_WIDTH ) / 2;
+#endif
 
     switch( current_holiday ) {
         case holiday::new_year:
         case holiday::easter:
             break;
         case holiday::halloween:
-            fold_and_print_from( w_open, point::zero, 30, 0, c_white, halloween_spider() );
+            fold_and_print_from( w_open, point( 1, 1 ), 30, 0, c_white, halloween_spider() );
             fold_and_print_from( w_open, point( getmaxx( w_open ) - 25, offset.y - 8 ),
                                  25, 0, c_white, halloween_graves() );
             break;
@@ -324,6 +358,15 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
             break;
     }
 
+#if defined(TILES)
+    // In tiles mode with background image, skip ASCII art title
+    iLine += static_cast<int>( mmenu_title.size() ) + 1;
+    center_print( w_open, iLine, c_white,
+                  _( "═══ Ruins of Eternal Struggle v1.0 ═══" ) );
+    iLine++;
+    center_print( w_open, iLine, c_dark_gray,
+                  _( "A fork of Cataclysm: The Last Generation | Based on Cataclysm: DDA" ) );
+#else
     if( mmenu_title.size() > 1 ) {
         for( const std::string &i_title : mmenu_title ) {
             nc_color cur_color = c_white;
@@ -335,8 +378,12 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     }
 
     iLine++;
-    center_print( w_open, iLine, c_light_blue, string_format( _( "Version: %s" ),
-                  getVersionString() ) );
+    center_print( w_open, iLine, c_dark_gray,
+                  _( "═══ Version: 1.0 ═══" ) );
+    iLine++;
+    center_print( w_open, iLine, c_dark_gray,
+                  _( "A fork of Cataclysm: The Last Generation | Based on Cataclysm: DDA" ) );
+#endif
 
     int menu_length = 0;
     for( size_t i = 0; i < vMenuItems.size(); ++i ) {
@@ -355,6 +402,19 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
         print_menu_items( w_open, vMenuItems, iSel, point( final_offset, offset.y ), spacing, true );
 
     wnoutrefresh( w_open );
+
+#if defined(TILES)
+    // Draw background image only above the menu area, so menu text stays visible
+    {
+        const int win_y = catacurses::getbegy( w_open );
+        const int win_h = getmaxy( w_open );
+        // Menu area = last 6 rows (separator + hints + menu items row)
+        int img_h = win_h - 6;
+        if( img_h > 0 ) {
+            draw_main_menu_background( 0, 0, TERMX, win_y + img_h );
+        }
+    }
+#endif
 
     const point p_offset( catacurses::getbegx( w_open ), catacurses::getbegy( w_open ) );
 
@@ -405,7 +465,7 @@ void main_menu::init_windows()
 
     w_open = catacurses::newwin( total_h, total_w, p0 );
 
-    menu_offset.y = total_h - 3;
+    menu_offset.y = total_h - 4;
     // note: if iMenuOffset is changed,
     // please update MOTD and credits to indicate how long they can be.
 
@@ -416,7 +476,13 @@ void main_menu::init_strings()
 {
     // ASCII Art
     mmenu_title = load_file( PATH_INFO::title( current_holiday ),
-                             _( "Cataclysm: The Last Generation" ) );
+                             _( "Ruins of Eternal Struggle" ) );
+
+#if defined(TILES)
+    // Load background image for main menu
+    load_main_menu_background( PATH_INFO::datadir() + "title/menu_background.jpg" );
+#endif
+
     // MOTD
     auto motd = load_file( PATH_INFO::motd(), _( "No message today." ) );
 
@@ -616,6 +682,10 @@ bool main_menu::opening_screen()
     }
 
     background_pane background;
+
+#if defined(TILES)
+    set_main_menu_background_active( true );
+#endif
 
     ui_adaptor ui;
     ui.on_redraw( [&]( const ui_adaptor & ) {
@@ -888,6 +958,9 @@ bool main_menu::opening_screen()
             }
         }
     }
+#if defined(TILES)
+    set_main_menu_background_active( false );
+#endif
     return true;
 }
 

@@ -4646,6 +4646,8 @@ void overmap::move_hordes()
             auto monster_node = hordes.extract( moving_mon );
             monster_node.key() = viable_candidates.front();
             migrating_hordes.insert( std::move( monster_node ) );
+        } else {
+            mon++;
         }
     }
     while( !migrating_hordes.empty() ) {

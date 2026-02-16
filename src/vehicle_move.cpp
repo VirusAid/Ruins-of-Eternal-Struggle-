@@ -56,6 +56,7 @@ static const efftype_id effect_stunned( "stunned" );
 
 static const flag_id json_flag_CANNOT_TAKE_DAMAGE( "CANNOT_TAKE_DAMAGE" );
 static const flag_id json_flag_DAMAGE_VEHICLE_WHEELS( "DAMAGE_VEHICLE_WHEELS" );
+static const flag_id json_flag_RESIST_RUNOVER_DAMAGE( "RESIST_RUNOVER_DAMAGE" );
 
 static const itype_id fuel_type_animal( "animal" );
 static const itype_id fuel_type_battery( "battery" );
@@ -1083,7 +1084,7 @@ veh_collision vehicle::part_collision( map &here, int part, const tripoint_abs_m
         if( ret.type == veh_coll_bashable ) {
             // Something bashable -- use map::bash to determine outcome
             // NOTE: Floor bashing disabled for balance reasons
-            //       Floor values are still used to set damage dealt  to vehicle
+            //       Floor values are still used to set damage dealt to vehicle
             smashed = here.is_bashable_ter_furn( pos, false ) &&
                       here.bash_resistance( pos, bash_floor ) <= obj_dmg &&
                       here.bash( pos, obj_dmg, false, false, false, false, this ).success;
@@ -1272,7 +1273,7 @@ static std::pair<double, double> item_hardness_calc( const item &it )
 
 double vehicle::hit_probability( const item &it, const vehicle_part *vp_wheel )
 {
-    const double wheel = vp_wheel->get_base().type->wheel->width * 0.0254;
+    const double wheel_coverage = vp_wheel->get_base().type->wheel->width * 0.0254;
 
     /* We can't get the exact dimensions of the item, but we can make a guess
        here with volume/length, using rng and a 0.001 multiplier to simulate
@@ -1285,11 +1286,11 @@ double vehicle::hit_probability( const item &it, const vehicle_part *vp_wheel )
     if( length < 1_mm ) {
         length = 1_mm;
     }
-    const double item = ( units::to_milliliter( it.volume() ) * 1000.0 /
-                          units::to_millimeter( length ) ) *
-                        0.001 * rng_float( 0.5, 1.0 );
+    const double item_coverage = ( units::to_milliliter( it.volume() ) * 1000.0 /
+                                   units::to_millimeter( length ) ) *
+                                 0.001 * rng_float( 0.5, 1.0 );
 
-    return std::min( wheel + item, 1.0 );
+    return std::min( wheel_coverage + item_coverage, 1.0 );
 }
 
 
@@ -1332,7 +1333,7 @@ void vehicle::damage_wheel_on_item( vehicle_part *vp_wheel, const item &it, int 
     if( chance_to_damage > 0.0 ) {
         if( chance_to_damage >= rng_float( 0.0, 1.0 ) ) {
             *damage_levels += one_damage_level;
-            //~%1$s vehicle name, %1$s vehicle part name, %3$s name of item being run over
+            //~%1$s vehicle name, %2$s vehicle part name, %3$s name of item being run over
             messages->emplace_back( string_format( _( "The %1$s's %2$s is damaged by running over the %3$s!" ),
                                                    disp_name(), vp_wheel->info().name(), it.tname() ) );
         }

@@ -30,6 +30,7 @@
 /mods/
 /obj/
 /objwin/
+/distribution/
 /save/
 /src/version.h
 /src/prefix.h

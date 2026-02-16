@@ -1750,7 +1750,7 @@ void options_manager::add_options_interface()
     add( "USE_LANG", "interface", to_translation( "Language" ),
          to_translation( "Switch language.  Each percentage is the fraction of strings translated "
                          "for that language." ),
-         options_manager::get_lang_options(), "" );
+         options_manager::get_lang_options(), "ru" );
 
     add_empty_line();
 
@@ -2549,14 +2549,10 @@ void options_manager::add_options_graphics()
 
 #if !defined(__ANDROID__) || !defined(__EMSCRIPTEN__) // Android and Emscripten are always fullscreen
         add( "FULLSCREEN", page_id, to_translation( "Fullscreen" ),
-             to_translation( "Starts Cataclysm in one of the fullscreen modes.  Requires restart." ),
+             to_translation( "Starts the game in one of the fullscreen modes.  Requires restart." ),
         { { "no", to_translation( "No" ) }, { "maximized", to_translation( "Maximized" ) }, { "fullscreen", to_translation( "Fullscreen" ) }, { "windowedbl", to_translation( "Windowed borderless" ) } },
-        // Borderless window is bad for debugging in Visual Studio
-#if defined(_MSC_VER)
-        "maximized", COPT_CURSES_HIDE
-#else
+        // Default to windowed borderless fullscreen
         "windowedbl", COPT_CURSES_HIDE
-#endif
            );
 #endif
 
@@ -2660,7 +2656,7 @@ void options_manager::add_options_world_default()
     add( "CITY_SPACING", "world_default", translation(), translation(), 0, 8, 4, COPT_ALWAYS_HIDE
        );
 
-    add( "SPAWN_DENSITY", "world_default", translation(), translation(), 0.0, 50.0, 1.0, 0.1,
+    add( "SPAWN_DENSITY", "world_default", translation(), translation(), 0.0, 50.0, 0.8, 0.1,
          COPT_ALWAYS_HIDE
        );
 
@@ -2668,10 +2664,16 @@ void options_manager::add_options_world_default()
          COPT_ALWAYS_HIDE
        );
 
+    add( "NO_NPC_FOOD", "world_default",
+         to_translation( "Disable NPC food needs" ),
+         to_translation( "If true, allied NPCs will not need to eat or drink.  Useful for a more casual experience." ),
+         true
+       );
+
     add( "EVOLUTION_INVERSE_MULTIPLIER", "world_default",
          to_translation( "Monster evolution slowdown" ),
          to_translation( "A multiplier for the time between monster upgrades.  For example a value of 2.00 would cause evolution to occur at half speed.  Set to 0.00 to turn off monster upgrades." ),
-         0.0, 100, 1.0, 0.01
+         0.0, 100, 2.0, 0.01
        );
 
     add_empty_line();

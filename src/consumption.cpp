@@ -427,6 +427,9 @@ std::pair<nutrients, nutrients> Character::compute_nutrient_range(
     }
 
     int count = rec.makes_amount();
+    if( count <= 0 ) {
+        count = 1;
+    }
     rec_cache[recipe_i] = { tally_min / count, tally_max / count };
     return rec_cache[recipe_i];
 }

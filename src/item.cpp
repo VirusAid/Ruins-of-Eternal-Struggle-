@@ -3414,7 +3414,7 @@ void item::gunmod_info( std::vector<iteminfo> &info, const iteminfo_query *parts
                            total_damage );
     }
     int pierce = get_ranged_pierce( mod );
-    if( get_ranged_pierce( mod ) != 0 && parts->test( iteminfo_parts::GUNMOD_ARMORPIERCE ) ) {
+    if( pierce != 0 && parts->test( iteminfo_parts::GUNMOD_ARMORPIERCE ) ) {
         info.emplace_back( "GUNMOD", _( "Armor penetration: " ), "", iteminfo::show_plus,
                            pierce );
     }

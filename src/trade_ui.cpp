@@ -234,6 +234,9 @@ void trade_ui::autobalance()
         size_t const avail = entry.get_available_count() - entry.chosen_count;
         double const price = npc_trading::trading_price( *_parties[-_cpane + 1], *_parties[_cpane],
                              entry_t{ entry.any_item(), 1 } ) * sign;
+        if( price == 0.0 ) {
+            return;
+        }
         double const num = _balance / price;
         double const extra = sign < 0 ? std::ceil( num ) : std::floor( num );
         _panes[_cpane]->toggle_entry( entry, entry.chosen_count +

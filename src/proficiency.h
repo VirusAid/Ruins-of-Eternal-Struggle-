@@ -240,7 +240,7 @@ class proficiency_migration
 
         static void check();
 
-        /** Find the last migration entry of the given vpart_id */
+        /** Find the last migration entry of the given proficiency_id */
         static const proficiency_migration *find_migration( const proficiency_id &original );
 };
 

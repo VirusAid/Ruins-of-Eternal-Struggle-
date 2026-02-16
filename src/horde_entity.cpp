@@ -26,7 +26,13 @@ horde_entity::horde_entity( const mtype_id &original )
 
 const mtype *horde_entity::get_type() const
 {
-    return type_id ? &type_id.obj() : monster_data->type;
+    if( type_id ) {
+        return &type_id.obj();
+    }
+    if( monster_data ) {
+        return monster_data->type;
+    }
+    return nullptr;
 }
 
 bool horde_entity::is_active() const

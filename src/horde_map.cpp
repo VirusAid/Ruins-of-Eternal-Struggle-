@@ -155,8 +155,10 @@ std::unordered_map<tripoint_abs_ms, horde_entity>::iterator horde_map::spawn_ent
     if( inserted ) {
         result->second.monster_data->set_pos_abs_only( p );
     } else {
+        const mtype *existing_type = result->second.get_type();
         debugmsg( "Attempted to insert a %s at %s, but there's already a %s there!",
-                  mon.name(), p.to_string(), result->second.get_type()->nname() );
+                  mon.name(), p.to_string(),
+                  existing_type ? existing_type->nname() : "unknown" );
     }
     return result;
 }
@@ -221,10 +223,11 @@ void horde_map::signal_entities( const tripoint_abs_ms &origin, int volume )
 
 void horde_map::insert( std::unordered_map<tripoint_abs_ms, horde_entity>::node_type &&node )
 {
+    const mtype *entity_type = node.mapped().get_type();
     std::unordered_map <tripoint_om_sm, std::unordered_map<tripoint_abs_ms, horde_entity>> &target_map =
-                node.mapped().get_type()->has_flag( mon_flag_DORMANT ) ? dormant_monster_map :
+                ( entity_type && entity_type->has_flag( mon_flag_DORMANT ) ) ? dormant_monster_map :
                 node.mapped().is_active() ? active_monster_map :
-                is_alert( *node.mapped().get_type() ) ? idle_monster_map :
+                ( entity_type && is_alert( *entity_type ) ) ? idle_monster_map :
                 immobile_monster_map;
     point_abs_om omp;
     tripoint_om_sm sm;
@@ -377,6 +380,14 @@ horde_map::iterator horde_map::find( const tripoint_om_ms &loc )
             submap_iter->second.find( monster_loc );
         if( mon_iter != submap_iter->second.end() ) {
             return iterator( *this, dormant_monster_map, submap_iter, mon_iter );
+        }
+    }
+    submap_iter = immobile_monster_map.find( submap_loc );
+    if( submap_iter != immobile_monster_map.end() ) {
+        std::unordered_map<tripoint_abs_ms, horde_entity>::iterator mon_iter =
+            submap_iter->second.find( monster_loc );
+        if( mon_iter != submap_iter->second.end() ) {
+            return iterator( *this, immobile_monster_map, submap_iter, mon_iter );
         }
     }
     return end();

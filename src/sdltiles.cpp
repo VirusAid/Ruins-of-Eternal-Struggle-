@@ -132,6 +132,8 @@ static SDL_Renderer_Ptr renderer;
 static SDL_PixelFormat_Ptr format;
 static SDL_Texture_Ptr display_buffer;
 static GeometryRenderer_Ptr geometry;
+static SDL_Texture_Ptr main_menu_background_tex;
+static bool main_menu_background_active = false;
 #if defined(__ANDROID__)
 static SDL_Texture_Ptr touch_joystick;
 #endif
@@ -4457,6 +4459,82 @@ void set_title( const std::string &title )
     if( ::window ) {
         SDL_SetWindowTitle( ::window.get(), title.c_str() );
     }
+}
+
+void load_main_menu_background( const std::string &path )
+{
+    try {
+        SDL_Surface_Ptr surface = load_image( path.c_str() );
+        if( surface ) {
+            // Use linear filtering for better quality when scaling
+            SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "best" );
+            main_menu_background_tex = CreateTextureFromSurface( renderer, std::move( surface ) );
+            SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "nearest" );
+            SDL_SetTextureBlendMode( main_menu_background_tex.get(), SDL_BLENDMODE_NONE );
+            SDL_SetTextureAlphaMod( main_menu_background_tex.get(), 255 );
+        }
+    } catch( const std::exception &e ) {
+        dbg( D_ERROR ) << "Failed to load main menu background: " << e.what();
+    }
+}
+
+void set_main_menu_background_active( bool active )
+{
+    main_menu_background_active = active;
+}
+
+void unload_main_menu_background()
+{
+    main_menu_background_tex.reset();
+    main_menu_background_active = false;
+}
+
+void draw_main_menu_background( int x_cells, int y_cells, int w_cells, int h_cells )
+{
+    if( !main_menu_background_active || !main_menu_background_tex ) {
+        return;
+    }
+    // Get the original image dimensions to preserve aspect ratio
+    int tex_w = 0;
+    int tex_h = 0;
+    SDL_QueryTexture( main_menu_background_tex.get(), nullptr, nullptr, &tex_w, &tex_h );
+    if( tex_w <= 0 || tex_h <= 0 ) {
+        return;
+    }
+
+    int area_w = w_cells * fontwidth;
+    int area_h = h_cells * fontheight;
+    int area_x = x_cells * fontwidth;
+    int area_y = y_cells * fontheight;
+
+    // Calculate scale to fit image inside the area while preserving aspect ratio
+    float scale_w = static_cast<float>( area_w ) / static_cast<float>( tex_w );
+    float scale_h = static_cast<float>( area_h ) / static_cast<float>( tex_h );
+    float scale = std::min( scale_w, scale_h );
+
+    int draw_w = static_cast<int>( tex_w * scale );
+    int draw_h = static_cast<int>( tex_h * scale );
+
+    // Center the image in the area
+    SDL_Rect dst;
+    dst.x = area_x + ( area_w - draw_w ) / 2;
+    dst.y = area_y + ( area_h - draw_h ) / 2;
+    dst.w = draw_w;
+    dst.h = draw_h;
+    RenderCopy( renderer, main_menu_background_tex, nullptr, &dst );
+}
+
+void draw_main_menu_darkened_bar( int x_cells, int y_cells, int w_cells, int h_cells, int alpha )
+{
+    SDL_Rect dst;
+    dst.x = x_cells * fontwidth;
+    dst.y = y_cells * fontheight;
+    dst.w = w_cells * fontwidth;
+    dst.h = h_cells * fontheight;
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
+    SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, static_cast<Uint8>( alpha ) );
+    SDL_RenderFillRect( renderer.get(), &dst );
+    SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_NONE );
 }
 
 const SDL_Renderer_Ptr &get_sdl_renderer()

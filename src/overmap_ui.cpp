@@ -1116,7 +1116,9 @@ static void draw_om_sidebar( ui_adaptor &ui,
             for( std::pair<const tripoint_abs_ms, horde_entity> &entity : *horde ) {
                 monster_count++;
                 const mtype *entity_type = entity.second.get_type();
-                monster_types.insert( entity_type->nname() );
+                if( entity_type ) {
+                    monster_types.insert( entity_type->nname() );
+                }
             }
         }
         if( monster_count ) {

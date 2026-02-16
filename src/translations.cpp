@@ -104,5 +104,5 @@ void set_language( const std::string &lang )
     // names.
     SNIPPET.reload_names( PATH_INFO::names() );
 
-    set_title( string_format( _( "Cataclysm: The Last Generation - %s" ), getVersionString() ) );
+    set_title( string_format( _( "Ruins of Eternal Struggle - %s" ), getVersionString() ) );
 }

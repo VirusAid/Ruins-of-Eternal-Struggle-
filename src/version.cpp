@@ -35,6 +35,13 @@ std::string getVersionFromFile()
 
 const char *getVersionString()
 {
+#ifdef VERSION
+    return VERSION;
+#else
     static std::string version = getVersionFromFile();
+    if( version == "unknown" ) {
+        return "1.0";
+    }
     return version.c_str();
+#endif
 }

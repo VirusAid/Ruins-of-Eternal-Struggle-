@@ -82,7 +82,7 @@ void activity_tracker::set_intake( int ncal )
 
 std::string activity_tracker::debug_weary_info() const
 {
-    return string_format( "Intake: %.1f Tracker: %.1f", intake / 1000.0f, output / 1000.0f );
+    return string_format( "Intake: %.1f Tracker: %.1f", intake / 1000.0f, tracker / 1000.0f );
 }
 
 void activity_tracker::calorie_adjust( int ncal )

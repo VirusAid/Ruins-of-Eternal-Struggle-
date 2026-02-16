@@ -1,12 +1,12 @@
-name: cataclysm
+name: ruins-of-eternal-struggle
 version: git
 summary: Post-apocalyptic turn-based survival game
-icon: data/xdg/cataclysm-tlg.svg
+icon: data/xdg/ruins-of-eternal-struggle.svg
 architectures:
   - build-on: [amd64]
     run-on: [amd64]
 description: |
-  Cataclysm: The Last Generation is a turn-based survival game set in a post-apocalyptic world based on Cataclysm: Dark Days Ahead. Surviving is difficult, you have been thrown, ill-equipped, into a landscape now riddled with monstrosities of which flesh eating zombies are neither the strangest nor the deadliest.
+  Ruins of Eternal Struggle is a turn-based survival game set in a post-apocalyptic world, based on Cataclysm: The Last Generation and Cataclysm: Dark Days Ahead. Surviving is difficult, you have been thrown, ill-equipped, into a landscape now riddled with monstrosities of which flesh eating zombies are neither the strangest nor the deadliest.
 
   Note: This snap install the ncurses version of the game. Start playing by running the command `cataclysm` on your favorite terminal after installation.
 

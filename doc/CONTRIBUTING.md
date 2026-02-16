@@ -2,15 +2,15 @@
 
 **Opening a new issue?** Please read [ISSUES.md](../ISSUES.md) first.
 
-Cataclysm: The Last Generation is released under the Creative Commons Attribution ShareAlike 3.0 license. The code and content of the game is free to use, modify, and redistribute for any purpose whatsoever. See http://creativecommons.org/licenses/by-sa/3.0/ for details.
+Ruins of Eternal Struggle is released under the Creative Commons Attribution ShareAlike 3.0 license. The code and content of the game is free to use, modify, and redistribute for any purpose whatsoever. See http://creativecommons.org/licenses/by-sa/3.0/ for details.
 This means any contribution you make to the project will also be covered by the same license, and this license is irrevocable.
 
 ## Using a good text editor
 
-Most of the Cataclysm: The Last Generation game data is defined in JSON files.
+Most of the Ruins of Eternal Struggle game data is defined in JSON files.
 These files are intended to be easy for you to edit, but there are some
 pitfalls.  Using Windows Notepad can get you into trouble, because it likes to
-insert a special character called a [BOM](https://en.wikipedia.org/wiki/Byte_order_mark) at the start of the file, which CTLG
+insert a special character called a [BOM](https://en.wikipedia.org/wiki/Byte_order_mark) at the start of the file, which the game
 does not want.
 
 If you're going to be editing JSON files consider getting a more fully-featured
@@ -20,7 +20,7 @@ editor such as [Notepad++](https://notepad-plus-plus.org/).
 
 At this time, we are not accepting content contributions from the general public. If you would like to take on a specific project, please contact worm girl via discord or github. Bugfixes, typo fixes, and similar are generally welcome.
 
-Contributing to Cataclysm: The Last Generation is easy — simply [fork](https://github.com/Cataclysm-TLG/Cataclysm-TLG/fork) the repository here on GitHub, make your changes, and then send us a pull request.
+Contributing to Ruins of Eternal Struggle is easy — simply [fork](https://github.com/VirusAid/Ruins-of-Eternal-Struggle-/fork) the repository here on GitHub, make your changes, and then send us a pull request.
 
 There are a couple of guidelines we suggest sticking to (see [#Example Workflow](#example-workflow)):
 

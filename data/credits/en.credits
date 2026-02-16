@@ -1,14 +1,26 @@
 # Lines longer than 78 characters will be wrapped automatically
 # The following line is for reference
 ##############################################################################
-<color_white>Original author:</color>    <color_white>Project Manager:</color>
-<color_yellow>Whales</color> (<color_dark_gray>retired</color>)    <color_yellow>Worm Girl</color>
+<color_white>Original idea:</color>         <color_white>TLG Project Manager:</color>
+<color_yellow>Whales</color> (<color_dark_gray>retired</color>)         <color_yellow>Worm Girl</color>
+
+<color_white>Ruins of Eternal Struggle — Project Lead:</color>
+<color_yellow>D3F0LT</color> — balance design and improvements,
+added numerous items, main menu design and
+implementation, active project development
+and direction.
 
 <color_white>Special thanks for art contributions:</color>
-<color_yellow>Fris0uman</color>, <color_yellow>Golfavel</color>, <color_yellow>vetall812</color>, <color_yellow>Dandy-boy</color>, and many more.
+<color_yellow>Fris0uman</color>, <color_yellow>Golfavel</color>, <color_yellow>vetall812</color>, <color_yellow>Dandy-boy</color>,
+and many more.
 
-<color_white>This project was forked from Cataclysm: Dark Days Ahead and would not exist without the efforts of scores of contributors on that project.</color>
+<color_white>This project is a fork of Cataclysm: The Last Generation:</color>
+<color_cyan>https://github.com/Cataclysm-TLG/Cataclysm-TLG</color>
+
+<color_white>Which itself is based on Cataclysm: Dark Days Ahead:</color>
 <color_cyan>https://github.com/CleverRaven/Cataclysm-DDA/</color>
 
-<color_light_cyan>Cataclysm</color>: <color_light_blue>The Last Generation</color> is released under <color_white>CC-BY-SA 3.0</color>:
+<color_white>Ruins of Eternal Struggle would not exist without the efforts of scores of contributors on both projects.</color>
+
+<color_light_cyan>Ruins of Eternal Struggle</color> is released under <color_white>CC-BY-SA 3.0</color>:
 <color_cyan>https://creativecommons.org/licenses/by-sa/3.0/</color>

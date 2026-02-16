@@ -5583,7 +5583,10 @@ void basecamp::feed_workers( const std::vector<std::reference_wrapper <Character
         debugmsg( "feed_workers called without any workers to feed!" );
         return;
     }
-    if( !is_player_meal && get_option<bool>( "NO_NPC_FOOD" ) ) {
+    // NO_NPC_FOOD may not exist in old saves, default to true (disabled NPC food)
+    bool no_npc_food = !get_options().has_option( "NO_NPC_FOOD" ) ||
+                       get_option<bool>( "NO_NPC_FOOD" );
+    if( !is_player_meal && no_npc_food ) {
         return;
     }
 

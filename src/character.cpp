@@ -5518,10 +5518,13 @@ float Character::activity_level() const
 
 bool Character::needs_food() const
 {
+    // NO_NPC_FOOD may not exist in old saves, default to true (disabled NPC food)
+    bool no_npc_food = !get_options().has_option( "NO_NPC_FOOD" ) ||
+                       get_option<bool>( "NO_NPC_FOOD" );
     return is_avatar() ||
            ( is_npc() && get_faction() != nullptr &&
              is_ally( get_player_character() ) &&
-             !get_option<bool>( "NO_NPC_FOOD" ) );
+             !no_npc_food );
 }
 
 void Character::update_needs( int rate_multiplier )

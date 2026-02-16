@@ -720,7 +720,11 @@ bool overmap::highway_select_end_points( const std::vector<const overmap *> &nei
                             border_points_in_radius.emplace_back( p );
                         }
                     }
-                    end_points[i] = random_entry( border_points_in_radius );
+                    if( border_points_in_radius.empty() ) {
+                        end_points[i] = fallback_random_point;
+                    } else {
+                        end_points[i] = random_entry( border_points_in_radius );
+                    }
                 } else {
                     end_points[i] = fallback_random_point;
                 }
@@ -1077,6 +1081,7 @@ void interhighway_node::generate_offset( int intersection_max_radius )
     if( intersection_candidates.empty() ) {
         debugmsg( "no highway intersections could be generated in overmap radius of %d at overmap %s; reduce lake frequency",
                   intersection_max_radius, grid_pos.to_string() );
+        return;
     }
     offset_pos = random_entry( intersection_candidates );
 }

@@ -22,7 +22,7 @@ class main_menu
         static std::string queued_world_to_load;
         static std::string queued_save_id_to_load;
     private:
-        // ASCII art that says "Cataclysm: The Last Generation"
+        // ASCII art title for Ruins of Eternal Struggle
         std::vector<std::string> mmenu_title;
         std::string mmenu_motd;
         std::string mmenu_credits;

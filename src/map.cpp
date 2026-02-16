@@ -2698,7 +2698,8 @@ int map::climb_difficulty( const tripoint_bub_ms &p, const Creature &you ) const
             bool furn_supports_weight = true;
             bool ter_supports_weight = true;
             if( !veh_at( pt ) ) {
-                if( you.get_weight() / 10000_gram > here.ter( pt ).obj().bash->str_min ) {
+                if( here.ter( pt ).obj().bash &&
+                    you.get_weight() / 10000_gram > here.ter( pt ).obj().bash->str_min ) {
                     you.add_msg_if_player( _( "The %s can't support your weight." ), here.ter( pt ).obj().name() );
                     ter_supports_weight = false;
                 }
@@ -2708,7 +2709,8 @@ int map::climb_difficulty( const tripoint_bub_ms &p, const Creature &you ) const
                     // I don't think we need this null guard, but it can hardly hurt.
                     if( climbing_furniture != furn_str_id::NULL_ID() ) {
                         if( climbing_furniture.obj().has_flag( ter_furn_flag::TFLAG_CLIMBABLE ) ) {
-                            if( you.get_weight() / 10000_gram > here.furn( pt ).obj().bash->str_min ) {
+                            if( climbing_furniture.obj().bash &&
+                                you.get_weight() / 10000_gram > here.furn( pt ).obj().bash->str_min ) {
                                 you.add_msg_if_player( _( "The %s can't support your weight." ), here.furn( pt ).obj().name() );
                                 furn_supports_weight = false;
                             }
@@ -4278,8 +4280,6 @@ ter_str_id map::get_roof( const tripoint_bub_ms &p, const bool allow_air ) const
         } else {
             return ter_t_rock_floor;
         }
-
-        return ter_t_open_air;
     }
     if( roof == ter_str_id::NULL_ID() ) {
         debugmsg( "map::get_new_floor: %d,%d,%d has invalid roof type %s",
@@ -4558,7 +4558,10 @@ void map::bash_ter_furn( const tripoint_bub_ms &p, bash_params &params )
         // If it's a fire doing the bashing, we need to stop here so that our fire doesn't punch holes in dirt or concrete.
         bool no_burn = false;
         if( params.fire ) {
-            no_burn = !get_roof( below, false ).obj().has_flag( ter_furn_flag::TFLAG_FLAMMABLE ) && !get_roof( below, false ).obj().has_flag( ter_furn_flag::TFLAG_FLAMMABLE_HARD ) && !get_roof( below, false ).obj().has_flag( ter_furn_flag::TFLAG_FLAMMABLE_ASH );
+            const ter_t &roof_below = get_roof( below, false ).obj();
+            no_burn = !roof_below.has_flag( ter_furn_flag::TFLAG_FLAMMABLE ) &&
+                      !roof_below.has_flag( ter_furn_flag::TFLAG_FLAMMABLE_HARD ) &&
+                      !roof_below.has_flag( ter_furn_flag::TFLAG_FLAMMABLE_ASH );
         }
         if( !no_burn && p.z() > -9 && bash->bash_below && ter_below.has_flag( ter_furn_flag::TFLAG_SUPPORTS_ROOF ) ) {
             // When bashing the tile below, don't allow bashing its floor, otherwise we get huge recursive destruction.
@@ -10481,7 +10484,7 @@ void map::build_obstacle_cache(
                     if( furn_here ) {
                         const furn_t &furn_obj = furn_here.obj();
                         furniture_coverage = furn_obj.coverage;
-                        if( furniture_coverage > 0 ) {
+                        if( furniture_coverage > 0 && furn_obj.bash ) {
                             furn_attenuation = rng( furn_obj.bash->str_min, furn_obj.bash->str_max );
                         }
                     }

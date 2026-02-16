@@ -149,7 +149,7 @@ OTHERS += -fsigned-char
 
 VERSION = 1.0
 
-TARGET_NAME = cataclysm-tlg
+TARGET_NAME = ruins-of-eternal-struggle
 TILES_TARGET_NAME = $(TARGET_NAME)-tiles
 ifeq ($(NATIVE), emscripten)
   TILES_TARGET_NAME = $(TARGET_NAME)-tiles.js

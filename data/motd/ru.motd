@@ -1,8 +1,26 @@
 # Lines longer than 78 characters will be wrapped automatically
 # The following line is for reference
 ##############################################################################
-<color_white>Visit us:</color>
+<color_white>Добро пожаловать в Ruins of Eternal Struggle v1.0!</color>
 
-<color_white>Report bugs, suggestion and follow the development at:</color>
+<color_light_gray>Пошаговая постапокалиптическая игра на выживание.</color>
+<color_light_gray>Исследуйте, собирайте ресурсы, крафтите и сражайтесь</color>
+<color_light_gray>за жизнь в мире, захваченном мертвецами и кое-чем похуже.</color>
 
-<color_light_gray>* Github: </color><color_light_cyan>https://github.com/Cataclysm-TLG/Cataclysm-TLG</color>
+<color_white>О проекте:</color>
+<color_yellow>* </color><color_light_gray>Проект активно развивается — новый контент и улучшения</color>
+<color_yellow>  </color><color_light_gray>добавляются регулярно.</color>
+<color_yellow>* </color><color_light_gray>Собственное видение баланса и геймплея — игра</color>
+<color_yellow>  </color><color_light_gray>становится доступнее, но не теряет глубины.</color>
+<color_yellow>* </color><color_light_gray>Планируются уникальные механики, предметы,</color>
+<color_yellow>  </color><color_light_gray>локации и сюжетные события.</color>
+<color_yellow>* </color><color_light_gray>Ваши идеи важны — предлагайте !</color>
+
+<color_white>Сообщайте об ошибках и следите за разработкой:</color>
+<color_light_gray>* Github: </color><color_light_cyan>https://github.com/VirusAid/Ruins-of-Eternal-Struggle-</color>
+
+<color_white>Это форк Cataclysm: The Last Generation,</color>
+<color_white>который основан на Cataclysm: Dark Days Ahead.</color>
+<color_light_gray>* TLG: </color><color_light_cyan>https://github.com/Cataclysm-TLG/Cataclysm-TLG</color>
+<color_light_gray>* DDA: </color><color_light_cyan>https://github.com/CleverRaven/Cataclysm-DDA</color>
+<color_dark_gray>Лицензия: CC-BY-SA 3.0</color>

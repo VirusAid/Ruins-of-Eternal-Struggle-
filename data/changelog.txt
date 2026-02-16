@@ -1,3 +1,16 @@
+# Ruins of Eternal Struggle v1.0 (2026-02-16)
+
+## Fork Features:
+Custom main menu with background artwork
+More casual default balance: slower monster evolution, lower spawn density
+NPC food needs disabled by default
+Fullscreen borderless window mode by default
+All references renamed from Cataclysm-TLG to Ruins of Eternal Struggle
+Russian localization for credits, MOTD, and title screens
+Fixed NO_NPC_FOOD option crash with old saves
+
+## Based on Cataclysm: The Last Generation (TLG)
+
 # 0.H
 
 ## Features:

@@ -225,7 +225,7 @@ void printVersionMessage()
     const bool hasSound = false;
 #endif
 
-    printf( "Cataclysm: The Last Generation: %s\n\n"
+    printf( "Ruins of Eternal Struggle: %s\n\n"
             "%ctiles, %csound\n\n"
             "data dir: %s\nuser dir: %s\n",
             getVersionString(),
@@ -685,7 +685,7 @@ int main( int argc, const char *argv[] )
     cli_opts cli = parse_commandline( argc, const_cast<const char **>( argv ) );
 
     if( !dir_exist( PATH_INFO::datadir() ) ) {
-        printf( "Fatal: Can't find data directory \"%s\"\nPlease ensure the current working directory is correct or specify data directory with --datadir.  Perhaps you meant to start \"cataclysm-launcher\"?\n",
+        printf( "Fatal: Can't find data directory \"%s\"\nPlease ensure the current working directory is correct or specify data directory with --datadir.\n",
                 PATH_INFO::datadir().c_str() );
         exit( 1 );
     }

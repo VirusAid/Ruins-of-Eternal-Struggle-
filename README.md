@@ -1,48 +1,54 @@
-# Cataclysm: The Last Generation
+# Ruins of Eternal Struggle
 
-Cataclysm: The Last Generation is a single-player turn-based postapocalyptic survival game. Based on the all-time classic [Cataclysm: Dark Days Ahead](https://cataclysmdda.org), The Last Generation tells the story of a world where the dead walk, alien horrors stalk the land, and the fabric of reality as we know it has come undone. Despite all this, a few unlucky souls yet survive, and whether the last generation of humanity is destined to die off, or to become something fit to survive in this brave new world is up to you.
+![Ruins of Eternal Struggle](data/title/menu_background.jpg)
 
-TLG's primary aim is to preserve Cataclysm's depth and respect for plausibility while refining what it has always done best as a game, foregrounding character progression and immersive life sim elements in a world that will put your survival skills to the test. Dig through the wreckage of shadowy government conspiracies to uncover the truth about the Cataclysm, form your own band of survivors, and adapt to the myriad threats by expanding your arsenal, installing military-grade bionics, or mutating into your own kind of monster.
+**Ruins of Eternal Struggle** — форк [Cataclysm: The Last Generation](https://github.com/Cataclysm-TLG/Cataclysm-TLG), основанного на [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA).
 
-## Downloads
+Это однопользовательская пошаговая постапокалиптическая игра на выживание в мире, где мёртвые ходят, инопланетные ужасы бродят по земле, а ткань реальности порвалась. Несколько невезучих душ всё ещё выживают — суждено ли последнему поколению человечества вымереть или стать чем-то, способным выжить в этом дивном новом мире, зависит от вас.
 
-**Releases** - To get the game, head over to the Releases page and download the version marked for your operating system. You do not need the source code to play: https://github.com/Cataclysm-TLG/Cataclysm-TLG/releases/
+## Особенности форка
 
-**Source** - The source can also be cloned from the [GitHub repo](https://github.com/Cataclysm-TLG/Cataclysm-TLG/). You probably only want to do this if you're working on the game.
+- Кастомное главное меню с фоновой иллюстрацией
+- Более казуальный баланс по умолчанию (замедленная эволюция монстров, пониженная плотность спавна)
+- Потребности NPC в еде отключены по умолчанию
+- Полноэкранный безрамочный режим окна по умолчанию
+- Поддержка русской локализации
+- Исправления ошибок
 
-## Links
+## Скачать
 
-Website: cataclysmtlg.com
+**Исходный код** — клонируйте репозиторий с GitHub:
+```
+git clone https://github.com/VirusAid/Ruins-of-Eternal-Struggle-.git
+```
 
-Discord: 
+**Готовая сборка** — смотрите раздел [Releases](https://github.com/VirusAid/Ruins-of-Eternal-Struggle-/releases) на GitHub.
 
-[https://discord.com/invite/zT9sXmZNCK](https://discord.com/invite/zT9sXmZNCK)
+## Ссылки
 
-## Contributions
+- Основан на: [Cataclysm: The Last Generation](https://github.com/Cataclysm-TLG/Cataclysm-TLG)
+- Оригинальный проект: [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)
 
-Cataclysm: The Last Generation is developed under the Creative Commons Attribution ShareAlike 3.0 license. The code and content of the game are free to use, modify, and redistribute for any purpose whatsoever. See https://creativecommons.org/licenses/by-sa/3.0/ for details.
-Some code distributed with the project is not part of the project and is released under different software licenses; the files covered by different software licenses have their own license notices.
+## Лицензия
 
-This project would not be possible without the work of thousands of contributions from the original project, [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)
+Ruins of Eternal Struggle распространяется под лицензией Creative Commons Attribution ShareAlike 3.0. Код и контент игры свободны для использования, модификации и распространения. См. https://creativecommons.org/licenses/by-sa/3.0/
 
-## Frequently Asked Questions
+Этот проект был бы невозможен без работы тысяч контрибьюторов [Cataclysm: The Last Generation](https://github.com/Cataclysm-TLG/Cataclysm-TLG) и оригинального [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA).
 
-#### I am coming from Cataclysm: Dark Days Ahead, what has changed in this fork?
+## FAQ
 
-See [CHANGELOG.md](doc/CHANGELOG.md)
+#### Я играл в Cataclysm: Dark Days Ahead, что изменилось?
 
-#### Is there a tutorial?
+Смотрите [CHANGELOG.md](doc/CHANGELOG.md)
 
-Yes, you can find the tutorial in the **Special** menu at the main menu. You can also access documentation in-game via the `?` key.
+#### Есть ли обучение?
 
-#### How can I change the key bindings?
+Да, в главном меню выберите **Обучение**. Также в игре нажмите `?` для доступа к документации.
 
-Press the `?` key, followed by the `1` key to see the full list of key commands. Press the `+` key to add a key binding, select which action with the corresponding letter key `a-w`, and then the key you wish to assign to that action.
+#### Как изменить назначение клавиш?
 
-#### How can I start a new world?
+Нажмите `?`, затем `1` для списка команд. Нажмите `+` чтобы добавить привязку.
 
-**World** on the main menu will generate a fresh world for you. Select **Create World**.
+#### Как создать новый мир?
 
-#### I am having trouble launching the game on Linux, what do I do?
-
-See [LINUX.md](doc/LINUX.md).
+В главном меню выберите **Мир** → **Создать мир**.

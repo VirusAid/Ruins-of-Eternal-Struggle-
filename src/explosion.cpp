@@ -211,7 +211,7 @@ static void do_blast( map *m, const Creature *source, const tripoint_bub_ms &p, 
         }
     };
 
-    m->bash( p, fire ? power : ( 2 * power ), true, false, false );
+    m->bash( p, fire ? power : ( 2 * power ), true, false, false, fire );
     record_if_empty_space( p );
 
     std::priority_queue< std::pair<float, tripoint_bub_ms>, std::vector< std::pair<float, tripoint_bub_ms> >, pair_greater_cmp_first >
@@ -250,7 +250,7 @@ static void do_blast( map *m, const Creature *source, const tripoint_bub_ms &p, 
             if( furn_here ) {
                 const furn_t &furn_obj = furn_here.obj();
                 furniture_coverage = furn_obj.coverage;
-                if( furniture_coverage > 0 ) {
+                if( furniture_coverage > 0 && furn_obj.bash ) {
                     furn_attenuation = rng( furn_obj.bash->str_min, furn_obj.bash->str_max );
                 }
             }
@@ -263,7 +263,7 @@ static void do_blast( map *m, const Creature *source, const tripoint_bub_ms &p, 
                 attenuation = ( furn_attenuation * furniture_coverage + attenuation * coverage ) / total_coverage;
                 attenuation = std::clamp( attenuation, 0, 100 );
             }
-            force *= 1 - attenuation / 100;
+            force *= 1.0f - attenuation / 100.0f;
         }
         // Don't propagate further.
         if( ( m->impassable( pt ) && pt != p ) || force == 0 ) {

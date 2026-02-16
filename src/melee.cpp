@@ -2142,8 +2142,7 @@ void Character::perform_technique( const ma_technique &technique, Creature &t,
         valid_aoe_technique( t, technique, targets );
 
         // Hit only one valid target (stabbing through doesn't spread out)
-        if( technique.aoe == "impale" ) {
-            // TODO: what if targets is empty
+        if( technique.aoe == "impale" && !targets.empty() ) {
             Creature *const v = random_entry( targets );
             targets.clear();
             targets.push_back( v );
@@ -2153,6 +2152,7 @@ void Character::perform_technique( const ma_technique &technique, Creature &t,
         int count_hit = 0;
         for( Creature *const c : targets ) {
             melee_attack( *c, false );
+            count_hit++;
         }
 
         t.add_msg_if_player( m_good, n_gettext( "%d enemy hit!", "%d enemies hit!", count_hit ),

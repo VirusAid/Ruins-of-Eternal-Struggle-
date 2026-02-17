@@ -489,9 +489,9 @@ void start_location::place_player( avatar &you, const tripoint_abs_omt &omtstart
         return false;
     };
 
-    while( !found_good_spot && tries < 100 ) {
-        tripoint_bub_ms rand_point( HALF_MAPSIZE_X + rng( 0, SEEX * 2 - 1 ),
-                                    HALF_MAPSIZE_Y + rng( 0, SEEY * 2 - 1 ),
+    while( !found_good_spot && tries < 500 ) {
+        tripoint_bub_ms rand_point( rng( 0, MAPSIZE_X - 1 ),
+                                    rng( 0, MAPSIZE_Y - 1 ),
                                     you.posz() );
         found_good_spot = check_spot( rand_point );
     }

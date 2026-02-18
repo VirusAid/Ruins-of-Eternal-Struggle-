@@ -8837,7 +8837,10 @@ std::optional<int> iuse::slow_zombie_antidote( Character *p, item *it, const tri
         p->add_msg_if_player( m_info, _( "You don't have a slow zombie infection.  No need to use this." ) );
         return std::nullopt;
     }
-    p->add_msg_if_player( _( "You inject the %s." ), it->tname() );
+    p->add_msg_player_or_npc( m_neutral,
+                              _( "You take the %s." ),
+                              _( "<npcname> takes the %s." ),
+                              it->tname() );
     p->mod_moves( -to_moves<int>( 5_seconds ) );
     if( one_in( 5 ) ) {
         // 80% success chance (fails 1 in 5)
@@ -8845,7 +8848,9 @@ std::optional<int> iuse::slow_zombie_antidote( Character *p, item *it, const tri
         return 1;
     }
     p->remove_effect( effect_slow_zombie_infection );
-    p->add_msg_if_player( m_good, _( "You feel the infection retreating as the antidote spreads through your veins." ) );
+    p->add_msg_player_or_npc( m_good,
+                              _( "You feel the infection retreating as the antidote spreads through your system." ),
+                              _( "<npcname> looks relieved as the antidote takes effect." ) );
     return 1;
 }
 

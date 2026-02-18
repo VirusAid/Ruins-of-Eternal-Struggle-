@@ -5129,14 +5129,21 @@
   {
     "type": "effect_type",
     "id": "slow_zombie_infection",
-    "name": [ "Slow Zombie Infection", "Slow Zombie Infection (Stage %d)" ],
+    "name": [
+      "Slow Zombie Infection",
+      "Slow Zombie Infection (Incubating)",
+      "Slow Zombie Infection (Stage 1)",
+      "Slow Zombie Infection (Stage 2)",
+      "Slow Zombie Infection (Critical)"
+    ],
     "desc": [
       "You were bitten by a zombie.  Something is wrong — a slow rot is spreading through your body.  Find an antidote.",
-      "Stage 1: You feel feverish and keep coughing.  The infection is progressing.",
-      "Stage 2: High fever, weakness.  The infection is taking hold.",
+      "Incubating — you feel uneasy.  Something is wrong with that bite wound.",
+      "Stage 1: You keep coughing and feel increasingly thirsty.  The infection is progressing.",
+      "Stage 2: High fever, weakness, severe thirst.  The infection is taking hold.",
       "Stage 3: Critical — the infection is consuming you."
     ],
-    "max_intensity": 3,
+    "max_intensity": 4,
     "max_duration": "21 days",
     "apply_message": "You feel a chill — something's not right with that bite wound.",
     "remove_message": "The infection has cleared from your system.",

@@ -52,6 +52,7 @@ static const efftype_id effect_airborne( "airborne" );
 static const efftype_id effect_badpoison( "badpoison" );
 static const efftype_id effect_bite( "bite" );
 static const efftype_id effect_slow_zombie_infection( "slow_zombie_infection" );
+static const species_id species_ZOMBIE( "ZOMBIE" );
 static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_grabbed( "grabbed" );
 static const efftype_id effect_grabbing( "grabbing" );
@@ -1046,6 +1047,14 @@ void melee_actor::on_damage( monster &z, Creature &target, dealt_damage_instance
                           rng( eff.intensity.first, eff.intensity.second ) );
             target.add_msg_if_player( m_mixed, eff.message, mon_name );
         }
+    }
+
+    // 5% chance of slow zombie infection from any zombie melee/scratch hit
+    if( z.type->in_species( species_ZOMBIE ) &&
+        !target.has_effect( effect_slow_zombie_infection ) && x_in_y( 5, 100 ) ) {
+        const time_duration incubation = time_duration::from_hours( rng( 48, 120 ) );
+        target.add_effect( effect_slow_zombie_infection, incubation,
+                           bodypart_str_id::NULL_ID(), true, 1 );
     }
 }
 

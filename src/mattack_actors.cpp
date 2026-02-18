@@ -1091,11 +1091,12 @@ void bite_actor::on_damage( monster &z, Creature &target, dealt_damage_instance 
         }
         // 20% chance of slow zombie infection from any zombie bite
         if( !target.has_effect( effect_slow_zombie_infection ) && x_in_y( 20, 100 ) ) {
-            // incubation: rng(2,5) days, effect counts down from max_duration(21 days)
-            // elapsed = max_dur - dur, so set dur = max_dur - incubation
+            // Total duration = incubation (2-5 days) + max disease time (16 days) = up to 21 days
+            // intensity 1 = incubation, stages advance by reducing duration threshold
+            // We set duration = incubation period, effect handler will advance intensity at 0
             const time_duration incubation = time_duration::from_hours( rng( 48, 120 ) );
-            const time_duration max_dur = time_duration::from_days( 21 );
-            target.add_effect( effect_slow_zombie_infection, max_dur - incubation,
+            // Store incubation as initial duration; intensity=1 means incubating
+            target.add_effect( effect_slow_zombie_infection, incubation,
                                bodypart_str_id::NULL_ID(), true, 1 );
         }
         // Flag only set for zombies in the deadly_bites mod

@@ -1188,53 +1188,54 @@ static void eff_fun_sleep( Character &u, effect &it )
 
 static void eff_fun_slow_zombie_infection( Character &u, effect &it )
 {
-    // Durations in turns (6 turns/sec, 600 turns/minute, 36000 turns/hour)
-    // Stage 1 starts at 3 days = 72h = 2592000 turns (counting down from max)
-    // Stage 2 starts at 7 days = 168h
-    // Stage 3 starts at 14 days = 336h
-    // We use intensity to track stage: 1=incubation, 2=cough, 3=fever, 4=critical
-    // Duration counts down from initial value set at infection
+    // intensity tracks stage:
+    // 1 = incubation (duration counts down, when expired -> advance to stage 2)
+    // 2 = stage 1: cough (lasts 4 days)
+    // 3 = stage 2: fever+weakness (lasts 7 days)
+    // 4 = stage 3: critical (until cured or death/mutation)
     const time_duration dur = it.get_duration();
     int intense = it.get_intensity();
 
-    // Check for cure: antibiotic (50% chance per dose check), strong antibiotic cures faster
+    // Check for cure: antibiotics give 50% chance per hour to push back infection
     if( u.has_effect( effect_antibiotic ) || u.has_effect( effect_strong_antibiotic ) ) {
         if( calendar::once_every( 1_hours ) && one_in( 2 ) ) {
             u.add_msg_if_player( m_good, _( "The antibiotics seem to be fighting off the zombie infection!" ) );
-            it.mod_duration( -6_hours );
-            if( it.get_duration() <= 0_turns ) {
+            if( intense <= 2 ) {
+                // In early stages antibiotics can cure
                 it.set_duration( 0_turns );
                 return;
+            } else {
+                // In later stages slow it down significantly
+                it.mod_duration( 4_hours );
             }
         }
     }
 
-    // Advance stage based on how long infection has been active
-    // We track this via intensity levels:
-    // intensity 1 = incubation (< 3 days elapsed)
-    // intensity 2 = stage 1 cough (3-7 days)
-    // intensity 3 = stage 2 fever (7-14 days)
-    // intensity 4 = stage 3 critical (14+ days)
-    // Duration counts up via mod_duration each turn
-    // Instead: duration counts DOWN. We set initial = rng(2,5)*days.
-    // So we use "max_duration - dur" as elapsed time.
-    const time_duration max_dur = it.get_max_duration();
-    const time_duration elapsed = max_dur - dur;
-
-    if( elapsed >= 14_days && intense < 4 ) {
-        it.set_intensity( 4 );
-        u.add_msg_if_player( m_bad, _( "You feel yourself losing control.  The infection is critical!" ) );
-    } else if( elapsed >= 7_days && intense < 3 ) {
-        it.set_intensity( 3 );
-        u.add_msg_if_player( m_bad, _( "Your fever worsens and you feel terribly weak." ) );
-    } else if( elapsed >= 3_days && intense < 2 ) {
-        it.set_intensity( 2 );
-        u.add_msg_if_player( m_bad, _( "You start coughing.  Something is wrong with that bite." ) );
+    // Stage transitions: when duration expires, advance to next stage
+    if( dur <= 0_turns ) {
+        if( intense == 1 ) {
+            // Incubation over -> Stage 1: cough for 4 days
+            u.add_msg_if_player( m_bad, _( "You start coughing.  Something is wrong with that bite." ) );
+            it.set_intensity( 2 );
+            it.set_duration( 4_days );
+            return;
+        } else if( intense == 2 ) {
+            // Stage 1 over -> Stage 2: fever for 7 days
+            u.add_msg_if_player( m_bad, _( "Your fever worsens and you feel terribly weak." ) );
+            it.set_intensity( 3 );
+            it.set_duration( 7_days );
+            return;
+        } else if( intense == 3 ) {
+            // Stage 2 over -> Stage 3: critical
+            u.add_msg_if_player( m_bad, _( "You feel yourself losing control.  The infection is critical!" ) );
+            it.set_intensity( 4 );
+            it.set_duration( 21_days ); // keep alive until death/mutation
+            return;
+        }
     }
 
-    // Stage effects
+    // Stage 1: Cough
     if( intense >= 2 ) {
-        // Stage 1: Cough — +5 thirst per tick (every ~10 min), 10% sound chance
         if( calendar::once_every( 10_minutes ) ) {
             u.mod_thirst( 5 );
             if( one_in( 10 ) ) {
@@ -1244,15 +1245,15 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
             }
         }
     }
+    // Stage 2: Fever + weakness
     if( intense >= 3 ) {
-        // Stage 2: Fever — +10 thirst per tick, -2 strength
         if( calendar::once_every( 10_minutes ) ) {
             u.mod_thirst( 10 );
         }
         u.mod_str_bonus( -2 );
     }
+    // Stage 3: Critical
     if( intense >= 4 ) {
-        // Stage 3: Critical — every hour 50% death, 50% random mutation
         if( calendar::once_every( 1_hours ) ) {
             if( one_in( 2 ) ) {
                 u.add_msg_if_player( m_bad,
@@ -1263,7 +1264,6 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
                 u.add_msg_if_player( m_bad,
                                      _( "Your body mutates violently as it fights off the zombie infection!" ) );
                 u.mutate();
-                // Clear infection after mutation
                 it.set_duration( 0_turns );
             }
         }

@@ -26,6 +26,7 @@ git clone https://github.com/VirusAid/Ruins-of-Eternal-Struggle-.git
 
 ## Ссылки
 
+- 💬 **Discord**: [https://discord.gg/8CHaDh2KTf](https://discord.gg/8CHaDh2KTf)
 - Основан на: [Cataclysm: The Last Generation](https://github.com/Cataclysm-TLG/Cataclysm-TLG)
 - Оригинальный проект: [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)
 

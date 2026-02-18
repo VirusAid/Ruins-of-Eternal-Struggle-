@@ -1261,13 +1261,13 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
             if( one_in( 2 ) ) {
                 u.add_msg_if_player( m_bad,
                                      _( "The zombie infection consumes you.  Your body can no longer fight it off." ) );
-                get_event_bus().send<event_type::dies_from_drug_overdose>( u.getID(), it.get_id() );
+                get_event_bus().send<event_type::dies_from_asthma_attack>( u.getID() );
                 u.set_part_hp_cur( bodypart_id( "torso" ), 0 );
             } else {
                 u.add_msg_if_player( m_bad,
                                      _( "Your body mutates violently as it fights off the zombie infection!" ) );
                 u.mutate();
-                it.set_duration( 0_turns );
+                u.remove_effect( effect_slow_zombie_infection );
             }
         }
     }

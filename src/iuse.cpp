@@ -190,6 +190,7 @@ static const efftype_id effect_haslight( "haslight" );
 static const efftype_id effect_high( "high" );
 static const efftype_id effect_in_pit( "in_pit" );
 static const efftype_id effect_infected( "infected" );
+static const efftype_id effect_slow_zombie_infection( "slow_zombie_infection" );
 static const efftype_id effect_jetinjector( "jetinjector" );
 static const efftype_id effect_lack_sleep( "lack_sleep" );
 static const efftype_id effect_laserlocked( "laserlocked" );
@@ -8827,6 +8828,24 @@ std::optional<int> iuse::strong_antibiotic( Character *p, item *it, const tripoi
     }
     p->add_effect( effect_strong_antibiotic, 12_hours );
     p->add_effect( effect_strong_antibiotic_visible, rng( 9_hours, 15_hours ) );
+    return 1;
+}
+
+std::optional<int> iuse::slow_zombie_antidote( Character *p, item *it, const tripoint_bub_ms & )
+{
+    if( !p->has_effect( effect_slow_zombie_infection ) ) {
+        p->add_msg_if_player( m_info, _( "You don't have a slow zombie infection.  No need to use this." ) );
+        return std::nullopt;
+    }
+    p->add_msg_if_player( _( "You inject the %s." ), it->tname() );
+    p->mod_moves( -to_moves<int>( 5_seconds ) );
+    if( one_in( 5 ) ) {
+        // 80% success chance (fails 1 in 5)
+        p->add_msg_if_player( m_bad, _( "The antidote doesn't seem to take hold this time." ) );
+        return 1;
+    }
+    p->remove_effect( effect_slow_zombie_infection );
+    p->add_msg_if_player( m_good, _( "You feel the infection retreating as the antidote spreads through your veins." ) );
     return 1;
 }
 

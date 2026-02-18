@@ -196,6 +196,7 @@ std::optional<int> wash_soft_items( Character *, item *, const tripoint_bub_ms &
 std::optional<int> water_purifier( Character *, item *, const tripoint_bub_ms & );
 std::optional<int> water_tablets( Character *, item *, const tripoint_bub_ms & );
 std::optional<int> weak_antibiotic( Character *, item *, const tripoint_bub_ms & );
+std::optional<int> slow_zombie_antidote( Character *, item *, const tripoint_bub_ms & );
 std::optional<int> weather_tool( Character *, item *, const tripoint_bub_ms & );
 std::optional<int> sextant( Character *, item *, const tripoint_bub_ms & );
 std::optional<int> lux_meter( Character *, item *, const tripoint_bub_ms & );

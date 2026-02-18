@@ -51,6 +51,7 @@ static const damage_type_id damage_bash( "bash" );
 static const efftype_id effect_airborne( "airborne" );
 static const efftype_id effect_badpoison( "badpoison" );
 static const efftype_id effect_bite( "bite" );
+static const efftype_id effect_slow_zombie_infection( "slow_zombie_infection" );
 static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_grabbed( "grabbed" );
 static const efftype_id effect_grabbing( "grabbing" );
@@ -1087,6 +1088,15 @@ void bite_actor::on_damage( monster &z, Creature &target, dealt_damage_instance 
                 add_msg_debug( debugmode::DF_MATTACK, "Added bitten effect to %s", hit->name );
                 target.add_effect( effect_bite, 1_turns, hit, true );
             }
+        }
+        // 20% chance of slow zombie infection from any zombie bite
+        if( !target.has_effect( effect_slow_zombie_infection ) && x_in_y( 20, 100 ) ) {
+            // incubation: rng(2,5) days, effect counts down from max_duration(21 days)
+            // elapsed = max_dur - dur, so set dur = max_dur - incubation
+            const time_duration incubation = time_duration::from_hours( rng( 48, 120 ) );
+            const time_duration max_dur = time_duration::from_days( 21 );
+            target.add_effect( effect_slow_zombie_infection, max_dur - incubation,
+                               bodypart_str_id::NULL_ID(), true, 1 );
         }
         // Flag only set for zombies in the deadly_bites mod
         if( x_in_y( infection_chance, 20 ) ) {

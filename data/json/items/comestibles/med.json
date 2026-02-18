@@ -2254,8 +2254,6 @@
     "color": "light_green",
     "looks_like": "antibiotics",
     "container": "bottle_plastic_pill_prescription",
-    "charges_per_use": 1,
-    "stackable": true,
     "use_action": [ "SLOW_ZOMBIE_ANTIDOTE" ],
     "flags": [ "NPC_SAFE", "WATER_DISSOLVE", "NO_TEMP" ]
   }

@@ -1237,7 +1237,10 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
     // Stage 1: Cough
     if( intense >= 2 ) {
         if( calendar::once_every( 10_minutes ) ) {
-            u.mod_thirst( 5 );
+            // Stage 2+ replaces thirst bonus with its own higher value below
+            if( intense < 3 ) {
+                u.mod_thirst( 5 );
+            }
             if( one_in( 10 ) ) {
                 u.add_msg_if_player( m_bad, _( "You cough loudly." ) );
                 sounds::sound( u.pos_bub(), 20, sounds::sound_t::speech,

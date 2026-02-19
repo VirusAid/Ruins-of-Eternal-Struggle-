@@ -2244,7 +2244,7 @@
     "subtypes": [ "COMESTIBLE" ],
     "comestible_type": "MED",
     "name": { "str_sp": "zombie infection antidote" },
-    "description": "An experimental antiviral compound synthesized from antibodies found in the blood of rare immune survivors.  Highly effective against the slow zombie infection.  Use it before the infection reaches the critical stage.",
+    "description": "An experimental antiviral compound synthesized from antibodies found in the blood of rare immune survivors.  Highly effective against the slow zombie infection.  Use immediately after a bite for best chance of cure.",
     "material": [ "drug_filler" ],
     "weight": "750 mg",
     "volume": "1 ml",

@@ -1231,6 +1231,9 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
             it.set_intensity( 4 );
             it.set_duration( 21_days ); // keep alive until death/mutation
             return;
+        } else {
+            // intense >= 4 with dur <= 0: effect was marked for removal, let decay handle it
+            return;
         }
     }
 
@@ -1267,7 +1270,8 @@ static void eff_fun_slow_zombie_infection( Character &u, effect &it )
                 u.add_msg_if_player( m_bad,
                                      _( "Your body mutates violently as it fights off the zombie infection!" ) );
                 u.mutate();
-                u.remove_effect( effect_slow_zombie_infection );
+                // Mark for safe removal after iteration (decay will remove when dur<=0)
+                it.set_duration( 0_turns );
             }
         }
     }

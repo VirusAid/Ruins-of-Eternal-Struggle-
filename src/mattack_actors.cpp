@@ -1054,7 +1054,7 @@ void melee_actor::on_damage( monster &z, Creature &target, dealt_damage_instance
         !target.has_effect( effect_slow_zombie_infection ) && x_in_y( 5, 100 ) ) {
         const time_duration incubation = time_duration::from_hours( rng( 48, 120 ) );
         target.add_effect( effect_slow_zombie_infection, incubation,
-                           bodypart_str_id::NULL_ID(), true, 1 );
+                           bodypart_str_id::NULL_ID(), false, 1 );
     }
 }
 
@@ -1106,7 +1106,7 @@ void bite_actor::on_damage( monster &z, Creature &target, dealt_damage_instance 
             const time_duration incubation = time_duration::from_hours( rng( 48, 120 ) );
             // Store incubation as initial duration; intensity=1 means incubating
             target.add_effect( effect_slow_zombie_infection, incubation,
-                               bodypart_str_id::NULL_ID(), true, 1 );
+                               bodypart_str_id::NULL_ID(), false, 1 );
         }
         // Flag only set for zombies in the deadly_bites mod
         if( x_in_y( infection_chance, 20 ) ) {

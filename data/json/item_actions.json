@@ -6,11 +6,6 @@
   },
   {
     "type": "item_action",
-    "id": "SLOW_ZOMBIE_ANTIDOTE",
-    "name": { "str": "Use zombie infection antidote" }
-  },
-  {
-    "type": "item_action",
     "id": "repair_metal",
     "name": { "str": "Repair metal/plastic/Kevlar" }
   },

@@ -2071,8 +2071,6 @@ void Item_factory::init()
     add_iuse( "WATER_PURIFIER", &iuse::water_purifier );
     add_iuse( "WATER_TABLETS", &iuse::water_tablets );
     add_iuse( "WEAK_ANTIBIOTIC", &iuse::weak_antibiotic );
-    add_iuse( "SLOW_ZOMBIE_ANTIDOTE", &iuse::slow_zombie_antidote,
-               to_translation( "Use to treat slow zombie infection (80% cure chance per dose)." ) );
     add_iuse( "WEATHER_TOOL", &iuse::weather_tool );
     add_iuse( "SEXTANT", &iuse::sextant );
     add_iuse( "WEED_CAKE", &iuse::weed_cake );

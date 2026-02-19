@@ -98,7 +98,6 @@ static const efftype_id effect_valium( "valium" );
 static const efftype_id effect_visuals( "visuals" );
 static const efftype_id effect_weak_antibiotic( "weak_antibiotic" );
 static const efftype_id effect_winded( "winded" );
-static const efftype_id effect_slow_zombie_infection( "slow_zombie_infection" );
 
 static const furn_str_id furn_f_rubble_rock( "f_rubble_rock" );
 
@@ -1186,97 +1185,6 @@ static void eff_fun_sleep( Character &u, effect &it )
     }
 }
 
-static void eff_fun_slow_zombie_infection( Character &u, effect &it )
-{
-    // intensity tracks stage:
-    // 1 = incubation (duration counts down, when expired -> advance to stage 2)
-    // 2 = stage 1: cough (lasts 4 days)
-    // 3 = stage 2: fever+weakness (lasts 7 days)
-    // 4 = stage 3: critical (until cured or death/mutation)
-    const time_duration dur = it.get_duration();
-    int intense = it.get_intensity();
-
-    // Check for cure: antibiotics give 50% chance per hour to push back infection
-    if( u.has_effect( effect_antibiotic ) || u.has_effect( effect_strong_antibiotic ) ) {
-        if( calendar::once_every( 1_hours ) && one_in( 2 ) ) {
-            u.add_msg_if_player( m_good, _( "The antibiotics seem to be fighting off the zombie infection!" ) );
-            if( intense <= 2 ) {
-                // In early stages antibiotics can cure
-                it.set_duration( 0_turns );
-                return;
-            } else {
-                // In later stages slow it down significantly
-                it.mod_duration( 4_hours );
-            }
-        }
-    }
-
-    // Stage transitions: when duration expires, advance to next stage
-    if( dur <= 0_turns ) {
-        if( intense == 1 ) {
-            // Incubation over -> Stage 1: cough for 4 days
-            u.add_msg_if_player( m_bad, _( "You start coughing.  Something is wrong with that bite." ) );
-            it.set_intensity( 2 );
-            it.set_duration( 4_days );
-            return;
-        } else if( intense == 2 ) {
-            // Stage 1 over -> Stage 2: fever for 7 days
-            u.add_msg_if_player( m_bad, _( "Your fever worsens and you feel terribly weak." ) );
-            it.set_intensity( 3 );
-            it.set_duration( 7_days );
-            return;
-        } else if( intense == 3 ) {
-            // Stage 2 over -> Stage 3: critical
-            u.add_msg_if_player( m_bad, _( "You feel yourself losing control.  The infection is critical!" ) );
-            it.set_intensity( 4 );
-            it.set_duration( 21_days ); // keep alive until death/mutation
-            return;
-        } else {
-            // intense >= 4 with dur <= 0: effect was marked for removal, let decay handle it
-            return;
-        }
-    }
-
-    // Stage 1: Cough
-    if( intense >= 2 ) {
-        if( calendar::once_every( 10_minutes ) ) {
-            // Stage 2+ replaces thirst bonus with its own higher value below
-            if( intense < 3 ) {
-                u.mod_thirst( 5 );
-            }
-            if( one_in( 10 ) ) {
-                u.add_msg_if_player( m_bad, _( "You cough loudly." ) );
-                sounds::sound( u.pos_bub(), 20, sounds::sound_t::speech,
-                               _( "*cough* *cough*" ), false, "misc", "cough" );
-            }
-        }
-    }
-    // Stage 2: Fever + weakness
-    if( intense >= 3 ) {
-        if( calendar::once_every( 10_minutes ) ) {
-            u.mod_thirst( 10 );
-        }
-        u.mod_str_bonus( -2 );
-    }
-    // Stage 3: Critical
-    if( intense >= 4 ) {
-        if( calendar::once_every( 1_hours ) ) {
-            if( one_in( 2 ) ) {
-                u.add_msg_if_player( m_bad,
-                                     _( "The zombie infection consumes you.  Your body can no longer fight it off." ) );
-                get_event_bus().send<event_type::dies_from_asthma_attack>( u.getID() );
-                u.set_part_hp_cur( bodypart_id( "torso" ), 0 );
-            } else {
-                u.add_msg_if_player( m_bad,
-                                     _( "Your body mutates violently as it fights off the zombie infection!" ) );
-                u.mutate();
-                // Mark for safe removal after iteration (decay will remove when dur<=0)
-                it.set_duration( 0_turns );
-            }
-        }
-    }
-}
-
 void Character::hardcoded_effects( effect &it )
 {
     map &here = get_map();
@@ -1309,7 +1217,6 @@ void Character::hardcoded_effects( effect &it )
             { effect_sleep, eff_fun_sleep },
             { effect_fake_common_cold, eff_fun_fake_common_cold },
             { effect_fake_flu, eff_fun_fake_flu },
-            { effect_slow_zombie_infection, eff_fun_slow_zombie_infection },
         }
     };
     const efftype_id &id = it.get_id();

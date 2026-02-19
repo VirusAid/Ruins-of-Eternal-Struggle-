@@ -2237,24 +2237,5 @@
     "addiction_type": "cocaine",
     "flags": [ "NO_INGEST", "WATER_DISSOLVE" ],
     "use_action": { "type": "heal", "bleed": 10, "move_cost": 3000, "effects": [ { "id": "pkill1_generic", "duration": 720 } ] }
-  },
-  {
-    "id": "slow_zombie_antidote",
-    "type": "ITEM",
-    "subtypes": [ "COMESTIBLE" ],
-    "comestible_type": "MED",
-    "name": { "str_sp": "zombie infection antidote" },
-    "description": "An experimental antiviral compound synthesized from antibodies found in the blood of rare immune survivors.  Highly effective against the slow zombie infection.  Use immediately after a bite for best chance of cure.",
-    "material": [ "drug_filler" ],
-    "weight": "750 mg",
-    "volume": "1 ml",
-    "price": "3 USD",
-    "price_postapoc": "200 USD",
-    "symbol": "!",
-    "color": "light_green",
-    "looks_like": "antibiotics",
-    "container": "bottle_plastic_pill_prescription",
-    "use_action": [ "SLOW_ZOMBIE_ANTIDOTE" ],
-    "flags": [ "NPC_SAFE", "WATER_DISSOLVE", "NO_TEMP" ]
   }
 ]

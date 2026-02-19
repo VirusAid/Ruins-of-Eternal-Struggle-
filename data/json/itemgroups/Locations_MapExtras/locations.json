@@ -189,7 +189,6 @@
       [ "strong_antibiotic", 1 ],
       [ "antibiotics", 5 ],
       [ "weak_antibiotic", 15 ],
-      [ "slow_zombie_antidote", 20 ],
       [ "crutches", 5 ],
       { "group": "bionics_common", "prob": 2 }
     ]

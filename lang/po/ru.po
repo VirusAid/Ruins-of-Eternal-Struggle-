@@ -307218,3 +307218,215 @@ msgstr "Распаковка памяти карты [%d/%d]"
 #, c-format
 msgid "Decompressing main save files [%d/%d]"
 msgstr "Распаковка основных файлов сохранения [%d/%d]"
+
+# Ruins of Eternal Struggle - Custom Professions & Scenarios
+
+msgctxt "profession_male"
+msgid "Lone Wanderer"
+msgstr "Одинокий странник"
+
+msgctxt "profession_female"
+msgid "Lone Wanderer"
+msgstr "Одинокая странница"
+
+msgctxt "profession_male"
+msgid "Last Guardian"
+msgstr "Последний страж"
+
+msgctxt "profession_female"
+msgid "Last Guardian"
+msgstr "Последняя стражница"
+
+msgctxt "profession_male"
+msgid "Infected Survivor"
+msgstr "Заражённый выживший"
+
+msgctxt "profession_female"
+msgid "Infected Survivor"
+msgstr "Заражённая выжившая"
+
+msgctxt "profession_male"
+msgid "Shadow Looter"
+msgstr "Теневой мародёр"
+
+msgctxt "profession_female"
+msgid "Shadow Looter"
+msgstr "Теневая мародёрша"
+
+msgctxt "profession_male"
+msgid "Ruins Medic"
+msgstr "Медик руин"
+
+msgctxt "profession_female"
+msgid "Ruins Medic"
+msgstr "Медик руин"
+
+msgctxt "profession_male"
+msgid "Wasteland Mechanic"
+msgstr "Механик пустоши"
+
+msgctxt "profession_female"
+msgid "Wasteland Mechanic"
+msgstr "Механик пустоши"
+
+msgctxt "scenario_male"
+msgid "Lone Wanderer"
+msgstr "Одинокий странник"
+
+msgctxt "scenario_female"
+msgid "Lone Wanderer"
+msgstr "Одинокая странница"
+
+msgctxt "scenario_male"
+msgid "Last Guardian"
+msgstr "Последний страж"
+
+msgctxt "scenario_female"
+msgid "Last Guardian"
+msgstr "Последняя стражница"
+
+msgctxt "scenario_male"
+msgid "Infected Survivor"
+msgstr "Заражённый выживший"
+
+msgctxt "scenario_female"
+msgid "Infected Survivor"
+msgstr "Заражённая выжившая"
+
+msgctxt "scenario_male"
+msgid "Shadow Looter"
+msgstr "Теневой мародёр"
+
+msgctxt "scenario_female"
+msgid "Shadow Looter"
+msgstr "Теневая мародёрша"
+
+msgctxt "scenario_male"
+msgid "Ruins Medic"
+msgstr "Медик руин"
+
+msgctxt "scenario_female"
+msgid "Ruins Medic"
+msgstr "Медик руин"
+
+msgctxt "scenario_male"
+msgid "Wasteland Mechanic"
+msgstr "Механик пустоши"
+
+msgctxt "scenario_female"
+msgid "Wasteland Mechanic"
+msgstr "Механик пустоши"
+
+msgid "Abandoned Building"
+msgstr "Заброшенное здание"
+
+msgid "Fortified Shelter"
+msgstr "Укреплённое убежище"
+
+msgid "Sickbed"
+msgstr "Койка больного"
+
+msgid "Dark Building"
+msgstr "Тёмное здание"
+
+msgid "Makeshift Clinic"
+msgstr "Импровизированная клиника"
+
+msgid "Old Garage"
+msgstr "Старый гараж"
+
+msgctxt "prof_desc_male"
+msgid "You've been wandering the ruins alone since the very beginning.  No group, no shelter, just you and the road.  You've learned to travel light and move fast."
+msgstr "Ты бродишь по руинам в одиночку с самого начала.  Ни группы, ни убежища — только ты и дорога.  Ты научился путешествовать налегке и двигаться быстро."
+
+msgctxt "prof_desc_female"
+msgid "You've been wandering the ruins alone since the very beginning.  No group, no shelter, just you and the road.  You've learned to travel light and move fast."
+msgstr "Ты бродишь по руинам в одиночку с самого начала.  Ни группы, ни убежища — только ты и дорога.  Ты научилась путешествовать налегке и двигаться быстро."
+
+msgctxt "prof_desc_male"
+msgid "You swore to protect the survivors in your shelter.  One by one, they all died or left.  Now only you remain, armed and vigilant, guarding empty rooms out of habit."
+msgstr "Ты поклялся защищать выживших в убежище.  Один за другим они все умерли или ушли.  Теперь остался только ты — вооружённый и бдительный, охраняющий пустые комнаты по привычке."
+
+msgctxt "prof_desc_female"
+msgid "You swore to protect the survivors in your shelter.  One by one, they all died or left.  Now only you remain, armed and vigilant, guarding empty rooms out of habit."
+msgstr "Ты поклялась защищать выживших в убежище.  Один за другим они все умерли или ушли.  Теперь осталась только ты — вооружённая и бдительная, охраняющая пустые комнаты по привычке."
+
+msgctxt "prof_desc_male"
+msgid "Something bit you during the first wave and you've been fighting the infection ever since.  Your body is weak, but months of self-treatment have made you an expert at keeping yourself alive."
+msgstr "Что-то укусило тебя во время первой волны, и с тех пор ты борешься с инфекцией.  Тело ослабло, но месяцы самолечения сделали тебя экспертом в выживании."
+
+msgctxt "prof_desc_female"
+msgid "Something bit you during the first wave and you've been fighting the infection ever since.  Your body is weak, but months of self-treatment have made you an expert at keeping yourself alive."
+msgstr "Что-то укусило тебя во время первой волны, и с тех пор ты борешься с инфекцией.  Тело ослабло, но месяцы самолечения сделали тебя экспертом в выживании."
+
+msgctxt "prof_desc_male"
+msgid "While others fought and died, you survived by sneaking through the ruins at night, taking what the dead no longer needed.  Stealth and speed are your greatest weapons."
+msgstr "Пока другие сражались и гибли, ты выживал, прокрадываясь по руинам ночью и забирая то, что мёртвым уже не нужно.  Скрытность и скорость — твоё главное оружие."
+
+msgctxt "prof_desc_female"
+msgid "While others fought and died, you survived by sneaking through the ruins at night, taking what the dead no longer needed.  Stealth and speed are your greatest weapons."
+msgstr "Пока другие сражались и гибли, ты выживала, прокрадываясь по руинам ночью и забирая то, что мёртвым уже не нужно.  Скрытность и скорость — твоё главное оружие."
+
+msgctxt "prof_desc_male"
+msgid "You were a paramedic before everything fell apart.  Now you wander the ruins with your medical bag, patching up the wounded — whoever is left.  Healing others is the only thing that keeps you sane."
+msgstr "До катастрофы ты был фельдшером.  Теперь бродишь по руинам с медицинской сумкой, латая раненых — тех, кто ещё остался.  Лечение других — единственное, что спасает от безумия."
+
+msgctxt "prof_desc_female"
+msgid "You were a paramedic before everything fell apart.  Now you wander the ruins with your medical bag, patching up the wounded — whoever is left.  Healing others is the only thing that keeps you sane."
+msgstr "До катастрофы ты была фельдшером.  Теперь бродишь по руинам с медицинской сумкой, латая раненых — тех, кто ещё остался.  Лечение других — единственное, что спасает от безумия."
+
+msgctxt "prof_desc_male"
+msgid "Engines, generators, locks — you can fix anything.  Before the Cataclysm you ran a repair shop; now your skills are worth more than gold.  If only you had a proper workshop…"
+msgstr "Двигатели, генераторы, замки — ты можешь починить что угодно.  До Катаклизма ты держал мастерскую; теперь твои навыки дороже золота.  Вот бы ещё нормальную мастерскую…"
+
+msgctxt "prof_desc_female"
+msgid "Engines, generators, locks — you can fix anything.  Before the Cataclysm you ran a repair shop; now your skills are worth more than gold.  If only you had a proper workshop…"
+msgstr "Двигатели, генераторы, замки — ты можешь починить что угодно.  До Катаклизма ты держала мастерскую; теперь твои навыки дороже золота.  Вот бы ещё нормальную мастерскую…"
+
+msgctxt "scen_desc_male"
+msgid "You've been walking for days — maybe weeks.  No group, no destination.  Just the ruins and you.  You found this abandoned building and decided to rest.  Tomorrow, you walk again."
+msgstr "Ты идёшь уже несколько дней — может, недель.  Ни группы, ни цели.  Только руины и ты.  Ты нашёл это заброшенное здание и решил отдохнуть.  Завтра снова в путь."
+
+msgctxt "scen_desc_female"
+msgid "You've been walking for days — maybe weeks.  No group, no destination.  Just the ruins and you.  You found this abandoned building and decided to rest.  Tomorrow, you walk again."
+msgstr "Ты идёшь уже несколько дней — может, недель.  Ни группы, ни цели.  Только руины и ты.  Ты нашла это заброшенное здание и решила отдохнуть.  Завтра снова в путь."
+
+msgctxt "scen_desc_male"
+msgid "You swore to hold this shelter no matter what.  The barricades are up, the perimeter is set.  One by one, the others left or died.  Now it's just you, your supplies, and the dead outside.  Hold the line."
+msgstr "Ты поклялся удержать это убежище любой ценой.  Баррикады возведены, периметр установлен.  Один за другим остальные ушли или погибли.  Теперь только ты, твои припасы и мертвецы снаружи.  Держи оборону."
+
+msgctxt "scen_desc_female"
+msgid "You swore to hold this shelter no matter what.  The barricades are up, the perimeter is set.  One by one, the others left or died.  Now it's just you, your supplies, and the dead outside.  Hold the line."
+msgstr "Ты поклялась удержать это убежище любой ценой.  Баррикады возведены, периметр установлен.  Один за другим остальные ушли или погибли.  Теперь только ты, твои припасы и мертвецы снаружи.  Держи оборону."
+
+msgctxt "scen_desc_male"
+msgid "Something bit you during the first chaotic days.  The wound festered, and you've been fighting the infection with whatever medicine you could scavenge.  Your body is failing, but your will to live burns brighter than ever."
+msgstr "Что-то укусило тебя в первые хаотичные дни.  Рана загноилась, и ты борешься с инфекцией любыми лекарствами, которые удаётся найти.  Тело сдаёт, но воля к жизни горит ярче, чем когда-либо."
+
+msgctxt "scen_desc_female"
+msgid "Something bit you during the first chaotic days.  The wound festered, and you've been fighting the infection with whatever medicine you could scavenge.  Your body is failing, but your will to live burns brighter than ever."
+msgstr "Что-то укусило тебя в первые хаотичные дни.  Рана загноилась, и ты борешься с инфекцией любыми лекарствами, которые удаётся найти.  Тело сдаёт, но воля к жизни горит ярче, чем когда-либо."
+
+msgctxt "scen_desc_male"
+msgid "The night is your ally.  While the dead stumble through the streets, you slip between shadows, picking through what others left behind.  Tonight you found a promising building.  Time to go to work."
+msgstr "Ночь — твой союзник.  Пока мертвецы бродят по улицам, ты скользишь между тенями, подбирая то, что оставили другие.  Сегодня ночью ты нашёл перспективное здание.  Пора за работу."
+
+msgctxt "scen_desc_female"
+msgid "The night is your ally.  While the dead stumble through the streets, you slip between shadows, picking through what others left behind.  Tonight you found a promising building.  Time to go to work."
+msgstr "Ночь — твой союзник.  Пока мертвецы бродят по улицам, ты скользишь между тенями, подбирая то, что оставили другие.  Сегодня ночью ты нашла перспективное здание.  Пора за работу."
+
+msgctxt "scen_desc_male"
+msgid "You used to save lives in ambulances screaming through traffic.  Now you save lives in crumbling buildings with improvised tools.  You set up a makeshift clinic in the first safe room you could find.  Patients don't come often anymore."
+msgstr "Раньше ты спасал жизни в машинах скорой помощи.  Теперь спасаешь в разрушенных зданиях подручными средствами.  Ты устроил импровизированную клинику в первой безопасной комнате.  Пациенты приходят всё реже."
+
+msgctxt "scen_desc_female"
+msgid "You used to save lives in ambulances screaming through traffic.  Now you save lives in crumbling buildings with improvised tools.  You set up a makeshift clinic in the first safe room you could find.  Patients don't come often anymore."
+msgstr "Раньше ты спасала жизни в машинах скорой помощи.  Теперь спасаешь в разрушенных зданиях подручными средствами.  Ты устроила импровизированную клинику в первой безопасной комнате.  Пациенты приходят всё реже."
+
+msgctxt "scen_desc_male"
+msgid "Your garage survived the first wave mostly intact.  The tools are here, spare parts are scattered around, and there's even fuel if you know where to look.  If you can get a vehicle running, you might just make it out of the city alive."
+msgstr "Твой гараж пережил первую волну почти без повреждений.  Инструменты на месте, запчасти разбросаны вокруг, и даже топливо есть, если знать где искать.  Если удастся завести машину — есть шанс выбраться из города живым."
+
+msgctxt "scen_desc_female"
+msgid "Your garage survived the first wave mostly intact.  The tools are here, spare parts are scattered around, and there's even fuel if you know where to look.  If you can get a vehicle running, you might just make it out of the city alive."
+msgstr "Твой гараж пережил первую волну почти без повреждений.  Инструменты на месте, запчасти разбросаны вокруг, и даже топливо есть, если знать где искать.  Если удастся завести машину — есть шанс выбраться из города живой."

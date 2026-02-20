@@ -6494,5 +6494,211 @@
       "male": { "entries": [ { "item": "briefs" } ] },
       "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
     }
+  },
+  {
+    "type": "profession",
+    "id": "roes_lone_wanderer",
+    "name": "Lone Wanderer",
+    "description": "You've been wandering the ruins alone since the very beginning.  No group, no shelter, just you and the road.  You've learned to travel light and move fast.",
+    "points": 1,
+    "skills": [
+      { "level": 2, "name": "survival" },
+      { "level": 2, "name": "dodge" },
+      { "level": 1, "name": "melee" }
+    ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "longshirt" },
+          { "item": "jeans" },
+          { "item": "boots" },
+          { "item": "socks" },
+          { "item": "hoodie" },
+          { "item": "mbag" },
+          { "item": "knife_folding" },
+          { "item": "lighter" },
+          { "item": "water_clean" },
+          { "item": "jerky", "count": 2 },
+          { "item": "flashlight" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    }
+  },
+  {
+    "type": "profession",
+    "id": "roes_last_guardian",
+    "name": "Last Guardian",
+    "description": "You swore to protect the survivors in your shelter.  One by one, they all died or left.  Now only you remain, armed and vigilant, guarding empty rooms out of habit.",
+    "points": 3,
+    "skills": [
+      { "level": 3, "name": "gun" },
+      { "level": 2, "name": "pistol" },
+      { "level": 2, "name": "melee" },
+      { "level": 1, "name": "firstaid" }
+    ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "longshirt" },
+          { "item": "jeans" },
+          { "item": "boots_combat" },
+          { "item": "socks" },
+          { "item": "ballistic_vest_light" },
+          { "item": "backpack" },
+          { "item": "glock_19", "ammo-item": "9mm", "charges": 15, "container-item": "holster" },
+          { "item": "glockmag", "ammo-item": "9mm", "charges": 15 },
+          { "item": "glockmag", "ammo-item": "9mm", "charges": 15 },
+          { "item": "bat" },
+          { "item": "flashlight" },
+          { "item": "water_clean", "container-item": "canteen" },
+          { "item": "wristwatch" },
+          { "item": "can_beans" },
+          { "item": "can_spam" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    },
+    "flags": [ "SCEN_ONLY" ]
+  },
+  {
+    "type": "profession",
+    "id": "roes_infected_survivor",
+    "name": "Infected Survivor",
+    "description": "Something bit you during the first wave and you've been fighting the infection ever since.  Your body is weak, but months of self-treatment have made you an expert at keeping yourself alive.",
+    "points": 0,
+    "skills": [
+      { "level": 4, "name": "firstaid" },
+      { "level": 2, "name": "cooking" },
+      { "level": 1, "name": "survival" }
+    ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "longshirt" },
+          { "item": "jeans" },
+          { "item": "sneakers" },
+          { "item": "socks" },
+          { "item": "mbag" },
+          { "item": "bandages", "count": 3 },
+          { "item": "disinfectant" },
+          { "item": "aspirin", "count": 3 },
+          { "item": "antibiotics" },
+          { "item": "water_clean" },
+          { "item": "crackers" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    }
+  },
+  {
+    "type": "profession",
+    "id": "roes_shadow_looter",
+    "name": "Shadow Looter",
+    "description": "While others fought and died, you survived by sneaking through the ruins at night, taking what the dead no longer needed.  Stealth and speed are your greatest weapons.",
+    "points": 2,
+    "skills": [
+      { "level": 3, "name": "dodge" },
+      { "level": 2, "name": "mechanics" },
+      { "level": 2, "name": "traps" },
+      { "level": 1, "name": "melee" }
+    ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "tshirt" },
+          { "item": "jeans" },
+          { "item": "sneakers" },
+          { "item": "socks" },
+          { "item": "longcoat" },
+          { "item": "gloves_light" },
+          { "item": "mask_dust" },
+          { "item": "backpack" },
+          { "item": "crowbar" },
+          { "item": "flashlight" },
+          { "item": "multitool" },
+          { "item": "lighter" },
+          { "item": "water_clean" },
+          { "item": "wristwatch" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    }
+  },
+  {
+    "type": "profession",
+    "id": "roes_field_medic",
+    "name": "Ruins Medic",
+    "description": "You were a paramedic before everything fell apart.  Now you wander the ruins with your medical bag, patching up the wounded — whoever is left.  Healing others is the only thing that keeps you sane.",
+    "points": 3,
+    "skills": [
+      { "level": 5, "name": "firstaid" },
+      { "level": 1, "name": "survival" },
+      { "level": 1, "name": "cooking" }
+    ],
+    "proficiencies": [ "prof_field_medic" ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "longshirt" },
+          { "item": "pants_cargo" },
+          { "item": "boots" },
+          { "item": "socks" },
+          { "item": "coat_rain" },
+          { "item": "backpack" },
+          { "item": "bandages", "count": 5 },
+          { "item": "disinfectant", "count": 2 },
+          { "item": "aspirin", "count": 5 },
+          { "item": "antibiotics", "count": 2 },
+          { "item": "morphine" },
+          { "item": "scalpel" },
+          { "item": "water_clean", "container-item": "canteen" },
+          { "item": "can_beans" },
+          { "item": "wristwatch" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    }
+  },
+  {
+    "type": "profession",
+    "id": "roes_wasteland_mechanic",
+    "name": "Wasteland Mechanic",
+    "description": "Engines, generators, locks — you can fix anything.  Before the Cataclysm you ran a repair shop; now your skills are worth more than gold.  If only you had a proper workshop…",
+    "points": 2,
+    "skills": [
+      { "level": 4, "name": "mechanics" },
+      { "level": 3, "name": "fabrication" },
+      { "level": 1, "name": "electronics" }
+    ],
+    "proficiencies": [ "prof_welding" ],
+    "items": {
+      "both": {
+        "entries": [
+          { "item": "tshirt" },
+          { "item": "jeans" },
+          { "item": "boots" },
+          { "item": "socks" },
+          { "item": "gloves_light" },
+          { "item": "tool_belt" },
+          { "item": "backpack" },
+          { "item": "wrench" },
+          { "item": "screwdriver" },
+          { "item": "hammer" },
+          { "group": "duct_tape_roll" },
+          { "item": "flashlight" },
+          { "item": "water_clean" },
+          { "item": "jerky", "count": 2 },
+          { "item": "wristwatch" }
+        ]
+      },
+      "male": { "entries": [ { "item": "boxer_shorts" } ] },
+      "female": { "entries": [ { "item": "sports_bra" }, { "item": "boy_shorts" } ] }
+    }
   }
 ]

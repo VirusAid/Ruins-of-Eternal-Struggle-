@@ -1201,5 +1201,101 @@
     "start_name": "Shady Basement",
     "allowed_locs": [ "sloc_basement_bionic" ],
     "professions": [ "razorgirl", "bionic_installer", "broken_cyborg" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_lone_wanderer",
+    "name": "Lone Wanderer",
+    "points": 0,
+    "description": "You've been walking for days — maybe weeks.  No group, no destination.  Just the ruins and you.  You found this abandoned building and decided to rest.  Tomorrow, you walk again.",
+    "allowed_locs": [
+      "sloc_house",
+      "sloc_house_boarded",
+      "sloc_shelter_vandalized_a",
+      "sloc_shelter_vandalized_b",
+      "sloc_shelter_vandalized_c"
+    ],
+    "start_name": "Abandoned Building",
+    "professions": [ "roes_lone_wanderer", "vagabond", "unemployed" ],
+    "flags": [ "CITY_START", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_last_guardian",
+    "name": "Last Guardian",
+    "points": 2,
+    "description": "You swore to hold this shelter no matter what.  The barricades are up, the perimeter is set.  One by one, the others left or died.  Now it's just you, your supplies, and the dead outside.  Hold the line.",
+    "allowed_locs": [
+      "sloc_shelter_a",
+      "sloc_shelter_b",
+      "sloc_shelter_c",
+      "sloc_house_boarded"
+    ],
+    "start_name": "Fortified Shelter",
+    "professions": [ "roes_last_guardian" ],
+    "flags": [ "CITY_START", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_infected_survivor",
+    "name": "Infected Survivor",
+    "points": -4,
+    "description": "Something bit you during the first chaotic days.  The wound festered, and you've been fighting the infection with whatever medicine you could scavenge.  Your body is failing, but your will to live burns brighter than ever.",
+    "allowed_locs": [
+      "sloc_house",
+      "sloc_house_boarded",
+      "sloc_hospital"
+    ],
+    "start_name": "Sickbed",
+    "forced_traits": [ "FLIMSY" ],
+    "forbidden_traits": [ "TOUGH", "DISRESISTANT" ],
+    "professions": [ "roes_infected_survivor", "unemployed" ],
+    "flags": [ "CITY_START", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_shadow_looter",
+    "name": "Shadow Looter",
+    "points": -1,
+    "description": "The night is your ally.  While the dead stumble through the streets, you slip between shadows, picking through what others left behind.  Tonight you found a promising building.  Time to go to work.",
+    "allowed_locs": [
+      "sloc_house",
+      "sloc_grocery_store",
+      "sloc_hardware",
+      "sloc_garage",
+      "sloc_electronics"
+    ],
+    "start_name": "Dark Building",
+    "professions": [ "roes_shadow_looter", "burglar", "unemployed" ],
+    "flags": [ "CITY_START", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_field_medic",
+    "name": "Ruins Medic",
+    "points": 1,
+    "description": "You used to save lives in ambulances screaming through traffic.  Now you save lives in crumbling buildings with improvised tools.  You set up a makeshift clinic in the first safe room you could find.  Patients don't come often anymore.",
+    "allowed_locs": [
+      "sloc_hospital",
+      "sloc_shelter_a",
+      "sloc_shelter_b",
+      "sloc_shelter_c"
+    ],
+    "start_name": "Makeshift Clinic",
+    "professions": [ "roes_field_medic", "medic", "unemployed" ],
+    "flags": [ "CITY_START", "LONE_START" ]
+  },
+  {
+    "type": "scenario",
+    "id": "roes_wasteland_mechanic",
+    "name": "Wasteland Mechanic",
+    "points": 0,
+    "description": "Your garage survived the first wave mostly intact.  The tools are here, spare parts are scattered around, and there's even fuel if you know where to look.  If you can get a vehicle running, you might just make it out of the city alive.",
+    "allowed_locs": [
+      "sloc_garage"
+    ],
+    "start_name": "Old Garage",
+    "professions": [ "roes_wasteland_mechanic", "mechanic", "unemployed" ],
+    "flags": [ "CITY_START", "LONE_START" ]
   }
 ]

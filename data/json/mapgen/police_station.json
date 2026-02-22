@@ -90,7 +90,10 @@
           "failures": [ { "action": "shutdown" }, { "action": "alarm" }, { "action": "manhacks" } ]
         }
       },
-      "place_monsters": [ { "monster": "GROUP_POLICE", "x": [ 1, 22 ], "y": [ 0, 23 ], "repeat": 4 } ]
+      "place_monsters": [ { "monster": "GROUP_POLICE", "x": [ 1, 22 ], "y": [ 0, 23 ], "repeat": 4 } ],
+      "place_loot": [
+        { "group": "ruins_echo_police_cache", "x": [ 17, 21 ], "y": [ 12, 15 ], "chance": 35 }
+      ]
     }
   },
   {

@@ -34,7 +34,10 @@
       ],
       "palettes": [ "mil_surplus_intact", "parametrized_walls_palette" ],
       "terrain": { " ": "t_thconc_floor" },
-      "place_loot": [ { "group": "cash_register_random", "x": 4, "y": [ 4, 7 ] } ]
+      "place_loot": [
+        { "group": "cash_register_random", "x": 4, "y": [ 4, 7 ] },
+        { "group": "ruins_echo_military_cache", "x": [ 5, 19 ], "y": [ 12, 18 ], "chance": 30 }
+      ]
     }
   },
   {

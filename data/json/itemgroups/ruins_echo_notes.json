@@ -48,7 +48,7 @@
   {
     "type": "item_group",
     "id": "hidden_ammo_cache",
-    "subtype": "distribution",
+    "subtype": "collection",
     "entries": [
       { "item": "9mm", "prob": 50, "count": [ 10, 30 ] },
       { "item": "223", "prob": 30, "count": [ 8, 20 ] },
@@ -61,7 +61,7 @@
   {
     "type": "item_group",
     "id": "hidden_med_cache",
-    "subtype": "distribution",
+    "subtype": "collection",
     "entries": [
       { "item": "bandages", "prob": 80, "count": [ 2, 5 ] },
       { "item": "disinfectant", "prob": 60 },
@@ -75,7 +75,7 @@
   {
     "type": "item_group",
     "id": "hidden_food_cache",
-    "subtype": "distribution",
+    "subtype": "collection",
     "entries": [
       { "item": "can_beans", "prob": 80, "count": [ 1, 4 ] },
       { "item": "can_spam", "prob": 70, "count": [ 1, 3 ] },

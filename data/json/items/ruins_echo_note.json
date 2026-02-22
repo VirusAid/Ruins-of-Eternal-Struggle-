@@ -1,0 +1,26 @@
+[
+  {
+    "type": "ITEM",
+    "id": "ruins_echo_note_lore",
+    "copy-from": "survnote",
+    "name": { "str": "crumpled note", "str_pl": "crumpled notes" },
+    "description": "A crumpled piece of paper.  Someone's handwriting covers it — rushed, desperate.",
+    "snippet_category": "ruins_echo_lore"
+  },
+  {
+    "type": "ITEM",
+    "id": "ruins_echo_note_loot",
+    "copy-from": "survnote",
+    "name": { "str": "scrawled note", "str_pl": "scrawled notes" },
+    "description": "A note scrawled in a hurry.  Reads like someone wanted to leave directions for the next survivor.",
+    "snippet_category": "ruins_echo_loot"
+  },
+  {
+    "type": "ITEM",
+    "id": "ruins_echo_note_cache",
+    "copy-from": "survnote",
+    "name": { "str": "torn note", "str_pl": "torn notes" },
+    "description": "A torn piece of paper with sparse, careful handwriting.  Whoever wrote this wanted it to be found.",
+    "snippet_category": "ruins_echo_cache"
+  }
+]

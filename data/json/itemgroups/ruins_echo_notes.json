@@ -1,0 +1,104 @@
+[
+  {
+    "type": "item_group",
+    "id": "ruins_echo_notes",
+    "subtype": "distribution",
+    "entries": [
+      { "group": "ruins_echo_lore_group", "prob": 60 },
+      { "group": "ruins_echo_loot_group", "prob": 30 },
+      { "group": "ruins_echo_cache_group", "prob": 10 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_lore_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "ruins_echo_note_lore", "prob": 100 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_loot_group",
+    "subtype": "collection",
+    "entries": [
+      { "item": "ruins_echo_note_loot", "prob": 100 },
+      { "group": "ruins_echo_hidden_loot", "prob": 100 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_cache_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "ruins_echo_note_cache", "prob": 100 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_hidden_loot",
+    "subtype": "distribution",
+    "entries": [
+      { "group": "hidden_ammo_cache", "prob": 25 },
+      { "group": "hidden_med_cache", "prob": 25 },
+      { "group": "hidden_food_cache", "prob": 25 },
+      { "group": "hidden_weapon_cache", "prob": 25 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "hidden_ammo_cache",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "9mm", "prob": 50, "count": [ 10, 30 ] },
+      { "item": "223", "prob": 30, "count": [ 8, 20 ] },
+      { "item": "308", "prob": 20, "count": [ 5, 15 ] },
+      { "item": "shot_00", "prob": 40, "count": [ 6, 18 ] },
+      { "item": "44magnum", "prob": 15, "count": [ 6, 12 ] },
+      { "item": "45_acp", "prob": 25, "count": [ 8, 20 ] }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "hidden_med_cache",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "bandages", "prob": 80, "count": [ 2, 5 ] },
+      { "item": "disinfectant", "prob": 60 },
+      { "item": "aspirin", "prob": 70, "count": [ 2, 4 ] },
+      { "item": "antibiotics", "prob": 40, "count": [ 1, 3 ] },
+      { "item": "morphine", "prob": 15 },
+      { "item": "firstaid", "prob": 50 },
+      { "item": "arm_splint", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "hidden_food_cache",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "can_beans", "prob": 80, "count": [ 1, 4 ] },
+      { "item": "can_spam", "prob": 70, "count": [ 1, 3 ] },
+      { "item": "jerky", "prob": 60, "count": [ 2, 6 ] },
+      { "item": "crackers", "prob": 70, "count": [ 1, 3 ] },
+      { "item": "water_clean", "prob": 50 },
+      { "item": "instant_coffee", "prob": 30 },
+      { "item": "pemmican", "prob": 20, "count": [ 1, 3 ] }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "hidden_weapon_cache",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "knife_hunting", "prob": 50 },
+      { "item": "knife_combat", "prob": 30 },
+      { "item": "hatchet", "prob": 20 },
+      { "item": "machete", "prob": 15 },
+      { "item": "glock_19", "ammo-item": "9mm", "charges": 15, "prob": 10 },
+      { "item": "rossi_r92_357_16", "prob": 8 },
+      { "item": "bat_metal", "prob": 25 },
+      { "item": "crowbar", "prob": 40 }
+    ]
+  }
+]

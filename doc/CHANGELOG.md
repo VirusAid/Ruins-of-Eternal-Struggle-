@@ -4,6 +4,16 @@ Cataclysm: The Last Generation is forked from a March 2024 build of Cataclysm: D
 
 The changelog does not include backports from DDA. We will attempt to keep as current as possible with DDA and backport what we can so long as it fits our design goals, however as our two games diverge, fewer and fewer things will be backported.
 
+## Ruins of Eternal Struggle additions
+
+- Added **Ruins Echoes** system — atmospheric survivor notes found when searching furniture in ruins
+  - 40 unique Russian-language messages across three categories: lore (60%), loot hints (30%), cache hints (10%)
+  - Notes spawn with 12% chance in desks, nightstands, lockers, bedroom furniture, and military lockers
+  - Loot hint notes spawn together with a hidden item cache (ammo, medicine, food, or weapon)
+  - Cache hint notes hint at existing rare world locations (hospital bunker, military depot, police vault, mayor's safehouse)
+- Added 6 custom professions: Lone Wanderer, Last Guardian, Infected Survivor, Shadow Looter, Ruins Medic, Wasteland Mechanic
+- Added 6 custom scenarios with matching start locations and Russian localization
+
 ## Major changes
 
 > [!CAUTION]

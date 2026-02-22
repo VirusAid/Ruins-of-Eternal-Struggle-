@@ -817,6 +817,7 @@
       [ "umbrella", 5 ],
       [ "teleumbrella", 10 ],
       [ "survnote", 1 ],
+      { "group": "ruins_echo_notes", "prob": 12 },
       [ "clock", 2 ],
       { "item": "coffeemaker", "prob": 2 },
       [ "bubblewrap", 10 ],
@@ -861,7 +862,8 @@
       { "group": "used_usb_drives", "prob": 5, "contents-group": "SUS_efiles_office" },
       { "item": "cash_card", "prob": 5, "charges": [ 0, 50000 ] },
       [ "record_accounting", 1 ],
-      [ "money_strap_twenty", 1 ]
+      [ "money_strap_twenty", 1 ],
+      { "group": "ruins_echo_notes", "prob": 12 }
     ]
   },
   {

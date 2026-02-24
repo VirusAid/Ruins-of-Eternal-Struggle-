@@ -112,7 +112,6 @@ CXX_WARNINGS = \
   -Woverloaded-virtual \
   -Wsuggest-override \
   -Wzero-as-null-pointer-constant \
-  -Wno-unknown-warning-option \
   -Wno-dangling-reference \
   -Wno-c++20-compat
 ifeq ($(NATIVE), emscripten)
@@ -827,7 +826,8 @@ ifeq ($(TILES), 1)
         LDFLAGS := $(filter-out -lSDL2main,$(LDFLAGS))
       else
         ifeq ($(MSYS2),1)
-          LDFLAGS += -Wl,--start-group -lharfbuzz -lfreetype -Wl,--end-group -lgraphite2 -lpng -lz -ltiff -lbz2 -lglib-2.0 -llzma -lws2_32 -lwebp -ljpeg -luuid
+          LDFLAGS += $(shell $(PKG_CONFIG) --libs SDL2_image SDL2_ttf SDL2_mixer SDL2 --static 2>/dev/null)
+          LDFLAGS := $(filter-out -lSDL2main,$(LDFLAGS))
         else
           LDFLAGS += -lfreetype -lpng -lz -ljpeg -lbz2
         endif

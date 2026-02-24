@@ -351,8 +351,8 @@
         { "item": "harddrugs", "chance": 1 }
       ],
       "9": { "item": "shower", "chance": 30, "repeat": [ 1, 2 ] },
-      "@": { "item": "bed", "chance": 50 },
-      "¤": { "item": "nightstand", "chance": 20 },
+      "@": [ { "item": "bed", "chance": 50 }, { "item": "ruins_echo_notes", "chance": 15 } ],
+      "¤": [ { "item": "nightstand", "chance": 20 }, { "item": "ruins_echo_notes", "chance": 20 } ],
       "Z": { "item": "laundry_collection", "chance": 90 },
       "W": { "item": "laundry_collection", "chance": 40 },
       "z": [
@@ -895,7 +895,7 @@
         { "item": "harddrugs", "chance": 1 }
       ],
       "9": { "item": "shower", "chance": 33, "repeat": [ 2, 4 ] },
-      "@": [ { "item": "bed", "chance": 50 }, { "item": "laundry_collection", "chance": 20 } ],
+      "@": [ { "item": "bed", "chance": 50 }, { "item": "laundry_collection", "chance": 20 }, { "item": "ruins_echo_notes", "chance": 15 } ],
       " ": { "item": "untidy_floor_clutter", "chance": 3 }
     }
   },
@@ -1018,7 +1018,7 @@
         { "item": "harddrugs", "chance": 1 }
       ],
       "9": { "item": "shower", "chance": 33, "repeat": [ 2, 4 ] },
-      "@": [ { "item": "bed", "chance": 50 }, { "item": "laundry_collection", "chance": 20 } ],
+      "@": [ { "item": "bed", "chance": 50 }, { "item": "laundry_collection", "chance": 20 }, { "item": "ruins_echo_notes", "chance": 15 } ],
       " ": { "item": "messy_floor_clutter", "chance": 12 }
     }
   }

@@ -12,7 +12,8 @@
         "om_special": "o_airport",
         "reveal_radius": 6,
         "random": true,
-        "search_range": 90,
+        "search_range": 200,
+        "create_if_necessary": true,
         "min_distance": 15,
         "z": 0
       },

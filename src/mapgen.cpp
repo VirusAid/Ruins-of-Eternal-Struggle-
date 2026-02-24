@@ -2016,7 +2016,9 @@ class mapgen_value
                 std::string based_on = on->get( dat );
                 auto it = cases.find( based_on );
                 if( it == cases.end() ) {
-                    debugmsg( "switch does not handle case %s", based_on );
+                    if( based_on != "f_null" && !based_on.empty() ) {
+                        debugmsg( "switch does not handle case %s", based_on );
+                    }
                     return make_null_helper<Id> {}();
                 }
                 return Id( it->second );

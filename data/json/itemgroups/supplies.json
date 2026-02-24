@@ -817,7 +817,7 @@
       [ "umbrella", 5 ],
       [ "teleumbrella", 10 ],
       [ "survnote", 1 ],
-      { "group": "ruins_echo_notes", "prob": 12 },
+      { "group": "ruins_echo_notes", "prob": 18 },
       [ "clock", 2 ],
       { "item": "coffeemaker", "prob": 2 },
       [ "bubblewrap", 10 ],

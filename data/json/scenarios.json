@@ -1250,6 +1250,7 @@
     "forced_traits": [ "FLIMSY" ],
     "forbidden_traits": [ "TOUGH", "DISRESISTANT" ],
     "professions": [ "roes_infected_survivor", "unemployed" ],
+    "eoc": [ "roes_infected_survivor_eoc" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1266,6 +1267,7 @@
       "sloc_electronics"
     ],
     "start_name": "Dark Building",
+    "forced_traits": [ "NIGHTVISION" ],
     "professions": [ "roes_shadow_looter", "burglar", "unemployed" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },

@@ -285,7 +285,7 @@
       [ "joint", 1 ],
       [ "curler_hair", 10 ],
       [ "hairbrush", 5 ],
-      { "group": "ruins_echo_notes", "prob": 12 }
+      { "group": "ruins_echo_notes", "prob": 24 }
     ]
   },
   {
@@ -1059,7 +1059,7 @@
       { "item": "motorbike_boots", "prob": 5 },
       { "item": "bandana", "prob": 35 },
       { "item": "glasses_eye", "prob": 90 },
-      { "group": "ruins_echo_notes", "prob": 12 },
+      { "group": "ruins_echo_notes", "prob": 453 },
       { "group": "box_of_contact_lens_any", "prob": 6 },
       { "item": "bifocal_transition_contacts_weekly", "prob": 1, "count": 6 },
       { "item": "sunglasses", "prob": 90 },

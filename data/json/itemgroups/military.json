@@ -678,7 +678,7 @@
       { "item": "thermos", "prob": 15 },
       { "item": "kevlar_nape_protector", "prob": 5 },
       { "item": "counterweight_pouch", "prob": 5 },
-      { "group": "ruins_echo_notes", "prob": 12 }
+      { "group": "ruins_echo_notes", "prob": 156 }
     ]
   },
   {

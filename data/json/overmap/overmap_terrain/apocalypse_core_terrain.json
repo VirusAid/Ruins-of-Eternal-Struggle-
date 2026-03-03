@@ -5,7 +5,7 @@
     "name": "вход в Ядро",
     "sym": "^",
     "color": "light_red",
-    "see_cost": 2,
+    "see_cost": "high",
     "flags": [ "KNOWN_DOWN" ]
   },
   {
@@ -14,8 +14,8 @@
     "name": "Ядро Апокалипсиса: ур. -1",
     "sym": "A",
     "color": "red",
-    "see_cost": 5,
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+    "see_cost": "opaque",
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
@@ -23,8 +23,8 @@
     "name": "Ядро Апокалипсиса: ур. -2",
     "sym": "A",
     "color": "red",
-    "see_cost": 5,
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+    "see_cost": "opaque",
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
@@ -32,8 +32,8 @@
     "name": "Ядро Апокалипсиса: ур. -3",
     "sym": "A",
     "color": "red",
-    "see_cost": 5,
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+    "see_cost": "opaque",
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
@@ -41,8 +41,8 @@
     "name": "Ядро Апокалипсиса: ур. -4",
     "sym": "A",
     "color": "red",
-    "see_cost": 5,
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+    "see_cost": "opaque",
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
@@ -50,7 +50,7 @@
     "name": "Ядро Апокалипсиса: ур. -5 «Ядро»",
     "sym": "A",
     "color": "light_red",
-    "see_cost": 8,
-    "flags": [ "KNOWN_UP", "EMPTY" ]
+    "see_cost": "opaque",
+    "flags": [ "KNOWN_UP" ]
   }
 ]

@@ -4,9 +4,10 @@
     "id": "ruins_echo_notes",
     "subtype": "distribution",
     "entries": [
-      { "group": "ruins_echo_lore_group", "prob": 60 },
-      { "group": "ruins_echo_loot_group", "prob": 30 },
-      { "group": "ruins_echo_cache_group", "prob": 10 }
+      { "group": "ruins_echo_lore_group", "prob": 55 },
+      { "group": "ruins_echo_loot_group", "prob": 27 },
+      { "group": "ruins_echo_cache_group", "prob": 9 },
+      { "group": "ruins_echo_apoc_group", "prob": 9 }
     ]
   },
   {
@@ -32,6 +33,14 @@
     "subtype": "distribution",
     "entries": [
       { "item": "ruins_echo_note_cache", "prob": 100 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_apoc_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "ruins_echo_note_apoc", "prob": 100 }
     ]
   },
   {

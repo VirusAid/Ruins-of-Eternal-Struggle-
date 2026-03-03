@@ -1,0 +1,102 @@
+[
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_boss_brute",
+    "copy-from": "mon_zombie_brute",
+    "name": { "str": "Страж-1", "str_pl": "Стражи-1" },
+    "description": "Первый страж Ядра. Массивный мутировавший труп, усиленный радиацией подземелья.",
+    "hp": 300,
+    "speed": 90,
+    "special_attacks": [
+      { "type": "monster_attack", "id": "tear", "min_mul": 1.5, "max_mul": 2.5, "cooldown": 1 }
+    ],
+    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_boss_hulk",
+    "copy-from": "mon_zombie_hulk",
+    "name": { "str": "Страж-2", "str_pl": "Стражи-2" },
+    "description": "Второй страж Ядра. Гигантский зомби-куль, его удары сотрясают стены.",
+    "hp": 400,
+    "speed": 75,
+    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_boss_necromancer",
+    "copy-from": "mon_zombie_necromancer",
+    "name": { "str": "Страж-3", "str_pl": "Стражи-3" },
+    "description": "Третий страж Ядра. Некромантическая аномалия Ядра — постоянно призывает подкрепление.",
+    "hp": 350,
+    "speed": 100,
+    "special_attacks": [
+      { "type": "CALL_BACKUP" }
+    ],
+    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_boss_master",
+    "copy-from": "mon_zombie_master",
+    "name": { "str": "Страж-4", "str_pl": "Стражи-4" },
+    "description": "Четвёртый страж Ядра. Управляет разумом выживших и подчинённых зомби.",
+    "hp": 450,
+    "speed": 110,
+    "special_attacks": [
+      { "type": "CALL_BACKUP" },
+      { "type": "MON_UPGRADE", "cooldown": 5 }
+    ],
+    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "PUSH_MON" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_boss_titan",
+    "copy-from": "mon_zombie_hulk",
+    "name": { "str": "Страж-5 «Титан»", "str_pl": "Стражи-5 «Титан»" },
+    "description": "Финальный страж Ядра Апокалипсиса. Живое воплощение конца света. Уничтожить любой ценой.",
+    "hp": 600,
+    "speed": 80,
+    "melee_skill": 8,
+    "melee_dice": 4,
+    "melee_sides": 10,
+    "armor_cut": 20,
+    "armor_bash": 20,
+    "special_attacks": [
+      { "type": "monster_attack", "id": "tear", "min_mul": 2.0, "max_mul": 4.0, "cooldown": 1 },
+      { "type": "CALL_BACKUP" }
+    ],
+    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS", "REVIVES_HEALTHY" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_zombie",
+    "copy-from": "mon_zombie",
+    "name": { "str": "заражённый Ядра", "str_pl": "заражённые Ядра" },
+    "description": "Зомби, поглощённый радиацией Ядра. Двигается быстрее обычного.",
+    "hp": 80,
+    "speed": 100,
+    "bash_skill": 3
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_zombie_rad",
+    "copy-from": "mon_zombie_smoker",
+    "name": { "str": "радиоактивный труп", "str_pl": "радиоактивные трупы" },
+    "description": "Зомби, насыщенный радиацией. При приближении излучает смертоносное поле.",
+    "hp": 60,
+    "speed": 95,
+    "special_attacks": [
+      { "type": "RADIATE", "cooldown": 5 }
+    ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_apoc_zombie_soldier",
+    "copy-from": "mon_zombie_soldier_9mm",
+    "name": { "str": "часовой Ядра", "str_pl": "часовые Ядра" },
+    "description": "Бывший военный, мутировавший под воздействием Ядра. Сохранил боевые рефлексы.",
+    "hp": 120,
+    "speed": 105
+  }
+]

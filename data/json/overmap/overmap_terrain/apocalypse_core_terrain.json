@@ -1,0 +1,56 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_entry",
+    "name": "вход в Ядро",
+    "sym": "^",
+    "color": "light_red",
+    "see_cost": 2,
+    "flags": [ "KNOWN_DOWN" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_l1",
+    "name": "Ядро Апокалипсиса: ур. -1",
+    "sym": "A",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_l2",
+    "name": "Ядро Апокалипсиса: ур. -2",
+    "sym": "A",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_l3",
+    "name": "Ядро Апокалипсиса: ур. -3",
+    "sym": "A",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_l4",
+    "name": "Ядро Апокалипсиса: ур. -4",
+    "sym": "A",
+    "color": "red",
+    "see_cost": 5,
+    "flags": [ "KNOWN_DOWN", "KNOWN_UP", "EMPTY" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_core_l5",
+    "name": "Ядро Апокалипсиса: ур. -5 «Ядро»",
+    "sym": "A",
+    "color": "light_red",
+    "see_cost": 8,
+    "flags": [ "KNOWN_UP", "EMPTY" ]
+  }
+]

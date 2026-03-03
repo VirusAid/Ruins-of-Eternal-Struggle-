@@ -22,5 +22,13 @@
     "name": { "str": "torn note", "str_pl": "torn notes" },
     "description": "A torn piece of paper with sparse, careful handwriting.  Whoever wrote this wanted it to be found.",
     "snippet_category": "ruins_echo_cache"
+  },
+  {
+    "type": "ITEM",
+    "id": "ruins_echo_note_apoc",
+    "copy-from": "survnote",
+    "name": { "str": "странная записка", "str_pl": "странные записки" },
+    "description": "Записка с координатами и расплывчатыми указаниями.  Тот, кто её писал, явно что-то видел.  Что-то под землёй.",
+    "snippet_category": "apoc_core_coordinates"
   }
 ]

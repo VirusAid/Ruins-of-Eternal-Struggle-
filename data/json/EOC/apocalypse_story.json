@@ -1,0 +1,130 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_ruins_crown_passive",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_worn": "ruins_crown" },
+    "effect": [
+      { "u_add_effect": "ruins_crown_active", "duration": "1 h" },
+      { "u_message": "Корона Руин: +20% скорость, +20% обнаружение тайников.", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_read_data_disk",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_worn": "nothing" },
+    "effect": [
+      {
+        "u_message": "ДИСК ДАННЫХ — ЯДРО АПОКАЛИПСИСА, УРОВЕНЬ ДОСТУПА 5.\n\nЗапись #001 — Д-р Фёдоров, день 12:\nЭксперимент превосходит ожидания.  Субъекты стабилизируются после облучения.\nЯдро генерирует поле — природа пока неизвестна.\n\nЗапись #047 — Д-р Архипова, день 34:\nМы потеряли Блок Б.  Стражи игнорируют приказы.  Эвакуация объявлена,\nно лифт на -5 не отвечает.  Если вы читаете это — нас уже нет.\n\nЗапись #089 — неизвестный, день 61:\nЯдро живое.  Оно принимает решения.  Уничтожьте его или станьте частью.\nЭто единственные два выхода.  БЕЗ ИСКЛЮЧЕНИЙ.",
+        "popup": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_enter_level1",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_add_effect": "apoc_radiation", "duration": "10 m", "intensity": 1 },
+      { "u_message": "Уровень -1: Подпрелье.  Радиационный фон повышен.  Стражи активны.", "popup": true },
+      { "u_message": "Вы чувствуете давление на барабанные перепонки.", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_enter_level2",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_add_effect": "apoc_radiation", "duration": "15 m", "intensity": 1 },
+      { "u_add_effect": "apoc_hallucination", "duration": "5 m", "intensity": 1 },
+      { "u_message": "Уровень -2: Лаборатории.  Здесь проводились эксперименты над людьми.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_enter_level3",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_add_effect": "apoc_radiation", "duration": "20 m", "intensity": 2 },
+      { "u_add_effect": "apoc_hallucination", "duration": "10 m", "intensity": 1 },
+      { "u_message": "Уровень -3: Бараки.  Запах крови.  Кто-то нацарапал на стене: 'УХОДИ'.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_enter_level4",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_add_effect": "apoc_radiation", "duration": "25 m", "intensity": 2 },
+      { "u_add_effect": "apoc_hallucination", "duration": "15 m", "intensity": 2 },
+      { "u_add_effect": "apoc_core_curse", "duration": "1 d" },
+      { "u_message": "Уровень -4: Командный центр.  Ядро близко.  Вы слышите его дыхание.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_enter_level5",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_add_effect": "apoc_radiation", "duration": "30 m", "intensity": 3 },
+      { "u_add_effect": "apoc_hallucination", "duration": "20 m", "intensity": 2 },
+      { "u_add_effect": "apoc_mutation_zone", "duration": "10 m" },
+      { "u_message": "Уровень -5: Ядро Апокалипсиса.\n\nВы стоите перед истоком.  Здесь заканчивается мир и начинается что-то другое.\nУничтожить Ядро — спасти остатки человечества.\nПоглотить Ядро — получить силу, но заплатить собой.\n\nВыбор за вами.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_good_ending",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_var": "apoc_finale_choice", "value": "destroy" },
+    "effect": [
+      {
+        "u_message": "ВЫ УНИЧТОЖИЛИ ЯДРО.\n\nВзрыв пронзил все пять уровней.  Когда пыль осела — тишина.\nВпервые за долгое время — настоящая тишина.\n\nКоролева Руин мертва.  Мир не спасён — но у него есть шанс.\nВы выходите на поверхность.  Солнце светит.",
+        "popup": true
+      },
+      { "u_add_effect": "ruins_crown_active", "duration": "999 d" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_bad_ending",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_var": "apoc_finale_choice", "value": "absorb" },
+    "effect": [
+      {
+        "u_message": "ВЫ ПОГЛОТИЛИ ЯДРО.\n\nСила затопила вас.  Вы чувствуете всё — каждый мертвец в радиусе километра.\nЯдро не умерло.  Оно переехало.\n\nТеперь вы — новое Ядро.  Руины приветствуют своего нового короля.",
+        "popup": true
+      },
+      { "u_add_effect": "apoc_radiation", "duration": "999 d", "intensity": 1 },
+      { "u_add_effect": "ruins_crown_active", "duration": "999 d" },
+      { "u_add_effect": "apoc_mutation_zone", "duration": "999 d" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_checkpoint_respawn",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      { "u_message": "Чекпоинт: лут восстановлен, аптечка доступна.", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "apocalypse_story",
+    "eoc_type": "ACTIVATION",
+    "condition": true,
+    "effect": [
+      {
+        "u_message": "ЯДРО АПОКАЛИПСИСА — ИСТОРИЯ\n\nВ последние месяцы перед катастрофой правительство запустило секретный проект.\nЦель — создать иммунитет к зомби-вирусу с помощью контролируемой мутации.\n\nПроект провалился.  Ядро не создало иммунитет.  Оно создало нечто другое.\n\nПять уровней под землёй хранят ответы.\nВопрос — хотите ли вы их знать?",
+        "popup": true
+      }
+    ]
+  }
+]

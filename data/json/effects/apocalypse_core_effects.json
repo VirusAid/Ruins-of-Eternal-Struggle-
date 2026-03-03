@@ -5,21 +5,17 @@
     "name": [ { "str": "Радиация Ядра" } ],
     "desc": [ { "str": "Вы чувствуете тепло изнутри.  Клетки разрушаются." } ],
     "max_intensity": 3,
+    "rating": "bad",
     "apply_message": "Вы входите в зону радиационного заражения Ядра.",
     "remove_message": "Радиационный фон снизился.",
-    "apply_effect": [
-      { "frequency": 100, "intensity_requirement": 1, "effects": [ { "id": "irradiated", "duration": "1 m", "intensity": 1 } ] }
+    "miss_messages": [
+      [ "Радиация Ядра жжёт изнутри.", 1 ],
+      [ "Вы чувствуете, как клетки гибнут под воздействием радиации.", 1 ]
     ],
-    "tick_effect": [
-      { "frequency": 100, "intensity_requirement": 1, "effects": [
-        { "id": "apoc_radiation", "duration": "30 s", "intensity": 1 }
-      ] },
-      { "frequency": 10, "intensity_requirement": 2,
-        "Miss_msg_u": "Радиация сжигает изнутри!", "effects": [
-          { "id": "irradiated", "duration": "2 m", "intensity": 2 }
-        ]
-      }
-    ],
+    "base_mods": {
+      "str_mod": [ 0, -1 ],
+      "per_mod": [ 0, -1 ]
+    },
     "flags": [ "NO_BREATHING" ]
   },
   {
@@ -28,18 +24,16 @@
     "name": [ { "str": "Галлюцинации Ядра" } ],
     "desc": [ { "str": "Реальность искажается.  Вы видите то, чего нет." } ],
     "max_intensity": 2,
+    "rating": "bad",
     "apply_message": "Мир начинает плыть.  Стены движутся.",
     "remove_message": "Галлюцинации рассеялись.",
-    "tick_effect": [
-      { "frequency": 50, "intensity_requirement": 1,
-        "Miss_msg_u": "Вы слышите голоса в стенах.",
-        "effects": []
-      },
-      { "frequency": 20, "intensity_requirement": 2,
-        "Miss_msg_u": "Тени двигаются! Это не настоящее.",
-        "effects": []
-      }
-    ]
+    "miss_messages": [
+      [ "Вы слышите голоса в стенах.", 2 ],
+      [ "Тени двигаются! Это не настоящее.", 1 ]
+    ],
+    "base_mods": {
+      "per_mod": [ 0, -2 ]
+    }
   },
   {
     "type": "effect_type",
@@ -47,13 +41,11 @@
     "name": [ { "str": "Зона мутации" } ],
     "desc": [ { "str": "Ваш организм нестабилен.  Мутация неизбежна." } ],
     "max_intensity": 1,
+    "rating": "bad",
     "apply_message": "Вы чувствуете, как меняется ваше тело...",
     "remove_message": "Мутация завершена.",
-    "tick_effect": [
-      { "frequency": 300, "intensity_requirement": 1,
-        "Miss_msg_u": "Ваше тело содрогается.",
-        "effects": []
-      }
+    "miss_messages": [
+      [ "Ваше тело содрогается.", 1 ]
     ]
   },
   {
@@ -62,13 +54,11 @@
     "name": [ { "str": "Проклятие Ядра" } ],
     "desc": [ { "str": "Ядро отмечает вас.  Вы не можете просто уйти." } ],
     "max_intensity": 1,
+    "rating": "bad",
     "apply_message": "Что-то следует за вами с уровней Ядра.",
     "remove_message": "Проклятие снято.",
-    "tick_effect": [
-      { "frequency": 600, "intensity_requirement": 1,
-        "Miss_msg_u": "Вы слышите шаги там, где никого нет.",
-        "effects": []
-      }
+    "miss_messages": [
+      [ "Вы слышите шаги там, где никого нет.", 1 ]
     ]
   },
   {
@@ -77,6 +67,7 @@
     "name": [ { "str": "Корона Руин: активна" } ],
     "desc": [ { "str": "Корона усиливает вашу связь с руинами.  Тайники видны яснее." } ],
     "max_intensity": 1,
+    "rating": "good",
     "apply_message": "Корона Руин мерцает.  Вы ощущаете близость скрытого.",
     "remove_message": "Эффект Короны Руин угас.",
     "base_mods": {

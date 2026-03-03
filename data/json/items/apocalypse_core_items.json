@@ -127,12 +127,14 @@
     ],
     "symbol": "[",
     "color": "yellow",
-    "covers": [
-      "head"
-    ],
-    "coverage": 80,
-    "encumbrance": 5,
     "warmth": 5,
+    "armor": [
+      {
+        "covers": [ "head" ],
+        "coverage": 80,
+        "encumbrance": 5
+      }
+    ],
     "flags": [
       "HELMET_COMPAT",
       "VARSIZE"

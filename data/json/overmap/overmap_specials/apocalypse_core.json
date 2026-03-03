@@ -19,6 +19,6 @@
     "flags": [ "MAN_MADE", "GLOBALLY_UNIQUE" ],
     "rotate": false,
     "city_distance": [ 5, 999 ],
-    "city_size": [ 0, 999 ]
+    "city_sizes": [ 0, 999 ]
   }
 ]

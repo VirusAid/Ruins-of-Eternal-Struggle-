@@ -8,7 +8,7 @@
     "hp": 300,
     "speed": 90,
     "special_attacks": [
-      { "type": "monster_attack", "id": "tear", "min_mul": 1.5, "max_mul": 2.5, "cooldown": 1 }
+      { "type": "monster_attack", "attack_type": "melee", "id": "apoc_brute_swipe", "cooldown": 3, "damage_max_instance": [ { "damage_type": "bash", "amount": 20, "armor_multiplier": 0.5 } ] }
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES" ]
   },
@@ -45,7 +45,7 @@
     "speed": 110,
     "special_attacks": [
       { "type": "CALL_BACKUP" },
-      { "type": "MON_UPGRADE", "cooldown": 5 }
+      [ "UPGRADE", 300 ]
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "PUSH_MON" ]
   },
@@ -63,7 +63,7 @@
     "armor_cut": 20,
     "armor_bash": 20,
     "special_attacks": [
-      { "type": "monster_attack", "id": "tear", "min_mul": 2.0, "max_mul": 4.0, "cooldown": 1 },
+      { "type": "monster_attack", "attack_type": "melee", "id": "apoc_titan_smash", "cooldown": 2, "damage_max_instance": [ { "damage_type": "bash", "amount": 40, "armor_multiplier": 0.3 } ] },
       { "type": "CALL_BACKUP" }
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS", "REVIVES_HEALTHY" ]
@@ -87,7 +87,7 @@
     "hp": 60,
     "speed": 95,
     "special_attacks": [
-      { "type": "RADIATE", "cooldown": 5 }
+      [ "TAZER", 5 ]
     ]
   },
   {

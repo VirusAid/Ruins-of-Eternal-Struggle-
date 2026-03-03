@@ -28,7 +28,6 @@
     "dispersion": 60,
     "durability": 9,
     "loudness": 28,
-    "clip_size": 30,
     "reload": 350,
     "valid_mod_locations": [
       [ "bore", 1 ],

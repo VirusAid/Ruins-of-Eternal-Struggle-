@@ -18,7 +18,7 @@
     "occurrences": [ 1, 1 ],
     "flags": [ "MAN_MADE", "GLOBALLY_UNIQUE" ],
     "rotate": false,
-    "city_distance": 5,
+    "city_distance": [ 5, 999 ],
     "city_size": [ 0, 999 ]
   }
 ]

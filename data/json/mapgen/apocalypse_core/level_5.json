@@ -1,7 +1,7 @@
 [
   {
     "type": "mapgen",
-    "om_terrain": "apoc_core_l5_north",
+    "om_terrain": "apoc_core_l5",
     "weight": 1000,
     "object": {
       "fill_ter": "t_floor",

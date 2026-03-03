@@ -4,21 +4,87 @@
     "id": "apoc_core",
     "subtype": "fixed",
     "overmaps": [
-      { "point": [ 0, 0, 0 ], "overmap": "apoc_core_entry_north" },
-      { "point": [ 0, 0, -1 ], "overmap": "apoc_core_l1_north" },
-      { "point": [ 0, 0, -2 ], "overmap": "apoc_core_l2_north" },
-      { "point": [ 0, 0, -3 ], "overmap": "apoc_core_l3_north" },
-      { "point": [ 0, 0, -4 ], "overmap": "apoc_core_l4_north" },
-      { "point": [ 0, 0, -5 ], "overmap": "apoc_core_l5_north" }
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "overmap": "apoc_core_entry"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -1
+        ],
+        "overmap": "apoc_core_l1"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -2
+        ],
+        "overmap": "apoc_core_l2"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -3
+        ],
+        "overmap": "apoc_core_l3"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -4
+        ],
+        "overmap": "apoc_core_l4"
+      },
+      {
+        "point": [
+          0,
+          0,
+          -5
+        ],
+        "overmap": "apoc_core_l5"
+      }
     ],
     "connections": [
-      { "point": [ 0, 0, 0 ], "terrain": "road", "connection": "road" }
+      {
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "terrain": "road",
+        "connection": "road"
+      }
     ],
-    "locations": [ "wilderness", "field", "forest_edge" ],
-    "occurrences": [ 1, 1 ],
-    "flags": [ "MAN_MADE", "GLOBALLY_UNIQUE" ],
+    "locations": [
+      "wilderness",
+      "field",
+      "forest_edge"
+    ],
+    "occurrences": [
+      1,
+      1
+    ],
+    "flags": [
+      "MAN_MADE",
+      "GLOBALLY_UNIQUE"
+    ],
     "rotate": false,
-    "city_distance": [ 5, -1 ],
-    "city_sizes": [ 0, -1 ]
+    "city_distance": [
+      5,
+      -1
+    ],
+    "city_sizes": [
+      0,
+      -1
+    ]
   }
 ]

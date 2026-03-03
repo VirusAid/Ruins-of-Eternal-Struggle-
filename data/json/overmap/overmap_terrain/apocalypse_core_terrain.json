@@ -6,7 +6,9 @@
     "sym": "^",
     "color": "light_red",
     "see_cost": "high",
-    "flags": [ "KNOWN_DOWN" ]
+    "flags": [
+      "KNOWN_DOWN"
+    ]
   },
   {
     "type": "overmap_terrain",
@@ -15,7 +17,10 @@
     "sym": "A",
     "color": "red",
     "see_cost": "opaque",
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
+    "flags": [
+      "KNOWN_DOWN",
+      "KNOWN_UP"
+    ]
   },
   {
     "type": "overmap_terrain",
@@ -24,7 +29,10 @@
     "sym": "A",
     "color": "red",
     "see_cost": "opaque",
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
+    "flags": [
+      "KNOWN_DOWN",
+      "KNOWN_UP"
+    ]
   },
   {
     "type": "overmap_terrain",
@@ -33,7 +41,10 @@
     "sym": "A",
     "color": "red",
     "see_cost": "opaque",
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
+    "flags": [
+      "KNOWN_DOWN",
+      "KNOWN_UP"
+    ]
   },
   {
     "type": "overmap_terrain",
@@ -42,7 +53,10 @@
     "sym": "A",
     "color": "red",
     "see_cost": "opaque",
-    "flags": [ "KNOWN_DOWN", "KNOWN_UP" ]
+    "flags": [
+      "KNOWN_DOWN",
+      "KNOWN_UP"
+    ]
   },
   {
     "type": "overmap_terrain",
@@ -51,6 +65,8 @@
     "sym": "A",
     "color": "light_red",
     "see_cost": "opaque",
-    "flags": [ "KNOWN_UP" ]
+    "flags": [
+      "KNOWN_UP"
+    ]
   }
 ]

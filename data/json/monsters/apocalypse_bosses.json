@@ -25,7 +25,7 @@
   {
     "type": "MONSTER",
     "id": "mon_apoc_boss_necromancer",
-    "copy-from": "mon_zombie_necromancer",
+    "copy-from": "mon_zombie_master",
     "name": { "str": "Страж-3", "str_pl": "Стражи-3" },
     "description": "Третий страж Ядра. Некромантическая аномалия Ядра — постоянно призывает подкрепление.",
     "hp": 350,
@@ -93,7 +93,7 @@
   {
     "type": "MONSTER",
     "id": "mon_apoc_zombie_soldier",
-    "copy-from": "mon_zombie_soldier_9mm",
+    "copy-from": "mon_zombie_soldier",
     "name": { "str": "часовой Ядра", "str_pl": "часовые Ядра" },
     "description": "Бывший военный, мутировавший под воздействием Ядра. Сохранил боевые рефлексы.",
     "hp": 120,

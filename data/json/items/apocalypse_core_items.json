@@ -16,7 +16,7 @@
     "dispersion": 60,
     "durability": 9,
     "shot_spread": 30,
-    "ammo_type": "556",
+    "ammo_type": "223",
     "clip_size": 30,
     "reload": 350,
     "loudness": 28,
@@ -27,7 +27,7 @@
     "pocket_data": [
       {
         "pocket_type": "MAGAZINE",
-        "ammo_restriction": { "556": 30 }
+        "ammo_restriction": { "223": 30 }
       }
     ]
   },

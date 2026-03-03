@@ -38,11 +38,12 @@
         "+": "t_door_c",
         "T": "t_thconc_floor",
         "X": "t_thconc_floor",
-        "c": "t_console"
+        "c": "t_thconc_floor"
       },
       "furniture": {
         "T": "f_table",
-        "X": "f_rubble"
+        "X": "f_rubble",
+        "c": "f_console"
       },
       "place_monsters": [
         { "monster": "mon_apoc_zombie_rad", "x": [ 1, 22 ], "y": [ 1, 12 ], "density": 0.8 },

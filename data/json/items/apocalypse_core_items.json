@@ -1,6 +1,7 @@
 [
   {
-    "type": "GUN",
+    "type": "ITEM",
+    "subtypes": [ "GUN" ],
     "id": "rifle_apocalypse",
     "name": {
       "str": "«Апокалипсис»",
@@ -62,7 +63,8 @@
     ]
   },
   {
-    "type": "AMMO",
+    "type": "ITEM",
+    "subtypes": [ "AMMO" ],
     "id": "apoc_energy_cell",
     "name": {
       "str": "энергетический патрон Ядра",
@@ -84,7 +86,8 @@
     "color": "light_cyan"
   },
   {
-    "type": "COMESTIBLE",
+    "type": "ITEM",
+    "subtypes": [ "COMESTIBLE" ],
     "id": "apoc_mutation_serum",
     "name": {
       "str": "сыворотка мутации Ядра",
@@ -118,7 +121,8 @@
     }
   },
   {
-    "type": "ARMOR",
+    "type": "ITEM",
+    "subtypes": [ "ARMOR" ],
     "id": "ruins_crown",
     "name": {
       "str": "Корона Руин",
@@ -152,7 +156,7 @@
     }
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "apoc_core_keycard",
     "name": {
       "str": "карточка доступа Ядра",
@@ -169,7 +173,7 @@
     "color": "light_red"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "apoc_core_data_disk",
     "name": {
       "str": "диск данных Ядра",
@@ -194,7 +198,7 @@
     }
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "apoc_checkpoint_kit",
     "name": {
       "str": "аварийный набор чекпоинта",

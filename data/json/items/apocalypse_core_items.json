@@ -2,7 +2,10 @@
   {
     "type": "GUN",
     "id": "rifle_apocalypse",
-    "name": { "str": "«Апокалипсис»", "str_pl": "«Апокалипсис»" },
+    "name": {
+      "str": "«Апокалипсис»",
+      "str_pl": "«Апокалипсис»"
+    },
     "description": "Экспериментальная штурмовая винтовка, разработанная учёными Ядра.  Питается от специальных батарей, стреляет сверхскоростными снарядами.  Оружие редкое — берегите.",
     "weight": "4300 g",
     "volume": "3400 ml",
@@ -10,9 +13,16 @@
     "bashing": 12,
     "symbol": "(",
     "color": "light_cyan",
-    "material": [ "steel", "plastic" ],
+    "material": [
+      "steel",
+      "plastic"
+    ],
     "range": 80,
-    "ranged_damage": { "damage_type": "bullet", "amount": 65, "armor_penetration": 15 },
+    "ranged_damage": {
+      "damage_type": "bullet",
+      "amount": 65,
+      "armor_penetration": 15
+    },
     "dispersion": 60,
     "durability": 9,
     "shot_spread": 30,
@@ -21,26 +31,53 @@
     "reload": 350,
     "loudness": 28,
     "valid_mod_locations": [
-      [ "bore", 1 ], [ "grip", 1 ], [ "muzzle", 1 ], [ "rail", 1 ], [ "sights", 1 ], [ "stock", 1 ]
+      [
+        "bore",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "stock",
+        1
+      ]
     ],
-    "flags": [ "RELOAD_ONE", "NO_UNLOAD" ],
-    "pocket_data": [
-      {
-        "pocket_type": "MAGAZINE",
-        "ammo_restriction": { "223": 30 }
-      }
+    "flags": [
+      "RELOAD_ONE",
+      "NO_UNLOAD"
     ]
   },
   {
     "type": "AMMO",
     "id": "apoc_energy_cell",
-    "name": { "str": "энергетический патрон Ядра", "str_pl": "энергетические патроны Ядра" },
+    "name": {
+      "str": "энергетический патрон Ядра",
+      "str_pl": "энергетические патроны Ядра"
+    },
     "description": "Специальный боеприпас для оружия Ядра.  Содержит концентрированную радиоактивную плазму.",
     "copy-from": "556",
     "weight": "8 g",
     "volume": "250 ml",
     "count": 30,
-    "damage": { "damage_type": "bullet", "amount": 65, "armor_penetration": 15 },
+    "damage": {
+      "damage_type": "bullet",
+      "amount": 65,
+      "armor_penetration": 15
+    },
     "dispersion": 30,
     "price": "2500 USD",
     "symbol": "=",
@@ -49,12 +86,17 @@
   {
     "type": "COMESTIBLE",
     "id": "apoc_mutation_serum",
-    "name": { "str": "сыворотка мутации Ядра", "str_pl": "сыворотки мутации Ядра" },
+    "name": {
+      "str": "сыворотка мутации Ядра",
+      "str_pl": "сыворотки мутации Ядра"
+    },
     "description": "Нестабильная сыворотка, синтезированная в лабораториях Ядра.  При приёме вызывает случайную мутацию.  Эффект непредсказуем — от регенерации до необратимых изменений.",
     "weight": "250 g",
     "volume": "250 ml",
     "price": "5000 USD",
-    "material": [ "powder" ],
+    "material": [
+      "powder"
+    ],
     "symbol": "!",
     "color": "green",
     "comestible_type": "DRINK",
@@ -64,72 +106,107 @@
     "use_action": {
       "type": "consume_drug",
       "effects": [
-        { "id": "apoc_mutation_zone", "duration": "5 m" },
-        { "id": "apoc_hallucination", "duration": "15 m" }
-      ],
-      "charges_needed": { "POWER": 0 }
+        {
+          "id": "apoc_mutation_zone",
+          "duration": "5 m"
+        },
+        {
+          "id": "apoc_hallucination",
+          "duration": "15 m"
+        }
+      ]
     }
   },
   {
     "type": "ARMOR",
     "id": "ruins_crown",
-    "name": { "str": "Корона Руин", "str_pl": "Короны Руин" },
+    "name": {
+      "str": "Корона Руин",
+      "str_pl": "Короны Руин"
+    },
     "description": "Странный венец, обнаруженный на последнем уровне Ядра Апокалипсиса.  Излучает слабое свечение.  Носящий её чувствует притяжение к тайнам руин.  +20% скорости исследования, +20% к обнаружению тайников.",
     "weight": "800 g",
     "volume": "1250 ml",
     "price": "20000 USD",
-    "material": [ "steel" ],
+    "material": [
+      "steel"
+    ],
     "symbol": "[",
     "color": "yellow",
-    "covers": [ "head" ],
+    "covers": [
+      "head"
+    ],
     "coverage": 80,
     "encumbrance": 5,
     "warmth": 5,
-    "flags": [ "HELMET_COMPAT", "VARSIZE" ],
+    "flags": [
+      "HELMET_COMPAT",
+      "VARSIZE"
+    ],
     "use_action": {
       "type": "effect_on_conditions",
       "description": "Вы чувствуете силу Руин...",
-      "effect_on_conditions": [ "eoc_ruins_crown_passive" ]
+      "effect_on_conditions": [
+        "eoc_ruins_crown_passive"
+      ]
     }
   },
   {
     "type": "GENERIC",
     "id": "apoc_core_keycard",
-    "name": { "str": "карточка доступа Ядра", "str_pl": "карточки доступа Ядра" },
+    "name": {
+      "str": "карточка доступа Ядра",
+      "str_pl": "карточки доступа Ядра"
+    },
     "description": "Электронный пропуск, открывающий двери на нижние уровни Ядра Апокалипсиса.  Цифры истёрты.",
     "weight": "15 g",
     "volume": "25 ml",
     "price": "0 USD",
-    "material": [ "plastic" ],
+    "material": [
+      "plastic"
+    ],
     "symbol": ";",
     "color": "light_red"
   },
   {
     "type": "GENERIC",
     "id": "apoc_core_data_disk",
-    "name": { "str": "диск данных Ядра", "str_pl": "диски данных Ядра" },
+    "name": {
+      "str": "диск данных Ядра",
+      "str_pl": "диски данных Ядра"
+    },
     "description": "Жёсткий диск из лаборатории Ядра.  Содержит засекреченные материалы о проекте «Апокалипсис» — записи учёных, протоколы испытаний, координаты.  Применить — прочитать.",
     "weight": "120 g",
     "volume": "200 ml",
     "price": "0 USD",
-    "material": [ "plastic", "steel" ],
+    "material": [
+      "plastic",
+      "steel"
+    ],
     "symbol": ";",
     "color": "cyan",
     "use_action": {
       "type": "effect_on_conditions",
       "description": "Вы вставляете диск в устройство...",
-      "effect_on_conditions": [ "eoc_read_data_disk" ]
+      "effect_on_conditions": [
+        "eoc_read_data_disk"
+      ]
     }
   },
   {
     "type": "GENERIC",
     "id": "apoc_checkpoint_kit",
-    "name": { "str": "аварийный набор чекпоинта", "str_pl": "аварийные наборы чекпоинта" },
+    "name": {
+      "str": "аварийный набор чекпоинта",
+      "str_pl": "аварийные наборы чекпоинта"
+    },
     "description": "Герметичный контейнер, оставленный у лифта.  Содержит базовые припасы для выживших.",
     "weight": "3000 g",
     "volume": "5000 ml",
     "price": "500 USD",
-    "material": [ "plastic" ],
+    "material": [
+      "plastic"
+    ],
     "symbol": "=",
     "color": "green",
     "use_action": {

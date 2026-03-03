@@ -3,7 +3,7 @@
     "type": "overmap_terrain",
     "id": "apoc_core_entry",
     "name": "вход в Ядро",
-    "sym": "^",
+    "sym": "X",
     "color": "light_red",
     "see_cost": "high",
     "flags": [

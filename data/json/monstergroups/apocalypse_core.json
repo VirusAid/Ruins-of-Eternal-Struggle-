@@ -16,7 +16,7 @@
         "freq": 20
       }
     ],
-    "id": "apoc_core_level1"
+    "name": "apoc_core_level1"
   },
   {
     "type": "monstergroup",
@@ -39,7 +39,7 @@
         "freq": 30
       }
     ],
-    "id": "apoc_core_level2"
+    "name": "apoc_core_level2"
   },
   {
     "type": "monstergroup",
@@ -62,7 +62,7 @@
         "freq": 15
       }
     ],
-    "id": "apoc_core_level3"
+    "name": "apoc_core_level3"
   },
   {
     "type": "monstergroup",
@@ -89,7 +89,7 @@
         "freq": 40
       }
     ],
-    "id": "apoc_core_level4"
+    "name": "apoc_core_level4"
   },
   {
     "type": "monstergroup",
@@ -116,7 +116,7 @@
         "freq": 30
       }
     ],
-    "id": "apoc_core_level5"
+    "name": "apoc_core_level5"
   },
   {
     "type": "monstergroup",
@@ -131,7 +131,7 @@
         "freq": 100
       }
     ],
-    "id": "apoc_boss_room1"
+    "name": "apoc_boss_room1"
   },
   {
     "type": "monstergroup",
@@ -146,7 +146,7 @@
         "freq": 80
       }
     ],
-    "id": "apoc_boss_room2"
+    "name": "apoc_boss_room2"
   },
   {
     "type": "monstergroup",
@@ -165,7 +165,7 @@
         "freq": 50
       }
     ],
-    "id": "apoc_boss_room3"
+    "name": "apoc_boss_room3"
   },
   {
     "type": "monstergroup",
@@ -180,7 +180,7 @@
         "freq": 150
       }
     ],
-    "id": "apoc_boss_room4"
+    "name": "apoc_boss_room4"
   },
   {
     "type": "monstergroup",
@@ -199,6 +199,6 @@
         "freq": 100
       }
     ],
-    "id": "apoc_boss_room5"
+    "name": "apoc_boss_room5"
   }
 ]

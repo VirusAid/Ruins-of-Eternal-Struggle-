@@ -10,7 +10,7 @@
     "special_attacks": [
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_brute_swipe", "cooldown": 3, "damage_max_instance": [ { "damage_type": "bash", "amount": 20, "armor_multiplier": 0.5 } ] }
     ],
-    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "CAN_OPEN_DOORS", "PUSH_MON", "BASHES" ]
   },
   {
     "type": "MONSTER",
@@ -20,7 +20,7 @@
     "description": "Второй страж Ядра. Гигантский зомби-куль, его удары сотрясают стены.",
     "hp": 400,
     "speed": 75,
-    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "CAN_OPEN_DOORS", "PUSH_MON", "BASHES", "DESTROYS" ]
   },
   {
     "type": "MONSTER",
@@ -65,7 +65,7 @@
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_titan_smash", "cooldown": 2, "damage_max_instance": [ { "damage_type": "bash", "amount": 40, "armor_multiplier": 0.3 } ] },
       [ "SHRIEK_ALERT", 200 ]
     ],
-    "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS", "REVIVES_HEALTHY" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "CAN_OPEN_DOORS", "PUSH_MON", "BASHES", "DESTROYS", "REVIVES_HEALTHY" ]
   },
   {
     "type": "MONSTER",

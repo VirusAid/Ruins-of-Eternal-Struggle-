@@ -15,8 +15,7 @@
     "base_mods": {
       "str_mod": [ 0, -1 ],
       "per_mod": [ 0, -1 ]
-    },
-    "flags": [ "NO_BREATHING" ]
+    }
   },
   {
     "type": "effect_type",

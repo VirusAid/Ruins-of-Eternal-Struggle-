@@ -31,7 +31,7 @@
     "hp": 350,
     "speed": 100,
     "special_attacks": [
-      { "type": "CALL_BACKUP" }
+      [ "SHRIEK_ALERT", 200 ]
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY" ]
   },
@@ -44,7 +44,7 @@
     "hp": 450,
     "speed": 110,
     "special_attacks": [
-      { "type": "CALL_BACKUP" },
+      [ "SHRIEK_ALERT", 200 ],
       [ "UPGRADE", 300 ]
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "PUSH_MON" ]
@@ -64,7 +64,7 @@
     "armor_bash": 20,
     "special_attacks": [
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_titan_smash", "cooldown": 2, "damage_max_instance": [ { "damage_type": "bash", "amount": 40, "armor_multiplier": 0.3 } ] },
-      { "type": "CALL_BACKUP" }
+      [ "SHRIEK_ALERT", 200 ]
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "OPENS_DOORS", "PUSH_MON", "BASHES", "DESTROYS", "REVIVES_HEALTHY" ]
   },

@@ -4,7 +4,7 @@
     "id": "apoc_core",
     "subtype": "fixed",
     "overmaps": [
-      { "point": [ 0, 0, 0 ], "overmap": "apoc_core_entry" },
+      { "point": [ 0, 0, 0 ], "overmap": "apoc_core_entry_north" },
       { "point": [ 0, 0, -1 ], "overmap": "apoc_core_l1" },
       { "point": [ 0, 0, -2 ], "overmap": "apoc_core_l2" },
       { "point": [ 0, 0, -3 ], "overmap": "apoc_core_l3" },

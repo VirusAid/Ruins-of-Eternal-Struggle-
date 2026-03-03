@@ -1,7 +1,7 @@
 [
   {
     "type": "mapgen",
-    "om_terrain": "apoc_core_entry",
+    "om_terrain": "apoc_core_entry_north",
     "weight": 1000,
     "object": {
       "fill_ter": "t_grass",

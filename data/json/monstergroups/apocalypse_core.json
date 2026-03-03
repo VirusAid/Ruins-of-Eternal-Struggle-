@@ -4,9 +4,9 @@
     "name": "apoc_core_level1",
     "default": "mon_zombie",
     "monsters": [
-      { "monster": "mon_apoc_zombie", "freq": 100, "multiplier": 0 },
-      { "monster": "mon_zombie_brute", "freq": 30, "multiplier": 0 },
-      { "monster": "mon_zombie_crawler", "freq": 20, "multiplier": 0 }
+      { "monster": "mon_apoc_zombie", "freq": 100 },
+      { "monster": "mon_zombie_brute", "freq": 30 },
+      { "monster": "mon_zombie_crawler", "freq": 20 }
     ]
   },
   {
@@ -14,10 +14,10 @@
     "name": "apoc_core_level2",
     "default": "mon_zombie",
     "monsters": [
-      { "monster": "mon_apoc_zombie", "freq": 80, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_rad", "freq": 50, "multiplier": 0 },
-      { "monster": "mon_zombie_hulk", "freq": 20, "multiplier": 0 },
-      { "monster": "mon_zombie_brute", "freq": 30, "multiplier": 0 }
+      { "monster": "mon_apoc_zombie", "freq": 80 },
+      { "monster": "mon_apoc_zombie_rad", "freq": 50 },
+      { "monster": "mon_zombie_hulk", "freq": 20 },
+      { "monster": "mon_zombie_brute", "freq": 30 }
     ]
   },
   {
@@ -25,10 +25,10 @@
     "name": "apoc_core_level3",
     "default": "mon_zombie",
     "monsters": [
-      { "monster": "mon_apoc_zombie", "freq": 70, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_rad", "freq": 60, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_soldier", "freq": 40, "multiplier": 0 },
-      { "monster": "mon_zombie_master", "freq": 15, "multiplier": 0 }
+      { "monster": "mon_apoc_zombie", "freq": 70 },
+      { "monster": "mon_apoc_zombie_rad", "freq": 60 },
+      { "monster": "mon_apoc_zombie_soldier", "freq": 40 },
+      { "monster": "mon_zombie_master", "freq": 15 }
     ]
   },
   {
@@ -36,11 +36,11 @@
     "name": "apoc_core_level4",
     "default": "mon_zombie",
     "monsters": [
-      { "monster": "mon_apoc_zombie_rad", "freq": 80, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_soldier", "freq": 60, "multiplier": 0 },
-      { "monster": "mon_zombie_master", "freq": 20, "multiplier": 0 },
-      { "monster": "mon_zombie_hulk", "freq": 30, "multiplier": 0 },
-      { "monster": "mon_zombie_brute", "freq": 40, "multiplier": 0 }
+      { "monster": "mon_apoc_zombie_rad", "freq": 80 },
+      { "monster": "mon_apoc_zombie_soldier", "freq": 60 },
+      { "monster": "mon_zombie_master", "freq": 20 },
+      { "monster": "mon_zombie_hulk", "freq": 30 },
+      { "monster": "mon_zombie_brute", "freq": 40 }
     ]
   },
   {
@@ -48,11 +48,11 @@
     "name": "apoc_core_level5",
     "default": "mon_zombie",
     "monsters": [
-      { "monster": "mon_apoc_zombie_rad", "freq": 100, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_soldier", "freq": 80, "multiplier": 0 },
-      { "monster": "mon_zombie_master", "freq": 40, "multiplier": 0 },
-      { "monster": "mon_zombie_hulk", "freq": 60, "multiplier": 0 },
-      { "monster": "mon_zombie_master", "freq": 30, "multiplier": 0 }
+      { "monster": "mon_apoc_zombie_rad", "freq": 100 },
+      { "monster": "mon_apoc_zombie_soldier", "freq": 80 },
+      { "monster": "mon_zombie_master", "freq": 40 },
+      { "monster": "mon_zombie_hulk", "freq": 60 },
+      { "monster": "mon_zombie_master", "freq": 30 }
     ]
   },
   {
@@ -60,8 +60,8 @@
     "name": "apoc_boss_room1",
     "default": "mon_apoc_boss_brute",
     "monsters": [
-      { "monster": "mon_apoc_boss_brute", "freq": 1000, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie", "freq": 100, "multiplier": 0 }
+      { "monster": "mon_apoc_boss_brute", "freq": 1000 },
+      { "monster": "mon_apoc_zombie", "freq": 100 }
     ]
   },
   {
@@ -69,8 +69,8 @@
     "name": "apoc_boss_room2",
     "default": "mon_apoc_boss_hulk",
     "monsters": [
-      { "monster": "mon_apoc_boss_hulk", "freq": 1000, "multiplier": 0 },
-      { "monster": "mon_zombie_brute", "freq": 80, "multiplier": 0 }
+      { "monster": "mon_apoc_boss_hulk", "freq": 1000 },
+      { "monster": "mon_zombie_brute", "freq": 80 }
     ]
   },
   {
@@ -78,9 +78,9 @@
     "name": "apoc_boss_room3",
     "default": "mon_apoc_boss_necromancer",
     "monsters": [
-      { "monster": "mon_apoc_boss_necromancer", "freq": 1000, "multiplier": 0 },
-      { "monster": "mon_zombie", "freq": 200, "multiplier": 0 },
-      { "monster": "mon_zombie_brute", "freq": 50, "multiplier": 0 }
+      { "monster": "mon_apoc_boss_necromancer", "freq": 1000 },
+      { "monster": "mon_zombie", "freq": 200 },
+      { "monster": "mon_zombie_brute", "freq": 50 }
     ]
   },
   {
@@ -88,8 +88,8 @@
     "name": "apoc_boss_room4",
     "default": "mon_apoc_boss_master",
     "monsters": [
-      { "monster": "mon_apoc_boss_master", "freq": 1000, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_soldier", "freq": 150, "multiplier": 0 }
+      { "monster": "mon_apoc_boss_master", "freq": 1000 },
+      { "monster": "mon_apoc_zombie_soldier", "freq": 150 }
     ]
   },
   {
@@ -97,9 +97,9 @@
     "name": "apoc_boss_room5",
     "default": "mon_apoc_boss_titan",
     "monsters": [
-      { "monster": "mon_apoc_boss_titan", "freq": 1000, "multiplier": 0 },
-      { "monster": "mon_apoc_zombie_rad", "freq": 200, "multiplier": 0 },
-      { "monster": "mon_apoc_boss_master", "freq": 100, "multiplier": 0 }
+      { "monster": "mon_apoc_boss_titan", "freq": 1000 },
+      { "monster": "mon_apoc_zombie_rad", "freq": 200 },
+      { "monster": "mon_apoc_boss_master", "freq": 100 }
     ]
   }
 ]

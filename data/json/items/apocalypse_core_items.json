@@ -135,7 +135,6 @@
       }
     ],
     "flags": [
-      "HELMET_COMPAT",
       "VARSIZE"
     ],
     "use_action": {

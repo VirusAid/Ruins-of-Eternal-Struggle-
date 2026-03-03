@@ -86,8 +86,7 @@
         {
           "monster": "mon_apoc_boss_necromancer",
           "x": 17,
-          "y": 17,
-          "name": "Страж-3"
+          "y": 17
         }
       ],
       "place_loot": [

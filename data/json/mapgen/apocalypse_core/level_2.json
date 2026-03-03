@@ -53,7 +53,7 @@
       "place_monsters": [
         { "monster": "mon_apoc_zombie_rad", "x": [ 2, 12 ], "y": [ 2, 8 ], "density": 0.8 },
         { "monster": "mon_apoc_zombie", "x": [ 13, 22 ], "y": [ 1, 14 ], "density": 0.5 },
-        { "monster": "mon_apoc_boss_hulk", "x": 12, "y": 17, "name": "Страж-2" }
+        { "monster": "mon_apoc_boss_hulk", "x": 12, "y": 17 }
       ],
       "place_loot": [
         { "group": "apoc_core_loot_common", "x": [ 9, 10 ], "y": [ 9, 10 ], "chance": 90 },

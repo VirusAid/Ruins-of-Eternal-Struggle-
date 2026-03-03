@@ -47,7 +47,7 @@
       },
       "place_monsters": [
         { "monster": "mon_apoc_zombie", "x": [ 8, 12 ], "y": [ 8, 16 ], "density": 0.6 },
-        { "monster": "mon_apoc_boss_brute", "x": 12, "y": 12, "name": "Страж-1" }
+        { "monster": "mon_apoc_boss_brute", "x": 12, "y": 12 }
       ],
       "place_loot": [
         { "group": "apoc_core_loot_common", "x": [ 9, 10 ], "y": [ 9, 10 ], "chance": 80 },

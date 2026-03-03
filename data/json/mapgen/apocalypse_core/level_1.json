@@ -46,16 +46,65 @@
         "B": "f_table"
       },
       "place_monsters": [
-        { "monster": "mon_apoc_zombie", "x": [ 8, 12 ], "y": [ 8, 16 ], "density": 0.6 },
-        { "monster": "mon_apoc_boss_brute", "x": 12, "y": 12 }
+        {
+          "monster": "apoc_core_level1",
+          "x": [
+            8,
+            12
+          ],
+          "y": [
+            8,
+            16
+          ],
+          "density": 0.6
+        }
       ],
       "place_loot": [
-        { "group": "apoc_core_loot_common", "x": [ 9, 10 ], "y": [ 9, 10 ], "chance": 80 },
-        { "group": "apoc_checkpoint_supplies", "x": [ 1, 2 ], "y": [ 1, 3 ], "chance": 100 },
-        { "group": "apoc_boss_drop", "x": 12, "y": 12, "chance": 100 }
+        {
+          "group": "apoc_core_loot_common",
+          "x": [
+            9,
+            10
+          ],
+          "y": [
+            9,
+            10
+          ],
+          "chance": 80
+        },
+        {
+          "group": "apoc_checkpoint_supplies",
+          "x": [
+            1,
+            2
+          ],
+          "y": [
+            1,
+            3
+          ],
+          "chance": 100
+        },
+        {
+          "group": "apoc_boss_drop",
+          "x": 12,
+          "y": 12,
+          "chance": 100
+        }
       ],
       "place_signs": [
-        { "x": 2, "y": 1, "signage": "ЯДРО АПОКАЛИПСИСА\nУровень -1: Подпрелье\nПРЕДУПРЕЖДЕНИЕ: радиация" }
+        {
+          "x": 2,
+          "y": 1,
+          "signage": "ЯДРО АПОКАЛИПСИСА\nУровень -1: Подпрелье\nПРЕДУПРЕЖДЕНИЕ: радиация"
+        }
+      ],
+      "place_monster": [
+        {
+          "monster": "mon_apoc_boss_brute",
+          "x": 12,
+          "y": 12,
+          "chance": 100
+        }
       ]
     }
   }

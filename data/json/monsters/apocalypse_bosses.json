@@ -59,9 +59,8 @@
     "speed": 80,
     "melee_skill": 8,
     "melee_dice": 4,
-    "melee_sides": 10,
-    "armor_cut": 20,
-    "armor_bash": 20,
+    "melee_dice_sides": 10,
+    "armor": { "bash": 20, "cut": 20, "bullet": 15 },
     "special_attacks": [
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_titan_smash", "cooldown": 2, "damage_max_instance": [ { "damage_type": "bash", "amount": 40, "armor_multiplier": 0.3 } ] },
       [ "SHRIEK_ALERT", 200 ]
@@ -75,8 +74,7 @@
     "name": { "str": "заражённый Ядра", "str_pl": "заражённые Ядра" },
     "description": "Зомби, поглощённый радиацией Ядра. Двигается быстрее обычного.",
     "hp": 80,
-    "speed": 100,
-    "bash_skill": 3
+    "speed": 100
   },
   {
     "type": "MONSTER",

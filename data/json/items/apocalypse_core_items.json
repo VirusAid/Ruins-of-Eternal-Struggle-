@@ -3,6 +3,7 @@
     "type": "ITEM",
     "subtypes": [ "GUN" ],
     "id": "rifle_apocalypse",
+    "looks_like": "m4a1",
     "name": {
       "str": "«Апокалипсис»",
       "str_pl": "«Апокалипсис»"
@@ -10,57 +11,46 @@
     "description": "Экспериментальная штурмовая винтовка, разработанная учёными Ядра.  Питается от специальных батарей, стреляет сверхскоростными снарядами.  Оружие редкое — берегите.",
     "weight": "4300 g",
     "volume": "3400 ml",
+    "longest_side": "900 mm",
+    "barrel_length": "500 mm",
     "price": "8500 USD",
-    "bashing": 12,
+    "price_postapoc": "120 USD",
+    "to_hit": -1,
+    "material": [ "steel", "plastic" ],
     "symbol": "(",
     "color": "light_cyan",
-    "material": [
-      "steel",
-      "plastic"
-    ],
-    "range": 80,
+    "ammo": [ "223" ],
+    "skill": "rifle",
     "ranged_damage": {
       "damage_type": "bullet",
-      "amount": 65,
-      "armor_penetration": 15
+      "amount": 55
     },
     "dispersion": 60,
     "durability": 9,
-    "shot_spread": 30,
-    "ammo_type": "223",
+    "loudness": 28,
     "clip_size": 30,
     "reload": 350,
-    "loudness": 28,
     "valid_mod_locations": [
-      [
-        "bore",
-        1
-      ],
-      [
-        "grip",
-        1
-      ],
-      [
-        "muzzle",
-        1
-      ],
-      [
-        "rail",
-        1
-      ],
-      [
-        "sights",
-        1
-      ],
-      [
-        "stock",
-        1
-      ]
+      [ "bore", 1 ],
+      [ "grip", 1 ],
+      [ "muzzle", 1 ],
+      [ "rail", 1 ],
+      [ "sights", 1 ],
+      [ "stock", 1 ],
+      [ "sling", 1 ]
     ],
-    "flags": [
-      "RELOAD_ONE",
-      "NO_UNLOAD"
-    ]
+    "faults": [
+      { "fault": "fault_gun_dirt" },
+      { "fault": "fault_gun_chamber_spent" }
+    ],
+    "flags": [ "FIRE_TWOHAND", "NO_TURRET" ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "item_restriction": [ "stanag30", "stanag5", "stanag10", "stanag20", "stanag50", "stanag60" ]
+      }
+    ],
+    "melee_damage": { "bash": 12 }
   },
   {
     "type": "ITEM",
@@ -212,12 +202,6 @@
       "plastic"
     ],
     "symbol": "=",
-    "color": "green",
-    "use_action": {
-      "type": "unfold_item",
-      "item_action_type": "unfold_item",
-      "result": "apoc_checkpoint_kit",
-      "folds_into": "apoc_checkpoint_kit"
-    }
+    "color": "green"
   }
 ]

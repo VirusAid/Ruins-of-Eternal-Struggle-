@@ -1,7 +1,9 @@
 [
   {
     "type": "ITEM",
-    "subtypes": [ "GUN" ],
+    "subtypes": [
+      "GUN"
+    ],
     "id": "rifle_apocalypse",
     "looks_like": "m4a1",
     "name": {
@@ -16,10 +18,15 @@
     "price": "8500 USD",
     "price_postapoc": "120 USD",
     "to_hit": -1,
-    "material": [ "steel", "plastic" ],
+    "material": [
+      "steel",
+      "plastic"
+    ],
     "symbol": "(",
     "color": "light_cyan",
-    "ammo": [ "223" ],
+    "ammo": [
+      "223"
+    ],
     "skill": "rifle",
     "ranged_damage": {
       "damage_type": "bullet",
@@ -30,30 +37,68 @@
     "loudness": 28,
     "reload": 350,
     "valid_mod_locations": [
-      [ "bore", 1 ],
-      [ "grip", 1 ],
-      [ "muzzle", 1 ],
-      [ "rail", 1 ],
-      [ "sights", 1 ],
-      [ "stock", 1 ],
-      [ "sling", 1 ]
+      [
+        "bore",
+        1
+      ],
+      [
+        "grip",
+        1
+      ],
+      [
+        "muzzle",
+        1
+      ],
+      [
+        "rail",
+        1
+      ],
+      [
+        "sights",
+        1
+      ],
+      [
+        "stock",
+        1
+      ],
+      [
+        "sling",
+        1
+      ]
     ],
     "faults": [
-      { "fault": "fault_gun_dirt" },
-      { "fault": "fault_gun_chamber_spent" }
+      {
+        "fault": "fault_gun_dirt"
+      },
+      {
+        "fault": "fault_gun_chamber_spent"
+      }
     ],
-    "flags": [ "FIRE_TWOHAND", "NO_TURRET" ],
+    "flags": [
+      "NEEDS_TWOHAND_USE"
+    ],
     "pocket_data": [
       {
         "pocket_type": "MAGAZINE_WELL",
-        "item_restriction": [ "stanag30", "stanag5", "stanag10", "stanag20", "stanag50", "stanag60" ]
+        "item_restriction": [
+          "stanag30",
+          "stanag5",
+          "stanag10",
+          "stanag20",
+          "stanag50",
+          "stanag60"
+        ]
       }
     ],
-    "melee_damage": { "bash": 12 }
+    "melee_damage": {
+      "bash": 12
+    }
   },
   {
     "type": "ITEM",
-    "subtypes": [ "AMMO" ],
+    "subtypes": [
+      "AMMO"
+    ],
     "id": "apoc_energy_cell",
     "name": {
       "str": "энергетический патрон Ядра",
@@ -76,7 +121,9 @@
   },
   {
     "type": "ITEM",
-    "subtypes": [ "COMESTIBLE" ],
+    "subtypes": [
+      "COMESTIBLE"
+    ],
     "id": "apoc_mutation_serum",
     "name": {
       "str": "сыворотка мутации Ядра",
@@ -111,7 +158,9 @@
   },
   {
     "type": "ITEM",
-    "subtypes": [ "ARMOR" ],
+    "subtypes": [
+      "ARMOR"
+    ],
     "id": "ruins_crown",
     "name": {
       "str": "Корона Руин",
@@ -129,7 +178,9 @@
     "warmth": 5,
     "armor": [
       {
-        "covers": [ "head" ],
+        "covers": [
+          "head"
+        ],
         "coverage": 80,
         "encumbrance": 5
       }

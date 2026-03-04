@@ -56,7 +56,9 @@
     "locations": [
       "wilderness",
       "field",
-      "forest_edge"
+      "forest",
+      "forest_edge",
+      "land"
     ],
     "occurrences": [
       1,
@@ -68,7 +70,7 @@
     ],
     "rotate": false,
     "city_distance": [
-      5,
+      2,
       -1
     ],
     "city_sizes": [

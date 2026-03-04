@@ -2,7 +2,6 @@
   {
     "type": "overmap_special",
     "id": "apoc_core",
-    "subtype": "fixed",
     "overmaps": [
       {
         "point": [
@@ -54,28 +53,24 @@
       }
     ],
     "locations": [
-      "wilderness",
-      "field",
       "forest",
-      "forest_edge",
-      "land"
+      "field",
+      "wilderness"
     ],
     "occurrences": [
       1,
       40
     ],
     "flags": [
+      "OVERMAP_UNIQUE",
       "MAN_MADE",
-      "GLOBALLY_UNIQUE"
+      "WILDERNESS"
     ],
     "city_distance": [
       2,
       -1
     ],
-    "city_sizes": [
-      0,
-      -1
-    ],
-    "rotate": false
+    "rotate": false,
+    "priority": 1
   }
 ]

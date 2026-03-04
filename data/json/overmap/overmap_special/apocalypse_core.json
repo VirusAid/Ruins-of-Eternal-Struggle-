@@ -9,7 +9,7 @@
           0,
           0
         ],
-        "overmap": "apoc_core_entry_north"
+        "overmap": "apoc_core_entry"
       },
       {
         "point": [
@@ -17,7 +17,7 @@
           0,
           -1
         ],
-        "overmap": "apoc_core_l1_north"
+        "overmap": "apoc_core_l1"
       },
       {
         "point": [
@@ -25,7 +25,7 @@
           0,
           -2
         ],
-        "overmap": "apoc_core_l2_north"
+        "overmap": "apoc_core_l2"
       },
       {
         "point": [
@@ -33,7 +33,7 @@
           0,
           -3
         ],
-        "overmap": "apoc_core_l3_north"
+        "overmap": "apoc_core_l3"
       },
       {
         "point": [
@@ -41,7 +41,7 @@
           0,
           -4
         ],
-        "overmap": "apoc_core_l4_north"
+        "overmap": "apoc_core_l4"
       },
       {
         "point": [
@@ -49,7 +49,7 @@
           0,
           -5
         ],
-        "overmap": "apoc_core_l5_north"
+        "overmap": "apoc_core_l5"
       }
     ],
     "locations": [

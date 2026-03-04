@@ -7,7 +7,8 @@
     "color": "light_red",
     "see_cost": "high",
     "flags": [
-      "KNOWN_DOWN"
+      "KNOWN_DOWN",
+      "NO_ROTATE"
     ]
   },
   {
@@ -19,7 +20,8 @@
     "see_cost": "opaque",
     "flags": [
       "KNOWN_DOWN",
-      "KNOWN_UP"
+      "KNOWN_UP",
+      "NO_ROTATE"
     ]
   },
   {
@@ -31,7 +33,8 @@
     "see_cost": "opaque",
     "flags": [
       "KNOWN_DOWN",
-      "KNOWN_UP"
+      "KNOWN_UP",
+      "NO_ROTATE"
     ]
   },
   {
@@ -43,7 +46,8 @@
     "see_cost": "opaque",
     "flags": [
       "KNOWN_DOWN",
-      "KNOWN_UP"
+      "KNOWN_UP",
+      "NO_ROTATE"
     ]
   },
   {
@@ -55,7 +59,8 @@
     "see_cost": "opaque",
     "flags": [
       "KNOWN_DOWN",
-      "KNOWN_UP"
+      "KNOWN_UP",
+      "NO_ROTATE"
     ]
   },
   {
@@ -66,7 +71,8 @@
     "color": "light_red",
     "see_cost": "opaque",
     "flags": [
-      "KNOWN_UP"
+      "KNOWN_UP",
+      "NO_ROTATE"
     ]
   }
 ]

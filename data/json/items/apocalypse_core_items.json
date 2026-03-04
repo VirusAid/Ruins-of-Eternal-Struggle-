@@ -74,9 +74,7 @@
         "fault": "fault_gun_chamber_spent"
       }
     ],
-    "flags": [
-      "NEEDS_TWOHAND_USE"
-    ],
+    "flags": [],
     "pocket_data": [
       {
         "pocket_type": "MAGAZINE_WELL",

@@ -75,6 +75,7 @@
     "city_sizes": [
       0,
       -1
-    ]
+    ],
+    "rotate": false
   }
 ]

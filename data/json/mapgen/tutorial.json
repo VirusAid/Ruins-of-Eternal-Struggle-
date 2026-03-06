@@ -2,25 +2,79 @@
   {
     "type": "item_group",
     "id": "fully_loaded_lighter",
-    "items": [ { "item": "lighter", "prob": 100, "charges": 100 } ]
+    "items": [
+      {
+        "item": "lighter",
+        "prob": 100,
+        "charges": 100
+      }
+    ]
   },
   {
     "type": "item_group",
     "id": "paint_tutorial",
     "subtype": "collection",
     "items": [
-      { "item": "paint_red", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_blue", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_yellow", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_green", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_purple", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_orange", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_pink", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_cyan", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_brown", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_white", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_black", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_gray", "prob": 100, "container-group": "paintcans" }
+      {
+        "item": "paint_red",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_blue",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_yellow",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_green",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_purple",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_orange",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_pink",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_cyan",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_brown",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_white",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_black",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_gray",
+        "prob": 100,
+        "container-group": "paintcans"
+      }
     ]
   },
   {
@@ -62,7 +116,11 @@
         "W": "t_window",
         "|": "t_door_locked_interior",
         ">": "t_stairs_down",
-        "&": "t_wall"
+        "&": "t_wall",
+        "№": "t_wall",
+        "Ř": "t_thconc_floor",
+        "Ŕ": "t_thconc_floor",
+        "Ŗ": "t_thconc_floor"
       },
       "furniture": {
         "r": "f_rack",
@@ -81,23 +139,88 @@
         "_": "f_rack"
       },
       "item": {
-        "!": { "item": "bat", "chance": 100 },
-        "r": { "item": "spear_steel", "chance": 100 },
-        "R": { "item": "spearsling", "chance": 100 },
-        "Ŕ": { "item": "uzi", "chance": 100 },
-        "Ŗ": { "item": "uzimag", "chance": 100 },
-        "Ř": { "item": "9mm", "chance": 100 },
-        "$": { "item": "backpack", "chance": 100 },
-        "@": [ { "item": "flashlight", "chance": 100 } ],
-        "%": { "item": "helmet_ball", "chance": 100 },
-        "^": { "item": "mask_dust", "chance": 100 },
-        "*": { "item": "paint_brush", "chance": 100 },
-        ")": { "item": "baseball", "chance": 100, "amount": 10 },
-        "_": { "item": "codeine", "chance": 100 },
-        "C": [ { "item": "peanutbutter", "chance": 100 }, { "item": "crackers", "chance": 100, "repeat": 2 } ]
+        "!": {
+          "item": "bat",
+          "chance": 100
+        },
+        "r": {
+          "item": "spear_steel",
+          "chance": 100
+        },
+        "R": {
+          "item": "spearsling",
+          "chance": 100
+        },
+        "Ŕ": {
+          "item": "uzi",
+          "chance": 100
+        },
+        "Ŗ": {
+          "item": "uzimag",
+          "chance": 100
+        },
+        "Ř": {
+          "item": "9mm",
+          "chance": 100
+        },
+        "$": {
+          "item": "backpack",
+          "chance": 100
+        },
+        "@": [
+          {
+            "item": "flashlight",
+            "chance": 100
+          }
+        ],
+        "%": {
+          "item": "helmet_ball",
+          "chance": 100
+        },
+        "^": {
+          "item": "mask_dust",
+          "chance": 100
+        },
+        "*": {
+          "item": "paint_brush",
+          "chance": 100
+        },
+        ")": {
+          "item": "baseball",
+          "chance": 100,
+          "amount": 10
+        },
+        "_": {
+          "item": "codeine",
+          "chance": 100
+        },
+        "C": [
+          {
+            "item": "peanutbutter",
+            "chance": 100
+          },
+          {
+            "item": "crackers",
+            "chance": 100,
+            "repeat": 2
+          }
+        ]
       },
-      "items": { "(": { "item": "paint_tutorial", "chance": 100 }, "@": { "item": "ammo_light_batteries_full", "chance": 100 } },
-      "monster": { "d": { "monster": "mon_dummy_tutorial" } },
+      "items": {
+        "(": {
+          "item": "paint_tutorial",
+          "chance": 100
+        },
+        "@": {
+          "item": "ammo_light_batteries_full",
+          "chance": 100
+        }
+      },
+      "monster": {
+        "d": {
+          "monster": "mon_dummy_tutorial"
+        }
+      },
       "traps": {
         "1": "tr_tutorial_1",
         "2": "tr_tutorial_2",
@@ -119,25 +242,79 @@
   {
     "type": "item_group",
     "id": "fully_loaded_lighter",
-    "items": [ { "item": "lighter", "prob": 100, "charges": 100 } ]
+    "items": [
+      {
+        "item": "lighter",
+        "prob": 100,
+        "charges": 100
+      }
+    ]
   },
   {
     "type": "item_group",
     "id": "paint_tutorial",
     "subtype": "collection",
     "items": [
-      { "item": "paint_red", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_blue", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_yellow", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_green", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_purple", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_orange", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_pink", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_cyan", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_brown", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_white", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_black", "prob": 100, "container-group": "paintcans" },
-      { "item": "paint_gray", "prob": 100, "container-group": "paintcans" }
+      {
+        "item": "paint_red",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_blue",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_yellow",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_green",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_purple",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_orange",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_pink",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_cyan",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_brown",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_white",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_black",
+        "prob": 100,
+        "container-group": "paintcans"
+      },
+      {
+        "item": "paint_gray",
+        "prob": 100,
+        "container-group": "paintcans"
+      }
     ]
   },
   {
@@ -170,7 +347,9 @@
         "-......................-",
         "------------------------"
       ],
-      "palettes": [ "roof_palette" ]
+      "palettes": [
+        "roof_palette"
+      ]
     }
   },
   {
@@ -204,16 +383,51 @@
         "########################",
         "########################"
       ],
-      "terrain": { "~": "t_water_dispenser", ".": "t_thconc_floor_olight", "#": "t_concrete_wall", "<": "t_stairs_up" },
-      "furniture": { "r": "f_rack", "R": "f_rack", "Ŕ": "f_rack", "Ŗ": "f_rack" },
-      "item": {
-        "r": { "item": "bottle_plastic", "chance": 100 },
-        "R": { "item": "gasoline_lantern", "chance": 100 },
-        "Ŕ": { "item": "gasoline", "chance": 100 }
+      "terrain": {
+        "~": "t_water_dispenser",
+        ".": "t_thconc_floor_olight",
+        "#": "t_concrete_wall",
+        "<": "t_stairs_up"
       },
-      "items": { "Ŗ": { "item": "fully_loaded_lighter", "chance": 100 } },
-      "traps": { "9": "tr_tutorial_9", "1": "tr_tutorial_10" },
-      "liquids": { "~": { "liquid": "water_clean", "amount": [ 0, 80 ] } }
+      "furniture": {
+        "r": "f_rack",
+        "R": "f_rack",
+        "Ŕ": "f_rack",
+        "Ŗ": "f_rack"
+      },
+      "item": {
+        "r": {
+          "item": "bottle_plastic",
+          "chance": 100
+        },
+        "R": {
+          "item": "gasoline_lantern",
+          "chance": 100
+        },
+        "Ŕ": {
+          "item": "gasoline",
+          "chance": 100
+        }
+      },
+      "items": {
+        "Ŗ": {
+          "item": "fully_loaded_lighter",
+          "chance": 100
+        }
+      },
+      "traps": {
+        "9": "tr_tutorial_9",
+        "1": "tr_tutorial_10"
+      },
+      "liquids": {
+        "~": {
+          "liquid": "water_clean",
+          "amount": [
+            0,
+            80
+          ]
+        }
+      }
     }
   }
 ]

@@ -1,6 +1,6 @@
 [
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_journal_survivor",
     "copy-from": "survnote",
     "name": { "str": "замусоленный дневник", "str_pl": "замусоленные дневники" },
@@ -8,10 +8,10 @@
     "snippet_category": "echo_survivor_diary",
     "weight": "200 g",
     "volume": "250 ml",
-    "looks_like": "survivorsnotebook"
+    "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_radio_log",
     "copy-from": "survnote",
     "name": { "str": "распечатка радиоперехвата", "str_pl": "распечатки радиоперехватов" },
@@ -22,7 +22,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_scientists_log",
     "copy-from": "survnote",
     "name": { "str": "журнал учёного А.М.", "str_pl": "журналы учёного А.М." },
@@ -30,10 +30,10 @@
     "snippet_category": "echo_scientist_log",
     "weight": "350 g",
     "volume": "500 ml",
-    "looks_like": "survivorsnotebook"
+    "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_shelter_manifest",
     "copy-from": "survnote",
     "name": { "str": "манифест убежища Д-7", "str_pl": "манифесты убежища Д-7" },
@@ -44,7 +44,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_military_report",
     "copy-from": "survnote",
     "name": { "str": "военный отчёт «ГРОМ-7»", "str_pl": "военные отчёты «ГРОМ-7»" },
@@ -55,7 +55,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_archive_disk",
     "copy-from": "survnote",
     "name": { "str": "архивный диск «ОБЪЕКТ-0»", "str_pl": "архивные диски «ОБЪЕКТ-0»" },
@@ -66,7 +66,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_access_codes",
     "copy-from": "survnote",
     "name": { "str": "лист с кодами доступа", "str_pl": "листы с кодами доступа" },
@@ -77,7 +77,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_beacon_key",
     "copy-from": "survnote",
     "name": { "str": "ключ активации маяка", "str_pl": "ключи активации маяка" },
@@ -88,7 +88,7 @@
     "looks_like": "survnote"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_final_transmission",
     "copy-from": "survnote",
     "name": { "str": "финальная передача", "str_pl": "финальные передачи" },

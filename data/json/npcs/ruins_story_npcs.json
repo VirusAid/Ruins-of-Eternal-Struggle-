@@ -18,7 +18,7 @@
       },
       {
         "text": "Кто такой Векслер?",
-        "condition": { "u_has_var": "echo_m4_done", "type": "u_val", "context": "storyline", "value": "yes" },
+        "condition": { "u_has_var": "echo_m4_done", "value": "yes" },
         "topic": "TALK_ECHO_ARCHIVIST_VEKSLER"
       },
       {
@@ -61,7 +61,7 @@
       {
         "text": "Я понял.  Спасибо.",
         "effect": [
-          { "u_add_var": "echo_archivist_shutdown_info", "type": "u_val", "context": "storyline", "value": "yes" }
+          { "u_add_var": "echo_archivist_shutdown_info", "value": "yes" }
         ],
         "topic": "TALK_DONE"
       },
@@ -113,7 +113,7 @@
       {
         "text": "Понял.  Буду искать.",
         "effect": [
-          { "u_add_var": "echo_radio_voice_heard", "type": "u_val", "context": "storyline", "value": "yes" }
+          { "u_add_var": "echo_radio_voice_heard", "value": "yes" }
         ],
         "topic": "TALK_DONE"
       }

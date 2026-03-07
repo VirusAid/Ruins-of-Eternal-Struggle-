@@ -3,9 +3,9 @@
     "type": "effect_on_condition",
     "id": "eoc_echo_story_enter_core",
     "eoc_type": "ACTIVATION",
-    "condition": { "not": { "u_has_var": "echo_story_core_entered", "type": "u_val", "context": "storyline", "value": "yes" } },
+    "condition": { "not": { "u_has_var": "echo_story_core_entered", "value": "yes" } },
     "effect": [
-      { "u_add_var": "echo_story_core_entered", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_story_core_entered", "value": "yes" },
       {
         "u_message": "ЭХО РУИН — ФИНАЛ\n\nТы стоишь у входа в объект «Нулевой» — источника всего, что произошло.\n\nВнутри — ответы.  Внутри — опасность.\nВнутри — возможность закрыть Разрыв навсегда.\n\nПроект «Рассвет» начался здесь.  Здесь он и закончится.",
         "popup": true
@@ -20,9 +20,9 @@
     "type": "effect_on_condition",
     "id": "eoc_echo_story_complete",
     "eoc_type": "ACTIVATION",
-    "condition": { "not": { "u_has_var": "echo_story_complete", "type": "u_val", "context": "storyline", "value": "yes" } },
+    "condition": { "not": { "u_has_var": "echo_story_complete", "value": "yes" } },
     "effect": [
-      { "u_add_var": "echo_story_complete", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_story_complete", "value": "yes" },
       {
         "u_message": "ЭХО РУИН — ЗАВЕРШЕНИЕ\n\nТы сделал это.  Разрыв закрыт.  Объект «Нулевой» нейтрализован.\n\nВекслер ошибся.  Катастрофу нельзя было отменить — но можно было остановить следующую.\n\nМир не вернётся прежним.  Но теперь у него есть шанс.",
         "popup": true
@@ -35,7 +35,7 @@
     "id": "eoc_echo_story_fail",
     "eoc_type": "ACTIVATION",
     "effect": [
-      { "u_add_var": "echo_story_failed", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_story_failed", "value": "yes" },
       {
         "u_message": "ЭХО РУИН — ПРОВАЛ\n\nТы не успел.  Объект «Нулевой» продолжает работать.\nРазрыв расширяется.\n\nТе, кого позвал Векслер, уже близко.",
         "popup": true
@@ -47,9 +47,9 @@
     "type": "effect_on_condition",
     "id": "eoc_echo_m3_arrive",
     "eoc_type": "ACTIVATION",
-    "condition": { "not": { "u_has_var": "echo_m3_visited", "type": "u_val", "context": "storyline", "value": "yes" } },
+    "condition": { "not": { "u_has_var": "echo_m3_visited", "value": "yes" } },
     "effect": [
-      { "u_add_var": "echo_m3_visited", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_m3_visited", "value": "yes" },
       {
         "u_message": "Убежище Д-7.  Стены исписаны.  Кто-то провёл здесь долгое время после Дня-Ч.\n\nНа полу — бумаги с печатью «СЕКРЕТНО».  Один документ — манифест с именем учёного Малинова.",
         "popup": false
@@ -60,9 +60,9 @@
     "type": "effect_on_condition",
     "id": "eoc_echo_m7_bunker",
     "eoc_type": "ACTIVATION",
-    "condition": { "not": { "u_has_var": "echo_m7_visited", "type": "u_val", "context": "storyline", "value": "yes" } },
+    "condition": { "not": { "u_has_var": "echo_m7_visited", "value": "yes" } },
     "effect": [
-      { "u_add_var": "echo_m7_visited", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_m7_visited", "value": "yes" },
       {
         "u_message": "Бункер «Сова».  Генераторы мертвы, но архив — нет.\n\nНа серверных стойках — диск с пометкой «ОБЪЕКТ-0».  Рядом — тело офицера.  В руке — карта доступа.",
         "popup": false
@@ -73,9 +73,9 @@
     "type": "effect_on_condition",
     "id": "eoc_echo_m11_beacon_activate",
     "eoc_type": "ACTIVATION",
-    "condition": { "not": { "u_has_var": "echo_beacon_activated", "type": "u_val", "context": "storyline", "value": "yes" } },
+    "condition": { "not": { "u_has_var": "echo_beacon_activated", "value": "yes" } },
     "effect": [
-      { "u_add_var": "echo_beacon_activated", "type": "u_val", "context": "storyline", "value": "yes" },
+      { "u_add_var": "echo_beacon_activated", "value": "yes" },
       {
         "u_message": "Ты вставил ключ активации в слот передатчика.\n\nДлинный тон заполнил помещение.  Потом — щелчок.  Где-то далеко на севере что-то разблокировалось.\n\nСигнал принят.  Вход открыт.",
         "popup": true

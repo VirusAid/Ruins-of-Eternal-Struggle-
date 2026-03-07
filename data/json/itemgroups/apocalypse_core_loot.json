@@ -10,7 +10,10 @@
       { "item": "energy_drink", "prob": 30, "count": [ 1, 3 ] },
       { "item": "flashlight", "prob": 20 },
       { "item": "apoc_core_keycard", "prob": 15 },
-      { "item": "apoc_mutation_serum", "prob": 5 }
+      { "item": "apoc_mutation_serum", "prob": 5 },
+      { "item": "echo_access_codes", "prob": 18 },
+      { "item": "echo_archive_disk", "prob": 10 },
+      { "item": "echo_military_report", "prob": 12 }
     ]
   },
   {

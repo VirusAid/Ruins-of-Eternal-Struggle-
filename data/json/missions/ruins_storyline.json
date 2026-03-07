@@ -1,0 +1,438 @@
+[
+  {
+    "id": "MISSION_ECHO_01_FIRST_TRACES",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Первый след" },
+    "description": "Среди обломков ты нашёл потрёпанный дневник.  Рукопись прерывается на полуслове, но упоминает какой-то сигнал на востоке и «объект» на карте.  Прочти его.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_journal_survivor",
+    "difficulty": 1,
+    "value": 1000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_journal_survivor", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Записи обрываются, но ты чувствуешь — за этим стоит что-то большее.  Дневник упоминает радиопередатчик в доме на холме.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_02_RADIO_LOG",
+    "dialogue": {
+      "describe": "Дневник, найденный среди руин.",
+      "offer": "Среди обломков — дневник.  Последние записи тревожные.  Стоит прочитать.",
+      "accepted": "Хорошо.  Ищи этот дневник.",
+      "rejected": "Как хочешь.  Он где-то рядом.",
+      "advice": "Проверь рюкзак — кажется, он уже у тебя.",
+      "inquire": "Нашёл дневник?",
+      "success": "Ты прочитал его.  Этот сигнал — не случайность.",
+      "success_lie": "Понятно.",
+      "failure": "Ничего.  Может, позже."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_02_RADIO_LOG",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Сигнал в эфире" },
+    "description": "Дневник Орлова упоминает морзянку на частоте 144.300 МГц и распечатку перехвата в доме на холме.  Найди эту распечатку.  В ней — координаты.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_radio_log",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_radio_log", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Перехват указывает на объект с кодовым названием «Нулевой».  Кто-то упомянул убежище Д-7.  Там могут быть люди или хотя бы документы.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_03_SHELTER",
+    "dialogue": {
+      "describe": "Распечатка радиоперехвата с загадочными координатами.",
+      "offer": "Дневник упоминает перехваченный радиосигнал.  Найди распечатку.",
+      "accepted": "Она где-то здесь, рядом с тобой.",
+      "rejected": "Как знаешь.",
+      "advice": "Частота 144.300 — военный диапазон.",
+      "inquire": "Нашёл распечатку?",
+      "success": "Перехват — это только начало.",
+      "success_lie": "Понятно.",
+      "failure": "Ладно."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_03_SHELTER",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Убежище Д-7" },
+    "description": "Радиоперехват упоминает убежище «Д-7».  Найди ближайшее убежище эвакуации и обыщи его — там могут быть выжившие или документы о проекте «Рассвет».",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "shelter",
+        "reveal_radius": 4,
+        "random": true,
+        "search_range": 40,
+        "min_distance": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Убежище почти пусто.  Но на полу — разбросанные бумаги.  Среди них — манифест с упоминанием учёного Малинова.  Его лаборатория должна быть где-то в промзоне.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_04_SCIENTISTS_LOG",
+    "dialogue": {
+      "describe": "В убежище должны быть следы проекта «Рассвет».",
+      "offer": "Перехват упоминает убежище Д-7.  Иди туда.",
+      "accepted": "Будь осторожен — там могут быть заражённые.",
+      "rejected": "Хорошо.",
+      "advice": "Убежища обычно строились у дорог.",
+      "inquire": "Ты уже в убежище?",
+      "success": "Что-то там нашёл?",
+      "success_lie": "Ладно.",
+      "failure": "Может, убежище слишком далеко."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_04_SCIENTISTS_LOG",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Журнал учёного" },
+    "description": "В убежище упоминался учёный Алексей Малинов.  Он вёл записи о проекте «Рассвет» — эксперименте, который мог стать причиной катастрофы.  Найди его журнал.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_scientists_log",
+    "difficulty": 3,
+    "value": 4000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_scientists_log", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Журнал Малинова раскрывает правду: проект «Рассвет» создал объект «Нулевой».  Координаты зашифрованы в военном отчёте «ГРОМ-7».  Нужна лаборатория — там остались улики.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_05_LAB",
+    "dialogue": {
+      "describe": "Журнал учёного Малинова с записями о проекте.",
+      "offer": "Малинов знал правду.  Его журнал — ключ.",
+      "accepted": "Он у тебя — ищи и читай.",
+      "rejected": "Понятно.",
+      "advice": "Учёные прятали записи в лабораториях.",
+      "inquire": "Нашёл журнал?",
+      "success": "Теперь ты знаешь больше, чем большинство.",
+      "success_lie": "Хорошо.",
+      "failure": "Жаль."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_05_LAB",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Лаборатория проекта" },
+    "description": "Малинов писал, что оставил копии документов в лаборатории.  Доберись до ближайшего исследовательского центра и найди военный отчёт «ГРОМ-7».",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 5000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 60,
+        "min_distance": 10
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Лаборатория разрушена, но часть архивов уцелела.  Военный отчёт «ГРОМ-7» скрыт за обломками — он указывает на бункер «Сова», где хранится архивный диск с координатами.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_06_MILITARY_REPORT",
+    "dialogue": {
+      "describe": "Лаборатория хранит следы проекта «Рассвет».",
+      "offer": "В лаборатории должны быть военные документы.",
+      "accepted": "Будь готов к охране и заражённым.",
+      "rejected": "Как хочешь.",
+      "advice": "Лаборатории часто в промышленных зонах.",
+      "inquire": "Нашёл лабораторию?",
+      "success": "Хорошая работа.",
+      "success_lie": "Понятно.",
+      "failure": "Слишком опасно?"
+    }
+  },
+  {
+    "id": "MISSION_ECHO_06_MILITARY_REPORT",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Отчёт «ГРОМ-7»" },
+    "description": "Военный отчёт «ГРОМ-7» должен быть где-то в лаборатории или рядом.  Он содержит часть координат объекта «Нулевой» и упоминает бункер «Сова».",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_military_report",
+    "difficulty": 4,
+    "value": 6000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_military_report", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Отчёт «ГРОМ-7» подтверждает: объект «Нулевой» — источник катастрофы.  Координаты на диске в бункере «Сова».  Диск защищён тремя кодами — охота начинается.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_07_BUNKER",
+    "dialogue": {
+      "describe": "Военный отчёт с грифом «ГРОМ-7».",
+      "offer": "Найди отчёт.  Он откроет правду об операции.",
+      "accepted": "Он у тебя — читай внимательно.",
+      "rejected": "Хорошо.",
+      "advice": "Военные документы часто в мусоре или за стальными дверьми.",
+      "inquire": "Нашёл отчёт «ГРОМ-7»?",
+      "success": "Теперь ты знаешь куда идти.",
+      "success_lie": "Понятно.",
+      "failure": "Жаль."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_07_BUNKER",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Бункер «Сова»" },
+    "description": "Отчёт «ГРОМ-7» указывает на бункер командования, где хранится архивный диск «ОБЪЕКТ-0» с полными координатами.  Доберись до ближайшего подземного бункера.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 5,
+    "value": 7000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "bunker_basement_1",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 80,
+        "min_distance": 15
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Бункер «Сова» — именно то место.  Архивный диск и доступ к картотеке здесь.  Пора взломать это место.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_08_KEYCARD",
+    "dialogue": {
+      "describe": "Подземный бункер командования с архивами.",
+      "offer": "Бункер «Сова» — ключ к координатам.",
+      "accepted": "Внутри будет охрана.  Будь готов.",
+      "rejected": "Понятно.",
+      "advice": "Бункеры обычно в лесах или под землёй.",
+      "inquire": "Добрался до бункера?",
+      "success": "Хорошо.  Теперь — архив.",
+      "success_lie": "Ладно.",
+      "failure": "Слишком сильное прикрытие."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_08_KEYCARD",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Карта доступа «Альфа»" },
+    "description": "Для доступа к архиву бункера нужна карта уровня «Альфа».  Она должна находиться в бункере или рядом с ним.  Найди её.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "apoc_core_keycard",
+    "difficulty": 5,
+    "value": 8000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "end": {
+      "effect": [
+        { "u_message": "Карта «Альфа» в руках.  Теперь нужен сам архивный диск — он где-то глубже в бункере.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_09_DATA_DISK",
+    "dialogue": {
+      "describe": "Карта доступа «Альфа» из архивов бункера.",
+      "offer": "Без карты «Альфа» в архив не попасть.  Найди её в бункере.",
+      "accepted": "Охраняй себя внутри.",
+      "rejected": "Понятно.",
+      "advice": "Карты хранятся у командиров — проверь тела.",
+      "inquire": "Нашёл карту «Альфа»?",
+      "success": "Отлично.  Теперь диск.",
+      "success_lie": "Хорошо.",
+      "failure": "Слишком опасно."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_09_DATA_DISK",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Архивный диск «ОБЪЕКТ-0»" },
+    "description": "Архивный диск с координатами объекта «Нулевой» хранится в глубине бункера.  Найди его — это ключ к местонахождению источника катастрофы.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "apoc_core_data_disk",
+    "difficulty": 6,
+    "value": 9000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "end": {
+      "effect": [
+        { "u_message": "Диск найден.  На нём — полные координаты и протокол нейтрализации объекта «Нулевой».  Нужны три кода доступа серии ΑΒΓ, рассеянных по всему региону.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_10_ACCESS_CODES",
+    "dialogue": {
+      "describe": "Архивный диск с зашифрованными координатами объекта.",
+      "offer": "Диск «ОБЪЕКТ-0» хранит весь план.  Найди его.",
+      "accepted": "Он глубоко в бункере.  Будь аккуратен.",
+      "rejected": "Понятно.",
+      "advice": "Серверные комнаты — хорошее место для поиска.",
+      "inquire": "Нашёл диск?",
+      "success": "Координаты готовы.  Теперь — коды.",
+      "success_lie": "Хорошо.",
+      "failure": "Жаль."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_10_ACCESS_CODES",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Три ключа от ворот" },
+    "description": "Диск расшифрован.  Для нейтрализации объекта нужны три листа с кодами доступа серии ΑΒΓ.  Они были намеренно рассеяны по разным тайникам — собери все три.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_access_codes",
+    "count": 3,
+    "difficulty": 6,
+    "value": 10000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_access_codes", "count": 3 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Три кода собраны: α=774, β=192, γ=555.  Теперь нужно активировать маяк на ближайшей радиостанции, чтобы снять блокировку с входа объекта.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_11_RADIO_TOWER",
+    "dialogue": {
+      "describe": "Три части кода доступа к объекту «Нулевой».",
+      "offer": "Три ключа от ворот.  Все три нужны.",
+      "accepted": "Они рядом — ищи в тайниках.",
+      "rejected": "Понятно.",
+      "advice": "Тайники в разных зданиях.  Терпение.",
+      "inquire": "Собрал все три кода?",
+      "success": "Все три.  Последний шаг — маяк.",
+      "success_lie": "Хорошо.",
+      "failure": "Продолжай поиск."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_11_RADIO_TOWER",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Активация маяка" },
+    "description": "Ключ активации маяка нужно использовать на радиостанции «СИГМА».  Найди ближайшую радиостанцию и активируй передатчик — это снимет блокировку с технического входа объекта.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 7,
+    "value": 11000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "station_radio",
+        "reveal_radius": 6,
+        "random": true,
+        "search_range": 100,
+        "min_distance": 20
+      },
+      "effect": [
+        { "u_spawn_item": "echo_beacon_key", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Маяк активирован!  Координатная система объекта «Нулевой» отозвалась.  Вход разблокирован.  Осталось — финальная передача.  Что-то срочное на башне.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_12_FINAL_SIGNAL",
+    "dialogue": {
+      "describe": "Радиостанция с маяком, ведущим к объекту.",
+      "offer": "Маяк активирует вход.  Найди радиостанцию.",
+      "accepted": "Ключ у тебя.  Иди на башню.",
+      "rejected": "Понятно.",
+      "advice": "Радиостанции видны издалека — высокие антенны.",
+      "inquire": "Активировал маяк?",
+      "success": "Отлично.  Вход открыт.",
+      "success_lie": "Понятно.",
+      "failure": "Нет сигнала."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_12_FINAL_SIGNAL",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Последнее послание" },
+    "description": "На радиобашне осталась распечатка последней передачи с объекта «Нулевой».  В ней — предупреждение о том, что сделал куратор Векслер.  Прочти это, прежде чем войти.",
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "echo_final_transmission",
+    "difficulty": 7,
+    "value": 12000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "echo_final_transmission", "count": 1 }
+      ]
+    },
+    "end": {
+      "effect": [
+        { "u_message": "«Они услышали зов.  И они идут».\n\nВекслер преднамеренно открыл Разрыв.  Объект «Нулевой» — маяк для чего-то снаружи нашего мира.  Нейтрализовать его — значит закрыть дверь.\n\nКоординаты объекта на карте.  Войди.  Останови это.", "popup": true }
+      ]
+    },
+    "followup": "MISSION_ECHO_13_ENTER_CORE",
+    "dialogue": {
+      "describe": "Финальная передача с объекта «Нулевой» — последнее предупреждение.",
+      "offer": "Последнее послание.  Прочти перед тем, как войти.",
+      "accepted": "Оно рядом.",
+      "rejected": "Ты уверен?",
+      "advice": "Оно лежит здесь, на башне.",
+      "inquire": "Нашёл финальную передачу?",
+      "success": "Теперь ты знаешь всё.  Иди.",
+      "success_lie": "Хорошо.",
+      "failure": "Передача потеряна."
+    }
+  },
+  {
+    "id": "MISSION_ECHO_13_ENTER_CORE",
+    "type": "mission_definition",
+    "name": { "str": "Эхо руин: Объект «Нулевой»" },
+    "description": "Ты знаешь всё.  Координаты получены, вход разблокирован, три кода в руках.\n\nОбъект «Нулевой» — источник катастрофы.  Внутри семь уровней.  Векслер открыл Разрыв намеренно.  Нейтрализуй генератор на нижнем уровне.\n\nВойди в объект «Апокалипсис» и закончи это.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 10,
+    "value": 50000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_special": "apoc_core",
+        "om_terrain": "apoc_core_entry",
+        "reveal_radius": 20
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты у порога объекта «Нулевой».\n\nЗа этой дверью — то, что изменило мир.  То, что позвало их.\n\nПора закрыть дверь.", "popup": true },
+        { "run_eocs": "eoc_echo_story_enter_core" }
+      ]
+    },
+    "dialogue": {
+      "describe": "Финальная миссия: войди в объект «Апокалипсис» и нейтрализуй его.",
+      "offer": "Координаты у тебя.  Иди к объекту «Нулевой».  Это финал.",
+      "accepted": "Всё готово.  Возврата нет.",
+      "rejected": "Ты уверен?  Там ещё никто не бывал и вернулся.",
+      "advice": "Держи все три кода.  Они понадобятся на нижнем уровне.",
+      "inquire": "Ты уже у объекта?",
+      "success": "Ты доберёшься.  Я в это верю.",
+      "success_lie": "Понятно.",
+      "failure": "Путь ещё не пройден."
+    }
+  }
+]

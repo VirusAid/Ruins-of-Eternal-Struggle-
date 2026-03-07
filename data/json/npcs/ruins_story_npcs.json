@@ -1,0 +1,134 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST",
+    "dynamic_line": "Слышишь меня?  Хорошо.  Я — Архивист.  Я знал, что кто-то рано или поздно найдёт этот сигнал.  Слушай внимательно — у нас мало времени.",
+    "responses": [
+      {
+        "text": "Кто ты такой и что происходит?",
+        "topic": "TALK_ECHO_ARCHIVIST_WHO"
+      },
+      {
+        "text": "Что за объект «Нулевой»?",
+        "topic": "TALK_ECHO_ARCHIVIST_OBJECT"
+      },
+      {
+        "text": "Что мне нужно сделать?",
+        "topic": "TALK_ECHO_ARCHIVIST_MISSION"
+      },
+      {
+        "text": "Кто такой Векслер?",
+        "condition": { "u_has_var": "echo_m4_done", "type": "u_val", "context": "storyline", "value": "yes" },
+        "topic": "TALK_ECHO_ARCHIVIST_VEKSLER"
+      },
+      {
+        "text": "Мне нужно идти.",
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST_WHO",
+    "dynamic_line": "Я работал архивариусом в объекте «Нулевой».  Ушёл за месяц до активации — что-то почувствовал.  Теперь передаю всё, что знаю, любому кто услышит.\n\nВсе остальные молчат.  Я — нет.",
+    "responses": [
+      {
+        "text": "Назад.",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST_OBJECT",
+    "dynamic_line": "Объект «Нулевой» — это не оружие и не убежище.  Это маяк.\n\nОни построили его, чтобы послать сигнал через Разрыв.  Куда-то, где нет расстояний и нет законов физики.\n\nВекслер называл это «следующим шагом».  Мы называем это концом света.",
+    "responses": [
+      {
+        "text": "Можно ли его выключить?",
+        "topic": "TALK_ECHO_ARCHIVIST_SHUTDOWN"
+      },
+      {
+        "text": "Назад.",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST_SHUTDOWN",
+    "dynamic_line": "Теоретически — да.  Генератор Разрыва находится на уровне шесть.  Ввод трёх кодов в последовательности α→β→γ инициирует цепную нейтрализацию.\n\nПрактически — тебе нужно добраться туда живым.  А это — другой вопрос.",
+    "responses": [
+      {
+        "text": "Я понял.  Спасибо.",
+        "effect": [
+          { "u_add_var": "echo_archivist_shutdown_info", "type": "u_val", "context": "storyline", "value": "yes" }
+        ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "Назад.",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST_MISSION",
+    "dynamic_line": "Найди дневник Орлова.  Потом — отчёт ГРОМ-7, журнал Малинова, архивный диск.  Три кода.\n\nКаждый шаг ведёт к следующему.  Когда у тебя всё — иди к объекту.\n\nУдачи.  Она тебе понадобится.",
+    "responses": [
+      {
+        "text": "Начну с поиска дневника.",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "Назад.",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_ARCHIVIST_VEKSLER",
+    "dynamic_line": "Куратор Векслер — идеолог всего этого.  Он верил, что катастрофа — эволюция.  Что Разрыв приведёт к контакту с чем-то высшим.\n\nМожет, он был прав.  Но цена слишком высока.\n\nЯ не знаю, жив ли он.  Но если войдёшь — встретишь его следы повсюду.",
+    "responses": [
+      {
+        "text": "Понятно.  Продолжу поиски.",
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "Назад.",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_ECHO_RADIO_VOICE",
+    "dynamic_line": "...шшш...  слышит меня кто-нибудь?...\n\n...я Архивист...  объект «Нулевой» всё ещё активен...  кто-то должен остановить это...\n\n...записи и координаты разбросаны...  ищи дневник Орлова...  начни с него...",
+    "responses": [
+      {
+        "text": "Кто ты?  Откуда сигнал?",
+        "topic": "TALK_ECHO_ARCHIVIST"
+      },
+      {
+        "text": "Понял.  Буду искать.",
+        "effect": [
+          { "u_add_var": "echo_radio_voice_heard", "type": "u_val", "context": "storyline", "value": "yes" }
+        ],
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "npc",
+    "id": "NPC_ECHO_ARCHIVIST",
+    "name_unique": "Архивист",
+    "gender": "male",
+    "name_suffix": "выживший архивариус",
+    "class": "NC_SURVIVOR",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_ECHO_ARCHIVIST",
+    "faction": "no_faction"
+  }
+]

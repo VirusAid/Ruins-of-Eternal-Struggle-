@@ -15,7 +15,10 @@
     "id": "ruins_echo_lore_group",
     "subtype": "distribution",
     "entries": [
-      { "item": "ruins_echo_note_lore", "prob": 100 }
+      { "item": "ruins_echo_note_lore", "prob": 70 },
+      { "item": "echo_journal_survivor", "prob": 15 },
+      { "item": "echo_radio_log", "prob": 10 },
+      { "item": "echo_shelter_manifest", "prob": 5 }
     ]
   },
   {
@@ -40,7 +43,25 @@
     "id": "ruins_echo_apoc_group",
     "subtype": "distribution",
     "entries": [
-      { "item": "ruins_echo_note_apoc", "prob": 100 }
+      { "item": "ruins_echo_note_apoc", "prob": 60 },
+      { "item": "echo_military_report", "prob": 20 },
+      { "item": "echo_scientists_log", "prob": 15 },
+      { "item": "echo_access_codes", "prob": 5 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_story_world_spawn",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "echo_journal_survivor", "prob": 20 },
+      { "item": "echo_radio_log", "prob": 15 },
+      { "item": "echo_scientists_log", "prob": 15 },
+      { "item": "echo_shelter_manifest", "prob": 15 },
+      { "item": "echo_military_report", "prob": 15 },
+      { "item": "echo_archive_disk", "prob": 5 },
+      { "item": "echo_access_codes", "prob": 8 },
+      { "item": "echo_final_transmission", "prob": 7 }
     ]
   },
   {

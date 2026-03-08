@@ -73,6 +73,41 @@
   },
   {
     "type": "effect_on_condition",
+    "id": "eoc_apoc_console_init",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      {
+        "u_message": "КОНСОЛЬ УПРАВЛЕНИЯ ЯДРОМ АПОКАЛИПСИСА\n\nСистема активна.  Ядро работает.\n\nИспользуйте другую консоль для выбора:\n  — УНИЧТОЖИТЬ ЯДРО\n  — ПОГЛОТИТЬ ЯДРО",
+        "popup": false
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_console_destroy",
+    "eoc_type": "ACTIVATION",
+    "condition": { "not": { "u_has_var": "apoc_finale_done", "value": "yes" } },
+    "effect": [
+      { "u_add_var": "apoc_finale_done", "value": "yes" },
+      { "u_add_var": "apoc_finale_choice", "value": "destroy" },
+      { "u_add_var": "echo_story_complete", "value": "yes" },
+      { "run_eocs": "eoc_apoc_good_ending" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_apoc_console_absorb",
+    "eoc_type": "ACTIVATION",
+    "condition": { "not": { "u_has_var": "apoc_finale_done", "value": "yes" } },
+    "effect": [
+      { "u_add_var": "apoc_finale_done", "value": "yes" },
+      { "u_add_var": "apoc_finale_choice", "value": "absorb" },
+      { "u_add_var": "echo_story_complete", "value": "yes" },
+      { "run_eocs": "eoc_apoc_bad_ending" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
     "id": "eoc_apoc_good_ending",
     "eoc_type": "ACTIVATION",
     "condition": { "u_has_var": "apoc_finale_choice", "value": "destroy" },

@@ -22,8 +22,8 @@
         "##########.#############",
         "#.........#............#",
         "#.........#............#",
-        "#....X....#....c.c.c...#",
-        "#.........#....c.c.c...#",
+        "#....X....#............#",
+        "#.........#............#",
         "#.........#............#",
         "##########.#############",
         "#......................#",
@@ -38,14 +38,38 @@
         "+": "t_door_c",
         "T": "t_thconc_floor",
         "X": "t_thconc_floor",
-        "c": "t_thconc_floor",
         "U": "t_stairs_up"
       },
       "furniture": {
         "T": "f_table",
-        "X": "f_rubble",
-        "c": "f_console"
+        "X": "f_rubble"
       },
+      "place_computers": [
+        {
+          "x": 14,
+          "y": 16,
+          "name": "Консоль — Статус Ядра",
+          "eocs": [ "eoc_apoc_console_init" ]
+        },
+        {
+          "x": 16,
+          "y": 16,
+          "name": "Консоль — УНИЧТОЖИТЬ ЯДРО",
+          "eocs": [ "eoc_apoc_console_destroy" ]
+        },
+        {
+          "x": 14,
+          "y": 17,
+          "name": "Консоль — ПОГЛОТИТЬ ЯДРО",
+          "eocs": [ "eoc_apoc_console_absorb" ]
+        },
+        {
+          "x": 16,
+          "y": 17,
+          "name": "Консоль — Статус Ядра",
+          "eocs": [ "eoc_apoc_console_init" ]
+        }
+      ],
       "place_monsters": [
         {
           "monster": "apoc_core_level5",

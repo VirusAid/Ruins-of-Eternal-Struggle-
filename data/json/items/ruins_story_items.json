@@ -66,7 +66,7 @@
     "description": "Поцарапанный CD-диск в сломанном пластиковом кейсе.  Маркер: АРХИВ  ОБЪЕКТ-0  ТОЛЬКО ДЛЯ КОМАНДОВАНИЯ.",
     "snippet_category": "echo_archive_disk",
     "material": [ "plastic" ],
-    "symbol": "",
+    "symbol": "*",
     "color": "cyan",
     "weight": "50 g",
     "volume": "50 ml"

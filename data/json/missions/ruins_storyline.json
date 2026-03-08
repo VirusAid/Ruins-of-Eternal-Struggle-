@@ -13,7 +13,7 @@
         { "u_spawn_item": "echo_journal_survivor", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "shelter",
+        "om_terrain": "evac_center_1",
         "reveal_radius": 3,
         "random": true,
         "search_range": 30,
@@ -41,7 +41,7 @@
         { "u_spawn_item": "echo_radio_log", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "shelter",
+        "om_terrain": "evac_center_1",
         "reveal_radius": 3,
         "random": true,
         "search_range": 35,
@@ -77,7 +77,7 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "shelter",
+        "om_terrain": "evac_center_1",
         "reveal_radius": 4,
         "random": true,
         "search_range": 40,
@@ -116,7 +116,7 @@
         { "u_spawn_item": "echo_scientists_log", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "shelter",
+        "om_terrain": "evac_center_1",
         "reveal_radius": 3,
         "random": true,
         "search_range": 40,
@@ -227,7 +227,7 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "bunker_basement_1",
+        "om_terrain": "bunker",
         "reveal_radius": 5,
         "random": true,
         "search_range": 80,
@@ -266,7 +266,7 @@
         { "u_spawn_item": "apoc_core_keycard", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "bunker_basement_1",
+        "om_terrain": "bunker",
         "reveal_radius": 5,
         "random": true,
         "search_range": 80,
@@ -302,7 +302,7 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "bunker_basement_1",
+        "om_terrain": "bunker",
         "reveal_radius": 5,
         "random": true,
         "search_range": 80,
@@ -341,7 +341,7 @@
         { "u_spawn_item": "echo_access_codes", "count": 3 }
       ],
       "assign_mission_target": {
-        "om_terrain": "bunker_basement_1",
+        "om_terrain": "bunker",
         "reveal_radius": 5,
         "random": true,
         "search_range": 80,
@@ -377,7 +377,7 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "station_radio",
+        "om_terrain": "radio_tower_north",
         "reveal_radius": 6,
         "random": true,
         "search_range": 100,
@@ -419,7 +419,7 @@
         { "u_spawn_item": "echo_final_transmission", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "station_radio",
+        "om_terrain": "radio_tower_north",
         "reveal_radius": 5,
         "random": true,
         "search_range": 100,

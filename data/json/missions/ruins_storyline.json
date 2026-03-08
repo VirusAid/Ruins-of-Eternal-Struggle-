@@ -238,6 +238,11 @@
     "difficulty": 5,
     "value": 8000,
     "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "apoc_core_keycard", "count": 1 }
+      ]
+    },
     "end": {
       "effect": [
         { "u_message": "Карта «Альфа» в руках.  Теперь нужен сам архивный диск — он где-то глубже в бункере.", "popup": true }

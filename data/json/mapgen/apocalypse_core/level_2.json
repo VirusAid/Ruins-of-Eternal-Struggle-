@@ -52,6 +52,14 @@
         "b": "f_chair",
         "B": "f_table"
       },
+      "place_computers": [
+        {
+          "x": 2,
+          "y": 1,
+          "name": "Уровень -2: Информация",
+          "eocs": [ "eoc_apoc_enter_level2" ]
+        }
+      ],
       "place_monsters": [
         {
           "monster": "apoc_core_level2",

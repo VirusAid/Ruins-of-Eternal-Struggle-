@@ -47,6 +47,14 @@
         "s": "f_locker",
         "B": "f_table"
       },
+      "place_computers": [
+        {
+          "x": 12,
+          "y": 13,
+          "name": "Уровень -1: Информация",
+          "eocs": [ "eoc_apoc_enter_level1" ]
+        }
+      ],
       "place_monsters": [
         {
           "monster": "apoc_core_level1",

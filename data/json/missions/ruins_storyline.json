@@ -13,11 +13,8 @@
         { "u_spawn_item": "echo_journal_survivor", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "evac_center_1",
+        "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 3,
-        "random": true,
-        "search_range": 30,
-        "min_distance": 3
       }
     },
     "end": {
@@ -41,11 +38,8 @@
         { "u_spawn_item": "echo_radio_log", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "evac_center_1",
+        "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 3,
-        "random": true,
-        "search_range": 35,
-        "min_distance": 3
       }
     },
     "end": {
@@ -77,11 +71,8 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "evac_center_1",
+        "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 4,
-        "random": true,
-        "search_range": 40,
-        "min_distance": 5
       }
     },
     "end": {
@@ -116,11 +107,8 @@
         { "u_spawn_item": "echo_scientists_log", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "evac_center_1",
+        "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 3,
-        "random": true,
-        "search_range": 40,
-        "min_distance": 5
       }
     },
     "end": {
@@ -152,11 +140,8 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "lab_core",
+        "om_terrain": "lab_core", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 60,
-        "min_distance": 10
       }
     },
     "end": {
@@ -191,11 +176,8 @@
         { "u_spawn_item": "echo_military_report", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "lab_core",
+        "om_terrain": "lab_core", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 4,
-        "random": true,
-        "search_range": 60,
-        "min_distance": 10
       }
     },
     "end": {
@@ -227,11 +209,8 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "bunker",
+        "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 80,
-        "min_distance": 15
       }
     },
     "end": {
@@ -266,11 +245,8 @@
         { "u_spawn_item": "apoc_core_keycard", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "bunker",
+        "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 80,
-        "min_distance": 15
       }
     },
     "end": {
@@ -302,11 +278,8 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "bunker",
+        "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 80,
-        "min_distance": 15
       }
     },
     "end": {
@@ -341,11 +314,8 @@
         { "u_spawn_item": "echo_access_codes", "count": 3 }
       ],
       "assign_mission_target": {
-        "om_terrain": "bunker",
+        "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 80,
-        "min_distance": 15
       }
     },
     "end": {
@@ -377,11 +347,8 @@
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "assign_mission_target": {
-        "om_terrain": "radio_tower_north",
+        "om_terrain": "radio_tower", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 6,
-        "random": true,
-        "search_range": 100,
-        "min_distance": 20
       },
       "effect": [
         { "u_spawn_item": "echo_beacon_key", "count": 1 }
@@ -419,11 +386,8 @@
         { "u_spawn_item": "echo_final_transmission", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "radio_tower_north",
+        "om_terrain": "radio_tower", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5,
-        "random": true,
-        "search_range": 100,
-        "min_distance": 20
       }
     },
     "end": {

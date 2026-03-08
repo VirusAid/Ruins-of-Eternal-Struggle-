@@ -13,10 +13,10 @@
         { "u_spawn_item": "echo_journal_survivor", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "house",
+        "om_terrain": "shelter",
         "reveal_radius": 3,
         "random": true,
-        "search_range": 20,
+        "search_range": 30,
         "min_distance": 3
       }
     },
@@ -41,10 +41,10 @@
         { "u_spawn_item": "echo_radio_log", "count": 1 }
       ],
       "assign_mission_target": {
-        "om_terrain": "house",
+        "om_terrain": "shelter",
         "reveal_radius": 3,
         "random": true,
-        "search_range": 25,
+        "search_range": 35,
         "min_distance": 3
       }
     },

@@ -1,6 +1,20 @@
 ﻿[
   {
     "type": "effect_on_condition",
+    "id": "eoc_echo_game_start",
+    "eoc_type": "ACTIVATION",
+    "condition": { "not": { "u_has_var": "echo_intro_shown", "value": "yes" } },
+    "effect": [
+      { "u_add_var": "echo_intro_shown", "value": "yes" },
+      {
+        "u_message": "ЭХО РУИН\n\nТы нашёл потрёпанный дневник среди обломков.\nПоследние записи выжившего обрываются на середине фразы — но одно имя повторяется снова и снова: ОБЪЕКТ НУЛЕВОЙ.\n\nРадиосигнал.  Секретный проект.  Что-то сломало мир.\n\n════════════════════════\nПроверь ЖУРНАЛ МИССИЙ (J) — там ждёт первое задание.\nПрочти дневник в инвентаре (i) — он укажет путь.\n════════════════════════",
+        "popup": true
+      },
+      { "u_spawn_item": "echo_journal_survivor", "count": 1 }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
     "id": "eoc_echo_story_enter_core",
     "eoc_type": "ACTIVATION",
     "condition": { "not": { "u_has_var": "echo_story_core_entered", "value": "yes" } },

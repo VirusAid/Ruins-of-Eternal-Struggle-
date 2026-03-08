@@ -6,6 +6,7 @@
     "name": { "str": "замусоленный дневник", "str_pl": "замусоленные дневники" },
     "description": "Потрёпанная записная книжка.  Чернила размыты, но текст ещё читаем.  Последние страницы вырваны.",
     "snippet_category": "echo_survivor_diary",
+    "use_action": "note_read",
     "weight": "200 g",
     "volume": "250 ml",
     "looks_like": "survnote"
@@ -17,6 +18,7 @@
     "name": { "str": "распечатка радиоперехвата", "str_pl": "распечатки радиоперехватов" },
     "description": "Сложенный лист бумаги с последовательностью точек и тире.  Внизу — частичная расшифровка.  Частота: 144.300 МГц.",
     "snippet_category": "echo_radio_log",
+    "use_action": "note_read",
     "weight": "50 g",
     "volume": "100 ml",
     "looks_like": "survnote"
@@ -28,6 +30,7 @@
     "name": { "str": "журнал учёного А.М.", "str_pl": "журналы учёного А.М." },
     "description": "Научный дневник плотной кожаной обложки.  На титульном листе инициалы «А. Малинов».  Страницы заполнены схемами, формулами и тревожными заметками.",
     "snippet_category": "echo_scientist_log",
+    "use_action": "note_read",
     "weight": "350 g",
     "volume": "500 ml",
     "looks_like": "survnote"
@@ -39,6 +42,7 @@
     "name": { "str": "манифест убежища Д-7", "str_pl": "манифесты убежища Д-7" },
     "description": "Официальный документ с угловым штампом: «СЕКРЕТНО».  Список персонала убежища Д-7.  На последней странице — исправленный набросок карты.",
     "snippet_category": "echo_shelter_manifest",
+    "use_action": "note_read",
     "weight": "80 g",
     "volume": "150 ml",
     "looks_like": "survnote"
@@ -50,6 +54,7 @@
     "name": { "str": "военный отчёт «ГРОМ-7»", "str_pl": "военные отчёты «ГРОМ-7»" },
     "description": "Ламинированный военный документ с красным грифом «ДСП».  Шифр операции: ГРОМ-7.  Упоминается объект с кодовым названием «Нулевой».  Координаты замазаны.",
     "snippet_category": "echo_military_log",
+    "use_action": "note_read",
     "weight": "120 g",
     "volume": "200 ml",
     "looks_like": "survnote"
@@ -61,6 +66,7 @@
     "name": { "str": "архивный диск «ОБЪЕКТ-0»", "str_pl": "архивные диски «ОБЪЕКТ-0»" },
     "description": "Поцарапанный CD-диск в сломанном пластиковом кейсе.  Маркер: «АРХИВ — ОБЪЕКТ-0 — ТОЛЬКО ДЛЯ КОМАНДОВАНИЯ».  Данные можно считать.",
     "snippet_category": "echo_archive_disk",
+    "use_action": "note_read",
     "weight": "50 g",
     "volume": "50 ml",
     "looks_like": "survnote"
@@ -72,6 +78,7 @@
     "name": { "str": "лист с кодами доступа", "str_pl": "листы с кодами доступа" },
     "description": "Жёлтый листок с колонками цифровых кодов.  Каждый помечен буквой греческого алфавита.  Рядом написано чьей-то рукой: «Три ключа открывают ворота».",
     "snippet_category": "echo_access_codes",
+    "use_action": "note_read",
     "weight": "30 g",
     "volume": "50 ml",
     "looks_like": "survnote"
@@ -83,6 +90,7 @@
     "name": { "str": "ключ активации маяка", "str_pl": "ключи активации маяка" },
     "description": "Металлическая пластина с выгравированным кодом.  Назначение: активация системы наведения объекта «Нулевой».  На обратной стороне — предупреждение об опасности.",
     "snippet_category": "echo_beacon_log",
+    "use_action": "note_read",
     "weight": "80 g",
     "volume": "100 ml",
     "looks_like": "survnote"
@@ -94,6 +102,7 @@
     "name": { "str": "финальная передача", "str_pl": "финальные передачи" },
     "description": "Распечатка последней радиопередачи с объекта «Нулевой».  Дата отправки: за 6 дней до Катастрофы.  Текст обрывается на полуслове.",
     "snippet_category": "echo_final_transmission",
+    "use_action": "note_read",
     "weight": "50 g",
     "volume": "100 ml",
     "looks_like": "survnote"

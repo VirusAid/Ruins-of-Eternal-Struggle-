@@ -1,6 +1,6 @@
 [
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_journal_survivor",
     "name": { "str": "замусоленный дневник", "str_pl": "замусоленные дневники" },
     "description": "Потрёпанная записная книжка.  Чернила размыты, но текст ещё читаем.  Последние страницы вырваны.",
@@ -9,11 +9,10 @@
     "symbol": "?",
     "color": "brown",
     "weight": "200 g",
-    "volume": "250 ml",
-    "looks_like": "survnote"
+    "volume": "250 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_radio_log",
     "name": { "str": "распечатка радиоперехвата", "str_pl": "распечатки радиоперехватов" },
     "description": "Сложенный лист бумаги с последовательностью точек и тире.  Внизу  частичная расшифровка.  Частота: 144.300 МГц.",
@@ -22,24 +21,22 @@
     "symbol": "?",
     "color": "white",
     "weight": "50 g",
-    "volume": "100 ml",
-    "looks_like": "survnote"
+    "volume": "100 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_scientists_log",
     "name": { "str": "журнал учёного А.М.", "str_pl": "журналы учёного А.М." },
     "description": "Научный дневник плотной кожаной обложки.  На титульном листе инициалы А. Малинов.  Страницы заполнены схемами, формулами и тревожными заметками.",
     "snippet_category": "echo_scientist_log",
-    "material": [ "paper", "leather" ],
+    "material": [ "paper" ],
     "symbol": "?",
     "color": "brown",
     "weight": "350 g",
-    "volume": "500 ml",
-    "looks_like": "survnote"
+    "volume": "500 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_shelter_manifest",
     "name": { "str": "манифест убежища Д-7", "str_pl": "манифесты убежища Д-7" },
     "description": "Официальный документ с угловым штампом: СЕКРЕТНО.  Список персонала убежища Д-7.  На последней странице  исправленный набросок карты.",
@@ -48,11 +45,10 @@
     "symbol": "?",
     "color": "white",
     "weight": "80 g",
-    "volume": "150 ml",
-    "looks_like": "survnote"
+    "volume": "150 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_military_report",
     "name": { "str": "военный отчёт ГРОМ-7", "str_pl": "военные отчёты ГРОМ-7" },
     "description": "Ламинированный военный документ с красным грифом ДСП.  Шифр операции: ГРОМ-7.  Упоминается объект с кодовым названием Нулевой.",
@@ -61,11 +57,10 @@
     "symbol": "?",
     "color": "light_red",
     "weight": "120 g",
-    "volume": "200 ml",
-    "looks_like": "survnote"
+    "volume": "200 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_archive_disk",
     "name": { "str": "архивный диск ОБЪЕКТ-0", "str_pl": "архивные диски ОБЪЕКТ-0" },
     "description": "Поцарапанный CD-диск в сломанном пластиковом кейсе.  Маркер: АРХИВ  ОБЪЕКТ-0  ТОЛЬКО ДЛЯ КОМАНДОВАНИЯ.",
@@ -74,11 +69,10 @@
     "symbol": "",
     "color": "cyan",
     "weight": "50 g",
-    "volume": "50 ml",
-    "looks_like": "survnote"
+    "volume": "50 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_access_codes",
     "name": { "str": "лист с кодами доступа", "str_pl": "листы с кодами доступа" },
     "description": "Жёлтый листок с колонками цифровых кодов.  Каждый помечен буквой греческого алфавита.  Рядом написано чьей-то рукой: Три ключа открывают ворота.",
@@ -87,11 +81,10 @@
     "symbol": "?",
     "color": "yellow",
     "weight": "30 g",
-    "volume": "50 ml",
-    "looks_like": "survnote"
+    "volume": "50 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_beacon_key",
     "name": { "str": "ключ активации маяка", "str_pl": "ключи активации маяка" },
     "description": "Металлическая пластина с выгравированным кодом.  Назначение: активация системы наведения объекта Нулевой.",
@@ -100,11 +93,10 @@
     "symbol": "!",
     "color": "light_cyan",
     "weight": "80 g",
-    "volume": "100 ml",
-    "looks_like": "survnote"
+    "volume": "100 ml"
   },
   {
-    "type": "GENERIC",
+    "type": "ITEM",
     "id": "echo_final_transmission",
     "name": { "str": "финальная передача", "str_pl": "финальные передачи" },
     "description": "Распечатка последней радиопередачи с объекта Нулевой.  Дата отправки: за 6 дней до Катастрофы.",
@@ -113,7 +105,6 @@
     "symbol": "?",
     "color": "light_red",
     "weight": "50 g",
-    "volume": "100 ml",
-    "looks_like": "survnote"
+    "volume": "100 ml"
   }
 ]

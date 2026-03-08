@@ -125,7 +125,7 @@
     "name_unique": "Архивист",
     "gender": "male",
     "name_suffix": "выживший архивариус",
-    "class": "NC_SURVIVOR",
+    "class": "NC_SCAVENGER_STATIC",
     "attitude": 0,
     "mission": 7,
     "chat": "TALK_ECHO_ARCHIVIST",

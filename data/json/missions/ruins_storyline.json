@@ -14,7 +14,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 3,
+        "reveal_radius": 3
       }
     },
     "end": {
@@ -39,7 +39,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 3,
+        "reveal_radius": 3
       }
     },
     "end": {
@@ -72,7 +72,7 @@
     "start": {
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 4,
+        "reveal_radius": 4
       }
     },
     "end": {
@@ -108,7 +108,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 3,
+        "reveal_radius": 3
       }
     },
     "end": {
@@ -141,7 +141,7 @@
     "start": {
       "assign_mission_target": {
         "om_terrain": "lab_core", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {
@@ -177,7 +177,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "lab_core", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 4,
+        "reveal_radius": 4
       }
     },
     "end": {
@@ -210,7 +210,7 @@
     "start": {
       "assign_mission_target": {
         "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {
@@ -246,7 +246,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {
@@ -279,7 +279,7 @@
     "start": {
       "assign_mission_target": {
         "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {
@@ -315,7 +315,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {
@@ -348,7 +348,7 @@
     "start": {
       "assign_mission_target": {
         "om_terrain": "radio_tower", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 6,
+        "reveal_radius": 6
       },
       "effect": [
         { "u_spawn_item": "echo_beacon_key", "count": 1 }
@@ -387,7 +387,7 @@
       ],
       "assign_mission_target": {
         "om_terrain": "radio_tower", "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 5,
+        "reveal_radius": 5
       }
     },
     "end": {

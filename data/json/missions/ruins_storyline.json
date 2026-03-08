@@ -3,20 +3,26 @@
     "id": "MISSION_ECHO_01_FIRST_TRACES",
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Первый след" },
-    "description": "Среди обломков ты нашёл потрёпанный дневник.  Рукопись прерывается на полуслове, но упоминает какой-то сигнал на востоке и «объект» на карте.  Прочти его.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_journal_survivor",
+    "description": "Среди обломков ты нашёл потрёпанный дневник выжившего.  Рукопись прерывается на полуслове, но упоминает сигнал на востоке и «объект» на карте.  Прочти его — и двигайся на восток.",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 1,
     "value": 1000,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_journal_survivor", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 20,
+        "min_distance": 3
+      }
     },
     "end": {
       "effect": [
-        { "u_message": "Записи обрываются, но ты чувствуешь — за этим стоит что-то большее.  Дневник упоминает радиопередатчик в доме на холме.", "popup": true }
+        { "u_message": "Дневник упоминает радиопередатчик в доме на холме.  Пора искать дальше.", "popup": true }
       ]
     },
     "followup": "MISSION_ECHO_02_RADIO_LOG"
@@ -26,15 +32,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Сигнал в эфире" },
     "description": "Дневник Орлова упоминает морзянку на частоте 144.300 МГц и распечатку перехвата в доме на холме.  Найди эту распечатку.  В ней — координаты.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_radio_log",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 2,
     "value": 2000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_radio_log", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 25,
+        "min_distance": 3
+      }
     },
     "end": {
       "effect": [
@@ -95,15 +107,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Журнал учёного" },
     "description": "В убежище упоминался учёный Алексей Малинов.  Он вёл записи о проекте «Рассвет» — эксперименте, который мог стать причиной катастрофы.  Найди его журнал.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_scientists_log",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 3,
     "value": 4000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_scientists_log", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "shelter",
+        "reveal_radius": 3,
+        "random": true,
+        "search_range": 40,
+        "min_distance": 5
+      }
     },
     "end": {
       "effect": [
@@ -164,15 +182,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Отчёт «ГРОМ-7»" },
     "description": "Военный отчёт «ГРОМ-7» должен быть где-то в лаборатории или рядом.  Он содержит часть координат объекта «Нулевой» и упоминает бункер «Сова».",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_military_report",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 4,
     "value": 6000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_military_report", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "reveal_radius": 4,
+        "random": true,
+        "search_range": 60,
+        "min_distance": 10
+      }
     },
     "end": {
       "effect": [
@@ -233,15 +257,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Карта доступа «Альфа»" },
     "description": "Для доступа к архиву бункера нужна карта уровня «Альфа».  Она должна находиться в бункере или рядом с ним.  Найди её.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "apoc_core_keycard",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 5,
     "value": 8000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "apoc_core_keycard", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "bunker_basement_1",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 80,
+        "min_distance": 15
+      }
     },
     "end": {
       "effect": [
@@ -266,11 +296,19 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Архивный диск «ОБЪЕКТ-0»" },
     "description": "Архивный диск с координатами объекта «Нулевой» хранится в глубине бункера.  Найди его — это ключ к местонахождению источника катастрофы.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "apoc_core_data_disk",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 6,
     "value": 9000,
     "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "bunker_basement_1",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 80,
+        "min_distance": 15
+      }
+    },
     "end": {
       "effect": [
         { "u_message": "Диск найден.  На нём — полные координаты и протокол нейтрализации объекта «Нулевой».  Нужны три кода доступа серии ΑΒΓ, рассеянных по всему региону.", "popup": true }
@@ -294,16 +332,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Три ключа от ворот" },
     "description": "Диск расшифрован.  Для нейтрализации объекта нужны три листа с кодами доступа серии ΑΒΓ.  Они были намеренно рассеяны по разным тайникам — собери все три.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_access_codes",
-    "count": 3,
+    "goal": "MGOAL_GO_TO",
     "difficulty": 6,
     "value": 10000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_access_codes", "count": 3 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "bunker_basement_1",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 80,
+        "min_distance": 15
+      }
     },
     "end": {
       "effect": [
@@ -367,15 +410,21 @@
     "type": "mission_definition",
     "name": { "str": "Эхо руин: Последнее послание" },
     "description": "На радиобашне осталась распечатка последней передачи с объекта «Нулевой».  В ней — предупреждение о том, что сделал куратор Векслер.  Прочти это, прежде чем войти.",
-    "goal": "MGOAL_FIND_ITEM",
-    "item": "echo_final_transmission",
+    "goal": "MGOAL_GO_TO",
     "difficulty": 7,
     "value": 12000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
       "effect": [
         { "u_spawn_item": "echo_final_transmission", "count": 1 }
-      ]
+      ],
+      "assign_mission_target": {
+        "om_terrain": "station_radio",
+        "reveal_radius": 5,
+        "random": true,
+        "search_range": 100,
+        "min_distance": 20
+      }
     },
     "end": {
       "effect": [

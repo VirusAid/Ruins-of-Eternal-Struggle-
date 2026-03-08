@@ -1,0 +1,18 @@
+[
+  {
+    "type": "scenario",
+    "id": "ruins_echo_seeker",
+    "name": "Эхо руин",
+    "points": 0,
+    "description": "Среди обломков ты нашёл потрёпанный дневник.  В нём — последние записи выжившего, упоминание странного сигнала на востоке и координаты некоего объекта.  Что-то случилось здесь.  Ты намерен это выяснить.",
+    "allowed_locs": [
+      "sloc_house",
+      "sloc_house_boarded",
+      "sloc_shelter_a",
+      "sloc_shelter_b",
+      "sloc_shelter_c"
+    ],
+    "start_name": "Дом на окраине",
+    "missions": [ "MISSION_ECHO_01_FIRST_TRACES" ]
+  }
+]

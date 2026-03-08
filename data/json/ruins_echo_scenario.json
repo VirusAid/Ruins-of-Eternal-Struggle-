@@ -13,7 +13,6 @@
       "sloc_shelter_c"
     ],
     "start_name": "Дом на окраине",
-    "missions": [ "MISSION_ECHO_01_FIRST_TRACES" ],
-    "eocs": [ "eoc_echo_game_start" ]
+    "missions": [ "MISSION_ECHO_01_FIRST_TRACES" ]
   }
 ]

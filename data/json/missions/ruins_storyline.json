@@ -9,6 +9,10 @@
     "value": 1000,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
+      "effect": [
+        { "run_eocs": "eoc_echo_game_start" },
+        { "u_spawn_item": "echo_journal_survivor", "count": 1 }
+      ],
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 3

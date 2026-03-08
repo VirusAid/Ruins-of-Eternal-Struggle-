@@ -90,8 +90,8 @@
     "effect": [
       { "u_add_var": "apoc_finale_done", "value": "yes" },
       { "u_add_var": "apoc_finale_choice", "value": "destroy" },
-      { "u_add_var": "echo_story_complete", "value": "yes" },
-      { "run_eocs": "eoc_apoc_good_ending" }
+      { "run_eocs": "eoc_apoc_good_ending" },
+      { "run_eocs": "eoc_echo_story_complete" }
     ]
   },
   {
@@ -102,8 +102,8 @@
     "effect": [
       { "u_add_var": "apoc_finale_done", "value": "yes" },
       { "u_add_var": "apoc_finale_choice", "value": "absorb" },
-      { "u_add_var": "echo_story_complete", "value": "yes" },
-      { "run_eocs": "eoc_apoc_bad_ending" }
+      { "run_eocs": "eoc_apoc_bad_ending" },
+      { "run_eocs": "eoc_echo_story_complete" }
     ]
   },
   {

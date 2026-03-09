@@ -74,6 +74,9 @@
     "value": 3000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
+      "effect": [
+        { "u_spawn_item": "echo_shelter_manifest", "count": 1 }
+      ],
       "assign_mission_target": {
         "om_terrain": "evac_center_1", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 4
@@ -283,6 +286,9 @@
     "value": 9000,
     "origins": [ "ORIGIN_SECONDARY" ],
     "start": {
+      "effect": [
+        { "u_spawn_item": "echo_archive_disk", "count": 1 }
+      ],
       "assign_mission_target": {
         "om_terrain": "bunker", "om_terrain_match_type": "PREFIX",
         "reveal_radius": 5

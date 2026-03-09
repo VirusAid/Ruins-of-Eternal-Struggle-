@@ -3931,7 +3931,6 @@
       { "level": 3, "name": "dodge" }
     ],
     "proficiencies": [ "prof_knives_familiar", "prof_knives_pro", "prof_unarmed_familiar", "prof_unarmed_pro", "prof_shivs_familiar" ],
-    "effect_on_conditions": [ "scenario_assassin_conv" ],
     "items": {
       "both": {
         "entries": [

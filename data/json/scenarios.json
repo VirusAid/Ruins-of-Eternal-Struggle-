@@ -1217,6 +1217,7 @@
     ],
     "start_name": "Abandoned Building",
     "professions": [ "roes_lone_wanderer", "vagabond", "unemployed" ],
+    "missions": [ "ROES_WANDERER_01_SIGNAL" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1233,6 +1234,7 @@
     ],
     "start_name": "Fortified Shelter",
     "professions": [ "roes_last_guardian" ],
+    "missions": [ "ROES_GUARDIAN_01_PERIMETER" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1251,6 +1253,7 @@
     "forbidden_traits": [ "TOUGH", "DISRESISTANT" ],
     "professions": [ "roes_infected_survivor", "unemployed" ],
     "eoc": [ "roes_infected_survivor_eoc" ],
+    "missions": [ "ROES_INFECTED_01_MEDS" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1269,6 +1272,7 @@
     "start_name": "Dark Building",
     "forced_traits": [ "NIGHTVISION" ],
     "professions": [ "roes_shadow_looter", "burglar", "unemployed" ],
+    "missions": [ "ROES_LOOTER_01_TARGET" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1285,6 +1289,7 @@
     ],
     "start_name": "Makeshift Clinic",
     "professions": [ "roes_field_medic", "medic", "unemployed" ],
+    "missions": [ "ROES_MEDIC_01_CALL" ],
     "flags": [ "CITY_START", "LONE_START" ]
   },
   {
@@ -1298,6 +1303,7 @@
     ],
     "start_name": "Old Garage",
     "professions": [ "roes_wasteland_mechanic", "mechanic", "unemployed" ],
+    "missions": [ "ROES_MECHANIC_01_PARTS" ],
     "flags": [ "CITY_START", "LONE_START" ]
   }
 ]

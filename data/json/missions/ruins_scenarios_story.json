@@ -1,0 +1,1119 @@
+[
+  {
+    "id": "ROES_WANDERER_01_SIGNAL",
+    "type": "mission_definition",
+    "name": { "str": "Скиталец: Голос в пустоте" },
+    "description": "Среди молчания руин ты уловил слабый сигнал на волне 157.5.  Кто-то вышел на связь.  Может, просто автоматика.  Может — нет.  Ближайшая радиовышка отмечена на карте.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 1000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "ОДИНОЧНЫЙ ПУТЬ\n\nТы шёл уже несколько дней.  Без цели — просто движение вперёд.  Лучше двигаться, чем стоять.\n\nНо сейчас в наушниках рации — слабый сигнал.  Не автоматика.  Человеческий голос.  Прерывистый.  Испуганный.\n\n«...если кто слышит...  сектор семь...  нас мало...  приходи...»\n\nСигнал исходит с радиовышки к востоку.\n\n— Записка с частотой в твоём инвентаре.\n— Ближайшая радиовышка отмечена на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "wanderer_radio_note", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "radio_tower",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Вышка найдена.  Антенна живая — кто-то обслуживал её совсем недавно.  На полу — записка и направление.  Они живы.  Им нужна помощь.", "popup": true }
+      ]
+    },
+    "followup": "ROES_WANDERER_02_CAMP"
+  },
+  {
+    "id": "ROES_WANDERER_02_CAMP",
+    "type": "mission_definition",
+    "name": { "str": "Скиталец: Живые в руинах" },
+    "description": "Записка с вышки указывает на лагерь выживших.  Небольшая группа, не уходят — что-то их держит.  Найди их.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "wanderer_survivor_diary", "count": 1 },
+        { "u_message": "На вышке ты нашёл чей-то блокнот.  Адрес лагеря и короткие записи — почему они не могут уйти.  Почему не хотят уходить.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Добрался.  Их семеро — вооружены слабо, напуганы сильно.  Каждую неделю к ним приходят трое с оружием и забирают половину запасов.  Называют это «платой за безопасность».", "popup": true }
+      ]
+    },
+    "followup": "ROES_WANDERER_03_TRIBUTE",
+    "dialogue": {
+      "describe": "Блокнот выжившего с адресом и историей лагеря.",
+      "offer": "В блокноте — их место.  Иди к ним.",
+      "accepted": "Им нужна помощь.",
+      "rejected": "Хорошо.",
+      "advice": "Лагерь рядом с убежищем или крупным зданием.",
+      "inquire": "Нашёл лагерь?",
+      "success": "Значит, они живы.  Хорошо.",
+      "success_lie": "Понятно.",
+      "failure": "Может, перебрались."
+    }
+  },
+  {
+    "id": "ROES_WANDERER_03_TRIBUTE",
+    "type": "mission_definition",
+    "name": { "str": "Скиталец: Цена защиты" },
+    "description": "Группа выживших платит «дань» вооружённым людям.  Сборщики уходят на север.  Следуй за их маршрутом — найди, где они прячутся.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Выжившие описали маршрут: сборщики всегда уходят на север, за торговый квартал.  Там должно быть место для передышки или хранения.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "mall",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Следы временного лагеря за торговым центром.  Обгорелые бочки, гильзы, следы нескольких человек.  Они уходили на восток — к военной базе или укреплённому зданию.", "popup": true }
+      ]
+    },
+    "followup": "ROES_WANDERER_04_DEN",
+    "dialogue": {
+      "describe": "Маршрут сборщиков ведёт на север.",
+      "offer": "Следуй за ними.  Узнай откуда они.",
+      "accepted": "Осторожно — они вооружены.",
+      "rejected": "Твоё право.",
+      "advice": "Ищи следы лагеря у крупных зданий.",
+      "inquire": "Выследил их?",
+      "success": "Хорошая работа.  Что дальше?",
+      "success_lie": "Понятно.",
+      "failure": "Продолжай поиск."
+    }
+  },
+  {
+    "id": "ROES_WANDERER_04_DEN",
+    "type": "mission_definition",
+    "name": { "str": "Скиталец: Логово волков" },
+    "description": "Следы ведут к военной базе или укреплённому зданию.  Там — главная база группировки.  Разведай или нейтрализуй угрозу.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 5000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "wanderer_bandit_ledger", "count": 1 },
+        { "u_message": "На месте временного лагеря ты нашёл бухгалтерский журнал — список «точек» и «объёмов».  Выжившие — не единственные жертвы.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "mil_base",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "База пала.  Угроза устранена.  Но легче от этого не стало — лагерь выживших всё ещё там.  Они должны узнать, что всё кончено.", "popup": true }
+      ]
+    },
+    "followup": "ROES_WANDERER_05_END",
+    "dialogue": {
+      "describe": "База группировки, собирающей дань с выживших.",
+      "offer": "Логово найдено.  Твой ход.",
+      "accepted": "Их человек пять-шесть.  Будь готов.",
+      "rejected": "Понятно.",
+      "advice": "Военные базы хорошо укреплены.  Планируй заранее.",
+      "inquire": "Взял базу?",
+      "success": "Они больше не угроза.",
+      "success_lie": "Хорошо.",
+      "failure": "Слишком сильная охрана?"
+    }
+  },
+  {
+    "id": "ROES_WANDERER_05_END",
+    "type": "mission_definition",
+    "name": { "str": "Скиталец: Дорога или дом" },
+    "description": "Угроза устранена.  Выжившие в лагере ждут вестей.  Вернись к ним.  Может, остановишься.  Или нет — дорога не ждёт.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Ты можешь вернуться.  Или продолжить идти.  Но они должны знать — угрозы больше нет.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты вернулся.  Сказал им.  Они молчали долго.  Потом старший произнёс: «Можешь остаться.  Если захочешь.»\n\nТы шёл в одиночку очень долго.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Лагерь выживших ждёт тебя.",
+      "offer": "Вернись.  Скажи им, что всё кончено.",
+      "accepted": "Это важно для них.",
+      "rejected": "Как знаешь.",
+      "advice": "Ты уже знаешь, где они.",
+      "inquire": "Вернулся к выжившим?",
+      "success": "Ты сделал это.  Не ради выгоды — просто потому что надо.",
+      "success_lie": "Хорошо.",
+      "failure": "В другой раз."
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_GUARDIAN_01_PERIMETER",
+    "type": "mission_definition",
+    "name": { "str": "Страж: Пустые залы" },
+    "description": "Убежище пусто.  Ты последний.  Осмотри укрепления снаружи — узнай, что случилось с теми, кто стоял здесь рядом с тобой.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 1000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "ПОСЛЕДНИЙ СТРАЖ\n\nОни уходили по одному.  Кто на задание, кто просто в ночь.  Ты оставался.  Всегда оставался.\n\nСейчас в убежище нет никого.  Ни мёртвых, ни живых.  Только пустые койки и твоя клятва.\n\nЧто случилось с ними?\n\n— Последняя записка командира в твоём инвентаре.\n— Ближайшее здание для осмотра отмечено на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "guardian_last_orders", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 2
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Укрепления снаружи разрушены не зомби — изнутри.  Несколько гильз.  Следы борьбы.  Кто-то из своих уходил с боем.  Или бежал.", "popup": true }
+      ]
+    },
+    "followup": "ROES_GUARDIAN_02_TRAIL"
+  },
+  {
+    "id": "ROES_GUARDIAN_02_TRAIL",
+    "type": "mission_definition",
+    "name": { "str": "Страж: Первые ушедшие" },
+    "description": "Следы от ворот уходят на восток.  Трое ушли первыми — несколько дней назад.  Найди, что с ними случилось.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Следы ведут к жилому кварталу.  Если они шли за припасами — логичный маршрут.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Нашёл одного из них.  Мёртв — но не от зубов.  В кармане — записка, адресованная тебе лично.  Читай.", "popup": true }
+      ]
+    },
+    "followup": "ROES_GUARDIAN_03_ORDERS",
+    "dialogue": {
+      "describe": "Следы первой группы уходят на восток.",
+      "offer": "Найди их.  Узнай, что случилось.",
+      "accepted": "Иди.",
+      "rejected": "Хорошо.",
+      "advice": "Ищи в жилых домах — они шли за припасами.",
+      "inquire": "Нашёл следы группы?",
+      "success": "Что с ними?",
+      "success_lie": "Понятно.",
+      "failure": "Продолжай искать."
+    }
+  },
+  {
+    "id": "ROES_GUARDIAN_03_ORDERS",
+    "type": "mission_definition",
+    "name": { "str": "Страж: Призрак командира" },
+    "description": "В записке — упоминание «особого приказа» командира.  Тайник где-то рядом с промышленным кварталом.  Найди его — там последняя воля командира.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "guardian_deserters_note", "count": 1 },
+        { "u_message": "В кармане погибшего — записка.  Она написана не тебе.  Она написана тому, кто захочет знать правду.  Что приказал командир?", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "mil_base",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Тайник найден.  Папка с документами.  Командир отправил группу с заданием, заведомо невыполнимым.  Это была ловушка — или безрассудство.", "popup": true }
+      ]
+    },
+    "followup": "ROES_GUARDIAN_04_WITNESS",
+    "dialogue": {
+      "describe": "Тайник с документами командира.",
+      "offer": "Записка указывает на тайник.  Найди его.",
+      "accepted": "Ты должен знать правду.",
+      "rejected": "Твоё право.",
+      "advice": "Военные и промышленные здания — место для тайников.",
+      "inquire": "Нашёл тайник?",
+      "success": "Что там было?",
+      "success_lie": "Понятно.",
+      "failure": "Продолжай искать."
+    }
+  },
+  {
+    "id": "ROES_GUARDIAN_04_WITNESS",
+    "type": "mission_definition",
+    "name": { "str": "Страж: Тот, кто видел" },
+    "description": "Документы упоминают одного, кто ушёл раньше всех и знал о приказе.  Если он выжил — ищи его в ближайшем убежище.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 4000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "В документах — имя.  Рядовой Саенко.  Он ушёл первым.  Возможно — потому что знал, что будет дальше.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Саенко там.  Живой.  Когда ты назвал своё имя, он долго молчал.  Потом сказал всё.\n\nКомандир намеренно отправил слабых.  Хотел сохранить запасы для себя.  Трусость, замаскированная под приказ.", "popup": true }
+      ]
+    },
+    "followup": "ROES_GUARDIAN_05_OATH",
+    "dialogue": {
+      "describe": "Единственный свидетель — рядовой Саенко.",
+      "offer": "Найди его.  Он всё видел.",
+      "accepted": "Он напуган.  Будь мягок.",
+      "rejected": "Понятно.",
+      "advice": "Выжившие ищут убежища в безопасных местах.",
+      "inquire": "Нашёл Саенко?",
+      "success": "Что он рассказал?",
+      "success_lie": "Хорошо.",
+      "failure": "Может, ушёл дальше."
+    }
+  },
+  {
+    "id": "ROES_GUARDIAN_05_OATH",
+    "type": "mission_definition",
+    "name": { "str": "Страж: Вес клятвы" },
+    "description": "Правда открыта.  Командир предал их.  Вернись к воротам убежища — реши, что делать с этим знанием.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "guardian_evidence_letter", "count": 1 },
+        { "u_message": "Саенко отдал тебе последнее письмо командира.  В нём — правда.  И признание.  Теперь — твоё решение.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты вернулся к воротам убежища.  Стоишь.  Смотришь на пустые стены.\n\nКлятва была — защищать.  Не командиров.  Не приказы.  Людей.\n\nЛюдей больше нет здесь.  Но где-то — есть.\n\nМожет, пора найти новый пост.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Финал пути стража.",
+      "offer": "Вернись к убежищу.  Закрой этот круг.",
+      "accepted": "Это важно.",
+      "rejected": "Понятно.",
+      "advice": "Ты знаешь дорогу домой.",
+      "inquire": "Вернулся?",
+      "success": "Ты исполнил долг так, как сам понимал это слово.",
+      "success_lie": "Хорошо.",
+      "failure": "В другой раз."
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_INFECTED_01_MEDS",
+    "type": "mission_definition",
+    "name": { "str": "Заражённый: Срочно — антибиотики" },
+    "description": "Инфекция распространяется.  Осталось несколько дней до серьёзных симптомов.  Найди антибиотики в больнице или убежище.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "ЗАРАЖЁННЫЙ ВЫЖИВШИЙ\n\nЧто-то укусило тебя в первую неделю.  Маленькая рана, быстро засохшая.  Ты не придал значения.\n\nТеперь ты понимаешь — это была ошибка.\n\nИнфекция работает медленно.  Почти незаметно.  Пока не перестаёт быть незаметной.\n\nНо ты всё ещё жив.  И ты слышал об одном докторе, который занимался чем-то под кодовым именем «Проект Морроу».  Лекарство.  Или что-то лучше.\n\n— Медицинские заметки в твоём инвентаре.\n— Ближайшая больница отмечена на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "infected_project_morrow_notes", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "hospital",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Антибиотики найдены — временное облегчение.  Но медицинские заметки в твоём кармане говорят о чём-то большем: доктор Карев.  Клиника.  Формула подавителя.", "popup": true }
+      ]
+    },
+    "followup": "ROES_INFECTED_02_MORROW"
+  },
+  {
+    "id": "ROES_INFECTED_02_MORROW",
+    "type": "mission_definition",
+    "name": { "str": "Заражённый: Проект «Морроу»" },
+    "description": "Медицинские заметки упоминают доктора Карева и «Проект Морроу» — программу разработки подавителя инфекции.  Его исследовательская лаборатория была у университетского комплекса.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "В заметках — наводка на лабораторию.  Доктор Карев проводил там последние испытания.  Если что-то уцелело — оно там.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Лаборатория разгромлена.  Но в сейфе — нетронутая папка.  Журнал клиники Карева.  Частичная формула.  Последние компоненты он перевёз в полевую клинику.", "popup": true }
+      ]
+    },
+    "followup": "ROES_INFECTED_03_CLINIC",
+    "dialogue": {
+      "describe": "Исследовательская лаборатория с записями доктора Карева.",
+      "offer": "Доктор Карев — единственный шанс.  Иди в лабораторию.",
+      "accepted": "Тело держится.  Двигайся.",
+      "rejected": "Хорошо.",
+      "advice": "Лаборатории в университетских зданиях или промзонах.",
+      "inquire": "Нашёл лабораторию?",
+      "success": "Что там?",
+      "success_lie": "Хорошо.",
+      "failure": "Времени немного."
+    }
+  },
+  {
+    "id": "ROES_INFECTED_03_CLINIC",
+    "type": "mission_definition",
+    "name": { "str": "Заражённый: Клиника Карева" },
+    "description": "Журнал лаборатории указывает на полевую клинику у шоссе на востоке.  Там — последняя часть формулы и, возможно, готовые образцы.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 5000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "infected_clinic_log", "count": 1 },
+        { "u_message": "Журнал клиники у тебя.  Карев был осторожен — разбросал компоненты формулы по нескольким точкам.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "hospital",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Клиника найдена.  Карева нет — ушёл или хуже.  Но оборудование на месте.  И его финальная записка: три редких компонента для полного синтеза.", "popup": true }
+      ]
+    },
+    "followup": "ROES_INFECTED_04_FORMULA",
+    "dialogue": {
+      "describe": "Полевая клиника Карева с оборудованием и образцами.",
+      "offer": "Клиника — следующий шаг.",
+      "accepted": "Держись.  Ты почти у цели.",
+      "rejected": "Понятно.",
+      "advice": "Полевые клиники в крупных помещениях.",
+      "inquire": "Добрался до клиники?",
+      "success": "Что там нашёл?",
+      "success_lie": "Хорошо.",
+      "failure": "Инфекция не ждёт."
+    }
+  },
+  {
+    "id": "ROES_INFECTED_04_FORMULA",
+    "type": "mission_definition",
+    "name": { "str": "Заражённый: Компоненты формулы" },
+    "description": "Для синтеза подавителя нужны компоненты из формулы Карева — они спрятаны в лаборатории.  Торопись.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 6000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "infected_suppressor_formula", "count": 1 },
+        { "u_message": "Формула в руках.  Компоненты в лаборатории — Карев спрятал их намеренно, чтобы никто не использовал неправильно.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Компоненты найдены.  Синтез возможен.  Один шаг остался.", "popup": true }
+      ]
+    },
+    "followup": "ROES_INFECTED_05_CURE",
+    "dialogue": {
+      "describe": "Компоненты для синтеза подавителя инфекции.",
+      "offer": "Компоненты в лаборатории.  Собери их.",
+      "accepted": "Почти у цели.",
+      "rejected": "Подожди.",
+      "advice": "Химические компоненты в лабораторных шкафах и холодильниках.",
+      "inquire": "Нашёл компоненты?",
+      "success": "Формула собрана.",
+      "success_lie": "Хорошо.",
+      "failure": "Время работает против тебя."
+    }
+  },
+  {
+    "id": "ROES_INFECTED_05_CURE",
+    "type": "mission_definition",
+    "name": { "str": "Заражённый: Ещё один день" },
+    "description": "Всё есть.  Синтез нужно провести в рабочей лаборатории.  Последняя лаборатория Карева — единственное подходящее место.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 5,
+    "value": 8000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Карев написал в финальной записке: «Синтез прост, если знаешь как.  Лаборатория всё ещё работает.  Генератор в подвале.»  Он предусмотрел это.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты синтезировал подавитель.  Ввёл.  Подождал.\n\nЧерез час инфекция замедлилась.  Не исчезла.  Но ты живёшь дальше.\n\nЕщё один день.  Потом ещё один.\n\nКарев не вылечил мир.  Но он дал тебе время.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Лаборатория для синтеза подавителя инфекции.",
+      "offer": "Один последний шаг.  Иди в лабораторию.",
+      "accepted": "Ты справишься.",
+      "rejected": "Подожди.",
+      "advice": "Сначала активируй генератор в подвале.",
+      "inquire": "Провёл синтез?",
+      "success": "Ты выжил.  Снова.",
+      "success_lie": "Понятно.",
+      "failure": "Не сдавайся."
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_LOOTER_01_TARGET",
+    "type": "mission_definition",
+    "name": { "str": "Мародёр: Работа есть работа" },
+    "description": "Новая наводка на перспективный склад.  Рутина: войти, взять, уйти.  Но кто оставил записку именно там, где ты её должен найти?",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 1000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "ТЕНЕВОЙ МАРОДЁР\n\nПока другие дрались и умирали в первые дни, ты работал.  Тихо.  Методично.  Результативно.\n\nОчередная наводка на хороший склад.  Кто-то оставил записку именно в том месте, где ты её должен найти.  Кто-то, кто знал твой маршрут.\n\nЭто странно.\n\n— Записка-наводка в твоём инвентаре.\n— Цель отмечена на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "looter_stash_tip", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "s_grocery",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 2
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Тайник найден.  Припасы взяты.  Но под ящиком — металлический кейс с символом организации «АРЕС».  Внутри — документы.", "popup": true }
+      ]
+    },
+    "followup": "ROES_LOOTER_02_DOCUMENTS"
+  },
+  {
+    "id": "ROES_LOOTER_02_DOCUMENTS",
+    "type": "mission_definition",
+    "name": { "str": "Мародёр: Чёрные файлы" },
+    "description": "Документы «АРЕС» частично зашифрованы — но ты умеешь читать такие вещи.  Нужно тихое место и несколько часов.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "looter_org_dossier", "count": 1 },
+        { "u_message": "Досье «АРЕС» у тебя.  Часть читается сразу.  Остальное — нужно безопасное место.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 2
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Расшифровано.  «АРЕС» — не банда и не мародёры.  Корпорация, работавшая с правительством.  Они ЗНАЛИ о Дне-Ч заранее.  За три месяца до.", "popup": true }
+      ]
+    },
+    "followup": "ROES_LOOTER_03_CODEBREAK",
+    "dialogue": {
+      "describe": "Зашифрованные документы организации «АРЕС».",
+      "offer": "Эти файлы стоят больше, чем кажется.  Расшифруй их.",
+      "accepted": "Тихое место — и разберёшься.",
+      "rejected": "Понятно.",
+      "advice": "Дома на окраине — лучший вариант.",
+      "inquire": "Расшифровал документы?",
+      "success": "Что там?",
+      "success_lie": "Хорошо.",
+      "failure": "Слишком сложный код?"
+    }
+  },
+  {
+    "id": "ROES_LOOTER_03_CODEBREAK",
+    "type": "mission_definition",
+    "name": { "str": "Мародёр: Они знали" },
+    "description": "«АРЕС» знал о катастрофе за месяцы.  В документах — координаты конспиративной квартиры организации.  Там должен быть серьёзный архив.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 4000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "looter_encrypted_files", "count": 1 },
+        { "u_message": "Второй уровень сломан.  Конспиративная квартира «АРЕС» в жилом квартале.  Туда отправляли агентов накануне Дня-Ч.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "house",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Квартира найдена.  Кодовый замок старого типа — пять минут работы.  Внутри — удача: нетронутый архив.", "popup": true }
+      ]
+    },
+    "followup": "ROES_LOOTER_04_SAFEHOUSE",
+    "dialogue": {
+      "describe": "Координаты конспиративной квартиры «АРЕС».",
+      "offer": "Квартира ждёт.  Иди.",
+      "accepted": "Там будет что взять.",
+      "rejected": "Понятно.",
+      "advice": "Конспиративные квартиры выглядят как обычные дома.",
+      "inquire": "Нашёл квартиру?",
+      "success": "Что внутри?",
+      "success_lie": "Хорошо.",
+      "failure": "Сложный замок?"
+    }
+  },
+  {
+    "id": "ROES_LOOTER_04_SAFEHOUSE",
+    "type": "mission_definition",
+    "name": { "str": "Мародёр: Квартира «АРЕС»" },
+    "description": "Внутри — серьёзный архив.  Папки, карты, диски.  Найди директиву с пометкой «ПРОТОКОЛ Ч» — главную ценность.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 6000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "looter_ares_manifest", "count": 1 },
+        { "u_message": "Первые документы уже у тебя.  Там — имена, даты.  Список тех, кого эвакуировали ДО Дня-Ч.  Очень длинный список.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "bunker",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Директива «ПРОТОКОЛ Ч» найдена.  Они не просто знали.  Они помогали организовать условия для катастрофы.  Ждали результата.", "popup": true }
+      ]
+    },
+    "followup": "ROES_LOOTER_05_LEVERAGE",
+    "dialogue": {
+      "describe": "Архив организации «АРЕС» с директивой «ПРОТОКОЛ Ч».",
+      "offer": "«ПРОТОКОЛ Ч» — главная цель.",
+      "accepted": "Там могут быть охранные системы.",
+      "rejected": "Понятно.",
+      "advice": "Архивы в самом защищённом месте.",
+      "inquire": "Взял «ПРОТОКОЛ Ч»?",
+      "success": "Что они сделали?",
+      "success_lie": "Хорошо.",
+      "failure": "Слишком охраняемое место?"
+    }
+  },
+  {
+    "id": "ROES_LOOTER_05_LEVERAGE",
+    "type": "mission_definition",
+    "name": { "str": "Мародёр: Карт-бланш" },
+    "description": "У тебя — доказательства того, что «АРЕС» организовал конец света ради выгоды.  Это ценнее любых припасов.  Куда идти с таким знанием?",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 5000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Информация — самое ценное.  Всегда было.  Сейчас — особенно.  Спрятать?  Продать?  Использовать?", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты нашёл людей, которым передал документы.  Или оставил для себя.\n\nТы всегда работал ради выгоды.  Но эти бумаги — это уже не просто выгода.\n\nЭто правда.  И теперь она у тебя.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Документы «АРЕС» — карт-бланш в руинах.",
+      "offer": "Реши, что делать с информацией.",
+      "accepted": "Правильно.",
+      "rejected": "Подожди.",
+      "advice": "Выжившие ценят информацию.",
+      "inquire": "Решил?",
+      "success": "Мир изменился.  Ты — нет.  Это хорошо.",
+      "success_lie": "Понятно.",
+      "failure": "В другой раз."
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_MEDIC_01_CALL",
+    "type": "mission_definition",
+    "name": { "str": "Медик: Принять вызов" },
+    "description": "Слабый сигнал.  Кто-то оставил записку с координатами.  Там раненый выживший.  Ты ещё помнишь, как помогать людям.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 1000,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "МЕДИК РУИН\n\nТы привык работать в хаосе.  Скорая помощь — это всегда хаос.  Просто раньше всё заканчивалось больницей, а не руинами.\n\nТеперь больниц нет.  Но люди, которым нужна помощь — есть.\n\nВ твоей рации — обрывок сигнала.  Кто-то там.  Ранен.  Ждёт.\n\n— Записка о пациенте в твоём инвентаре.\n— Ближайшее убежище отмечено на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "medic_distress_call", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Убежище найдено.  Там пятеро.  Один — с серьёзным ранением.  Без нормальных медикаментов не обойтись.  Сначала — снабжение.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MEDIC_02_SUPPLIES"
+  },
+  {
+    "id": "ROES_MEDIC_02_SUPPLIES",
+    "type": "mission_definition",
+    "name": { "str": "Медик: Критические запасы" },
+    "description": "Для лечения нужны антибиотики, обезболивающее и стерильные перевязочные материалы.  Ближайшая больница должна что-то иметь.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "У тебя есть базовый набор.  Но для серьёзного вмешательства нужно больше.  Больница — туда.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "hospital",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Медкабинет разграблен наполовину.  Но остатки есть.  Антибиотики, обезболивающее, шовный материал.  Хватит.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MEDIC_03_PATIENT",
+    "dialogue": {
+      "describe": "Медикаменты из ближайшей больницы.",
+      "offer": "Больница — единственный источник нужного.",
+      "accepted": "Торопись.  Пациент ждёт.",
+      "rejected": "Понятно.",
+      "advice": "Медикаменты в аптечках и ординаторских.",
+      "inquire": "Нашёл медикаменты?",
+      "success": "Хорошо.  Теперь лечи.",
+      "success_lie": "Хорошо.",
+      "failure": "Больница разграблена?"
+    }
+  },
+  {
+    "id": "ROES_MEDIC_03_PATIENT",
+    "type": "mission_definition",
+    "name": { "str": "Медик: Пациент жив" },
+    "description": "Медикаменты есть.  Вернись в убежище и проведи необходимые процедуры.  Потом разберись, что происходит с остальной группой.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "medic_patient_journal", "count": 1 },
+        { "u_message": "Пока собирал медикаменты, нашёл личный журнал одного из выживших.  Он пишет о чём-то, что распространяется среди группы.  Симптомы.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Пациент стабилизирован.  Будет жить.  Но он рассказал: двое из группы начали кашлять три дня назад.  Симптомы напоминают лихорадку Зэта.  Очень напоминают.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MEDIC_04_OUTBREAK",
+    "dialogue": {
+      "describe": "Убежище с ранеными выжившими.",
+      "offer": "Пациент ждёт.  Возвращайся.",
+      "accepted": "Ты нужен там.",
+      "rejected": "Понятно.",
+      "advice": "Убежище там, где ты их оставил.",
+      "inquire": "Провёл лечение?",
+      "success": "Пациент жив.",
+      "success_lie": "Хорошо.",
+      "failure": "Время идёт."
+    }
+  },
+  {
+    "id": "ROES_MEDIC_04_OUTBREAK",
+    "type": "mission_definition",
+    "name": { "str": "Медик: Вектор заражения" },
+    "description": "В группе распространяется лихорадка Зэта.  Нужны противовирусные препараты.  Найди их в лаборатории или медицинском складе.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 4,
+    "value": 5000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "medic_treatment_notes", "count": 1 },
+        { "u_message": "Протокол лечения лихорадки Зэта собран из обрывков медлитературы.  Нужны противовирусные из лаборатории.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "lab_core",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Препараты найдены.  Источник заражения — разбитый контейнер у входа в убежище, принесённый три дня назад.  Изолировали.  Продезинфицировали.  Группа будет жить.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MEDIC_05_CLINIC",
+    "dialogue": {
+      "describe": "Источник инфекции и противовирусные препараты.",
+      "offer": "Найди и устрани вектор заражения.",
+      "accepted": "Спеши.",
+      "rejected": "Понятно.",
+      "advice": "Редкие препараты — в лабораториях.",
+      "inquire": "Устранил угрозу?",
+      "success": "Хорошая работа.  Все живы.",
+      "success_lie": "Хорошо.",
+      "failure": "Инфекция распространяется."
+    }
+  },
+  {
+    "id": "ROES_MEDIC_05_CLINIC",
+    "type": "mission_definition",
+    "name": { "str": "Медик: Место для исцеления" },
+    "description": "Группа спасена.  Но без постоянного медпункта каждое следующее ранение снова будет угрозой.  Найди подходящее здание.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Группа просит тебя остаться.  Им нужен врач.  Тебе нужна база.  Больница или убежище — лучший вариант.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "hospital",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Медпункт готов.  Стерильно, насколько возможно.  Света достаточно.  Запас медикаментов на месяц.\n\nТы больше не скорая помощь.  Ты — единственный врач в радиусе двадцати километров.\n\nПациентов много.  Работы — ещё больше.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Подходящее здание для постоянного медпункта.",
+      "offer": "Найди место.  Организуй клинику.",
+      "accepted": "Это важно.",
+      "rejected": "Понятно.",
+      "advice": "Больница — идеальный вариант.",
+      "inquire": "Организовал медпункт?",
+      "success": "Люди узнают.  Придут.  Ты готов?",
+      "success_lie": "Хорошо.",
+      "failure": "В другой раз."
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_MECHANIC_01_PARTS",
+    "type": "mission_definition",
+    "name": { "str": "Механик: Список деталей" },
+    "description": "Двигатель почти готов.  Нужны три позиции из списка: фильтр, стартер, ремень ГРМ.  Ближайший автосервис на востоке — первый вариант.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 1500,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "effect": [
+        {
+          "u_message": "МЕХАНИК ПУСТОШЕЙ\n\nГараж выстоял.  Инструменты на месте.  Машина почти готова — если найти нужные детали.\n\nТы написал список месяц назад.  Всего три позиции.  Брошенный автосервис на востоке — ближайший вариант.\n\nОдна проблема: с востока периодически слышна стрельба.  Редкая.  Но регулярная.\n\n— Список деталей в твоём инвентаре.\n— Ближайший автосервис отмечен на карте.",
+          "popup": true
+        },
+        { "u_spawn_item": "mechanic_parts_manifest", "count": 1 }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "s_garage",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Детали найдены.  Но разборка разгромлена — не зомби.  Люди.  Следы недавнего конфликта.  По дороге — кровь и брошенный груз.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MECHANIC_02_FUEL"
+  },
+  {
+    "id": "ROES_MECHANIC_02_FUEL",
+    "type": "mission_definition",
+    "name": { "str": "Механик: Чёрное золото" },
+    "description": "Детали есть.  Теперь нужно топливо.  Ближайшая заправка могла уцелеть — резервные баки были стальными.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 2,
+    "value": 2000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "До полного бака ещё далеко.  Заправка в квартале к югу — первый шаг.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "s_gas",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 3
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "На заправке следы недавней остановки.  Большой грузовик.  Ушёл на север — потом стрельба.  Потом тишина.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MECHANIC_03_CONVOY",
+    "dialogue": {
+      "describe": "Топливо для запуска двигателя.",
+      "offer": "Без топлива никуда.  Заправка рядом.",
+      "accepted": "Бери всё, что можешь унести.",
+      "rejected": "Понятно.",
+      "advice": "Подземные резервуары могут иметь остатки.",
+      "inquire": "Нашёл топливо?",
+      "success": "Хорошо.  Теперь едем?",
+      "success_lie": "Хорошо.",
+      "failure": "Заправка сухая?"
+    }
+  },
+  {
+    "id": "ROES_MECHANIC_03_CONVOY",
+    "type": "mission_definition",
+    "name": { "str": "Механик: Разбитый конвой" },
+    "description": "Следы грузовика ведут на север.  Там — разбитый конвой.  Несколько машин.  Груз рассыпан.  Кто-то напал — и может быть ещё рядом.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 3,
+    "value": 3000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Следы ведут на север.  Конвой должен быть там.  Если повезёт — есть что взять.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "evac_center_1",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 4
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Конвой найден.  Три грузовика.  Разграблено аккуратно — профессионально.  Среди трупов охраны — манифест конвоя: медикаменты, оружие и запаянные ящики с маркировкой «К».", "popup": true }
+      ]
+    },
+    "followup": "ROES_MECHANIC_04_HUNTERS",
+    "dialogue": {
+      "describe": "Разграбленный конвой на северной дороге.",
+      "offer": "Конвой там.  Смотри в оба.",
+      "accepted": "Может, что-то осталось.",
+      "rejected": "Хорошо.",
+      "advice": "Конвои шли по главным дорогам.",
+      "inquire": "Нашёл конвой?",
+      "success": "Что было в ящиках?",
+      "success_lie": "Понятно.",
+      "failure": "Слишком опасно?"
+    }
+  },
+  {
+    "id": "ROES_MECHANIC_04_HUNTERS",
+    "type": "mission_definition",
+    "name": { "str": "Механик: Предаторы" },
+    "description": "Манифест конвоя у тебя.  Группа нападавших охотится на дороге регулярно.  Если хочешь уехать — это проблему нужно решить.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 5,
+    "value": 6000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "mechanic_convoy_report", "count": 1 },
+        { "u_message": "Нападавшие знали маршрут конвоя заранее.  Инсайдер или радиоперехват.  Их база — военное строение к северу.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "mil_base",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "База зачищена.  Дорога свободна.\n\nОдин из выживших рассказал: в ящиках «К» — прототипы синтетического топлива.  Высококонцентрированного.  Твоя машина поедет дальше, чем ты думал.", "popup": true }
+      ]
+    },
+    "followup": "ROES_MECHANIC_05_IGNITION",
+    "dialogue": {
+      "describe": "База нападавших на конвои.",
+      "offer": "Предаторы мешают всем.  Устрани угрозу.",
+      "accepted": "Их много.  Будь готов.",
+      "rejected": "Понятно.",
+      "advice": "Военные базы хорошо укреплены.",
+      "inquire": "Базу взял?",
+      "success": "Дорога теперь чиста.",
+      "success_lie": "Хорошо.",
+      "failure": "Слишком сильное прикрытие."
+    }
+  },
+  {
+    "id": "ROES_MECHANIC_05_IGNITION",
+    "type": "mission_definition",
+    "name": { "str": "Механик: Зажигание" },
+    "description": "Детали есть.  Топливо есть.  Дорога свободна.  Вернись в гараж и заведи двигатель.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 1,
+    "value": 4000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_spawn_item": "mechanic_escape_plan", "count": 1 },
+        { "u_message": "Карта маршрута у дороги.  Несколько живых точек на запад.  Возможно — люди.  Возможно — просто надежда.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_terrain": "s_garage",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 2
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Двигатель запустился с третьего раза.  Чистый звук.  Без дыма.\n\nДорога ждёт.\n\nТы долго работал, чтобы уехать.  Теперь осталось только выбрать направление.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Гараж с готовым к выезду автомобилем.",
+      "offer": "Возвращайся.  Заводи.  Едем.",
+      "accepted": "Это то, ради чего ты всё делал.",
+      "rejected": "Понятно.",
+      "advice": "Гараж там, где ты начал.",
+      "inquire": "Завёл?",
+      "success": "Слышишь двигатель?  Это звук возможности.",
+      "success_lie": "Хорошо.",
+      "failure": "Что-то не так с машиной?"
+    },
+    "followup": "ROES_ENDGAME_CONVERGE"
+  },
+  {
+    "id": "ROES_ENDGAME_CONVERGE",
+    "type": "mission_definition",
+    "name": { "str": "К нулевой точке" },
+    "description": "С разных сторон — от сигналов, документов, слухов — всё указывает на одну координату.  Объект \"Нулевой\".  Там — начало всего.  И, возможно, конец.",
+    "goal": "MGOAL_GO_TO",
+    "difficulty": 8,
+    "value": 20000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "start": {
+      "effect": [
+        { "u_message": "Координаты складываются из обрывков.  Радиосигналы.  Документы.  Чужие записки.  Всё ведёт в одно место.\n\nОбъект \"Нулевой\" — источник катастрофы.  Туда не ходили.  Оттуда не возвращались.\n\nТеперь — твой черёд.", "popup": true }
+      ],
+      "assign_mission_target": {
+        "om_special": "apoc_core",
+        "om_terrain": "apoc_core_entry",
+        "reveal_radius": 20
+      }
+    },
+    "end": {
+      "effect": [
+        { "u_message": "Ты у входа в объект \"Нулевой\".\n\nЗа этой дверью — то, что изменило мир.  Источник.  Ответ.\n\nНикто не заставлял тебя идти сюда.  Ты пришёл сам.", "popup": true }
+      ]
+    },
+    "dialogue": {
+      "describe": "Объект \"Нулевой\" — нулевая точка всего.",
+      "offer": "Координаты в руках.  Их слишком много, чтобы совпасть случайно.  Иди туда.",
+      "accepted": "Оттуда, возможно, нет дороги назад.",
+      "rejected": "Ты уверен?",
+      "advice": "Прими во внимание всё, что узнал в пути.",
+      "inquire": "Ты уже у объекта?",
+      "success": "Ты дошёл.",
+      "success_lie": "Понятно.",
+      "failure": "Путь ещё не пройден."
+    }
+  }
+]

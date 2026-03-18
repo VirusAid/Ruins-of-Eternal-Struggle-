@@ -18,7 +18,9 @@
       { "item": "ruins_echo_note_lore", "prob": 70 },
       { "item": "echo_journal_survivor", "prob": 15 },
       { "item": "echo_radio_log", "prob": 10 },
-      { "item": "echo_shelter_manifest", "prob": 5 }
+      { "item": "echo_shelter_manifest", "prob": 5 },
+      { "item": "echo_cata_scientist_note", "prob": 8 },
+      { "item": "echo_cata_survivor_tape", "prob": 6 }
     ]
   },
   {
@@ -46,7 +48,8 @@
       { "item": "ruins_echo_note_apoc", "prob": 60 },
       { "item": "echo_military_report", "prob": 20 },
       { "item": "echo_scientists_log", "prob": 15 },
-      { "item": "echo_access_codes", "prob": 5 }
+      { "item": "echo_access_codes", "prob": 5 },
+      { "item": "echo_cata_military_radio", "prob": 10 }
     ]
   },
   {

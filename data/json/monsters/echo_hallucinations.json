@@ -1,0 +1,35 @@
+[
+  {
+    "type": "MONSTER",
+    "id": "mon_echo_mutant",
+    "copy-from": "mon_zombie",
+    "name": { "str": "искажённая фигура", "str_pl": "искажённые фигуры" },
+    "description": "Полупрозрачный силуэт, покрытый пульсирующими наростами.  Он не настоящий.  Но выглядит слишком реально.",
+    "hp": 40,
+    "speed": 80,
+    "color": "dark_gray",
+    "flags": [ "SEES", "HEARS", "NO_BREATHE", "NOHEAD" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_echo_soldier",
+    "copy-from": "mon_zombie_soldier",
+    "name": { "str": "призрачный солдат", "str_pl": "призрачные солдаты" },
+    "description": "Солдат в изодранной форме.  Лицо размыто, как сквозь воду.  Рот открывается, но звук доносится с запозданием.",
+    "hp": 50,
+    "speed": 90,
+    "color": "dark_gray",
+    "flags": [ "SEES", "HEARS", "NO_BREATHE" ]
+  },
+  {
+    "type": "MONSTER",
+    "id": "mon_echo_shadow",
+    "copy-from": "mon_shadow",
+    "name": { "str": "тень безумца", "str_pl": "тени безумцев" },
+    "description": "Тёмный силуэт, повторяющий движения человека.  Шепчет что-то неразборчивое.  Его глаза — две точки белого света.",
+    "hp": 30,
+    "speed": 100,
+    "color": "dark_gray",
+    "flags": [ "SEES", "HEARS", "NO_BREATHE", "NOHEAD", "SUNDEATH" ]
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "type": "item_group",
+    "id": "witness_notes_loot",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 10 },
+      { "item": "witness_note_gromova", "prob": 10 },
+      { "item": "witness_note_anya", "prob": 10 },
+      { "item": "witness_note_klyk", "prob": 10 },
+      { "item": "witness_note_lebedev", "prob": 10 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "witness_notes_others_sechenov",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_gromova", "prob": 30 },
+      { "item": "witness_note_anya", "prob": 30 },
+      { "item": "witness_note_klyk", "prob": 30 },
+      { "item": "witness_note_lebedev", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "witness_notes_others_gromova",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 30 },
+      { "item": "witness_note_anya", "prob": 30 },
+      { "item": "witness_note_klyk", "prob": 30 },
+      { "item": "witness_note_lebedev", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "witness_notes_others_anya",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 30 },
+      { "item": "witness_note_gromova", "prob": 30 },
+      { "item": "witness_note_klyk", "prob": 30 },
+      { "item": "witness_note_lebedev", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "witness_notes_others_klyk",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 30 },
+      { "item": "witness_note_gromova", "prob": 30 },
+      { "item": "witness_note_anya", "prob": 30 },
+      { "item": "witness_note_lebedev", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "witness_notes_others_lebedev",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 30 },
+      { "item": "witness_note_gromova", "prob": 30 },
+      { "item": "witness_note_anya", "prob": 30 },
+      { "item": "witness_note_klyk", "prob": 30 }
+    ]
+  }
+]

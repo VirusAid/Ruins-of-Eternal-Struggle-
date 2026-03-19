@@ -1,0 +1,92 @@
+[
+  {
+    "type": "ITEM",
+    "id": "witness_note_sechenov",
+    "name": { "str": "записка о старом учёном", "str_pl": "записки о старом учёном" },
+    "description": "Мятая записка, написанная торопливым почерком.  Упоминает некоего доктора Сеченова и бункер в лесу.  Применить — прочитать.",
+    "weight": "10 g",
+    "volume": "5 ml",
+    "price": "0 USD",
+    "material": [ "paper" ],
+    "symbol": "?",
+    "color": "brown",
+    "flags": [ "TRADER_AVOID" ],
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Вы разворачиваете записку...",
+      "effect_on_conditions": [ "eoc_witness_note_sechenov_read" ]
+    }
+  },
+  {
+    "type": "ITEM",
+    "id": "witness_note_gromova",
+    "name": { "str": "обрывок военного рапорта", "str_pl": "обрывки военного рапорта" },
+    "description": "Оторванная часть военного рапорта.  Упоминает майора Громову и укреплённую базу.  Применить — прочитать.",
+    "weight": "10 g",
+    "volume": "5 ml",
+    "price": "0 USD",
+    "material": [ "paper" ],
+    "symbol": "?",
+    "color": "green",
+    "flags": [ "TRADER_AVOID" ],
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Вы расправляете обрывок рапорта...",
+      "effect_on_conditions": [ "eoc_witness_note_gromova_read" ]
+    }
+  },
+  {
+    "type": "ITEM",
+    "id": "witness_note_anya",
+    "name": { "str": "записка с детским рисунком", "str_pl": "записки с детским рисунком" },
+    "description": "Листок бумаги с неумелым рисунком и текстом на обороте.  Упоминает девочку Аню в церкви.  Применить — прочитать.",
+    "weight": "10 g",
+    "volume": "5 ml",
+    "price": "0 USD",
+    "material": [ "paper" ],
+    "symbol": "?",
+    "color": "yellow",
+    "flags": [ "TRADER_AVOID" ],
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Вы переворачиваете рисунок...",
+      "effect_on_conditions": [ "eoc_witness_note_anya_read" ]
+    }
+  },
+  {
+    "type": "ITEM",
+    "id": "witness_note_klyk",
+    "name": { "str": "записка о безумном сталкере", "str_pl": "записки о безумном сталкере" },
+    "description": "Рваная записка с грубым почерком.  Упоминает человека по прозвищу Клык и вход в подземелье.  Применить — прочитать.",
+    "weight": "10 g",
+    "volume": "5 ml",
+    "price": "0 USD",
+    "material": [ "paper" ],
+    "symbol": "?",
+    "color": "red",
+    "flags": [ "TRADER_AVOID" ],
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Вы разглядываете записку...",
+      "effect_on_conditions": [ "eoc_witness_note_klyk_read" ]
+    }
+  },
+  {
+    "type": "ITEM",
+    "id": "witness_note_lebedev",
+    "name": { "str": "страница научного журнала", "str_pl": "страницы научного журнала" },
+    "description": "Аккуратно вырванная страница из научного журнала.  Упоминает профессора Лебедева и лабораторию в лесу.  Применить — прочитать.",
+    "weight": "10 g",
+    "volume": "5 ml",
+    "price": "0 USD",
+    "material": [ "paper" ],
+    "symbol": "?",
+    "color": "cyan",
+    "flags": [ "TRADER_AVOID" ],
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Вы читаете страницу журнала...",
+      "effect_on_conditions": [ "eoc_witness_note_lebedev_read" ]
+    }
+  }
+]

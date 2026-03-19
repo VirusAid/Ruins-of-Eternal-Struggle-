@@ -4,10 +4,11 @@
     "id": "ruins_echo_notes",
     "subtype": "distribution",
     "entries": [
-      { "group": "ruins_echo_lore_group", "prob": 55 },
-      { "group": "ruins_echo_loot_group", "prob": 27 },
-      { "group": "ruins_echo_cache_group", "prob": 9 },
-      { "group": "ruins_echo_apoc_group", "prob": 9 }
+      { "group": "ruins_echo_lore_group", "prob": 50 },
+      { "group": "ruins_echo_loot_group", "prob": 24 },
+      { "group": "ruins_echo_cache_group", "prob": 8 },
+      { "group": "ruins_echo_apoc_group", "prob": 8 },
+      { "group": "ruins_echo_witness_group", "prob": 10 }
     ]
   },
   {
@@ -174,6 +175,18 @@
       { "item": "water_clean",  "prob": 80 },
       { "item": "bandages",     "prob": 65, "count": [ 2, 5 ] },
       { "item": "antibiotics",  "prob": 55, "count": [ 1, 3 ] }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ruins_echo_witness_group",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "witness_note_sechenov", "prob": 20 },
+      { "item": "witness_note_gromova", "prob": 20 },
+      { "item": "witness_note_anya", "prob": 20 },
+      { "item": "witness_note_klyk", "prob": 20 },
+      { "item": "witness_note_lebedev", "prob": 20 }
     ]
   }
 ]

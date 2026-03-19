@@ -1,0 +1,47 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "witness_bunker_sechenov",
+    "name": "заброшенный бункер",
+    "sym": "B",
+    "color": "dark_gray",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "witness_base_gromova",
+    "name": "укреплённая база",
+    "sym": "M",
+    "color": "green",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "witness_church_anya",
+    "name": "полуразрушенная церковь",
+    "sym": "C",
+    "color": "yellow",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "witness_metro_klyk",
+    "name": "вход в подземелье",
+    "sym": "U",
+    "color": "red",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "witness_lab_lebedev",
+    "name": "изолированная лаборатория",
+    "sym": "L",
+    "color": "cyan",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  }
+]

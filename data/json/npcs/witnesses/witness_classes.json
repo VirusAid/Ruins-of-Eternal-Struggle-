@@ -53,7 +53,7 @@
     "type": "npc_class",
     "id": "NC_WITNESS_ANYA",
     "name": { "str": "Аня" },
-    "job_description": "Шестнадцатилетняя девочка.  Её родители работали в Core.",
+    "job_description": "Двенадцатилетняя девочка.  Её родители работали в Core.",
     "common": false,
     "sells_belongings": false,
     "bonus_str": { "rng": [ -4, -2 ] },

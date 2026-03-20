@@ -135,8 +135,23 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
             ret.push_back( x_pos );
 
             nc_color item_color = get_menu_item_color( i, iSel );
-            std::string prefix = ( i == iSel ) ? "▸ " : "  ";
+            std::string prefix = ( i == iSel ) ? "\u25b8 " : "  ";
             std::string item_text = remove_color_tags( vItems[i] );
+            // Strip hotkey markup like <M|m>, <N|n>, <a|A> etc.
+            {
+                std::string clean;
+                bool in_bracket = false;
+                for( size_t ci = 0; ci < item_text.size(); ci++ ) {
+                    if( item_text[ci] == '<' ) {
+                        in_bracket = true;
+                    } else if( item_text[ci] == '>' && in_bracket ) {
+                        in_bracket = false;
+                    } else if( !in_bracket ) {
+                        clean += item_text[ci];
+                    }
+                }
+                item_text = clean;
+            }
             // Clean display
             std::string display_text = prefix + item_text;
 
@@ -751,10 +766,9 @@ nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
         if( atmo_glitch_active_ ) {
             return c_yellow;
         }
-        return c_light_red;
+        return c_white;
     }
-    // Unselected: visible but muted
-    return c_white;
+    return c_light_gray;
 }
 
 bool main_menu::opening_screen()

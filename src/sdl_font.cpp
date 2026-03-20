@@ -298,7 +298,7 @@ CachedTTFFont::CachedTTFFont(
     if( !font ) {
         throw std::runtime_error( TTF_GetError() );
     }
-    TTF_SetFontStyle( font.get(), TTF_STYLE_NORMAL );
+    TTF_SetFontStyle( font.get(), TTF_STYLE_BOLD );
 }
 
 SDL_Texture_Ptr CachedTTFFont::create_glyph( const SDL_Renderer_Ptr &renderer,

@@ -356,8 +356,8 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                           _( "═══ Ruins of Eternal Struggle ═══" ) );
         }
         iLine++;
-        center_print( w_open, iLine, c_red,
-                      _( "Ruins of Eternal Struggle  |  v1.0" ) );
+        center_print( w_open, iLine, c_light_red,
+                      _( "v1.0" ) );
     }
 #else
     // Curses mode — ASCII art title
@@ -388,7 +388,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     int hint_y = window_height - 4;
 
     if( iSel == getopt( main_menu_opts::NEWCHAR ) ) {
-        center_print( w_open, hint_y, c_yellow, vNewGameHints[sel2] );
+        center_print( w_open, hint_y, c_light_red, vNewGameHints[sel2] );
     }
 
     // ═══ ATMOSPHERIC MESSAGE (bottom of screen) ═══
@@ -407,12 +407,12 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                 atmo_msg = glitched;
             }
         }
-        center_print( w_open, window_height - 2, c_red, atmo_msg );
+        center_print( w_open, window_height - 2, c_light_red, atmo_msg );
     }
 
     // ═══ Day tip (very subtle) ═══
     if( !vdaytip.empty() ) {
-        right_print( w_open, window_height - 1, 2, c_dark_gray,
+        right_print( w_open, window_height - 1, 2, c_white,
                      string_format( "// %s", vdaytip ) );
     }
 

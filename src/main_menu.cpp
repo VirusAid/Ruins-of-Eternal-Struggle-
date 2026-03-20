@@ -763,7 +763,7 @@ bool main_menu::should_glitch() const
 nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
-        return c_white;
+        return c_light_red;
     }
     return c_light_red;
 }

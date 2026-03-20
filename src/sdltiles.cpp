@@ -589,8 +589,8 @@ void refresh_display()
         // Make the text buffer semi-transparent so the background shows through
         // Black cells become see-through, text stays visible
         SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_BLEND );
-        // Set moderate alpha so text is clearly readable but BG shows through dark areas
-        SDL_SetTextureAlphaMod( display_buffer.get(), 120 );
+        // Very low alpha so background is bright and vivid
+        SDL_SetTextureAlphaMod( display_buffer.get(), 70 );
         RenderCopy( renderer, display_buffer, nullptr, nullptr );
         SDL_SetTextureAlphaMod( display_buffer.get(), 255 );
         SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_NONE );

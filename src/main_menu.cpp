@@ -126,10 +126,11 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
     std::vector<int> ret;
 
     if( main ) {
-        // ═══ VERTICAL MENU LAYOUT ═══
-        // Draw menu items as a vertical list on the left side
+        // ═══ VERTICAL MENU LAYOUT (centered) ═══
         int y_pos = offset.y;
-        int x_pos = 4; // Left margin
+        int win_w = getmaxx( w_in );
+        // Center the menu horizontally
+        int x_pos = ( win_w / 2 ) - 8;
 
         for( size_t i = 0; i < vItems.size(); ++i ) {
             ret.push_back( x_pos );
@@ -379,8 +380,8 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     iLine += 2;
 
     // ═══ VERTICAL MENU ITEMS (left-aligned) ═══
-    int menu_y = iLine + 2;
-    point menu_pos( 4, menu_y );
+    int menu_y = iLine;
+    point menu_pos( 0, menu_y );
 
     std::vector<int> offsets =
         print_menu_items( w_open, vMenuItems, iSel, menu_pos, 0, true );
@@ -441,7 +442,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     // ═══ SUB-MENU ═══
     const point p_offset( catacurses::getbegx( w_open ), catacurses::getbegy( w_open ) );
     // For vertical layout, sub-menu appears to the right of menu items
-    int sub_x = 35;
+    int sub_x = ( getmaxx( w_open ) / 2 ) + 10;
     int sub_y = menu_y + iSel * 2;
     display_sub_menu( iSel, p_offset + point( sub_x, sub_y ), sel_line );
 }
@@ -755,11 +756,11 @@ nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
         if( atmo_glitch_active_ ) {
-            return c_yellow;
+            return c_white;
         }
-        return c_light_red;
+        return c_yellow;
     }
-    return c_white;
+    return c_light_gray;
 }
 
 bool main_menu::opening_screen()

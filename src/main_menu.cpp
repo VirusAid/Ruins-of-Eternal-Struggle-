@@ -345,10 +345,10 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
         double elapsed = std::chrono::duration<double>(
                              std::chrono::steady_clock::now() - atmo_start_time_ ).count();
         float pulse = 0.7f + 0.3f * static_cast<float>( std::sin( elapsed * 1.2 ) );
-        nc_color logo_color = pulse > 0.85f ? c_white : c_light_gray;
+        nc_color logo_color = pulse > 0.85f ? c_light_red : c_red;
 
         if( atmo_glitch_active_ && atmo_glitch_frames_ < 3 ) {
-            logo_color = c_light_red;
+            logo_color = c_white;
             center_print( w_open, iLine, logo_color,
                           _( "▓▒░ Ruins of Eternal Struggle ░▒▓" ) );
         } else {
@@ -356,7 +356,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                           _( "═══ Ruins of Eternal Struggle ═══" ) );
         }
         iLine++;
-        center_print( w_open, iLine, c_dark_gray,
+        center_print( w_open, iLine, c_red,
                       _( "The Last Generation  |  v1.0" ) );
     }
 #else
@@ -372,7 +372,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
         center_print( w_open, iLine++, c_light_cyan, mmenu_title[0] );
     }
     iLine++;
-    center_print( w_open, iLine, c_dark_gray, _( "═══ v1.0 ═══" ) );
+    center_print( w_open, iLine, c_red, _( "═══ v1.0 ═══" ) );
 #endif
 
     iLine += 2;
@@ -407,12 +407,12 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                 atmo_msg = glitched;
             }
         }
-        center_print( w_open, window_height - 2, c_light_gray, atmo_msg );
+        center_print( w_open, window_height - 2, c_red, atmo_msg );
     }
 
     // ═══ Day tip (very subtle) ═══
     if( !vdaytip.empty() ) {
-        right_print( w_open, window_height - 1, 2, c_light_gray,
+        right_print( w_open, window_height - 1, 2, c_dark_gray,
                      string_format( "// %s", vdaytip ) );
     }
 
@@ -749,12 +749,12 @@ nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
         if( atmo_glitch_active_ ) {
-            return c_light_red;
+            return c_white;
         }
-        return c_white;
+        return c_light_red;
     }
-    // Unselected: light gray for readability over background
-    return c_light_gray;
+    // Unselected: darker red for blood aesthetic
+    return c_red;
 }
 
 bool main_menu::opening_screen()

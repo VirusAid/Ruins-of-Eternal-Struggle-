@@ -306,7 +306,7 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
     wnoutrefresh( w_sub );
 }
 
-void main_menu::print_menu( const catacurses::window &w_open, int iSel, const point &offset,
+void main_menu::print_menu( const catacurses::window &w_open, int iSel, const point &/*offset*/,
                             int sel_line )
 {
     main_menu_button_map.clear();
@@ -314,6 +314,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
 
     int window_width = getmaxx( w_open );
     int window_height = getmaxy( w_open );
+    ( void )window_width; // used in curses path
 
     // ═══ Update atmosphere state ═══
     update_atmosphere();
@@ -406,12 +407,12 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                 atmo_msg = glitched;
             }
         }
-        center_print( w_open, window_height - 2, c_dark_gray, atmo_msg );
+        center_print( w_open, window_height - 2, c_light_gray, atmo_msg );
     }
 
     // ═══ Day tip (very subtle) ═══
     if( !vdaytip.empty() ) {
-        right_print( w_open, window_height - 1, 2, c_dark_gray,
+        right_print( w_open, window_height - 1, 2, c_light_gray,
                      string_format( "// %s", vdaytip ) );
     }
 
@@ -428,16 +429,8 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
 
     wnoutrefresh( w_open );
 
-#if defined(TILES)
-    // ═══ DRAW BACKGROUND IMAGE (full screen behind everything) ═══
-    {
-        draw_main_menu_background( 0, 0, TERMX, TERMY );
-        // Darkened overlay on the menu area for readability
-        const int win_x = catacurses::getbegx( w_open );
-        draw_main_menu_darkened_bar( win_x, catacurses::getbegy( w_open ) + menu_y - 1,
-                                     30, static_cast<int>( vMenuItems.size() ) * 2 + 2, 160 );
-    }
-#endif
+    // Background is handled by set_main_menu_background_active(true) in opening_screen().
+    // Do NOT call draw_main_menu_background() here — it would paint over curses text.
 
     // ═══ SUB-MENU ═══
     const point p_offset( catacurses::getbegx( w_open ), catacurses::getbegy( w_open ) );
@@ -755,17 +748,13 @@ bool main_menu::should_glitch() const
 nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
-        // Selected item: bright with subtle pulse
-        double elapsed = std::chrono::duration<double>(
-                             std::chrono::steady_clock::now() - atmo_start_time_ ).count();
-        float pulse = 0.85f + 0.15f * static_cast<float>( std::sin( elapsed * 2.5 ) );
         if( atmo_glitch_active_ ) {
             return c_light_red;
         }
-        return pulse > 0.9f ? c_white : c_light_gray;
+        return c_white;
     }
-    // Unselected: dim
-    return c_dark_gray;
+    // Unselected: light gray for readability over background
+    return c_light_gray;
 }
 
 bool main_menu::opening_screen()

@@ -168,6 +168,15 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
                     display_text[pos] = glitch_chars[gc];
                 }
             }
+            // Permanent subtle glitch: randomly offset characters on all items
+            {
+                static std::mt19937 grng( std::random_device{}() );
+                if( std::uniform_int_distribution<int>( 0, 6 )( grng ) == 0 && display_text.size() > 3 ) {
+                    size_t gp = std::uniform_int_distribution<size_t>( 2, display_text.size() - 1 )( grng );
+                    static const char gc2[] = "░▒▓_|/\\";
+                    display_text[gp] = gc2[grng() % ( sizeof( gc2 ) - 1 )];
+                }
+            }
 
             // Semi-transparent unselected items via darker color
             trim_and_print( w_in, point( x_pos, y_pos ), getmaxx( w_in ) - x_pos - 2,
@@ -357,10 +366,9 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     int iLine = 2;
 
 #if defined(TILES)
-    // In tiles mode — background image already has the title, skip text logo
-    {
-        // just advance iLine so menu starts at right position
-    }
+    // In tiles mode — background image already has the title
+    // Position menu below the image title area
+    iLine = 14;
 #else
     // Curses mode — ASCII art title
     if( mmenu_title.size() > 1 ) {
@@ -755,12 +763,9 @@ bool main_menu::should_glitch() const
 nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
-        if( atmo_glitch_active_ ) {
-            return c_white;
-        }
-        return c_yellow;
+        return c_light_red;
     }
-    return c_light_gray;
+    return c_red;
 }
 
 bool main_menu::opening_screen()

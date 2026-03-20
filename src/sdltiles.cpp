@@ -586,13 +586,10 @@ void refresh_display()
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
     if( main_menu_background_active && main_menu_background_tex ) {
-        // Make the text buffer semi-transparent so the background shows through
-        // Black cells become see-through, text stays visible
-        SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_BLEND );
-        // Very low alpha so background is bright and vivid
-        SDL_SetTextureAlphaMod( display_buffer.get(), 70 );
+        // Use ADDITIVE blending: black cells (0,0,0) add nothing = fully transparent
+        // Colored text adds its color on top = bright and glowing
+        SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_ADD );
         RenderCopy( renderer, display_buffer, nullptr, nullptr );
-        SDL_SetTextureAlphaMod( display_buffer.get(), 255 );
         SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_NONE );
     } else {
         RenderCopy( renderer, display_buffer, nullptr, nullptr );

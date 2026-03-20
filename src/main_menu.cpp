@@ -285,7 +285,7 @@ void main_menu::display_sub_menu( int sel, const point &bottom_left, int sel_lin
         return;
     }
 
-    point top_left( bottom_left + point( 0, -( sub_opts.size() + 1 ) ) );
+    point top_left( bottom_left );
 
     // If sel2 somehow outgrew the options vector, clamp it back.
     sel2 = std::min<int>( sel2, sub_opts.size() );
@@ -763,9 +763,9 @@ bool main_menu::should_glitch() const
 nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
-        return c_light_red;
+        return c_white;
     }
-    return c_red;
+    return c_light_red;
 }
 
 bool main_menu::opening_screen()

@@ -555,12 +555,48 @@ void refresh_display()
     // there, present it, select the buffer as target again.
     SetRenderTarget( renderer, nullptr );
     ClearScreen();
+
+    // Draw main menu background UNDER the curses text buffer
+    if( main_menu_background_active && main_menu_background_tex ) {
+        int tex_w = 0;
+        int tex_h = 0;
+        SDL_QueryTexture( main_menu_background_tex.get(), nullptr, nullptr, &tex_w, &tex_h );
+        if( tex_w > 0 && tex_h > 0 ) {
+            int screen_w = 0;
+            int screen_h = 0;
+            SDL_GetRendererOutputSize( renderer.get(), &screen_w, &screen_h );
+            // Cover-fit: scale to fill entire screen, crop excess
+            float scale_w = static_cast<float>( screen_w ) / static_cast<float>( tex_w );
+            float scale_h = static_cast<float>( screen_h ) / static_cast<float>( tex_h );
+            float scale = std::max( scale_w, scale_h );
+            int draw_w = static_cast<int>( tex_w * scale );
+            int draw_h = static_cast<int>( tex_h * scale );
+            SDL_Rect dst;
+            dst.x = ( screen_w - draw_w ) / 2;
+            dst.y = ( screen_h - draw_h ) / 2;
+            dst.w = draw_w;
+            dst.h = draw_h;
+            RenderCopy( renderer, main_menu_background_tex, nullptr, &dst );
+        }
+    }
+
 #if defined(__ANDROID__)
     SDL_Rect dstrect = get_android_render_rect( TERMINAL_WIDTH * fontwidth,
                        TERMINAL_HEIGHT * fontheight );
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
-    RenderCopy( renderer, display_buffer, nullptr, nullptr );
+    if( main_menu_background_active && main_menu_background_tex ) {
+        // Make the text buffer semi-transparent so the background shows through
+        // Black cells become see-through, text stays visible
+        SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_BLEND );
+        // Set moderate alpha so text is clearly readable but BG shows through dark areas
+        SDL_SetTextureAlphaMod( display_buffer.get(), 230 );
+        RenderCopy( renderer, display_buffer, nullptr, nullptr );
+        SDL_SetTextureAlphaMod( display_buffer.get(), 255 );
+        SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_NONE );
+    } else {
+        RenderCopy( renderer, display_buffer, nullptr, nullptr );
+    }
 #endif
 #if defined(__ANDROID__)
     draw_terminal_size_preview();

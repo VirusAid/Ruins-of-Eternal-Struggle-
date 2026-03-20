@@ -137,7 +137,7 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
             nc_color item_color = get_menu_item_color( i, iSel );
             std::string prefix = ( i == iSel ) ? "▸ " : "  ";
             std::string item_text = remove_color_tags( vItems[i] );
-            // Strip « » decorations for cleaner look
+            // Clean display
             std::string display_text = prefix + item_text;
 
             if( atmo_glitch_active_ && i == iSel && ( atmo_glitch_frames_ % 3 == 0 ) ) {
@@ -357,7 +357,7 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
         }
         iLine++;
         center_print( w_open, iLine, c_red,
-                      _( "The Last Generation  |  v1.0" ) );
+                      _( "Ruins of Eternal Struggle  |  v1.0" ) );
     }
 #else
     // Curses mode — ASCII art title
@@ -749,12 +749,12 @@ nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
         if( atmo_glitch_active_ ) {
-            return c_white;
+            return c_yellow;
         }
         return c_light_red;
     }
-    // Unselected: darker red for blood aesthetic
-    return c_red;
+    // Unselected: visible but muted
+    return c_white;
 }
 
 bool main_menu::opening_screen()

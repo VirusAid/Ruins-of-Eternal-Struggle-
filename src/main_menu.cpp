@@ -356,25 +356,9 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     int iLine = 2;
 
 #if defined(TILES)
-    // In tiles mode — draw stylized title at top-center
+    // In tiles mode — background image already has the title, skip text logo
     {
-        // Pulsating logo effect: brightness oscillates
-        double elapsed = std::chrono::duration<double>(
-                             std::chrono::steady_clock::now() - atmo_start_time_ ).count();
-        float pulse = 0.7f + 0.3f * static_cast<float>( std::sin( elapsed * 1.2 ) );
-        nc_color logo_color = pulse > 0.85f ? c_light_red : c_red;
-
-        if( atmo_glitch_active_ && atmo_glitch_frames_ < 3 ) {
-            logo_color = c_white;
-            center_print( w_open, iLine, logo_color,
-                          _( "▓▒░ Ruins of Eternal Struggle ░▒▓" ) );
-        } else {
-            center_print( w_open, iLine, logo_color,
-                          _( "═══ Ruins of Eternal Struggle ═══" ) );
-        }
-        iLine++;
-        center_print( w_open, iLine, c_light_red,
-                      _( "v1.0" ) );
+        // just advance iLine so menu starts at right position
     }
 #else
     // Curses mode — ASCII art title
@@ -427,10 +411,15 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
         center_print( w_open, window_height - 2, c_light_red, atmo_msg );
     }
 
-    // ═══ Day tip (very subtle) ═══
-    if( !vdaytip.empty() ) {
-        right_print( w_open, window_height - 1, 2, c_white,
-                     string_format( "// %s", vdaytip ) );
+    // ═══ Day tip + version (bottom right) ═══
+    {
+        std::string bottom_right;
+        if( !vdaytip.empty() ) {
+            bottom_right = string_format( "// %s  |  v1.0", vdaytip );
+        } else {
+            bottom_right = "v1.0";
+        }
+        right_print( w_open, window_height - 1, 2, c_white, bottom_right );
     }
 
     // ═══ Holiday decorations ═══

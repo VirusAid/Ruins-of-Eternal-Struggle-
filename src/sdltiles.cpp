@@ -586,8 +586,31 @@ void refresh_display()
     RenderCopy( renderer, display_buffer, NULL, &dstrect );
 #else
     if( main_menu_background_active && main_menu_background_tex ) {
-        // Use ADDITIVE blending: black cells (0,0,0) add nothing = fully transparent
-        // Colored text adds its color on top = bright and glowing
+        // Draw dark overlay behind the menu area for text readability
+        {
+            int screen_w = 0;
+            int screen_h = 0;
+            SDL_GetRendererOutputSize( renderer.get(), &screen_w, &screen_h );
+            SDL_SetRenderDrawBlendMode( renderer.get(), SDL_BLENDMODE_BLEND );
+            // Semi-dark overlay over entire screen for contrast
+            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, 120 );
+            SDL_Rect full_bg;
+            full_bg.x = 0;
+            full_bg.y = 0;
+            full_bg.w = screen_w;
+            full_bg.h = screen_h;
+            SDL_RenderFillRect( renderer.get(), &full_bg );
+            // Darker center panel where menu buttons are
+            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, 140 );
+            SDL_Rect menu_bg;
+            menu_bg.x = screen_w / 4;
+            menu_bg.y = screen_h / 3;
+            menu_bg.w = screen_w / 2;
+            menu_bg.h = screen_h / 2;
+            SDL_RenderFillRect( renderer.get(), &menu_bg );
+            SDL_SetRenderDrawBlendMode( renderer.get(), SDL_BLENDMODE_NONE );
+        }
+        // ADDITIVE blending: black = transparent, colored text = glowing
         SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_ADD );
         RenderCopy( renderer, display_buffer, nullptr, nullptr );
         SDL_SetTextureBlendMode( display_buffer.get(), SDL_BLENDMODE_NONE );

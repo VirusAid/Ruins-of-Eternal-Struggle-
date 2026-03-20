@@ -137,16 +137,18 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
             nc_color item_color = get_menu_item_color( i, iSel );
             std::string prefix = ( i == iSel ) ? "\u25b8 " : "  ";
             std::string item_text = remove_color_tags( vItems[i] );
-            // Strip hotkey markup like <M|m>, <N|n>, <a|A> etc.
+            // Strip hotkey markup like <M|m>, <N|n>, <a|A> — keep first letter
             {
                 std::string clean;
-                bool in_bracket = false;
                 for( size_t ci = 0; ci < item_text.size(); ci++ ) {
                     if( item_text[ci] == '<' ) {
-                        in_bracket = true;
-                    } else if( item_text[ci] == '>' && in_bracket ) {
-                        in_bracket = false;
-                    } else if( !in_bracket ) {
+                        // Extract the first character inside brackets as the actual letter
+                        size_t end = item_text.find( '>', ci );
+                        if( end != std::string::npos && ci + 1 < end ) {
+                            clean += item_text[ci + 1]; // first char after '<'
+                            ci = end; // skip past '>'
+                        }
+                    } else {
                         clean += item_text[ci];
                     }
                 }
@@ -766,9 +768,9 @@ nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
         if( atmo_glitch_active_ ) {
             return c_yellow;
         }
-        return c_white;
+        return c_light_red;
     }
-    return c_light_gray;
+    return c_white;
 }
 
 bool main_menu::opening_screen()

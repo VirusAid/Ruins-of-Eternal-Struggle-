@@ -2,7 +2,9 @@
 #ifndef CATA_SRC_MAIN_MENU_H
 #define CATA_SRC_MAIN_MENU_H
 
+#include <chrono>
 #include <cstddef>
+#include <string>
 #include <vector>
 
 #include "cuboid_rectangle.h"
@@ -118,6 +120,26 @@ class main_menu
 
         static std::string halloween_spider();
         std::string halloween_graves();
+
+        // ═══ Ruins of Eternal Struggle — Atmosphere System ═══
+        void init_atmosphere();
+        void update_atmosphere();
+        std::string get_atmosphere_message() const;
+        bool should_glitch() const;
+        nc_color get_menu_item_color( size_t index, size_t selected ) const;
+
+        // Atmosphere state
+        std::chrono::steady_clock::time_point atmo_start_time_;
+        std::chrono::steady_clock::time_point atmo_last_update_;
+        std::chrono::steady_clock::time_point atmo_last_glitch_;
+        std::chrono::steady_clock::time_point atmo_msg_change_time_;
+        int atmo_frame_counter_ = 0;
+        int atmo_fade_alpha_ = 0;        // 0..255 for fade-in
+        bool atmo_glitch_active_ = false;
+        int atmo_glitch_frames_ = 0;
+        int atmo_current_msg_ = 0;
+        float atmo_fog_phase_ = 0.0f;
+        std::vector<std::string> atmo_messages_;
 };
 
 #endif // CATA_SRC_MAIN_MENU_H

@@ -1,6 +1,7 @@
 #include "main_menu.h"
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
@@ -11,6 +12,7 @@
 #include <istream>
 #include <memory>
 #include <optional>
+#include <random>
 #include <string>
 
 #if defined(EMSCRIPTEN)
@@ -122,46 +124,67 @@ std::vector<int> main_menu::print_menu_items( const catacurses::window &w_in,
 {
     const point win_offset( getbegx( w_in ), getbegy( w_in ) );
     std::vector<int> ret;
-    std::string text;
-    for( size_t i = 0; i < vItems.size(); ++i ) {
-        if( i > 0 ) {
-            text += std::string( spacing, ' ' );
-        }
-        ret.push_back( utf8_width_notags( text.c_str() ) );
 
-        std::string temp = shortcut_text( iSel == i ? hilite( c_light_red ) : c_light_red, vItems[i] );
-        text += string_format( "«%s»", colorize( temp, iSel == i ? hilite( c_white ) : c_dark_gray ) );
-    }
+    if( main ) {
+        // ═══ VERTICAL MENU LAYOUT ═══
+        // Draw menu items as a vertical list on the left side
+        int y_pos = offset.y;
+        int x_pos = 4; // Left margin
 
-    int text_width = utf8_width_notags( text.c_str() );
-    if( text_width > getmaxx( w_in ) ) {
-        offset.y -= std::ceil( text_width / getmaxx( w_in ) );
-    }
+        for( size_t i = 0; i < vItems.size(); ++i ) {
+            ret.push_back( x_pos );
 
-    std::vector<std::string> menu_txt = foldstring( text, getmaxx( w_in ), ' ' );
+            nc_color item_color = get_menu_item_color( i, iSel );
+            std::string prefix = ( i == iSel ) ? "▸ " : "  ";
+            std::string item_text = remove_color_tags( vItems[i] );
+            // Strip « » decorations for cleaner look
+            std::string display_text = prefix + item_text;
 
-    int y_off = 0;
-    int sel_opt = 0;
-    for( const std::string &txt : menu_txt ) {
-        trim_and_print( w_in, offset + point( 0, y_off ), getmaxx( w_in ), c_white, txt );
-        if( !main ) {
-            y_off++;
-            continue;
-        }
-        std::vector<std::string> tmp_chars = utf8_display_split( remove_color_tags( txt ) );
-        for( int x = 0; static_cast<size_t>( x ) < tmp_chars.size(); x++ ) {
-            if( tmp_chars[x] == "\u00AB" ) {
-                for( int x2 = x; static_cast<size_t>( x2 ) < tmp_chars.size(); x2++ ) {
-                    if( tmp_chars[x2] == "\u00BB" ) {
-                        inclusive_rectangle<point> rec( win_offset + offset + point( x, y_off ),
-                                                        win_offset + offset + point( x2, y_off ) );
-                        main_menu_button_map.emplace_back( rec, sel_opt++ );
-                        break;
-                    }
+            if( atmo_glitch_active_ && i == iSel && ( atmo_glitch_frames_ % 3 == 0 ) ) {
+                // Glitch effect on selected item — random character corruption
+                if( display_text.size() > 4 ) {
+                    static std::mt19937 rng( std::random_device{}() );
+                    size_t pos = std::uniform_int_distribution<size_t>( 2, display_text.size() - 2 )( rng );
+                    static const char glitch_chars[] = "░▒▓█▌▐│┤╡╢╖╕╣║╗╝╜╛";
+                    int gc = std::uniform_int_distribution<int>( 0, sizeof( glitch_chars ) - 2 )( rng );
+                    display_text[pos] = glitch_chars[gc];
                 }
             }
+
+            // Semi-transparent unselected items via darker color
+            trim_and_print( w_in, point( x_pos, y_pos ), getmaxx( w_in ) - x_pos - 2,
+                            item_color, display_text );
+
+            // Clickable area for mouse
+            if( main ) {
+                int text_w = utf8_width( display_text, true );
+                inclusive_rectangle<point> rec(
+                    win_offset + point( x_pos, y_pos ),
+                    win_offset + point( x_pos + text_w, y_pos ) );
+                main_menu_button_map.emplace_back( rec, static_cast<int>( i ) );
+            }
+
+            y_pos += 2; // Spacing between items
         }
-        y_off++;
+    } else {
+        // Sub-menus: original horizontal layout
+        std::string text;
+        for( size_t i = 0; i < vItems.size(); ++i ) {
+            if( i > 0 ) {
+                text += std::string( spacing, ' ' );
+            }
+            ret.push_back( utf8_width_notags( text.c_str() ) );
+            std::string temp = shortcut_text( iSel == i ? hilite( c_light_red ) : c_light_red,
+                                              vItems[i] );
+            text += string_format( "«%s»",
+                                   colorize( temp, iSel == i ? hilite( c_white ) : c_dark_gray ) );
+        }
+        std::vector<std::string> menu_txt = foldstring( text, getmaxx( w_in ), ' ' );
+        int y_off = 0;
+        for( const std::string &txt : menu_txt ) {
+            trim_and_print( w_in, offset + point( 0, y_off ), getmaxx( w_in ), c_white, txt );
+            y_off++;
+        }
     }
 
     return ret;
@@ -287,87 +310,58 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
                             int sel_line )
 {
     main_menu_button_map.clear();
-
-    // Clear Lines
     werase( w_open );
 
-    // Define window size
     int window_width = getmaxx( w_open );
     int window_height = getmaxy( w_open );
 
+    // ═══ Update atmosphere state ═══
+    update_atmosphere();
+
 #if !defined(TILES)
-    // ── Post-apocalyptic border decoration (curses only) ──
-    // Top border with ruined aesthetic
+    // ── Minimal dark border (curses only) ──
     for( int x = 0; x < window_width; x++ ) {
         mvwputch( w_open, point( x, 0 ), c_dark_gray, LINE_OXOX );
+        mvwputch( w_open, point( x, window_height - 1 ), c_dark_gray, LINE_OXOX );
     }
-    mvwputch( w_open, point( 0, 0 ), c_dark_gray, LINE_OXXO );
-    mvwputch( w_open, point( window_width - 1, 0 ), c_dark_gray, LINE_OOXX );
-
-    // Side borders
     for( int y = 1; y < window_height - 1; y++ ) {
         mvwputch( w_open, point( 0, y ), c_dark_gray, LINE_XOXO );
         mvwputch( w_open, point( window_width - 1, y ), c_dark_gray, LINE_XOXO );
     }
-
-    // Bottom border
-    for( int x = 0; x < window_width; x++ ) {
-        mvwputch( w_open, point( x, window_height - 1 ), c_dark_gray, LINE_OXOX );
-    }
+    mvwputch( w_open, point( 0, 0 ), c_dark_gray, LINE_OXXO );
+    mvwputch( w_open, point( window_width - 1, 0 ), c_dark_gray, LINE_OOXX );
     mvwputch( w_open, point( 0, window_height - 1 ), c_dark_gray, LINE_XXOO );
     mvwputch( w_open, point( window_width - 1, window_height - 1 ), c_dark_gray, LINE_XOOX );
-
-    // Decorative separator line above menu items
-    for( int x = 1; x < window_width - 1; x++ ) {
-        mvwputch( w_open, point( x, window_height - 5 ), c_dark_gray, LINE_OXOX );
-    }
-    mvwputch( w_open, point( 0, window_height - 5 ), c_dark_gray, LINE_XXXO );
-    mvwputch( w_open, point( window_width - 1, window_height - 5 ), c_dark_gray, LINE_XXOX );
 #endif
 
-    // Status/hint area
-    if( iSel == getopt( main_menu_opts::NEWCHAR ) ) {
-        center_print( w_open, window_height - 3, c_yellow, vNewGameHints[sel2] );
-    } else {
-        center_print( w_open, window_height - 3, c_dark_gray,
-                      _( "Bugs?  Suggestions?  Use links in MOTD to report them." ) );
-    }
-
-    center_print( w_open, window_height - 2, c_dark_gray,
-                  string_format( _( "» %s «" ), vdaytip ) );
-
-    int iLine = 1;
-#if !defined(TILES)
-    const int iOffsetX = ( window_width - FULL_SCREEN_WIDTH ) / 2;
-#endif
-
-    switch( current_holiday ) {
-        case holiday::new_year:
-        case holiday::easter:
-            break;
-        case holiday::halloween:
-            fold_and_print_from( w_open, point( 1, 1 ), 30, 0, c_white, halloween_spider() );
-            fold_and_print_from( w_open, point( getmaxx( w_open ) - 25, offset.y - 8 ),
-                                 25, 0, c_white, halloween_graves() );
-            break;
-        case holiday::thanksgiving:
-        case holiday::christmas:
-        case holiday::none:
-        case holiday::num_holiday:
-        default:
-            break;
-    }
+    // ═══ LOGO / TITLE ═══
+    int iLine = 2;
 
 #if defined(TILES)
-    // In tiles mode with background image, skip ASCII art title
-    iLine += static_cast<int>( mmenu_title.size() ) + 1;
-    center_print( w_open, iLine, c_white,
-                  _( "═══ Ruins of Eternal Struggle v1.0 ═══" ) );
-    iLine++;
-    center_print( w_open, iLine, c_dark_gray,
-                  _( "A fork of Cataclysm: The Last Generation | Based on Cataclysm: DDA" ) );
+    // In tiles mode — draw stylized title at top-center
+    {
+        // Pulsating logo effect: brightness oscillates
+        double elapsed = std::chrono::duration<double>(
+                             std::chrono::steady_clock::now() - atmo_start_time_ ).count();
+        float pulse = 0.7f + 0.3f * static_cast<float>( std::sin( elapsed * 1.2 ) );
+        nc_color logo_color = pulse > 0.85f ? c_white : c_light_gray;
+
+        if( atmo_glitch_active_ && atmo_glitch_frames_ < 3 ) {
+            logo_color = c_light_red;
+            center_print( w_open, iLine, logo_color,
+                          _( "▓▒░ Ruins of Eternal Struggle ░▒▓" ) );
+        } else {
+            center_print( w_open, iLine, logo_color,
+                          _( "═══ Ruins of Eternal Struggle ═══" ) );
+        }
+        iLine++;
+        center_print( w_open, iLine, c_dark_gray,
+                      _( "The Last Generation  |  v1.0" ) );
+    }
 #else
+    // Curses mode — ASCII art title
     if( mmenu_title.size() > 1 ) {
+        const int iOffsetX = ( window_width - FULL_SCREEN_WIDTH ) / 2;
         for( const std::string &i_title : mmenu_title ) {
             nc_color cur_color = c_white;
             nc_color base_color = c_white;
@@ -376,49 +370,81 @@ void main_menu::print_menu( const catacurses::window &w_open, int iSel, const po
     } else {
         center_print( w_open, iLine++, c_light_cyan, mmenu_title[0] );
     }
-
     iLine++;
-    center_print( w_open, iLine, c_dark_gray,
-                  _( "═══ Version: 1.0 ═══" ) );
-    iLine++;
-    center_print( w_open, iLine, c_dark_gray,
-                  _( "A fork of Cataclysm: The Last Generation | Based on Cataclysm: DDA" ) );
+    center_print( w_open, iLine, c_dark_gray, _( "═══ v1.0 ═══" ) );
 #endif
 
-    int menu_length = 0;
-    for( size_t i = 0; i < vMenuItems.size(); ++i ) {
-        menu_length += utf8_width_notags( vMenuItems[i].c_str() ) + 2;
-        if( !vMenuHotkeys[i].empty() ) {
-            menu_length += utf8_width( vMenuHotkeys[i][0] );
-        }
-    }
-    const int free_space = std::max( 0, window_width - menu_length - offset.x );
-    const int spacing = free_space / ( static_cast<int>( vMenuItems.size() ) + 1 );
-    const int width_of_spacing = spacing * ( vMenuItems.size() + 1 );
-    const int adj_offset = std::max( 0, ( free_space - width_of_spacing ) / 2 );
-    const int final_offset = offset.x + adj_offset + spacing;
+    iLine += 2;
+
+    // ═══ VERTICAL MENU ITEMS (left-aligned) ═══
+    int menu_y = iLine + 2;
+    point menu_pos( 4, menu_y );
 
     std::vector<int> offsets =
-        print_menu_items( w_open, vMenuItems, iSel, point( final_offset, offset.y ), spacing, true );
+        print_menu_items( w_open, vMenuItems, iSel, menu_pos, 0, true );
+
+    // ═══ HINT / STATUS AREA (bottom) ═══
+    int hint_y = window_height - 4;
+
+    if( iSel == getopt( main_menu_opts::NEWCHAR ) ) {
+        center_print( w_open, hint_y, c_yellow, vNewGameHints[sel2] );
+    }
+
+    // ═══ ATMOSPHERIC MESSAGE (bottom of screen) ═══
+    {
+        std::string atmo_msg = get_atmosphere_message();
+        // Occasional glitch in the atmosphere text
+        if( atmo_glitch_active_ && ( atmo_glitch_frames_ % 5 == 0 ) ) {
+            // Corrupt a few characters
+            std::string glitched = atmo_msg;
+            if( glitched.size() > 3 ) {
+                static std::mt19937 rng( std::random_device{}() );
+                for( int g = 0; g < 2; g++ ) {
+                    size_t pos = std::uniform_int_distribution<size_t>( 0, glitched.size() - 1 )( rng );
+                    glitched[pos] = "░▒▓#@!?"[rng() % 7];
+                }
+                atmo_msg = glitched;
+            }
+        }
+        center_print( w_open, window_height - 2, c_dark_gray, atmo_msg );
+    }
+
+    // ═══ Day tip (very subtle) ═══
+    if( !vdaytip.empty() ) {
+        right_print( w_open, window_height - 1, 2, c_dark_gray,
+                     string_format( "// %s", vdaytip ) );
+    }
+
+    // ═══ Holiday decorations ═══
+    switch( current_holiday ) {
+        case holiday::halloween:
+            fold_and_print_from( w_open, point( 1, 1 ), 30, 0, c_white, halloween_spider() );
+            fold_and_print_from( w_open, point( getmaxx( w_open ) - 25, menu_y - 2 ),
+                                 25, 0, c_white, halloween_graves() );
+            break;
+        default:
+            break;
+    }
 
     wnoutrefresh( w_open );
 
 #if defined(TILES)
-    // Draw background image only above the menu area, so menu text stays visible
+    // ═══ DRAW BACKGROUND IMAGE (full screen behind everything) ═══
     {
-        const int win_y = catacurses::getbegy( w_open );
-        const int win_h = getmaxy( w_open );
-        // Menu area = last 6 rows (separator + hints + menu items row)
-        int img_h = win_h - 6;
-        if( img_h > 0 ) {
-            draw_main_menu_background( 0, 0, TERMX, win_y + img_h );
-        }
+        draw_main_menu_background( 0, 0, TERMX, TERMY );
+        // Darkened overlay on the menu area for readability
+        const int win_x = catacurses::getbegx( w_open );
+        draw_main_menu_darkened_bar( win_x, catacurses::getbegy( w_open ) + menu_y - 1,
+                                     30, static_cast<int>( vMenuItems.size() ) * 2 + 2, 160 );
     }
 #endif
 
+    // ═══ SUB-MENU ═══
     const point p_offset( catacurses::getbegx( w_open ), catacurses::getbegy( w_open ) );
-
-    display_sub_menu( iSel, p_offset + point( offsets[iSel], offset.y - 2 ), sel_line );
+    // For vertical layout, sub-menu appears to the right of menu items
+    int sub_x = 35;
+    int sub_y = menu_y + iSel * 2;
+    display_sub_menu( iSel, p_offset + point( sub_x, sub_y ), sel_line );
 }
 
 std::vector<std::string> main_menu::load_file( const std::string &path,
@@ -628,6 +654,120 @@ void main_menu::load_char_templates()
     std::sort( templates.begin(), templates.end(), localized_compare );
 }
 
+// ═══════════════════════════════════════════════════
+// ATMOSPHERE SYSTEM — Ruins of Eternal Struggle
+// ═══════════════════════════════════════════════════
+
+void main_menu::init_atmosphere()
+{
+    auto now = std::chrono::steady_clock::now();
+    atmo_start_time_ = now;
+    atmo_last_update_ = now;
+    atmo_last_glitch_ = now;
+    atmo_msg_change_time_ = now;
+    atmo_frame_counter_ = 0;
+    atmo_fade_alpha_ = 0;
+    atmo_glitch_active_ = false;
+    atmo_glitch_frames_ = 0;
+    atmo_current_msg_ = 0;
+    atmo_fog_phase_ = 0.0f;
+
+    atmo_messages_.clear();
+    atmo_messages_.emplace_back( _( "Город давно мёртв..." ) );
+    atmo_messages_.emplace_back( _( "Ты не один..." ) );
+    atmo_messages_.emplace_back( _( "Они наблюдают..." ) );
+    atmo_messages_.emplace_back( _( "Сигнал всё ещё идёт..." ) );
+    atmo_messages_.emplace_back( _( "47.3 герц... слышишь?" ) );
+    atmo_messages_.emplace_back( _( "Ядро не спит." ) );
+    atmo_messages_.emplace_back( _( "Стены помнят всё." ) );
+    atmo_messages_.emplace_back( _( "Кто-то звал на помощь... давно." ) );
+    atmo_messages_.emplace_back( _( "Руины вечны. Борьба — тоже." ) );
+    atmo_messages_.emplace_back( _( "Протокол «Закат» был ошибкой." ) );
+    atmo_messages_.emplace_back( _( "Глубина: 340 метров... и дальше." ) );
+    atmo_messages_.emplace_back( _( "...если кто слышит... сектор семь..." ) );
+    atmo_messages_.emplace_back( _( "Тишина — это тоже ответ." ) );
+    atmo_messages_.emplace_back( _( "Не оглядывайся." ) );
+}
+
+void main_menu::update_atmosphere()
+{
+    auto now = std::chrono::steady_clock::now();
+    double dt = std::chrono::duration<double>( now - atmo_last_update_ ).count();
+    atmo_last_update_ = now;
+    atmo_frame_counter_++;
+
+    // Fade-in effect (first 2 seconds)
+    double total_elapsed = std::chrono::duration<double>( now - atmo_start_time_ ).count();
+    if( total_elapsed < 2.0 ) {
+        atmo_fade_alpha_ = static_cast<int>( ( total_elapsed / 2.0 ) * 255.0 );
+    } else {
+        atmo_fade_alpha_ = 255;
+    }
+
+    // Fog phase (slow sine wave)
+    atmo_fog_phase_ += static_cast<float>( dt ) * 0.4f;
+    if( atmo_fog_phase_ > 6.2832f ) {
+        atmo_fog_phase_ -= 6.2832f;
+    }
+
+    // Glitch system — trigger randomly every 8-15 seconds
+    double since_glitch = std::chrono::duration<double>( now - atmo_last_glitch_ ).count();
+    if( !atmo_glitch_active_ && since_glitch > 8.0 ) {
+        static std::mt19937 rng( std::random_device{}() );
+        if( std::uniform_real_distribution<double>( 0.0, 1.0 )( rng ) < dt * 0.15 ) {
+            atmo_glitch_active_ = true;
+            atmo_glitch_frames_ = std::uniform_int_distribution<int>( 3, 8 )( rng );
+            atmo_last_glitch_ = now;
+        }
+    }
+
+    // Decrement glitch frames
+    if( atmo_glitch_active_ ) {
+        atmo_glitch_frames_--;
+        if( atmo_glitch_frames_ <= 0 ) {
+            atmo_glitch_active_ = false;
+        }
+    }
+
+    // Rotate atmosphere messages every 6 seconds
+    double since_msg = std::chrono::duration<double>( now - atmo_msg_change_time_ ).count();
+    if( since_msg > 6.0 && !atmo_messages_.empty() ) {
+        static std::mt19937 rng( std::random_device{}() );
+        atmo_current_msg_ = std::uniform_int_distribution<int>(
+                                0, static_cast<int>( atmo_messages_.size() ) - 1 )( rng );
+        atmo_msg_change_time_ = now;
+    }
+}
+
+std::string main_menu::get_atmosphere_message() const
+{
+    if( atmo_messages_.empty() ) {
+        return {};
+    }
+    return atmo_messages_[atmo_current_msg_ % atmo_messages_.size()];
+}
+
+bool main_menu::should_glitch() const
+{
+    return atmo_glitch_active_;
+}
+
+nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
+{
+    if( index == selected ) {
+        // Selected item: bright with subtle pulse
+        double elapsed = std::chrono::duration<double>(
+                             std::chrono::steady_clock::now() - atmo_start_time_ ).count();
+        float pulse = 0.85f + 0.15f * static_cast<float>( std::sin( elapsed * 2.5 ) );
+        if( atmo_glitch_active_ ) {
+            return c_light_red;
+        }
+        return pulse > 0.9f ? c_white : c_light_gray;
+    }
+    // Unselected: dim
+    return c_dark_gray;
+}
+
 bool main_menu::opening_screen()
 {
     // set holiday based on local system time
@@ -643,6 +783,9 @@ bool main_menu::opening_screen()
     world_generator->init();
 
     init_strings();
+
+    // Initialize atmosphere system
+    init_atmosphere();
 
     load_char_templates();
 
@@ -806,14 +949,57 @@ bool main_menu::opening_screen()
                 return false;
             }
 #endif
-        } else if( action == "LEFT" || action == "PREV_TAB" || action == "RIGHT" || action == "NEXT_TAB" ) {
-            sel_line = 0;
-            sel1 = inc_clamp_wrap( sel1, action == "RIGHT" || action == "NEXT_TAB",
-                                   static_cast<int>( main_menu_opts::NUM_MENU_OPTS ) );
-            sel2 = sel1 == getopt( main_menu_opts::LOADCHAR ) ? last_world_pos : 0;
-            on_move();
-        } else if( action == "UP" || action == "DOWN" ||
-                   action == "PAGE_UP" || action == "PAGE_DOWN" ||
+        } else if( action == "LEFT" || action == "PREV_TAB" || action == "RIGHT" || action == "NEXT_TAB" ||
+                   action == "UP" || action == "DOWN" ) {
+            // Vertical menu: UP/DOWN/LEFT/RIGHT all navigate main menu items
+            // But only when no sub-menu has items to scroll
+            int max_sub_items = 0;
+            main_menu_opts cur_opt = static_cast<main_menu_opts>( sel1 );
+            switch( cur_opt ) {
+                case main_menu_opts::LOADCHAR:
+                    max_sub_items = world_generator->get_all_worlds().size();
+                    break;
+                case main_menu_opts::WORLD:
+                    max_sub_items = world_generator->get_all_worlds().size() + 1;
+                    break;
+                case main_menu_opts::NEWCHAR:
+                    max_sub_items = vNewGameSubItems.size();
+                    break;
+                case main_menu_opts::SETTINGS:
+                    max_sub_items = vSettingsSubItems.size();
+                    break;
+                default:
+                    break;
+            }
+
+            if( ( action == "LEFT" || action == "RIGHT" ) && max_sub_items > 0 ) {
+                // LEFT/RIGHT navigate sub-items when sub-menu is active
+                if( action == "LEFT" ) {
+                    sel2--;
+                    if( sel2 < 0 ) {
+                        sel2 = max_sub_items - 1;
+                    }
+                } else {
+                    sel2++;
+                    if( sel2 >= max_sub_items ) {
+                        sel2 = 0;
+                    }
+                }
+                on_move();
+            } else if( action == "UP" || action == "LEFT" || action == "PREV_TAB" ) {
+                sel_line = 0;
+                sel1 = inc_clamp_wrap( sel1, false,
+                                       static_cast<int>( main_menu_opts::NUM_MENU_OPTS ) );
+                sel2 = sel1 == getopt( main_menu_opts::LOADCHAR ) ? last_world_pos : 0;
+                on_move();
+            } else {
+                sel_line = 0;
+                sel1 = inc_clamp_wrap( sel1, true,
+                                       static_cast<int>( main_menu_opts::NUM_MENU_OPTS ) );
+                sel2 = sel1 == getopt( main_menu_opts::LOADCHAR ) ? last_world_pos : 0;
+                on_move();
+            }
+        } else if( action == "PAGE_UP" || action == "PAGE_DOWN" ||
                    action == "SCROLL_UP" || action == "SCROLL_DOWN" ) {
             int max_item_count = 0;
             int min_item_val = 0;
@@ -821,11 +1007,11 @@ bool main_menu::opening_screen()
             switch( opt ) {
                 case main_menu_opts::MOTD:
                 case main_menu_opts::CREDITS:
-                    if( action == "UP" || action == "PAGE_UP" || action == "SCROLL_UP" ) {
+                    if( action == "PAGE_UP" || action == "SCROLL_UP" ) {
                         if( sel_line > 0 ) {
                             sel_line--;
                         }
-                    } else if( action == "DOWN" || action == "PAGE_DOWN" || action == "SCROLL_DOWN" ) {
+                    } else if( action == "PAGE_DOWN" || action == "SCROLL_DOWN" ) {
                         int effective_height = sel_line + FULL_SCREEN_HEIGHT - 2;
                         if( ( opt == main_menu_opts::CREDITS && effective_height < mmenu_credits_len ) ||
                             ( opt == main_menu_opts::MOTD && effective_height < mmenu_motd_len ) ) {
@@ -837,7 +1023,6 @@ bool main_menu::opening_screen()
                     max_item_count = world_generator->get_all_worlds().size();
                     break;
                 case main_menu_opts::WORLD:
-                    // extra 1 = "Create New World"
                     max_item_count = world_generator->get_all_worlds().size() + 1;
                     break;
                 case main_menu_opts::NEWCHAR:
@@ -846,19 +1031,16 @@ bool main_menu::opening_screen()
                 case main_menu_opts::SETTINGS:
                     max_item_count = vSettingsSubItems.size();
                     break;
-                case main_menu_opts::TUTORIAL:
-                case main_menu_opts::HELP:
-                case main_menu_opts::QUIT:
                 default:
                     break;
             }
             if( max_item_count > 0 ) {
-                if( action == "UP" || action == "PAGE_UP" || action == "SCROLL_UP" ) {
+                if( action == "PAGE_UP" || action == "SCROLL_UP" ) {
                     sel2--;
                     if( sel2 < min_item_val ) {
                         sel2 = max_item_count - 1;
                     }
-                } else if( action == "DOWN" || action == "PAGE_DOWN" || action == "SCROLL_DOWN" ) {
+                } else if( action == "PAGE_DOWN" || action == "SCROLL_DOWN" ) {
                     sel2++;
                     if( sel2 >= max_item_count ) {
                         sel2 = min_item_val;

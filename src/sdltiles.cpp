@@ -134,6 +134,7 @@ static SDL_Texture_Ptr display_buffer;
 static GeometryRenderer_Ptr geometry;
 static SDL_Texture_Ptr main_menu_background_tex;
 static bool main_menu_background_active = false;
+static bool main_menu_in_chargen = false;
 #if defined(__ANDROID__)
 static SDL_Texture_Ptr touch_joystick;
 #endif
@@ -592,8 +593,9 @@ void refresh_display()
             int screen_h = 0;
             SDL_GetRendererOutputSize( renderer.get(), &screen_w, &screen_h );
             SDL_SetRenderDrawBlendMode( renderer.get(), SDL_BLENDMODE_BLEND );
-            // Semi-dark overlay over entire screen for contrast
-            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, 120 );
+            // Dark overlay over entire screen for text readability
+            int overlay_alpha = main_menu_in_chargen ? 200 : 120;
+            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, overlay_alpha );
             SDL_Rect full_bg;
             full_bg.x = 0;
             full_bg.y = 0;
@@ -601,7 +603,8 @@ void refresh_display()
             full_bg.h = screen_h;
             SDL_RenderFillRect( renderer.get(), &full_bg );
             // Darker center panel where menu buttons are
-            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, 140 );
+            int panel_alpha = main_menu_in_chargen ? 220 : 140;
+            SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, panel_alpha );
             SDL_Rect menu_bg;
             menu_bg.x = screen_w / 4;
             menu_bg.y = screen_h / 3;
@@ -4537,6 +4540,11 @@ void load_main_menu_background( const std::string &path )
 void set_main_menu_background_active( bool active )
 {
     main_menu_background_active = active;
+}
+
+void set_main_menu_in_chargen( bool active )
+{
+    main_menu_in_chargen = active;
 }
 
 void unload_main_menu_background()

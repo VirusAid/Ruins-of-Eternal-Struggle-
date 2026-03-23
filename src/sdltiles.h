@@ -67,6 +67,7 @@ const SDL_Renderer_Ptr &get_sdl_renderer();
 
 void load_main_menu_background( const std::string &path );
 void set_main_menu_background_active( bool active );
+void set_main_menu_in_chargen( bool active );
 void unload_main_menu_background();
 void draw_main_menu_background( int x_cells, int y_cells, int w_cells, int h_cells );
 void draw_main_menu_darkened_bar( int x_cells, int y_cells, int w_cells, int h_cells, int alpha );

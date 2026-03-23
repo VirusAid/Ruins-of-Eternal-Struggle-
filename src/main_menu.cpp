@@ -763,7 +763,7 @@ bool main_menu::should_glitch() const
 nc_color main_menu::get_menu_item_color( size_t index, size_t selected ) const
 {
     if( index == selected ) {
-        return c_light_red;
+        return c_white;
     }
     return c_light_red;
 }
@@ -1121,7 +1121,13 @@ bool main_menu::opening_screen()
                     }
                     break;
                 case main_menu_opts::NEWCHAR:
+#if defined(TILES)
+                    set_main_menu_in_chargen( true );
+#endif
                     start = new_character_tab();
+#if defined(TILES)
+                    set_main_menu_in_chargen( false );
+#endif
                     break;
                 case main_menu_opts::MOTD:
                 case main_menu_opts::CREDITS:

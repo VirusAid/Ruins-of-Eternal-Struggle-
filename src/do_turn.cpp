@@ -31,6 +31,7 @@
 #include "event.h"
 #include "event_bus.h"
 #include "explosion.h"
+#include "faction_economy.h"
 #include "game.h"
 #include "game_constants.h"
 #include "gamemode.h"
@@ -504,6 +505,8 @@ bool do_turn()
     }
     if( calendar::once_every( 1_days ) ) {
         overmap_buffer.process_mongroups();
+        // Update faction dynamic economies once per day
+        get_faction_economy_manager().update_all( calendar::turn );
     }
 
     // Move hordes every turn, move_hordes has its own rate limiting

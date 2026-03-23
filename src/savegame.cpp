@@ -21,6 +21,7 @@
 #include "creature_tracker.h"
 #include "debug.h"
 #include "faction.h"
+#include "faction_economy.h"
 #include "hash_utils.h"
 #include "horde_entity.h"
 #include "input.h"
@@ -1668,6 +1669,8 @@ void game::unserialize_master( const JsonValue &jv )
             mission::unserialize_all( jsin );
         } else if( name == "factions" ) {
             jsin.read( *faction_manager_ptr );
+        } else if( name == "faction_economies" ) {
+            get_faction_economy_manager().deserialize( jsin );
         } else if( name == "seed" ) {
             jsin.read( seed );
         } else if( name == "weather" ) {
@@ -1839,6 +1842,8 @@ void game::serialize_master( std::ostream &fout )
         timed_event_manager::serialize_all( json );
 
         json.member( "factions", *faction_manager_ptr );
+        json.member( "faction_economies" );
+        get_faction_economy_manager().serialize( json );
         json.member( "seed", seed );
 
         json.end_object();

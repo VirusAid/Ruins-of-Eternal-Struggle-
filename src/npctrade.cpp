@@ -12,6 +12,7 @@
 #include "character.h"
 #include "debug.h"
 #include "faction.h"
+#include "faction_economy.h"
 #include "item.h"
 #include "item_category.h" // IWYU pragma: keep
 #include "item_location.h"
@@ -213,6 +214,15 @@ int npc_trading::adjusted_price( item const *it, int amount, Character const &bu
         price *= 1 + 0.25 * adjust;
     }
 
+    // Apply faction dynamic economy modifier
+    if( faction_party->get_faction() ) {
+        const faction_economy *econ = get_faction_economy_manager().get_if_exists(
+                                          faction_party->get_faction()->id );
+        if( econ != nullptr ) {
+            price *= econ->get_price_modifier( *it );
+        }
+    }
+
     return static_cast<int>( std::ceil( price ) );
 }
 
@@ -314,6 +324,27 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
 
         std::list<item_location *> from_map;
 
+        // Snapshot traded items for economy tracking BEFORE transfer
+        // (transfer_items invalidates item_locations)
+        struct econ_trade_entry {
+            item traded_item; // copy of the item
+            int amount;
+        };
+        std::vector<econ_trade_entry> player_sold;  // player -> NPC
+        std::vector<econ_trade_entry> player_bought; // NPC -> player
+        if( np.get_faction() ) {
+            for( const trade_selector::entry_t &entry : trade_result.items_you ) {
+                if( entry.first.get_item() ) {
+                    player_sold.push_back( { *entry.first.get_item(), std::max( 1, entry.second ) } );
+                }
+            }
+            for( const trade_selector::entry_t &entry : trade_result.items_trader ) {
+                if( entry.first.get_item() ) {
+                    player_bought.push_back( { *entry.first.get_item(), std::max( 1, entry.second ) } );
+                }
+            }
+        }
+
         std::list<item> escrow;
         avatar &player_character = get_avatar();
         // Movement of items in 3 steps: player to escrow - npc to player - escrow to npc.
@@ -354,6 +385,17 @@ bool npc_trading::trade( npc &np, int cost, const std::string &deal )
             player_character.cash -= trade_result.delta_bank;
             update_npc_owed( np, trade_result.balance, trade_result.value_you );
             player_character.practice( skill_speech, trade_result.value_you / 10000 );
+        }
+
+        // Update faction dynamic economy based on traded items (using snapshot)
+        if( np.get_faction() ) {
+            faction_economy &econ = get_faction_economy_manager().get( np.get_faction()->id );
+            for( const auto &sold : player_sold ) {
+                econ.record_sale( sold.traded_item, sold.amount );
+            }
+            for( const auto &bought : player_bought ) {
+                econ.record_purchase( bought.traded_item, bought.amount );
+            }
         }
     }
     return trade_result.traded ;

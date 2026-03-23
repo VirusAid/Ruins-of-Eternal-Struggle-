@@ -43,6 +43,7 @@
 #include "emit.h"
 #include "event_statistics.h"
 #include "faction.h"
+#include "faction_economy.h"
 #include "fault.h"
 #include "field_type.h"
 #include "filesystem.h"
@@ -442,6 +443,7 @@ void DynamicDataLoader::initialize()
     add( "MOD_INFO", &load_ignored_type );
 
     add( "faction", &faction_template::load );
+    add( "faction_economy", &faction_economy_manager::load );
     add( "npc", &npc_template::load );
     add( "npc_class", &npc_class::load_npc_class );
     add( "talk_topic", &load_talk_topic );
@@ -652,6 +654,7 @@ void DynamicDataLoader::unload_data()
     effect_on_conditions::reset();
     event_transformation::reset();
     faction_template::reset();
+    faction_economy_manager::reset();
     faults::reset();
     field_types::reset();
     field_type_migrations::reset();

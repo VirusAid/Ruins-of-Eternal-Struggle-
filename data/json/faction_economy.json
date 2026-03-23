@@ -1,0 +1,50 @@
+[
+  {
+    "type": "faction_economy",
+    "faction_id": "free_merchants",
+    "global_trade_mod": 1.0,
+    "//": "Free Merchants: civilian survivors, high demand for food/medicine, sell tools/clothing",
+    "priorities": [
+      { "category": "food",        "supply":  60, "demand": 150, "priority": 1.8 },
+      { "category": "medicine",    "supply":  40, "demand": 140, "priority": 2.0 },
+      { "category": "weapons",     "supply":  80, "demand":  80, "priority": 0.8 },
+      { "category": "ammo",        "supply":  70, "demand":  70, "priority": 0.7 },
+      { "category": "tools",       "supply": 130, "demand":  90, "priority": 0.9 },
+      { "category": "clothing",    "supply": 120, "demand":  80, "priority": 0.7 },
+      { "category": "electronics", "supply":  50, "demand": 100, "priority": 1.2 },
+      { "category": "luxury",      "supply":  90, "demand":  60, "priority": 0.5 }
+    ]
+  },
+  {
+    "type": "faction_economy",
+    "faction_id": "tacoma_commune",
+    "global_trade_mod": 1.1,
+    "//": "Tacoma Commune: farming community, good food supply, need weapons and medicine",
+    "priorities": [
+      { "category": "food",        "supply": 160, "demand":  70, "priority": 0.5 },
+      { "category": "medicine",    "supply":  50, "demand": 130, "priority": 1.8 },
+      { "category": "weapons",     "supply":  40, "demand": 140, "priority": 2.0 },
+      { "category": "ammo",        "supply":  30, "demand": 150, "priority": 2.2 },
+      { "category": "tools",       "supply": 100, "demand": 110, "priority": 1.2 },
+      { "category": "clothing",    "supply": 110, "demand":  80, "priority": 0.8 },
+      { "category": "electronics", "supply":  30, "demand": 100, "priority": 1.5 },
+      { "category": "luxury",      "supply":  80, "demand":  50, "priority": 0.4 }
+    ]
+  },
+  {
+    "type": "faction_economy",
+    "faction_id": "robofac",
+    "global_trade_mod": 0.9,
+    "//": "Hub 01: high-tech faction, surplus electronics, need food and raw materials",
+    "priorities": [
+      { "category": "food",        "supply":  50, "demand": 160, "priority": 2.5 },
+      { "category": "medicine",    "supply": 120, "demand":  80, "priority": 0.8 },
+      { "category": "weapons",     "supply": 100, "demand":  90, "priority": 1.0 },
+      { "category": "ammo",        "supply": 110, "demand":  80, "priority": 0.8 },
+      { "category": "tools",       "supply": 140, "demand":  70, "priority": 0.6 },
+      { "category": "clothing",    "supply":  90, "demand":  60, "priority": 0.5 },
+      { "category": "electronics", "supply": 200, "demand":  50, "priority": 0.3 },
+      { "category": "luxury",      "supply":  60, "demand": 120, "priority": 1.5 }
+    ]
+  }
+]

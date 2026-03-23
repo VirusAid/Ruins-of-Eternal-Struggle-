@@ -606,10 +606,19 @@ void refresh_display()
             int panel_alpha = main_menu_in_chargen ? 220 : 140;
             SDL_SetRenderDrawColor( renderer.get(), 0, 0, 0, panel_alpha );
             SDL_Rect menu_bg;
-            menu_bg.x = screen_w / 4;
-            menu_bg.y = screen_h / 3;
-            menu_bg.w = screen_w / 2;
-            menu_bg.h = screen_h / 2;
+            if( main_menu_in_chargen ) {
+                // In character creation: dark panel covers entire screen
+                menu_bg.x = 0;
+                menu_bg.y = 0;
+                menu_bg.w = screen_w;
+                menu_bg.h = screen_h;
+            } else {
+                // Main menu: dark panel only in center
+                menu_bg.x = screen_w / 4;
+                menu_bg.y = screen_h / 3;
+                menu_bg.w = screen_w / 2;
+                menu_bg.h = screen_h / 2;
+            }
             SDL_RenderFillRect( renderer.get(), &menu_bg );
             SDL_SetRenderDrawBlendMode( renderer.get(), SDL_BLENDMODE_NONE );
         }

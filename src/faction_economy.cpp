@@ -10,6 +10,7 @@
 #include "item.h"
 #include "item_category.h"
 #include "json.h"
+#include "options.h"
 
 static faction_economy_manager g_faction_economy_manager;
 std::map<faction_id, faction_economy> faction_economy_manager::templates_;
@@ -154,13 +155,18 @@ void faction_economy::record_purchase( const item &it, int amount )
     if( iter == categories.end() ) {
         return;
     }
+    const float trade_impact = get_option<float>( "ECONOMY_TRADE_IMPACT" );
+    const float price_range = get_option<float>( "ECONOMY_PRICE_RANGE" );
+    const double max_price = std::clamp( 5.0 * price_range, 0.3, 25.0 );
     // Player buys from faction: supply decreases, demand signal increases
-    iter->second.supply = std::max( 0, iter->second.supply - amount * 5 );
-    iter->second.demand = std::min( 500, iter->second.demand + amount * 3 );
+    int supply_delta = static_cast<int>( amount * 5 * trade_impact );
+    int demand_delta = static_cast<int>( amount * 3 * trade_impact );
+    iter->second.supply = std::max( 0, iter->second.supply - supply_delta );
+    iter->second.demand = std::min( 500, iter->second.demand + demand_delta );
     // Recalculate price modifier immediately
     double ratio = static_cast<double>( iter->second.demand ) /
                    std::max( 1.0, static_cast<double>( iter->second.supply ) );
-    iter->second.price_mod = std::clamp( ratio * iter->second.priority, 0.3, 5.0 );
+    iter->second.price_mod = std::clamp( ratio * iter->second.priority, 0.3, max_price );
 }
 
 void faction_economy::record_sale( const item &it, int amount )
@@ -170,13 +176,18 @@ void faction_economy::record_sale( const item &it, int amount )
     if( iter == categories.end() ) {
         return;
     }
+    const float trade_impact = get_option<float>( "ECONOMY_TRADE_IMPACT" );
+    const float price_range = get_option<float>( "ECONOMY_PRICE_RANGE" );
+    const double max_price = std::clamp( 5.0 * price_range, 0.3, 25.0 );
     // Player sells to faction: supply increases, demand signal decreases
-    iter->second.supply = std::min( 500, iter->second.supply + amount * 5 );
-    iter->second.demand = std::max( 0, iter->second.demand - amount * 2 );
+    int supply_delta = static_cast<int>( amount * 5 * trade_impact );
+    int demand_delta = static_cast<int>( amount * 2 * trade_impact );
+    iter->second.supply = std::min( 500, iter->second.supply + supply_delta );
+    iter->second.demand = std::max( 0, iter->second.demand - demand_delta );
     // Recalculate price modifier immediately
     double ratio = static_cast<double>( iter->second.demand ) /
                    std::max( 1.0, static_cast<double>( iter->second.supply ) );
-    iter->second.price_mod = std::clamp( ratio * iter->second.priority, 0.3, 5.0 );
+    iter->second.price_mod = std::clamp( ratio * iter->second.priority, 0.3, max_price );
 }
 
 void faction_economy::update( const time_point &now )
@@ -193,10 +204,13 @@ void faction_economy::update( const time_point &now )
     last_update = now;
 
     for( auto &[cat, data] : categories ) {
-        // Drift supply toward 100 (equilibrium) by 10% per day
+        const float drift_rate = get_option<float>( "ECONOMY_DRIFT_RATE" );
+        const float price_range = get_option<float>( "ECONOMY_PRICE_RANGE" );
+        const double max_price = std::clamp( 5.0 * price_range, 0.3, 25.0 );
+        // Drift supply toward 100 (equilibrium) by drift_rate per day
         for( int d = 0; d < days_elapsed; d++ ) {
-            data.supply += static_cast<int>( ( 100 - data.supply ) * 0.1 );
-            data.demand += static_cast<int>( ( 100 - data.demand ) * 0.1 );
+            data.supply += static_cast<int>( ( 100 - data.supply ) * drift_rate );
+            data.demand += static_cast<int>( ( 100 - data.demand ) * drift_rate );
         }
         data.supply = std::clamp( data.supply, 0, 500 );
         data.demand = std::clamp( data.demand, 0, 500 );
@@ -204,7 +218,7 @@ void faction_economy::update( const time_point &now )
         // Recalculate price modifier
         double ratio = static_cast<double>( data.demand ) /
                        std::max( 1.0, static_cast<double>( data.supply ) );
-        data.price_mod = std::clamp( ratio * data.priority, 0.3, 5.0 );
+        data.price_mod = std::clamp( ratio * data.priority, 0.3, max_price );
     }
 }
 

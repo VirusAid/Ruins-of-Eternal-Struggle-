@@ -1,0 +1,137 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_move",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "30 seconds", "30 seconds" ],
+    "condition": {
+      "and": [
+        { "not": { "u_has_var": "starter_tip_move_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_move_done", "value": "yes" },
+      { "u_message": "[Подсказка] Используйте клавиши движения (стрелки, numpad или vi-клавиши) для перемещения. Нажмите '?' для справки по управлению.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_inventory",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "2 minutes", "2 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_move_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_inventory_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_inventory_done", "value": "yes" },
+      { "u_message": "[Подсказка] Нажмите 'i' чтобы открыть инвентарь. Нажмите 'e' чтобы осмотреть предметы вокруг. Подбирайте предметы нажатием ','.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_eat",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "4 minutes", "4 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_inventory_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_eat_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_eat_done", "value": "yes" },
+      { "u_message": "[Подсказка] Голод и жажда — ваши враги. Нажмите 'E' чтобы поесть, 'W' чтобы попить. Следите за индикаторами в боковой панели.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_read",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "6 minutes", "6 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_eat_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_read_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_read_done", "value": "yes" },
+      { "u_message": "[Подсказка] Нажмите 'a' и выберите предмет, чтобы применить его: прочитать записку, использовать аптечку, зажечь фонарик. Найденные записки раскрывают историю мира.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_craft",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "8 minutes", "8 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_read_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_craft_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_craft_done", "value": "yes" },
+      { "u_message": "[Подсказка] Крафт — ключ к выживанию. Нажмите '&' чтобы открыть меню крафта. Разбирайте предметы нажатием '(' для получения материалов.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_combat",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "10 minutes", "10 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_craft_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_combat_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_combat_done", "value": "yes" },
+      { "u_message": "[Подсказка] Сражение: двигайтесь в сторону врага для ближнего боя. Нажмите 'f' чтобы стрелять. Зомби опасны в группах — не стесняйтесь убегать!", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_map",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "12 minutes", "12 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_combat_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_map_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_map_done", "value": "yes" },
+      { "u_message": "[Подсказка] Нажмите 'M' для карты мира. Нажмите '/' на карте чтобы искать локации. Попробуйте найти 'убежище' или 'магазин'.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_starter_tip_economy",
+    "eoc_type": "RECURRING",
+    "recurrence": [ "14 minutes", "14 minutes" ],
+    "condition": {
+      "and": [
+        { "u_has_var": "starter_tip_map_done", "value": "yes" },
+        { "not": { "u_has_var": "starter_tip_economy_done", "value": "yes" } },
+        { "get_option": "STARTER_TIPS" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "starter_tip_economy_done", "value": "yes" },
+      { "u_message": "[Подсказка — Экономика фракций]\n\nЦены у торговцев зависят от спроса и предложения.\n\n• Free Merchants отчаянно нуждаются в еде и медикаментах — цены на них высокие.\n• Tacoma Commune — фермеры. Еда у них дешёвая, зато оружие и патроны стоят дорого.\n• Hub 01 — учёные. Электроника почти даром, но еда на вес золота.\n\nПродавайте фракции то, что им нужно — цены будут падать. Покупайте у тех, у кого это в избытке!", "popup": true }
+    ]
+  }
+]

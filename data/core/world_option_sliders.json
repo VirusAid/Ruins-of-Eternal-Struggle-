@@ -160,5 +160,89 @@
         "options": [ { "option": "NPC_SPAWNTIME", "type": "float", "val": 1 } ]
       }
     ]
+  },
+  {
+    "type": "option_slider",
+    "id": "world_economy",
+    "context": "WORLDGEN",
+    "name": "Экономика фракций",
+    "default": 2,
+    "levels": [
+      {
+        "level": 0,
+        "name": "Казуальная",
+        "description": "Цены быстро возвращаются к норме, торговля слабо влияет на рынок. Для тех, кто не хочет заморачиваться с экономикой.",
+        "options": [
+          { "option": "ECONOMY_DRIFT_RATE", "type": "float", "val": 0.25 },
+          { "option": "ECONOMY_TRADE_IMPACT", "type": "float", "val": 0.5 },
+          { "option": "ECONOMY_PRICE_RANGE", "type": "float", "val": 0.5 }
+        ]
+      },
+      {
+        "level": 1,
+        "name": "Лёгкая",
+        "description": "Цены умеренно восстанавливаются. Торговля немного влияет на рынок, но без экстремальных скачков.",
+        "options": [
+          { "option": "ECONOMY_DRIFT_RATE", "type": "float", "val": 0.15 },
+          { "option": "ECONOMY_TRADE_IMPACT", "type": "float", "val": 0.8 },
+          { "option": "ECONOMY_PRICE_RANGE", "type": "float", "val": 0.8 }
+        ]
+      },
+      {
+        "level": 2,
+        "name": "Стандартная",
+        "description": "Классическая экономика. Цены зависят от спроса и предложения, торговля ощутимо влияет на рынок.",
+        "options": [
+          { "option": "ECONOMY_DRIFT_RATE", "type": "float", "val": 0.10 },
+          { "option": "ECONOMY_TRADE_IMPACT", "type": "float", "val": 1.0 },
+          { "option": "ECONOMY_PRICE_RANGE", "type": "float", "val": 1.0 }
+        ]
+      },
+      {
+        "level": 3,
+        "name": "Жёсткая",
+        "description": "Цены медленно восстанавливаются и сильно реагируют на торговлю. Нужно тщательно выбирать, что и кому продавать.",
+        "options": [
+          { "option": "ECONOMY_DRIFT_RATE", "type": "float", "val": 0.05 },
+          { "option": "ECONOMY_TRADE_IMPACT", "type": "float", "val": 1.5 },
+          { "option": "ECONOMY_PRICE_RANGE", "type": "float", "val": 1.5 }
+        ]
+      },
+      {
+        "level": 4,
+        "name": "Хардкор",
+        "description": "Экономика почти не восстанавливается сама. Каждая сделка критична. Цены могут быть экстремальными. Для настоящих выживальщиков.",
+        "options": [
+          { "option": "ECONOMY_DRIFT_RATE", "type": "float", "val": 0.02 },
+          { "option": "ECONOMY_TRADE_IMPACT", "type": "float", "val": 2.0 },
+          { "option": "ECONOMY_PRICE_RANGE", "type": "float", "val": 2.5 }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "option_slider",
+    "id": "world_starter_tips",
+    "context": "WORLDGEN",
+    "name": "Обучение",
+    "default": 1,
+    "levels": [
+      {
+        "level": 0,
+        "name": "Выключено",
+        "description": "Подсказки для новых игроков отключены. Для опытных выживальщиков.",
+        "options": [
+          { "option": "STARTER_TIPS", "type": "bool", "val": false }
+        ]
+      },
+      {
+        "level": 1,
+        "name": "Включено",
+        "description": "В первые 15 минут игры появляются подсказки: управление, инвентарь, еда, крафт, бой, карта и экономика фракций.",
+        "options": [
+          { "option": "STARTER_TIPS", "type": "bool", "val": true }
+        ]
+      }
+    ]
   }
 ]

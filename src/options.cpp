@@ -2670,10 +2670,8 @@ void options_manager::add_options_world_default()
          true
        );
 
-    add( "STARTER_TIPS", "world_default",
-         to_translation( "Starter tips for new players" ),
-         to_translation( "If true, short gameplay tips will appear during the first 15 minutes of a new game.  Covers basic controls, inventory, eating, trading, and the faction economy system." ),
-         true
+    add( "STARTER_TIPS", "world_default", translation(), translation(),
+         true, COPT_ALWAYS_HIDE
        );
 
     add( "EVOLUTION_INVERSE_MULTIPLIER", "world_default",
@@ -2684,29 +2682,18 @@ void options_manager::add_options_world_default()
 
     add_empty_line();
 
-    add_option_group( "world_default", Group( "faction_economy_opts",
-                      to_translation( "Faction Economy" ),
-                      to_translation( "Options for the dynamic faction economy system (supply/demand pricing)." ) ),
-    [&]( const std::string & page_id ) {
+    // Economy options controlled by the "Faction Economy" slider on the world creation screen.
+    add( "ECONOMY_DRIFT_RATE", "world_default", translation(), translation(),
+         0.0, 1.0, 0.10, 0.01, COPT_ALWAYS_HIDE
+       );
 
-        add( "ECONOMY_DRIFT_RATE", page_id,
-             to_translation( "Economy drift speed" ),
-             to_translation( "How fast faction prices drift back to normal each day.  0.05 = slow recovery, 0.10 = default, 0.30 = fast.  Set to 0 to freeze prices." ),
-             0.0, 1.0, 0.10, 0.01
-           );
+    add( "ECONOMY_TRADE_IMPACT", "world_default", translation(), translation(),
+         0.1, 5.0, 1.0, 0.1, COPT_ALWAYS_HIDE
+       );
 
-        add( "ECONOMY_TRADE_IMPACT", page_id,
-             to_translation( "Trade impact multiplier" ),
-             to_translation( "How strongly buying/selling affects faction prices.  0.5 = weak impact, 1.0 = default, 2.0 = strong.  Higher values = prices change faster from trades." ),
-             0.1, 5.0, 1.0, 0.1
-           );
-
-        add( "ECONOMY_PRICE_RANGE", page_id,
-             to_translation( "Price range multiplier" ),
-             to_translation( "Multiplier for how extreme prices can be.  0.5 = prices stay closer to normal, 1.0 = default, 2.0 = prices can be much higher/lower." ),
-             0.1, 5.0, 1.0, 0.1
-           );
-    } );
+    add( "ECONOMY_PRICE_RANGE", "world_default", translation(), translation(),
+         0.1, 5.0, 1.0, 0.1, COPT_ALWAYS_HIDE
+       );
 
     add_empty_line();
 

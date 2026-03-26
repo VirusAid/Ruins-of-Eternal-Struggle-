@@ -6667,7 +6667,8 @@ float Character::healing_rate( float at_rest_quality ) const
 {
     float const rest = clamp( at_rest_quality, 0.0f, 1.0f );
     // TODO: Cache
-    float const base_heal_rate = 0.0001;
+    // TLG-style: base healing reduced by 10% to increase survival difficulty
+    float const base_heal_rate = 0.00009;
     float const heal_rate = enchantment_cache->modify_value( enchant_vals::mod::REGEN_HP,
                             base_heal_rate );
     float awake_rate = ( 1.0f - rest ) * heal_rate;

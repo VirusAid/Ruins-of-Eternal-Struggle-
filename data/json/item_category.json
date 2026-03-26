@@ -69,8 +69,9 @@
     "type": "ITEM_CATEGORY",
     "name_header": { "str": "Food" },
     "name_noun": { "ctxt": "item_category", "str_sp": "food" },
-    "//": "zone is hardcoded",
-    "sort_rank": -18
+    "//": "zone is hardcoded. Reduced spawn rate: food was running out before the Cataclysm.",
+    "sort_rank": -18,
+    "spawn_rate": 0.6
   },
   {
     "id": "drugs",

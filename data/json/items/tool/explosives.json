@@ -454,7 +454,7 @@
     "material": [ "steel", "plastic" ],
     "symbol": "*",
     "color": "green",
-    "countdown_action": { "type": "explosion", "explosion": { "power": 240, "shrapnel": { "casing_mass": 217, "fragment_mass": 0.02 } } },
+    "countdown_action": { "type": "explosion", "explosion": { "power": 160, "shrapnel": { "casing_mass": 217, "fragment_mass": 0.02 } } },
     "countdown_interval": "5 seconds",
     "flags": [ "BOMB", "TRADER_AVOID", "DANGEROUS", "SPAWN_ACTIVE" ],
     "melee_damage": { "bash": 2 }

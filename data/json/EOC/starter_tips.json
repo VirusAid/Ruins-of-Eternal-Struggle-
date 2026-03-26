@@ -7,7 +7,7 @@
     "condition": {
       "and": [
         { "not": { "u_has_var": "starter_tip_move_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -24,7 +24,7 @@
       "and": [
         { "u_has_var": "starter_tip_move_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_inventory_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -41,7 +41,7 @@
       "and": [
         { "u_has_var": "starter_tip_inventory_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_eat_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -58,7 +58,7 @@
       "and": [
         { "u_has_var": "starter_tip_eat_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_read_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -75,7 +75,7 @@
       "and": [
         { "u_has_var": "starter_tip_read_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_craft_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -92,7 +92,7 @@
       "and": [
         { "u_has_var": "starter_tip_craft_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_combat_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -109,7 +109,7 @@
       "and": [
         { "u_has_var": "starter_tip_combat_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_map_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -126,7 +126,7 @@
       "and": [
         { "u_has_var": "starter_tip_map_done", "value": "yes" },
         { "not": { "u_has_var": "starter_tip_economy_done", "value": "yes" } },
-        { "get_option": "STARTER_TIPS" }
+        { "math": ["game_option('STARTER_TIPS')", "==", "1"] }
       ]
     },
     "effect": [
@@ -135,3 +135,4 @@
     ]
   }
 ]
+

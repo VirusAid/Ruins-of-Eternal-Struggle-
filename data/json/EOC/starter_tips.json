@@ -3,7 +3,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_move",
     "eoc_type": "RECURRING",
-    "recurrence": [ "30 seconds", "30 seconds" ],
+    "recurrence": [ "0 seconds", "0 seconds" ],
     "condition": {
       "and": [
         { "not": { "u_has_var": "starter_tip_move_done", "value": "yes" } },
@@ -19,7 +19,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_inventory",
     "eoc_type": "RECURRING",
-    "recurrence": [ "2 minutes", "2 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_move_done", "value": "yes" },
@@ -36,7 +36,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_eat",
     "eoc_type": "RECURRING",
-    "recurrence": [ "4 minutes", "4 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_inventory_done", "value": "yes" },
@@ -53,7 +53,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_read",
     "eoc_type": "RECURRING",
-    "recurrence": [ "6 minutes", "6 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_eat_done", "value": "yes" },
@@ -70,7 +70,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_craft",
     "eoc_type": "RECURRING",
-    "recurrence": [ "8 minutes", "8 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_read_done", "value": "yes" },
@@ -87,7 +87,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_combat",
     "eoc_type": "RECURRING",
-    "recurrence": [ "10 minutes", "10 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_craft_done", "value": "yes" },
@@ -104,7 +104,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_map",
     "eoc_type": "RECURRING",
-    "recurrence": [ "12 minutes", "12 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_combat_done", "value": "yes" },
@@ -121,7 +121,7 @@
     "type": "effect_on_condition",
     "id": "eoc_starter_tip_economy",
     "eoc_type": "RECURRING",
-    "recurrence": [ "14 minutes", "14 minutes" ],
+    "recurrence": [ "30 seconds", "30 seconds" ],
     "condition": {
       "and": [
         { "u_has_var": "starter_tip_map_done", "value": "yes" },

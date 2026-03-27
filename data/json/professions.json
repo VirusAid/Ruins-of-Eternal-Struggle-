@@ -6498,12 +6498,14 @@
     "type": "profession",
     "id": "roes_lone_wanderer",
     "name": "Lone Wanderer",
-    "description": "You've been wandering the ruins alone since the very beginning.  No group, no shelter, just you and the road.  You've learned to travel light and move fast.",
-    "points": 1,
+    "description": "You've been wandering the ruins alone since the very beginning.  No group, no shelter, just you and the road.  You've learned to travel light, move fast, and talk your way out of trouble.",
+    "points": 2,
     "skills": [
-      { "level": 2, "name": "survival" },
+      { "level": 3, "name": "survival" },
       { "level": 2, "name": "dodge" },
-      { "level": 1, "name": "melee" }
+      { "level": 2, "name": "melee" },
+      { "level": 1, "name": "speech" },
+      { "level": 1, "name": "cutting" }
     ],
     "items": {
       "both": {
@@ -6530,12 +6532,14 @@
     "id": "roes_last_guardian",
     "name": "Last Guardian",
     "description": "You swore to protect the survivors in your shelter.  One by one, they all died or left.  Now only you remain, armed and vigilant, guarding empty rooms out of habit.",
-    "points": 3,
+    "points": 4,
     "skills": [
       { "level": 3, "name": "gun" },
-      { "level": 2, "name": "pistol" },
+      { "level": 3, "name": "pistol" },
       { "level": 2, "name": "melee" },
-      { "level": 1, "name": "firstaid" }
+      { "level": 2, "name": "firstaid" },
+      { "level": 1, "name": "dodge" },
+      { "level": 1, "name": "speech" }
     ],
     "items": {
       "both": {
@@ -6571,8 +6575,10 @@
     "skills": [
       { "level": 4, "name": "firstaid" },
       { "level": 2, "name": "cooking" },
-      { "level": 1, "name": "survival" }
+      { "level": 2, "name": "survival" },
+      { "level": 2, "name": "dodge" }
     ],
+    "proficiencies": [ "prof_field_medic" ],
     "items": {
       "both": {
         "entries": [
@@ -6597,14 +6603,16 @@
     "type": "profession",
     "id": "roes_shadow_looter",
     "name": "Shadow Looter",
-    "description": "While others fought and died, you survived by sneaking through the ruins at night, taking what the dead no longer needed.  Stealth and speed are your greatest weapons.",
-    "points": 2,
+    "description": "While others fought and died, you survived by sneaking through the ruins at night, picking locks and taking what the dead no longer needed.  Stealth and speed are your greatest weapons.",
+    "points": 3,
     "skills": [
       { "level": 3, "name": "dodge" },
       { "level": 2, "name": "mechanics" },
       { "level": 2, "name": "traps" },
-      { "level": 1, "name": "melee" }
+      { "level": 2, "name": "melee" },
+      { "level": 1, "name": "stabbing" }
     ],
+    "proficiencies": [ "prof_lockpicking" ],
     "items": {
       "both": {
         "entries": [
@@ -6633,13 +6641,16 @@
     "id": "roes_field_medic",
     "name": "Ruins Medic",
     "description": "You were a paramedic before everything fell apart.  Now you wander the ruins with your medical bag, patching up the wounded — whoever is left.  Healing others is the only thing that keeps you sane.",
-    "points": 3,
+    "points": 4,
     "skills": [
       { "level": 5, "name": "firstaid" },
-      { "level": 1, "name": "survival" },
-      { "level": 1, "name": "cooking" }
+      { "level": 2, "name": "survival" },
+      { "level": 2, "name": "dodge" },
+      { "level": 1, "name": "cooking" },
+      { "level": 1, "name": "chemistry" }
     ],
-    "proficiencies": [ "prof_field_medic" ],
+    "proficiencies": [ "prof_field_medic", "prof_intro_biology", "prof_physiology", "prof_burn_care" ],
+    "traits": [ "PROF_MED" ],
     "items": {
       "both": {
         "entries": [

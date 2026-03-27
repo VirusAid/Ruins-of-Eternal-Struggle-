@@ -2,9 +2,9 @@
   {
     "type": "effect_on_condition",
     "id": "eoc_anomaly_weather_check",
-    "eoc_type": "OM_MOVE",
+    "eoc_type": "RECURRING",
     "recurrence": [ "3 hours", "8 hours" ],
-    "condition": { "not": { "u_has_effect": "anomaly_rad_exposure" } },
+    "condition": { "and": [ { "not": { "u_has_effect": "anomaly_rad_exposure" } }, { "not": { "u_has_effect": "anomaly_acid_burns" } }, { "not": { "u_has_effect": "anomaly_mutation_fog" } } ] },
     "effect": [
       { "run_eocs": "eoc_anomaly_weather_roll" }
     ]
@@ -36,7 +36,7 @@
     "type": "effect_on_condition",
     "id": "eoc_anomaly_rad_storm",
     "eoc_type": "ACTIVATION",
-    "condition": { "is_weather_outside": true },
+    "condition": "u_is_outside",
     "effect": [
       { "u_message": "Небо окрашивается в грязно-жёлтый.  Воздух потрескивает.  Счётчик Гейгера — если бы он у вас был — зашкаливал бы.\n\nРадиационная буря.  Ищите укрытие.", "popup": true },
       { "u_add_effect": "anomaly_rad_exposure", "duration": "30 minutes" },
@@ -47,7 +47,7 @@
     "type": "effect_on_condition",
     "id": "eoc_anomaly_acid_rain",
     "eoc_type": "ACTIVATION",
-    "condition": { "is_weather_outside": true },
+    "condition": "u_is_outside",
     "effect": [
       { "u_message": "Первая капля падает на руку.  Жжёт.  Вторая — на щёку.  Жжёт сильнее.\n\nКислотный дождь.  Капли оставляют белёсые следы на любой поверхности.  Нужна крыша над головой — немедленно.", "popup": true },
       { "u_add_effect": "anomaly_acid_burns", "duration": "20 minutes" },
@@ -58,11 +58,10 @@
     "type": "effect_on_condition",
     "id": "eoc_anomaly_mut_fog",
     "eoc_type": "ACTIVATION",
-    "condition": { "is_weather_outside": true },
+    "condition": "u_is_outside",
     "effect": [
       { "u_message": "Туман поднимается от земли — зеленоватый, густой, с запахом озона и формальдегида.  Видимость падает.  Кожа зудит.\n\nМутагенная дымка.  Те, кто дышал ею слишком долго, становились...  другими.", "popup": true },
-      { "u_add_effect": "anomaly_mutation_fog", "duration": "25 minutes" },
-      { "u_add_effect": "mutating", "duration": "5 minutes", "intensity": 1 }
+      { "u_add_effect": "anomaly_mutation_fog", "duration": "25 minutes" }
     ]
   }
 ]

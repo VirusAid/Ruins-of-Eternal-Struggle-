@@ -29,8 +29,7 @@
     "autolearn": true,
     "components": [
       [ [ "two_way_radio", 1 ] ],
-      [ [ "wire", 1 ] ],
-      [ [ "soldering_iron", 1 ] ]
+      [ [ "wire", 1 ] ]
     ],
     "tools": [ [ [ "soldering_iron", 10 ] ] ]
   }

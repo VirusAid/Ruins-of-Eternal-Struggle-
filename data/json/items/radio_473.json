@@ -1,0 +1,37 @@
+[
+  {
+    "type": "TOOL",
+    "id": "radio_tuned_473",
+    "name": { "str": "настроенная рация", "str_pl": "настроенные рации" },
+    "description": "Старая военная рация, настроенная на частоту 47.3 Гц.  Инфразвуковой диапазон.  На дисплее мелькают помехи, но иногда сквозь шум пробивается что-то — не совсем слова, не совсем музыка.  Что-то среднее.",
+    "weight": "900 g",
+    "volume": "750 ml",
+    "price": 500,
+    "price_postapoc": 5000,
+    "material": [ "plastic", "aluminum" ],
+    "symbol": "[",
+    "color": "green",
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Настроить на частоту 47.3 Гц",
+      "effect_on_conditions": [ "eoc_radio_473_listen" ]
+    },
+    "flags": [ "WATER_BREAK_ACTIVE" ]
+  },
+  {
+    "type": "recipe",
+    "result": "radio_tuned_473",
+    "category": "CC_ELECTRONIC",
+    "subcategory": "CSC_ELECTRONIC_OTHER",
+    "skill_used": "electronics",
+    "difficulty": 3,
+    "time": "45 m",
+    "autolearn": true,
+    "components": [
+      [ [ "two_way_radio", 1 ] ],
+      [ [ "wire", 1 ] ],
+      [ [ "soldering_iron", 1 ] ]
+    ],
+    "tools": [ [ [ "soldering_iron", 10 ] ] ]
+  }
+]

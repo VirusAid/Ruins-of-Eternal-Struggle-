@@ -37,6 +37,13 @@
         "condition": { "u_has_var": "witness_klyk_knows_return", "value": "yes" } },
       { "text": "Что Ядро тебе сказало?", "topic": "TALK_WITNESS_KLYK_MESSAGE",
         "condition": { "u_has_var": "witness_klyk_knows_guide", "value": "yes" } },
+      { "text": "Клык, смотри что я нашёл.  Коды.", "topic": "TALK_WITNESS_KLYK_LORE_GIFT",
+        "condition": { "and": [
+          { "u_has_var": "witness_klyk_knows_guide", "value": "yes" },
+          { "not": { "u_has_var": "witness_trust_klyk", "value": "yes" } },
+          { "u_has_var": "echo_beacon_activated", "value": "yes" }
+        ] }
+      },
       { "text": "Прощай, Клык.", "topic": "TALK_DONE" }
     ]
   },

@@ -37,6 +37,45 @@
         "condition": { "u_has_var": "witness_lebedev_knows_others", "value": "yes" } },
       { "text": "Расскажите о протоколе \"Закат\".", "topic": "TALK_WITNESS_LEBEDEV_ZAKAT",
         "condition": { "u_has_var": "witness_lebedev_knows_stop", "value": "yes" } },
+      { "text": "Профессор, взгляните на этот архивный диск.", "topic": "TALK_WITNESS_LEBEDEV_LORE_GIFT",
+        "condition": { "and": [
+          { "u_has_var": "witness_lebedev_knows_stop", "value": "yes" },
+          { "not": { "u_has_var": "witness_trust_lebedev", "value": "yes" } },
+          { "or": [
+            { "u_has_var": "echo_cata_scientist_done", "value": "yes" },
+            { "u_has_var": "echo_cata_military_done", "value": "yes" }
+          ] }
+        ] }
+      },
+      { "text": "Профессор...  я чувствую, что мне нужна ваша помощь.  Мутации.", "topic": "TALK_WITNESS_LEBEDEV_MUTATION_QUEST",
+        "condition": { "and": [
+          { "u_has_var": "witness_lebedev_knows_stop", "value": "yes" },
+          { "not": { "u_has_var": "lebedev_mutation_quest_done", "value": "yes" } },
+          { "or": [
+            { "u_has_trait": "THRESH_PLANT" },
+            { "u_has_trait": "THRESH_LIZARD" },
+            { "u_has_trait": "THRESH_BIRD" },
+            { "u_has_trait": "THRESH_FISH" },
+            { "u_has_trait": "THRESH_BEAST" },
+            { "u_has_trait": "THRESH_FELINE" },
+            { "u_has_trait": "THRESH_LUPINE" },
+            { "u_has_trait": "THRESH_URSINE" },
+            { "u_has_trait": "THRESH_CATTLE" },
+            { "u_has_trait": "THRESH_INSECT" },
+            { "u_has_trait": "THRESH_SPIDER" },
+            { "u_has_trait": "THRESH_SLIME" },
+            { "u_has_trait": "THRESH_TROGLOBITE" },
+            { "u_has_trait": "THRESH_CEPHALOPOD" },
+            { "u_has_trait": "THRESH_MOUSE" },
+            { "u_has_trait": "THRESH_RABBIT" },
+            { "u_has_trait": "THRESH_MEDICAL" },
+            { "u_has_trait": "THRESH_CHIMERA" },
+            { "u_has_trait": "THRESH_ELFA" },
+            { "u_has_trait": "THRESH_RAPTOR" },
+            { "u_has_trait": "THRESH_BATRACHIAN" }
+          ] }
+        ] }
+      },
       { "text": "Мне пора.  Спасибо за чай.", "topic": "TALK_DONE" }
     ]
   },

@@ -1,0 +1,78 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_listen",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "run_eocs": "eoc_radio_473_dispatch" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_dispatch",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_var": "apoc_finale_done", "value": "yes" },
+    "effect": [
+      { "u_message": "*Шшшшш...*\n\nЧастота 47.3 Гц молчит.\n\nЯдро больше не передаёт.  Впервые за годы — абсолютная, оглушающая тишина на этой частоте.\n\nНо на самом краю слышимости — далёкий, ровный тон.  Не сигнал.  Не помехи.  Что-то новое.\n\nЧто-то отвечает.", "popup": true }
+    ],
+    "false_effect": [
+      { "run_eocs": "eoc_radio_473_check_stage" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_check_stage",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_var": "echo_story_core_entered", "value": "yes" },
+    "effect": [
+      { "u_message": "*Шшшшш...*  *...кхх...  ядр...  ...нтроль...  субъект...  внутри... ...*\n\nСигнал стал сильнее.  Вы слышите обрывки слов — механический голос, зацикленный, как сломанный автоответчик.  Но между повторами проскальзывает что-то живое.\n\n*«...нейтрализация...  код ΑΒΓ...  частота стабильна...  ждём...»*\n\nЯдро знает, что к нему идут.", "popup": true }
+    ],
+    "false_effect": [
+      { "run_eocs": "eoc_radio_473_check_witnesses" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_check_witnesses",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "or": [
+        { "u_has_var": "witness_sechenov_knows_yadro", "value": "yes" },
+        { "u_has_var": "witness_lebedev_knows_signal", "value": "yes" },
+        { "u_has_var": "witness_gromova_knows_core", "value": "yes" }
+      ]
+    },
+    "effect": [
+      { "u_message": "*Шшшшш...*  *...гул...  47.3...  Гц...*\n\nСквозь помехи пробивается ритмичный пульс — не радиосигнал, а что-то биологическое.  Как сердцебиение.  Медленное.  Тяжёлое.\n\nМежду ударами — обрывки передач:\n\n*«...Проект Рассвет...  образец номер три...  объект реагирует...  параметры в норме...  объект РЕАГИРУЕТ...»*\n\nПередача обрывается хрипом статики.  Но несколько секунд спустя начинается снова.  С начала.  Всегда с начала.", "popup": true }
+    ],
+    "false_effect": [
+      { "run_eocs": "eoc_radio_473_check_echo" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_check_echo",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "or": [
+        { "u_has_var": "echo_cata_scientist_done", "value": "yes" },
+        { "u_has_var": "echo_cata_military_done", "value": "yes" },
+        { "u_has_var": "echo_cata_survivor_done", "value": "yes" }
+      ]
+    },
+    "effect": [
+      { "u_message": "*Шшшшш...*  *...кхх...  ш-ш-ш...*\n\nСквозь белый шум — голос.  Женский.  Усталый.  Знакомый.\n\n*«...Архипова вызывает...  кто-нибудь...  частота 47.3...  если вы слышите...  объект растёт...  он уже не помещается на четвёртом уровне...  стены... стены двигаются...»*\n\nГолос обрывается.  Пауза.  Потом — другой голос, мужской, далёкий:\n\n*«...подтверждаю.  Периметр нарушен.  Карантин-7 не удержал.  Повторяю — не удержал.»*\n\nТишина.  Потом — гул.  Инфразвуковой.  47.3 Гц.  Вы чувствуете его в костях.", "popup": true }
+    ],
+    "false_effect": [
+      { "run_eocs": "eoc_radio_473_default" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_radio_473_default",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "*Шшшшш...*\n\nВы крутите настройку.  47.3 герца.  На дисплее — помехи.\n\nСквозь шум — что-то.  Не слова.  Пульс.  Ритмичный, медленный, глубокий.  Как сердцебиение чего-то огромного, похороненного далеко под землёй.\n\nКаждые несколько секунд пульс сбивается.  На долю мгновения в статике мелькает обрывок: *«...ноль...  ноль...  ноль...»*\n\nПотом снова пульс.  Ровный.  Терпеливый.", "popup": true }
+    ]
+  }
+]

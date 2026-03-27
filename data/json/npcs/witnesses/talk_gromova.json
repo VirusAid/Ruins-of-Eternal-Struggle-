@@ -39,6 +39,13 @@
         "condition": { "u_has_var": "witness_gromova_knows_survivors", "value": "yes" } },
       { "text": "Расскажите о Протоколе Заката.", "topic": "TALK_WITNESS_GROMOVA_SUNSET",
         "condition": { "u_has_var": "witness_gromova_knows_return", "value": "yes" } },
+      { "text": "У меня есть военный отчёт.  Взгляните.", "topic": "TALK_WITNESS_GROMOVA_LORE_GIFT",
+        "condition": { "and": [
+          { "u_has_var": "witness_gromova_knows_return", "value": "yes" },
+          { "not": { "u_has_var": "witness_trust_gromova", "value": "yes" } },
+          { "u_has_var": "echo_cata_military_done", "value": "yes" }
+        ] }
+      },
       { "text": "До встречи, майор.", "topic": "TALK_DONE" }
     ]
   },

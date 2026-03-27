@@ -5,7 +5,10 @@
     "eoc_type": "ACTIVATION",
     "effect": [
       { "u_add_effect": "ruins_crown_active", "duration": "1 h" },
-      { "u_message": "Корона Руин: +20% скорость, +20% обнаружение тайников.", "popup": false }
+      {
+        "u_message": "Корона Руин: +20% скорость, +20% обнаружение тайников.",
+        "popup": false
+      }
     ]
   },
   {
@@ -25,8 +28,14 @@
     "eoc_type": "ACTIVATION",
     "effect": [
       { "u_add_effect": "apoc_radiation", "duration": "10 m", "intensity": 1 },
-      { "u_message": "Уровень -1: Подпрелье.  Радиационный фон повышен.  Стражи активны.", "popup": true },
-      { "u_message": "Вы чувствуете давление на барабанные перепонки.", "popup": false }
+      {
+        "u_message": "Уровень -1: Подпрелье.  Радиационный фон повышен.  Стражи активны.",
+        "popup": true
+      },
+      {
+        "u_message": "Вы чувствуете давление на барабанные перепонки.",
+        "popup": false
+      }
     ]
   },
   {
@@ -36,7 +45,10 @@
     "effect": [
       { "u_add_effect": "apoc_radiation", "duration": "15 m", "intensity": 1 },
       { "u_add_effect": "apoc_hallucination", "duration": "5 m", "intensity": 1 },
-      { "u_message": "Уровень -2: Лаборатории.  Здесь проводились эксперименты над людьми.", "popup": true }
+      {
+        "u_message": "Уровень -2: Лаборатории.  Здесь проводились эксперименты над людьми.",
+        "popup": true
+      }
     ]
   },
   {
@@ -46,7 +58,10 @@
     "effect": [
       { "u_add_effect": "apoc_radiation", "duration": "20 m", "intensity": 2 },
       { "u_add_effect": "apoc_hallucination", "duration": "10 m", "intensity": 1 },
-      { "u_message": "Уровень -3: Бараки.  Запах крови.  Кто-то нацарапал на стене: 'УХОДИ'.", "popup": true }
+      {
+        "u_message": "Уровень -3: Бараки.  Запах крови.  Кто-то нацарапал на стене: 'УХОДИ'.",
+        "popup": true
+      }
     ]
   },
   {
@@ -57,7 +72,10 @@
       { "u_add_effect": "apoc_radiation", "duration": "25 m", "intensity": 2 },
       { "u_add_effect": "apoc_hallucination", "duration": "15 m", "intensity": 2 },
       { "u_add_effect": "apoc_core_curse", "duration": "1 d" },
-      { "u_message": "Уровень -4: Командный центр.  Ядро близко.  Вы слышите его дыхание.", "popup": true }
+      {
+        "u_message": "Уровень -4: Командный центр.  Ядро близко.  Вы слышите его дыхание.",
+        "popup": true
+      }
     ]
   },
   {
@@ -68,7 +86,10 @@
       { "u_add_effect": "apoc_radiation", "duration": "30 m", "intensity": 3 },
       { "u_add_effect": "apoc_hallucination", "duration": "20 m", "intensity": 2 },
       { "u_add_effect": "apoc_mutation_zone", "duration": "10 m" },
-      { "u_message": "Уровень -5: Ядро Апокалипсиса.\n\nВы стоите перед истоком.  Здесь заканчивается мир и начинается что-то другое.\nУничтожить Ядро — спасти остатки человечества.\nПоглотить Ядро — получить силу, но заплатить собой.\n\nВыбор за вами.", "popup": true }
+      {
+        "u_message": "Уровень -5: Ядро Апокалипсиса.\n\nВы стоите перед истоком.  Здесь заканчивается мир и начинается что-то другое.\nУничтожить Ядро — спасти остатки человечества.\nПоглотить Ядро — получить силу, но заплатить собой.\n\nВыбор за вами.",
+        "popup": true
+      }
     ]
   },
   {

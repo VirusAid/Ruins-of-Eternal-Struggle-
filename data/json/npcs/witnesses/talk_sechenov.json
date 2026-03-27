@@ -41,6 +41,16 @@
         "condition": { "u_has_var": "witness_sechenov_knows_guilt", "value": "yes" } },
       { "text": "Расскажите всё о протоколе нейтрализации.", "topic": "TALK_WITNESS_SECHENOV_PROTOCOL",
         "condition": { "u_has_var": "witness_sechenov_knows_hope", "value": "yes" } },
+      { "text": "У меня есть документ, который может вас заинтересовать.", "topic": "TALK_WITNESS_SECHENOV_LORE_GIFT",
+        "condition": { "and": [
+          { "u_has_var": "witness_sechenov_knows_hope", "value": "yes" },
+          { "not": { "u_has_var": "witness_trust_sechenov", "value": "yes" } },
+          { "or": [
+            { "u_has_var": "echo_cata_scientist_done", "value": "yes" },
+            { "u_has_var": "echo_story_core_entered", "value": "yes" }
+          ] }
+        ] }
+      },
       { "text": "Прощайте, доктор.", "topic": "TALK_DONE" }
     ]
   },

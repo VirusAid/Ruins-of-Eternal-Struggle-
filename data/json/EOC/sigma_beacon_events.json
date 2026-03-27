@@ -1,0 +1,100 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_activate",
+    "eoc_type": "ACTIVATION",
+    "condition": { "not": { "u_has_var": "sigma_beacon_activated", "value": "yes" } },
+    "effect": [
+      { "run_eocs": "eoc_sigma_beacon_check_requirements" }
+    ],
+    "false_effect": [
+      { "u_message": "Передатчик гудит — сигнал уже отправлен.  Больше нечего передавать.  На дисплее мигает: «ОЖИДАНИЕ ОТВЕТА».\n\nВы ждёте.  Долго.\n\nОтвета нет.  Или — он уже пришёл, но вы не можете его услышать.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_check_requirements",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "and": [
+        { "u_has_var": "echo_cata_scientist_done", "value": "yes" },
+        { "u_has_var": "echo_cata_military_done", "value": "yes" },
+        { "u_has_var": "echo_cata_survivor_done", "value": "yes" },
+        { "or": [
+          { "u_has_var": "witness_trust_sechenov", "value": "yes" },
+          { "u_has_var": "witness_trust_lebedev", "value": "yes" },
+          { "u_has_var": "witness_trust_gromova", "value": "yes" }
+        ] }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "sigma_beacon_activated", "value": "yes" },
+      { "u_message": "Вы вводите частоту: 47.3 Гц.\n\nПередатчик оживает.  Антенна вибрирует.  Дисплей показывает: «СОЕДИНЕНИЕ УСТАНОВЛЕНО».\n\nВы нажимаете кнопку передачи.", "popup": true },
+      { "run_eocs": "eoc_sigma_beacon_phase1", "time_in_future": "3 seconds" },
+      { "run_eocs": "eoc_sigma_beacon_phase2", "time_in_future": "10 seconds" },
+      { "run_eocs": "eoc_sigma_beacon_phase3", "time_in_future": "20 seconds" },
+      { "run_eocs": "eoc_sigma_beacon_phase4", "time_in_future": "30 seconds" },
+      { "run_eocs": "eoc_sigma_beacon_finale", "time_in_future": "45 seconds" }
+    ],
+    "false_effect": [
+      { "u_message": "Передатчик гудит, экран мигает — но сигнал не проходит.  На дисплее: «АВТОРИЗАЦИЯ НЕПОЛНАЯ».\n\nВам нужно больше знаний.  Нужно найти все три Эхо Катастрофы и поговорить со свидетелями.  Только тогда вы поймёте, что передать — и кому.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_phase1",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "*Шшшшш...*\n\nТишина.  Долгая, звенящая тишина.\n\nА потом — щелчок.  Как будто кто-то на том конце снял трубку.\n\nИ голос.  Далёкий.  Механический.  Но — живой.\n\n*«...подтверждаю приём.  Маяк-7.  Частота корректна.  Идентификация...»*", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_phase2",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "*«...субъект не значится в базе.  Повторяю — не значится.  Но сигнал чистый.  Протокол «Маяк» активирован некорректно, но...»*\n\n*Пауза.  Длинная.  На заднем плане — шум.  Двигатели.  Голоса.  Много голосов.*\n\n*«...подождите.  Переключаю на командный.»*", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_phase3",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "Другой голос.  Старше.  Спокойнее.  Привыкший отдавать приказы.\n\n*«Говорит командный пункт «Восход».  Назовите себя.»*\n\nВы молчите.  Вам нечего назвать.  Вы — никто.  Выживший.  Один из последних.\n\n*«...понятно.  Вы — гражданский.  Как вы получили доступ к протоколу «Маяк»?»*\n\nВы молчите снова.  Но ваши руки дрожат.  Кто-то — жив.  Где-то — есть люди.  Организованные.  С командным пунктом.  С двигателями.", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_phase4",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "*«Слушайте внимательно.  Мы — подразделение «Восход».  Автономный бункерный комплекс.  Мы потеряли связь с внешним миром четырнадцать месяцев назад.  Ваш маяк — первый сигнал извне за всё это время.»*\n\n*Пауза.*\n\n*«Если вы слышите это — значит, снаружи ещё есть люди.  Значит, не всё потеряно.»*\n\n*Ещё пауза.  Голоса на заднем плане — возбуждённые, быстрые.  Кто-то плачет.*\n\n*«Мы вышлем разведку.  Координаты маяка зафиксированы.  Но нам нужно время.  Мы...  мы не были готовы к тому, что кто-то ответит.»*", "popup": false }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sigma_beacon_finale",
+    "eoc_type": "ACTIVATION",
+    "effect": [
+      { "u_message": "*«Последнее.  Объект «Нулевой» — мы знаем о нём.  Мы знаем, что он делает.  У нас есть данные, которых нет у вас.  Если вы планируете туда идти — не идите один.»*\n\n*Длинная пауза.  Голос становится тише, человечнее.*\n\n*«Спасибо, что вышли на связь.  Мы идём.  «Восход» — конец связи.»*\n\n*Щелчок.*\n\n*Тишина.*\n\nВы стоите один посреди мёртвого мира, с остывающим передатчиком в руках.  Но впервые за всё это время — вы точно знаете, что вы не последний.\n\nКто-то идёт.", "popup": true },
+      { "u_add_var": "sigma_response_received", "value": "yes" },
+      { "u_add_effect": "sigma_hope", "duration": "6 hours" }
+    ]
+  },
+  {
+    "type": "effect_type",
+    "id": "sigma_hope",
+    "name": [ { "str": "Надежда" } ],
+    "desc": [ { "str": "Кто-то ответил.  Кто-то жив.  Кто-то идёт.  Впервые за долгое время — есть ради чего выживать." } ],
+    "max_intensity": 1,
+    "rating": "good",
+    "apply_message": "Вы не один.  Кто-то идёт.  Это меняет всё.",
+    "remove_message": "Чувство надежды притупляется, но не исчезает.  Они ответили.  Это — реально.",
+    "base_mods": {
+      "str_mod": [ 2, 0 ],
+      "per_mod": [ 1, 0 ],
+      "speed_mod": [ 5 ]
+    }
+  }
+]

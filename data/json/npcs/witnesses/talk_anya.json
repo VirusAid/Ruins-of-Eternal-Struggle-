@@ -39,6 +39,13 @@
         "condition": { "u_has_var": "witness_anya_knows_hear", "value": "yes" } },
       { "text": "Что Ядро хочет от тебя?", "topic": "TALK_WITNESS_ANYA_WANT",
         "condition": { "u_has_var": "witness_anya_knows_drawings", "value": "yes" } },
+      { "text": "Аня, я нашёл кое-что.  Думаю, это принадлежало твоей маме.", "topic": "TALK_WITNESS_ANYA_LORE_GIFT",
+        "condition": { "and": [
+          { "u_has_var": "witness_anya_knows_drawings", "value": "yes" },
+          { "not": { "u_has_var": "witness_trust_anya", "value": "yes" } },
+          { "u_has_var": "echo_cata_survivor_done", "value": "yes" }
+        ] }
+      },
       { "text": "Мне пора идти, Аня.", "topic": "TALK_DONE" }
     ]
   },

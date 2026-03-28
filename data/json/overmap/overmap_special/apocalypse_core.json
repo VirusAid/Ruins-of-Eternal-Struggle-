@@ -62,9 +62,9 @@
       40
     ],
     "flags": [
+      "CLASSIC",
       "OVERMAP_UNIQUE",
-      "MAN_MADE",
-      "WILDERNESS"
+      "MAN_MADE"
     ],
     "city_distance": [
       2,

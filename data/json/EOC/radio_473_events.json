@@ -38,8 +38,8 @@
     "condition": {
       "or": [
         { "u_has_var": "witness_sechenov_knows_yadro", "value": "yes" },
-        { "u_has_var": "witness_lebedev_knows_signal", "value": "yes" },
-        { "u_has_var": "witness_gromova_knows_core", "value": "yes" }
+        { "u_has_var": "witness_lebedev_knows_ether", "value": "yes" },
+        { "u_has_var": "witness_gromova_knows_object", "value": "yes" }
       ]
     },
     "effect": [

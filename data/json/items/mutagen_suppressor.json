@@ -38,7 +38,7 @@
     ],
     "tools": [
       [ [ "hotplate", 20 ] ],
-      [ [ "glass", 1 ] ]
+      [ [ "beaker", -1 ] ]
     ]
   }
 ]

@@ -79,7 +79,36 @@
     "effect": [
       { "u_message": "*«Последнее.  Объект «Нулевой» — мы знаем о нём.  Мы знаем, что он делает.  У нас есть данные, которых нет у вас.  Если вы планируете туда идти — не идите один.»*\n\n*Длинная пауза.  Голос становится тише, человечнее.*\n\n*«Спасибо, что вышли на связь.  Мы идём.  «Восход» — конец связи.»*\n\n*Щелчок.*\n\n*Тишина.*\n\nВы стоите один посреди мёртвого мира, с остывающим передатчиком в руках.  Но впервые за всё это время — вы точно знаете, что вы не последний.\n\nКто-то идёт.", "popup": true },
       { "u_add_var": "sigma_response_received", "value": "yes" },
-      { "u_add_effect": "sigma_hope", "duration": "6 hours" }
+      { "u_add_effect": "sigma_hope", "duration": "6 hours" },
+      { "run_eocs": "eoc_voskhod_arrival_warning", "time_in_future": "7 days" },
+      { "run_eocs": "eoc_voskhod_patrol_spawn", "time_in_future": "10 days" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_voskhod_arrival_warning",
+    "eoc_type": "ACTIVATION",
+    "condition": { "u_has_var": "sigma_response_received", "value": "yes" },
+    "effect": [
+      { "u_message": "На горизонте — движение.  Не зомби.  Слишком организованно.  Слишком быстро.\n\nТри фигуры в тактическом снаряжении.  Оружие.  Рюкзаки.  Порядок.\n\nОни идут к вам.  Целенаправленно.  Как будто знают, где вы.\n\nМаяк.  Они засекли маяк.", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_voskhod_patrol_spawn",
+    "eoc_type": "ACTIVATION",
+    "condition": {
+      "and": [
+        { "u_has_var": "sigma_response_received", "value": "yes" },
+        { "not": { "u_has_var": "voskhod_patrol_arrived", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "voskhod_patrol_arrived", "value": "yes" },
+      { "u_spawn_npc": "NPC_VOSKHOD_COMMANDER", "real_count": 1, "min_radius": 3, "max_radius": 8 },
+      { "u_spawn_npc": "NPC_VOSKHOD_SOLDIER", "real_count": 1, "min_radius": 3, "max_radius": 8 },
+      { "u_spawn_npc": "NPC_VOSKHOD_MEDIC", "real_count": 1, "min_radius": 3, "max_radius": 8 },
+      { "u_message": "Три человека выходят из-за руин.  Бронежилеты.  Автоматы.  Военная выправка.\n\nПередний поднимает руку — жест «своих».\n\n«Маяк-7.  Подразделение «Восход».  Мы вас нашли.»\n\nОни — настоящие.  Они — пришли.", "popup": true }
     ]
   },
   {

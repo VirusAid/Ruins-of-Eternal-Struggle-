@@ -18,5 +18,27 @@
       "effect_on_conditions": [ "eoc_lebedev_suppressor_use" ]
     },
     "flags": [ "NPC_SAFE", "IRREPLACEABLE" ]
+  },
+  {
+    "type": "recipe",
+    "result": "mutagen_suppressor_lebedev",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "difficulty": 7,
+    "time": "90 m",
+    "autolearn": false,
+    "book_learn": [],
+    "components": [
+      [ [ "mutagen", 1 ] ],
+      [ [ "aspirin", 5 ] ],
+      [ [ "charcoal", 10 ] ],
+      [ [ "bleach", 1 ] ],
+      [ [ "water_clean", 2 ] ]
+    ],
+    "tools": [
+      [ [ "hotplate", 20 ] ],
+      [ [ "glass", 1 ] ]
+    ]
   }
 ]

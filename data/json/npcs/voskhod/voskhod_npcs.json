@@ -1,0 +1,53 @@
+[
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_COMMANDER",
+    "name_unique": "Капитан Ковалёв",
+    "name_suffix": "командир «Восхода»",
+    "gender": "male",
+    "class": "NC_VOSKHOD_COMMANDER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_VOSKHOD_COMMANDER",
+    "age": 38,
+    "height": 182,
+    "str": 11,
+    "dex": 10,
+    "int": 11,
+    "per": 12
+  },
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_SOLDIER",
+    "name_unique": "Сержант Демидов",
+    "name_suffix": "боец «Восхода»",
+    "gender": "male",
+    "class": "NC_VOSKHOD_SOLDIER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_VOSKHOD_SOLDIER",
+    "age": 26,
+    "height": 178,
+    "str": 13,
+    "dex": 11,
+    "int": 8,
+    "per": 10
+  },
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_MEDIC",
+    "name_unique": "Лейтенант Рыжова",
+    "name_suffix": "медик «Восхода»",
+    "gender": "female",
+    "class": "NC_VOSKHOD_MEDIC",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_VOSKHOD_MEDIC",
+    "age": 30,
+    "height": 168,
+    "str": 8,
+    "dex": 10,
+    "int": 12,
+    "per": 11
+  }
+]

@@ -76,7 +76,8 @@
       "effect": [
         { "u_add_var": "witness_lebedev_suppressor", "value": "yes" },
         { "u_add_var": "witness_trust_lebedev", "value": "yes" },
-        { "u_spawn_item": "mutagen_suppressor_lebedev", "count": 2 }
+        { "u_spawn_item": "mutagen_suppressor_lebedev", "count": 2 },
+        { "u_learn_recipe": "mutagen_suppressor_lebedev" }
       ]
     },
     "responses": [

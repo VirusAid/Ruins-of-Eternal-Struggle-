@@ -87,7 +87,7 @@
             1,
             12
           ],
-          "density": 0.8
+          "density": 0.08
         },
         {
           "monster": "apoc_core_level5",
@@ -99,7 +99,7 @@
             20,
             22
           ],
-          "density": 0.6
+          "density": 0.15
         }
       ],
       "place_loot": [

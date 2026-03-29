@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "calendar.h"
+#include "cata_variant.h"
 #include "condition.h"
 #include "dialogue.h"
 #include "enums.h"
@@ -18,10 +19,13 @@
 #include "mtype.h"
 #include "npc.h"
 #include "options.h"
+#include "stats_tracker.h"
 #include "string_input_popup.h"
 #include "units.h"
 #include "weather.h"
 #include "worldfactory.h"
+
+class event_statistic;
 
 /*
 General guidelines for writing dialogue functions
@@ -862,6 +866,18 @@ double energy_eval( const_dialogue const &d, char /* scope */,
                                     _read_from_string<units::energy>( params[0].str( d ), units::energy_units ) ) );
 }
 
+double event_statistic_eval( const_dialogue const &d, char /* scope */,
+                             std::vector<diag_value> const &params,
+                             diag_kwargs const & /* kwargs */ )
+{
+    string_id<event_statistic> stat_id( params[0].str( d ) );
+    if( !stat_id.is_valid() ) {
+        throw math::runtime_error( R"(Unknown event_statistic "%s")", stat_id.str() );
+    }
+    cata_variant val = get_stats().value_of( stat_id );
+    return diag_value( val ).dbl( d );
+}
+
 double school_level_eval( const_dialogue const &d, char scope,
                           std::vector<diag_value> const &params, diag_kwargs const & /* kwargs */ )
 {
@@ -1623,6 +1639,7 @@ std::map<std::string_view, dialogue_func> const dialogue_funcs{
     { "health", { "un", 0, health_eval, health_ass } },
     { "encumbrance", { "un", 1, encumbrance_eval } },
     { "energy", { "g", 1, energy_eval } },
+    { "event_statistic", { "g", 1, event_statistic_eval } },
     { "faction_like", { "g", 1, faction_like_eval, faction_like_ass } },
     { "faction_respect", { "g", 1, faction_respect_eval, faction_respect_ass } },
     { "faction_trust", { "g", 1, faction_trust_eval, faction_trust_ass } },

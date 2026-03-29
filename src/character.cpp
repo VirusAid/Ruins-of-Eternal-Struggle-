@@ -5495,7 +5495,7 @@ bool Character::needs_food() const
     bool no_npc_food = !get_options().has_option( "NO_NPC_FOOD" ) ||
                        get_option<bool>( "NO_NPC_FOOD" );
     return is_avatar() ||
-           ( is_npc() && get_faction() != nullptr &&
+           ( is_npc() && !no_npc_food && get_faction() != nullptr &&
              is_ally( get_player_character() ) );
 }
 

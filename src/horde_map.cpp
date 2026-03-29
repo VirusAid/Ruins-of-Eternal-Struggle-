@@ -170,7 +170,6 @@ std::optional<std::unordered_map<tripoint_abs_ms, horde_entity>::iterator> horde
     if( inserted ) {
         ( *result )->second.monster_data->set_pos_abs_only( p );
     } else {
-        const mtype *existing_type = result->second.get_type();
         debugmsg( "Attempted to insert a %s at %s, but there's already a %s there!",
                   mon.name(), p.to_string(), ( *result )->second.get_type()->nname() );
     }

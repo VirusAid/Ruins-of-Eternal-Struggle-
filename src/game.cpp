@@ -167,6 +167,7 @@
 #include "pickup.h"
 #include "player_activity.h"
 #include "popup.h"
+#include "power_network.h"
 #include "profession.h"
 #include "proficiency.h"
 #include "recipe.h"
@@ -834,6 +835,7 @@ void game::setup()
     clear_zombies();
     critter_tracker->clear_npcs();
     faction_manager_ptr->clear();
+    power_networks_ptr->clear();
     mission::clear_all();
     Messages::clear_messages();
     timed_events = timed_event_manager();
@@ -2650,7 +2652,6 @@ input_context get_default_mode_input_context()
     ctxt.register_action( "pause" );
     ctxt.register_action( "LEVEL_DOWN", to_translation( "Descend stairs" ) );
     ctxt.register_action( "LEVEL_UP", to_translation( "Ascend stairs" ) );
-    ctxt.register_action( "toggle_map_memory" );
     ctxt.register_action( "center" );
     ctxt.register_action( "shift_n" );
     ctxt.register_action( "shift_ne" );
@@ -3888,6 +3889,11 @@ void game::write_memorial_file( std::string sLastWords )
     }, _( "player memorial" ) );
 }
 
+power_network_manager &game::power_networks()
+{
+    return *power_networks_ptr;
+}
+
 void game::disp_NPC_epilogues()
 {
     // TODO: This search needs to be expanded to all NPCs
@@ -5091,7 +5097,7 @@ void game::knockback( std::vector<tripoint_bub_ms> &traj, int stun, int dam_mult
                                  targ->get_name() );
                     }
                 } else if( pos.x() == traj_front.x() && pos.y() == traj_front.y() &&
-                           u.has_trait( trait_LEG_TENT_BRACE ) && u.is_barefoot() ) {
+                           u.has_trait( trait_LEG_TENT_BRACE ) && u.worn.is_barefoot() ) {
                     add_msg( _( "%s collided with you, and barely dislodges your tentacles!" ), targ->get_name() );
                 } else if( pos.x() == traj_front.x() && pos.y() == traj_front.y() ) {
                     add_msg( m_bad, _( "%s collided with you and sent you flying!" ), targ->get_name() );
@@ -6046,11 +6052,10 @@ void game::control_vehicle()
             return;
         } else if( num_valid_controls > 1 ) {
             const std::optional<tripoint_bub_ms> temp = choose_adjacent( _( "Control vehicle where?" ) );
-            if( !vehicle_position ) {
+            if( !temp ) {
                 return;
-            } else {
-                vehicle_position.value() = temp.value();
             }
+            vehicle_position = temp.value();
             const optional_vpart_position vp = here.veh_at( *vehicle_position );
             if( vp ) {
                 vehicle_controls = vp.value().part_with_feature( "CONTROLS", true );
@@ -6364,10 +6369,6 @@ void game::examine( const tripoint_bub_ms &examp, bool with_pickup )
                 if( monexamine::pet_menu( *mon ) ) {
                     return;
                 }
-            } else if( mon->has_flag( mon_flag_RIDEABLE_MECH ) && !mon->has_effect( effect_pet ) ) {
-                if( monexamine::mech_hack( *mon ) ) {
-                    return;
-                }
             } else if( mon->has_flag( mon_flag_PAY_BOT ) ) {
                 if( monexamine::pay_bot( *mon ) ) {
                     return;
@@ -6392,7 +6393,7 @@ void game::examine( const tripoint_bub_ms &examp, bool with_pickup )
 
     const optional_vpart_position vp = here.veh_at( examp );
     if( vp ) {
-        if( !u.is_mounted() || u.mounted_creature->has_flag( mon_flag_RIDEABLE_MECH ) ) {
+        if( !u.is_mounted() ) {
             if( !vp->vehicle().is_appliance() ) {
                 vp->vehicle().interact_with( &here, examp, with_pickup );
             } else {
@@ -8821,7 +8822,7 @@ void game::insert_item( drop_locations &targets )
     }, title, 1, _( "You have no container to insert items." ) );
 
     if( !item_loc ) {
-        add_msg( _( "Never mind." ) );
+        add_msg( _( "Nevermind." ) );
         return;
     }
 
@@ -8835,7 +8836,7 @@ void game::insert_item()
     }, _( "Insert item" ), 1, _( "You have no container to insert items." ) );
 
     if( !item_loc ) {
-        add_msg( _( "Never mind." ) );
+        add_msg( _( "Nevermind." ) );
         return;
     }
 
@@ -9600,7 +9601,7 @@ void game::reload( item_location &loc, bool prompt, bool empty )
         }
         loc = loc.obtain( u );
         if( !loc ) {
-            add_msg( _( "Never mind." ) );
+            add_msg( _( "Nevermind." ) );
             return;
         }
     }
@@ -9626,15 +9627,30 @@ void game::reload( item_location &loc, bool prompt, bool empty )
     }
 }
 
+
+class reload_selector_preset : public inventory_selector_preset
+{
+    public:
+        explicit reload_selector_preset() : you( get_avatar() ) {
+            _pk_type = { pocket_type::CONTAINER, pocket_type::MOD };
+        }
+        bool is_shown( const item_location &location ) const override {
+            return !location.is_invisible_installed_gunmod( ) &&
+                   you.rate_action_reload( *location ) == hint_rating::good;
+        }
+    private:
+        const Character &you;
+};
+
 // Reload something.
 void game::reload_item()
 {
-    item_location item_loc = inv_map_splice( [&]( const item & it ) {
-        return u.rate_action_reload( it ) == hint_rating::good;
-    }, _( "Reload item" ), 1, _( "You have nothing to reload." ) );
+    const reload_selector_preset preset;
+    item_location item_loc = inv_map_splice( preset,
+                             _( "Reload item" ), 1, _( "You have nothing to reload." ) );
 
     if( !item_loc ) {
-        add_msg( _( "Never mind." ) );
+        add_msg( _( "Nevermind." ) );
         return;
     }
 
@@ -10096,19 +10112,12 @@ bool game::walk_move( const tripoint_bub_ms &dest_loc, const bool via_ramp,
     if( u.has_flag( json_flag_NYCTOPHOBIA ) && !u.has_effect( effect_took_xanax ) && !u.is_running() &&
         dest_light_level < nyctophobia_threshold ) {
         add_msg( m_bad,
-                 _( "It's so dark and scary in there!  You can't force yourself to walk into this tile.  Switch to running movement mode to move there." ) );
+                 _( "You're too scared to walk into the dark.  You must run in order to willingly go that way." ) );
         return false;
     }
 
     if( u.is_mounted() ) {
         monster *mons = u.mounted_creature.get();
-        if( mons->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-            if( !mons->check_mech_powered() ) {
-                add_msg( m_bad, _( "Your %s refuses to move as its batteries have been drained." ),
-                         mons->get_name() );
-                return false;
-            }
-        }
         if( !mons->move_effects( false, dest_loc ) ) {
             add_msg( m_bad, _( "You cannot move as your %s isn't able to move." ), mons->get_name() );
             return false;
@@ -10171,22 +10180,6 @@ bool game::walk_move( const tripoint_bub_ms &dest_loc, const bool via_ramp,
 
     if( ( !here.passable_skip_fields( dest_loc ) || ( !impassable_field_ids.empty() &&
             !u.is_immune_fields( impassable_field_ids ) ) ) && !pushing && !shifting_furniture ) {
-        if( vp_there && u.mounted_creature && u.mounted_creature->has_flag( mon_flag_RIDEABLE_MECH ) &&
-            vp_there->vehicle().handle_potential_theft( u ) ) {
-            tripoint_rel_ms diff = dest_loc - pos;
-            if( diff.x() < 0 ) {
-                diff.x() -= 2;
-            } else if( diff.x() > 0 ) {
-                diff.x() += 2;
-            }
-            if( diff.y() < 0 ) {
-                diff.y() -= 2;
-            } else if( diff.y() > 0 ) {
-                diff.y() += 2;
-            }
-            u.mounted_creature->shove_vehicle( dest_loc + diff.xy(),
-                                               dest_loc );
-        }
         return false;
     }
     if( vp_there && !vp_there->vehicle().handle_potential_theft( u ) ) {
@@ -10253,19 +10246,17 @@ bool game::walk_move( const tripoint_bub_ms &dest_loc, const bool via_ramp,
     const int previous_moves = u.get_moves();
     if( u.is_mounted() ) {
         auto *crit = u.mounted_creature.get();
-        if( !crit->has_flag( mon_flag_RIDEABLE_MECH ) &&
-            ( here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_MOUNTABLE, dest_loc ) ||
-              here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR, dest_loc ) ||
-              here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE, dest_loc ) ||
-              here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_DAMAGED, dest_loc ) ||
-              here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_REINFORCED, dest_loc ) ) ) {
+        if( here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_MOUNTABLE, dest_loc ) ||
+            here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR, dest_loc ) ||
+            here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_OPENCLOSE_INSIDE, dest_loc ) ||
+            here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_DAMAGED, dest_loc ) ||
+            here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_BARRICADABLE_DOOR_REINFORCED, dest_loc ) ) {
             add_msg( m_warning, _( "You cannot pass obstacles whilst mounted." ) );
             return false;
         }
         const double base_moves = u.run_cost( mcost, diag ) * 100.0 / crit->get_speed();
         const double encumb_moves = u.get_weight() / 4800.0_gram;
         u.mod_moves( -static_cast<int>( std::ceil( base_moves + encumb_moves ) ) );
-        crit->use_mech_power( u.current_movement_mode()->mech_power_use() );
     } else {
         u.mod_moves( -u.run_cost( mcost, diag ) );
         /**
@@ -10533,42 +10524,48 @@ point_rel_sm game::place_player( const tripoint_bub_ms &dest_loc, bool quick )
     }
 
     if( monster *const mon_ptr = get_creature_tracker().creature_at<monster>( dest_loc ) ) {
-        // We displaced a monster. It's probably a bug if it wasn't a friendly mon...
-        // Immobile monsters can't be displaced.
         monster &critter = *mon_ptr;
-        // TODO: handling for ridden creatures other than players mount.
-        if( !critter.has_effect( effect_ridden ) ) {
-            if( u.is_mounted() ) {
-                std::vector<tripoint_bub_ms> maybe_valid;
-                for( const tripoint_bub_ms &jk : here.points_in_radius( critter.pos_bub(), 1 ) ) {
-                    if( is_empty( jk ) ) {
-                        maybe_valid.push_back( jk );
+        // Creatures under a solid surface coexist with the player on the tile
+        if( critter.is_underwater() &&
+            here.has_flag( ter_furn_flag::TFLAG_SWIM_UNDER, dest_loc ) ) {
+            // Fish stays under the walkway/ice, no displacement needed
+        } else {
+            // We displaced a monster. It's probably a bug if it wasn't a friendly mon...
+            // Immobile monsters can't be displaced.
+            // TODO: handling for ridden creatures other than players mount.
+            if( !critter.has_effect( effect_ridden ) ) {
+                if( u.is_mounted() ) {
+                    std::vector<tripoint_bub_ms> maybe_valid;
+                    for( const tripoint_bub_ms &jk : here.points_in_radius( critter.pos_bub(), 1 ) ) {
+                        if( is_empty( jk ) ) {
+                            maybe_valid.push_back( jk );
+                        }
                     }
-                }
-                bool moved = false;
-                while( !maybe_valid.empty() ) {
-                    if( critter.move_to( random_entry_removed( maybe_valid ) ) ) {
-                        add_msg( _( "You push the %s out of the way." ), critter.name() );
-                        moved = true;
+                    bool moved = false;
+                    while( !maybe_valid.empty() ) {
+                        if( critter.move_to( random_entry_removed( maybe_valid ) ) ) {
+                            add_msg( _( "You push the %s out of the way." ), critter.name() );
+                            moved = true;
+                        }
                     }
-                }
-                if( !moved ) {
-                    add_msg( _( "There is no room to push the %s out of the way." ), critter.name() );
-                    return point_rel_sm::zero;
-                }
-            } else {
-                // Force the movement even though the player is there right now.
-                const bool moved = critter.move_to( u.pos_bub(), /*force=*/false, /*step_on_critter=*/true );
-                if( moved ) {
-                    add_msg( _( "You displace the %s." ), critter.name() );
+                    if( !moved ) {
+                        add_msg( _( "There is no room to push the %s out of the way." ), critter.name() );
+                        return point_rel_sm::zero;
+                    }
                 } else {
-                    add_msg( _( "You cannot move the %s out of the way." ), critter.name() );
-                    return point_rel_sm::zero;
+                    // Force the movement even though the player is there right now.
+                    const bool moved = critter.move_to( u.pos_bub(), /*force=*/false, /*step_on_critter=*/true );
+                    if( moved ) {
+                        add_msg( _( "You displace the %s." ), critter.name() );
+                    } else {
+                        add_msg( _( "You cannot move the %s out of the way." ), critter.name() );
+                        return point_rel_sm::zero;
+                    }
                 }
+            } else if( !u.has_effect( effect_riding ) ) {
+                add_msg( _( "You cannot move the %s out of the way." ), critter.name() );
+                return point_rel_sm::zero;
             }
-        } else if( !u.has_effect( effect_riding ) ) {
-            add_msg( _( "You cannot move the %s out of the way." ), critter.name() );
-            return point_rel_sm::zero;
         }
     }
 
@@ -10627,15 +10624,12 @@ point_rel_sm game::place_player( const tripoint_bub_ms &dest_loc, bool quick )
                     return;
                 } else if( ( forage_bushes && xter_t.has_examine( iexamine::shrub_marloss ) ) ||
                            ( forage_bushes && xter_t.has_examine( iexamine::shrub_wildveggies ) ) ||
-                           ( forage_bushes && xter_t.has_examine( iexamine::harvest_ter_nectar ) ) ||
                            ( forage_trees && xter_t.has_examine( iexamine::tree_marloss ) ) ||
                            ( forage_trees && xter_t.has_examine( iexamine::harvest_ter ) ) ||
-                           ( forage_trees && xter_t.has_examine( iexamine::harvest_ter_nectar ) ) ||
                            ( forage_crops && xter_t.has_examine( iexamine::harvest_plant_ex ) )
                          ) {
                     xter_t.examine( u, pos );
                 } else if( ( forage_everything && xfurn_t.has_examine( iexamine::harvest_furn ) ) ||
-                           ( forage_everything && xfurn_t.has_examine( iexamine::harvest_furn_nectar ) ) ||
                            ( forage_crops && xfurn_t.has_examine( iexamine::harvest_plant_ex ) )
                          ) {
                     xfurn_t.examine( u, pos );
@@ -11726,17 +11720,6 @@ void game::vertical_move( int movez, bool force, bool peeking )
         return;
     }
 
-    if( u.is_mounted() ) {
-        monster *mons = u.mounted_creature.get();
-        if( mons->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-            if( !mons->check_mech_powered() ) {
-                add_msg( m_bad, _( "Your %s refuses to move as its batteries have been drained." ),
-                         mons->get_name() );
-                return;
-            }
-        }
-    }
-
     map &here = get_map();
     tripoint_bub_ms pos = u.pos_bub( here );
 
@@ -12000,12 +11983,7 @@ void game::vertical_move( int movez, bool force, bool peeking )
         }
     }
 
-    if( u.is_mounted() ) {
-        monster *crit = u.mounted_creature.get();
-        if( crit->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-            crit->use_mech_power( u.current_movement_mode()->mech_power_use() + 1_kJ );
-        }
-    } else {
+    if( !u.in_vehicle ) {
         u.mod_moves( -move_cost );
         u.burn_energy_all( -move_cost );
     }

@@ -1038,6 +1038,7 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
 
             const lit_level ll = overmap_buffer.is_explored( omp ) ? lit_level::LOW : lit_level::LIT;
             // light level is now used for choosing between grayscale filter and normal lit tiles.
+
             draw_from_id_string( id, category,
                                  category == TILE_CATEGORY::OVERMAP_TERRAIN ? "overmap_terrain" : "",
                                  omp, subtile, rotation, ll, false, height_3d, 1.0f, 1.0f );
@@ -1064,7 +1065,7 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
             //     }
             //     if( showhordes && los ) {
             //             static const std::string empty_string;
-            //         const int horde_size = overmap_buffer.get_horde_size( omp );
+            //         const int horde_size = overmap_buffer.get_horde_size( omp, horde_map_flavors::active );
             //         if( horde_size >= HORDE_VISIBILITY_SIZE ) {
             //             // Scale down the range of horde population, which can be 1-576 to a range of 1-10
             //             // These thresholds are generated with pow( sprite_size, 2.4 ).
@@ -1171,9 +1172,23 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
         int rotation;
         int subtile;
         terrain.get_rotation_and_subtile( rotation, subtile );
-        draw_from_id_string( id, tripoint_bub_ms( global_omt_to_draw_position( center_pos ) ), subtile,
-                             rotation,
-                             lit_level::LOW, true );
+        int height_3d = 0;
+        draw_options opts{};
+        opts.category = TILE_CATEGORY::OVERMAP_TERRAIN;
+        opts.subcategory = "overmap_terrain";
+        opts.scale_x = 1.0f;
+        opts.scale_y = 1.0f;
+
+        draw_from_id_string(
+            id,
+            tripoint_bub_ms( global_omt_to_draw_position( center_pos ) ),
+            subtile,
+            rotation,
+            lit_level::LOW,
+            true,          // apply_visual_effects
+            height_3d,
+            opts
+        );
     }
     if( uistate.place_special ) {
         for( const overmap_special_terrain &s_ter : uistate.place_special->preview_terrains() ) {
@@ -1186,9 +1201,25 @@ void cata_tiles::draw_om( const point &dest, const tripoint_abs_omt &center_abs_
                 int subtile;
                 terrain.get_rotation_and_subtile( rotation, subtile );
 
-                draw_from_id_string( id, TILE_CATEGORY::OVERMAP_TERRAIN, "overmap_terrain",
-                                     tripoint_bub_ms( global_omt_to_draw_position( center_pos + rp ) ), 0,
-                                     rotation, lit_level::LOW, true );
+                std::string overmap_subcat = "overmap_terrain";
+
+                draw_options opts{};
+                opts.category = TILE_CATEGORY::OVERMAP_TERRAIN;
+                opts.subcategory = overmap_subcat;
+                opts.scale_x = 1.0f;
+                opts.scale_y = 1.0f;
+
+                int height_3d = 0;
+                draw_from_id_string(
+                    id,
+                    tripoint_bub_ms( global_omt_to_draw_position( center_pos + rp ) ),
+                    subtile,
+                    rotation,
+                    lit_level::LOW,
+                    true,
+                    height_3d,
+                    opts
+                );
             }
         }
     }

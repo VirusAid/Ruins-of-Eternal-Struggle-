@@ -611,11 +611,7 @@ void veh_interact::cache_tool_availability()
     crafting_inv = &player_character.crafting_inventory();
 
     cache_tool_availability_update_lifting( player_character.pos_bub() );
-    int mech_jack = 0;
-    if( player_character.is_mounted() ) {
-        mech_jack = player_character.mounted_creature->mech_str_addition() + 10;
-    }
-    int max_quality = std::max( { player_character.max_quality( qual_JACK ), mech_jack,
+    int max_quality = std::max( { player_character.max_quality( qual_JACK ),
                                   map_selector( player_character.pos_bub(), PICKUP_RANGE ).max_quality( qual_JACK ),
                                   vehicle_selector( here, player_character.pos_bub(), 2, true, *veh ).max_quality( qual_JACK )
                                 } );
@@ -3017,7 +3013,7 @@ void act_vehicle_unload_fuel( map &here, vehicle *veh )
         }
         smenu.query();
         if( smenu.ret < 0 || static_cast<size_t>( smenu.ret ) >= fuels.size() ) {
-            add_msg( m_info, _( "Never mind." ) );
+            add_msg( m_info, _( "Nevermind." ) );
             return;
         }
         fuel = fuels[smenu.ret];

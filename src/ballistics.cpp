@@ -519,7 +519,17 @@ void projectile_attack( dealt_projectile_attack &attack, const projectile &proj_
                                           critter->ranged_target_size(), 0.4 );
             }
 
-            if( !skip_hit && critter != nullptr && cur_missed_by < 1.0 ) {
+            if( !skip_hit &&critter != nullptr && cur_missed_by < 1.0 ) {
+                // Prevent shots from hitting underwater creatures that are beneath surface (except thin ice);
+                // treat the shot as hitting the terrain instead.
+                if( critter->is_underwater() &&
+                    here->has_flag( ter_furn_flag::TFLAG_SWIM_UNDER, critter->pos_bub() ) &&
+                    !here->has_flag( ter_furn_flag::TFLAG_THIN_ICE, critter->pos_bub() ) ) {
+                    if( origin != nullptr && origin->is_avatar() ) {
+                        add_msg( m_info, _( "Your shot is blocked by the surface." ) );
+                    }
+                    continue;
+                }
                 if( in_veh != nullptr && veh_pointer_or_null( here->veh_at( tp ) ) == in_veh &&
                     critter->is_avatar() ) {
                     // Turret either was aimed by the player (who is now ducking) and shoots from above

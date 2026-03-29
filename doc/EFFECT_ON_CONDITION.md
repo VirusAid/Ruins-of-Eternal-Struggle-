@@ -1699,6 +1699,10 @@ You can see selected location.
 - type: simple string
 - return true if beta talker is an item and has enough ammo for at least one "shot".
 
+### `is_rotten`
+- type: simple string
+- return true if beta talker is an item and is rotten.
+
 ### `test_eoc`
 - type: string or [variable object](##variable-object)
 - return true if the provided eoc's condition returns true
@@ -4407,11 +4411,11 @@ You cancel activity `ACT_GAME` for 45 minutes
 You or NPC is teleported to `target_var` coordinates
 
 | Syntax | Optionality | Value  | Info |
-| --- | --- | --- | --- | 
-| "u_teleport", / "npc_teleport" | **mandatory** | [variable object](##variable-object) | location to teleport; should use `target_var`, created previously |
-| "success_message" | optional | string or [variable object](##variable-object) | message, that would be printed, if teleportation was successful | 
-| "fail_message" | optional | string or [variable object](##variable-object) | message, that would be printed, if teleportation was failed, like if coordinates contained creature or impassable obstacle (like wall) | 
-| "force" | optional | boolean | default false; if true, teleportation can't fail - any creature, that stand on target coordinates, would be brutally telefragged, and if impassable obstacle occur, the closest point would be picked instead |
+| --- | --- | --- | --- |
+| "u_teleport", / "npc_teleport" | **mandatory** | [variable object](#variable-object) | location to teleport; should use `target_var`, created previously |
+| "success_message" | optional | string or [variable object](#variable-object) | message, that would be printed, if teleportation was successful |
+| "fail_message" | optional | string or [variable object](#variable-object) | message, that would be printed, if teleportation was failed, like if coordinates contained creature or impassable obstacle (like wall) |
+| "force" | optional | boolean | default false; if true, teleportation can't fail - any creature, that stand on target coordinates, would be brutally telefragged, and if impassable obstacle occur, the closest point would be picked instead. For the vehicle, collision test will be skipped. |
 | "force_safe" | optional | boolean | default false; if true, teleportation cannot^(tm) fail.  If there is a creature or obstacle at the target coordinate, the closest passable point within 5 horizontal tiles is picked instead.  If there is no point, the creature remains where they are. |
 
 ##### Valid talkers:
@@ -4997,6 +5001,25 @@ Picks a random fault from a type, and applies it onto item
 Beta talker adds a random fault from `shorted` type as it's fault
 ```jsonc
 { "npc_set_random_fault_of_type": "shorted" }
+```
+
+#### `set_browsed`
+Set the browse status of browsable items
+
+| Syntax | Optionality | Value  | Info |
+| ------ | ----------- | ------ | ---- |
+| "set_browsed" | **mandatory** | boolean | browse status |
+
+##### Valid talkers:
+
+| Avatar | NPC | Monster | Furniture | Item | Vehicle |
+| ------ | --------- | ---- | ------- | --- | ---- |
+| ❌ | ❌ | ❌ | ❌ | ✔️ | ❌ |
+
+##### Examples
+Beta talker makes some browsable item browsed
+```jsonc
+{ "set_browsed": true }
 ```
 
 ## Map effects

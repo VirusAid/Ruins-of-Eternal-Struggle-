@@ -45,6 +45,8 @@
 #include "gun_mode.h"
 #include "item.h"
 #include "item_factory.h"
+#include "item_location.h"
+#include "item_transformation.h"
 #include "itype.h"
 #include "iuse.h"
 #include "iuse_actor.h"
@@ -82,7 +84,9 @@
 #include "vehicle.h"
 #include "viewer.h"
 #include "visitable.h"
+#include "weather.h"
 #include "vehicle_selector.h"
+#include "weather.h"
 #include "vpart_position.h"
 #include "vpart_range.h"
 
@@ -92,6 +96,7 @@ static const activity_id ACT_MOVE_LOOT( "ACT_MOVE_LOOT" );
 static const activity_id ACT_OPERATION( "ACT_OPERATION" );
 static const activity_id ACT_SPELLCASTING( "ACT_SPELLCASTING" );
 static const activity_id ACT_TIDY_UP( "ACT_TIDY_UP" );
+static const activity_id ACT_MULTIPLE_READ( "ACT_MULTIPLE_READ" );
 
 static const bionic_id bio_ads( "bio_ads" );
 static const bionic_id bio_blade( "bio_blade" );
@@ -123,6 +128,7 @@ static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_catch_up( "catch_up" );
 static const efftype_id effect_cramped_space( "cramped_space" );
 static const efftype_id effect_disinfected( "disinfected" );
+static const efftype_id effect_drunk( "drunk" );
 static const efftype_id effect_hit_by_player( "hit_by_player" );
 static const efftype_id effect_hypovolemia( "hypovolemia" );
 static const efftype_id effect_infected( "infected" );
@@ -138,18 +144,27 @@ static const efftype_id effect_stunned( "stunned" );
 
 static const field_type_str_id field_fd_last_known( "fd_last_known" );
 
+static const flag_id json_flag_HEMOVORE_FUN( "HEMOVORE_FUN" );
+
 static const itype_id itype_inhaler( "inhaler" );
 static const itype_id itype_lsd( "lsd" );
 static const itype_id itype_oxygen_tank( "oxygen_tank" );
 static const itype_id itype_smoxygen_tank( "smoxygen_tank" );
 static const itype_id itype_thorazine( "thorazine" );
 
+static const json_character_flag json_flag_CANNIBAL( "CANNIBAL" );
+static const json_character_flag json_flag_BLOODFEEDER( "BLOODFEEDER" );
+
 static const npc_class_id NC_EVAC_SHOPKEEP( "NC_EVAC_SHOPKEEP" );
 
 static const skill_id skill_firstaid( "firstaid" );
 
+static const trait_id trait_ALCMET( "ALCMET" );
 static const trait_id trait_IGNORE_SOUND( "IGNORE_SOUND" );
 static const trait_id trait_RETURN_TO_START_POS( "RETURN_TO_START_POS" );
+
+static const vitamin_id vitamin_ethanol( "ethanol" );
+static const vitamin_id vitamin_human_flesh_vitamin( "human_flesh_vitamin" );
 
 static const zone_type_id zone_type_NO_NPC_PICKUP( "NO_NPC_PICKUP" );
 static const zone_type_id zone_type_NPC_RETREAT( "NPC_RETREAT" );
@@ -795,10 +810,14 @@ void npc::assess_danger()
         }
         int dist = rl_dist( pos_bub(), pt );
         cur_threat_map[direction_from( pos_bub(), pt )] += 2.0f * ( NPC_MONSTER_DANGER_MAX - dist );
-        if( dist < 3 && !has_effect( effect_npc_fire_bad ) ) {
-            warn_about( "fire_bad", 1_minutes );
-            add_effect( effect_npc_fire_bad, 5_turns );
-            path.clear();
+        if( dist < 3 ) {
+            if( !has_effect( effect_npc_fire_bad ) ) {
+                warn_about( "fire_bad", 1_minutes );
+                path.clear();
+            }
+            // Keep refreshing the effect while fire is within 3 tiles so the NPC
+            // keeps running until they are truly clear, preventing back-and-forth.
+            add_effect( effect_npc_fire_bad, 20_turns );
         }
     }
 
@@ -1645,7 +1664,27 @@ void npc::execute_action( npc_action action )
             // Find a nice spot to sleep
             tripoint_bub_ms best_spot = pos_bub();
             int best_sleepy = evaluate_sleep_spot( best_spot );
-            for( const tripoint_bub_ms &p : closest_points_first( pos_bub(), MAX_VIEW_DISTANCE ) ) {
+
+            // first build a list of positions to search
+            std::vector<tripoint_bub_ms> search_positions;
+
+            if( is_walking_with() && player_character.in_vehicle && player_character.in_sleep_state() ) {
+                const optional_vpart_position player_part_pos = here.veh_at( player_character.pos_bub() );
+                if( player_part_pos ) {
+                    vehicle *player_vehicle = &player_part_pos->vehicle();
+                    for( const vpart_reference &part : player_vehicle->get_avail_parts( VPFLAG_BOARDABLE ) ) {
+                        search_positions.push_back( player_vehicle->bub_part_pos( here, part.part() ) );
+                    }
+                }
+            }
+
+            if( search_positions.empty() ) {
+                search_positions = closest_points_first( pos_bub(), MAX_VIEW_DISTANCE );
+            }
+
+
+            // then search through all positions to find the best sleep spot
+            for( const tripoint_bub_ms &p : search_positions ) {
                 if( !could_move_onto( p ) || !g->is_empty( p ) ) {
                     continue;
                 }
@@ -1659,6 +1698,7 @@ void npc::execute_action( npc_action action )
                     }
                 }
             }
+
             if( is_walking_with() ) {
                 complain_about( "napping", 30_minutes, chat_snippets().snip_warn_sleep.translated() );
             }
@@ -1938,6 +1978,7 @@ void npc::execute_action( npc_action action )
 
         case npc_player_activity:
             do_player_activity();
+            complain();
             break;
 
         case npc_undecided:
@@ -2362,7 +2403,7 @@ void outfit::activate_combat_items( npc &guy )
             // Due to how UPS works, there can be no charges_needed for UPS items.
             // Energy consumption is thus not checked at activation.
             // To prevent "flickering", this is a hard check for UPS charges > 0.
-            if( transform->target->has_flag( flag_USE_UPS ) && guy.available_ups() == 0_kJ ) {
+            if( transform->transform.target->has_flag( flag_USE_UPS ) && guy.available_ups() == 0_kJ ) {
                 continue;
             }
             if( transform->can_use( guy, candidate, tripoint_bub_ms::zero ).success() ) {
@@ -2564,6 +2605,32 @@ npc_action npc::address_needs( float danger )
 
     if( one_in( 3 ) && adjust_worn() ) {
         return npc_noop;
+    }
+
+    if( is_player_ally() && one_in( 3 ) ) {
+        const units::temperature torso_temp = get_part_temp_cur( body_part_torso.id() );
+        if( torso_temp <= BODYTEMP_COLD && try_wear_warmer_clothing() ) {
+            return npc_noop;
+        } else if( torso_temp >= BODYTEMP_HOT && try_remove_warm_clothing() ) {
+            return npc_noop;
+        }
+    }
+
+    if( is_player_ally() ) {
+        if( rules.has_flag( ally_rule::seek_shelter ) && seek_safe_temperature() ) {
+            return npc_noop;
+        } else if( !rules.has_flag( ally_rule::seek_shelter ) ) {
+            const units::temperature torso_temp = get_part_temp_cur( body_part_torso.id() );
+            if( torso_temp <= BODYTEMP_COLD ) {
+                complain_about( "override_cold", 5_minutes,
+                                _( "I'd love to find somewhere warmer, but I'm following you instead." ),
+                                false, sounds::sound_t::order );
+            } else if( torso_temp >= BODYTEMP_HOT ) {
+                complain_about( "override_hot", 5_minutes,
+                                _( "I'd love to find somewhere cooler, but I'm following you instead." ),
+                                false, sounds::sound_t::order );
+            }
+        }
     }
 
     const auto could_sleep = [&]() {
@@ -3102,9 +3169,6 @@ void npc::move_to( const tripoint_bub_ms &pt, bool no_bashing, std::set<tripoint
                                                 diag ) * 100.0 / mounted_creature->get_speed();
             const double encumb_moves = get_weight() / 4800.0_gram;
             mod_moves( -static_cast<int>( std::ceil( base_moves + encumb_moves ) ) );
-            if( mounted_creature->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-                mounted_creature->use_mech_power( 1_kJ );
-            }
         } else {
             mod_moves( -run_cost( here.combined_movecost( pos, p ), diag ) );
         }
@@ -4067,6 +4131,11 @@ bool npc::do_player_activity()
         // instead; just scan the map ONCE for a task to do, and if it returns false
         // then stop scanning, abandon the activity, and kill the backlog of moves.
         if( !generic_multi_activity_handler( activity, *this->as_character(), true ) ) {
+            if( activity.id() == ACT_MULTIPLE_READ ) {
+                add_msg_if_player_sees( *this,
+                                        _( "%s has nothing left to study from their books." ),
+                                        disp_name() );
+            }
             revert_after_activity();
             set_moves( 0 );
             return true;
@@ -4538,7 +4607,7 @@ void npc::use_painkiller()
 // Be eaten before it rots (favor soon-to-rot perishables)
 //
 // TODO: Cache the results of this, *especially* if there's nothing we want to eat.
-static float rate_food( const item &it, int want_nutr, int want_quench )
+float npc::rate_food( const item &it, int want_nutr, int want_quench )
 {
     const auto &food = it.get_comestible();
     if( !food ) {
@@ -4563,7 +4632,6 @@ static float rate_food( const item &it, int want_nutr, int want_quench )
         // TODO: Get a good method of telling apart:
         // raw meat (parasites - don't eat unless mutant)
         // zed meat (poison - don't eat unless mutant)
-        // alcohol (debuffs, health drop - supplement diet but don't bulk-consume)
         // caffeine (fine to consume, but expensive and prevents sleep)
         // hallucination mushrooms (NPCs don't hallucinate, so don't eat those)
         // honeycomb (harmless iuse)
@@ -4575,6 +4643,22 @@ static float rate_food( const item &it, int want_nutr, int want_quench )
 
         // For now skip all of those
         return 0.0f;
+    }
+
+    if( it.has_vitamin( vitamin_ethanol ) ) {
+        // Alcohol metabolizers can take a sip while sober.
+        if( !has_trait( trait_ALCMET ) || !has_effect( effect_drunk ) ) {
+            return 0.0f;
+        }
+    }
+
+    // Cannibals can eat human flesh or drink human blood.
+    // Bloodfeeders can drink human blood.
+    if( it.has_vitamin( vitamin_human_flesh_vitamin ) ) {
+        if( !( has_flag( json_flag_CANNIBAL ) ||
+               ( has_flag( json_flag_BLOODFEEDER ) && it.has_flag( flag_HEMOVORE_FUN ) ) ) ) {
+            return 0.0f;
+        }
     }
 
     double relative_rot = it.get_relative_rot();
@@ -4670,26 +4754,20 @@ bool npc::consume_food_from_camp()
         int stomach_room = 15000 - stomach_kcal;
         int gut_room = 15000 - gut_kcal;
 
-
         // Stomach and gut kcal will overflow at 20,000. feed_workers doesn't really model
         // stomach volume very well, so that's not helpful for preventing overeating. Here we
         // kludge a fix in just to keep that from happening.
         // TODO: Make feed_workers properly guess a stomach volume and have that prevent overflow
         // instead of this.
         int safe_kcal_cap = std::min( stomach_room, gut_room );
-
         if( safe_kcal_cap <= 0 ) {
             return false;
         }
-
         desired_kcal = std::min( desired_kcal, safe_kcal_cap );
-
         int kcal_to_eat = std::min( desired_kcal, bcp->get_owner()->food_supply().kcal() );
-
         if( kcal_to_eat > 0 ) {
             nutrients meal = bcp->camp_food_supply( -kcal_to_eat );
             bcp->feed_workers( *this, -meal );
-
             return true;
         } else {
             // We need food but there's none to eat :(
@@ -5331,6 +5409,8 @@ bool npc::complain()
     static const std::string radiation_string = "radiation";
     static const std::string hunger_string = "hunger";
     static const std::string thirst_string = "thirst";
+    static const std::string too_cold_string = "too_cold";
+    static const std::string too_hot_string = "too_hot";
 
     if( !is_player_ally() || !get_player_view().sees( here, *this ) ) {
         return false;
@@ -5426,6 +5506,24 @@ bool npc::complain()
         }
     }
 
+    // Temperature complaints — cold and hot, every 30 min normally, forced every 10 min when severe
+    const units::temperature torso_temp = get_part_temp_cur( body_part_torso.id() );
+    if( torso_temp <= BODYTEMP_COLD ) {
+        const bool severe = torso_temp <= BODYTEMP_VERY_COLD;
+        const time_duration freq = severe ? 10_minutes : 30_minutes;
+        if( complain_about( too_cold_string, freq, chat_snippets().snip_too_cold.translated(),
+                            false, sounds::sound_t::order ) ) {
+            return true;
+        }
+    } else if( torso_temp >= BODYTEMP_HOT ) {
+        const bool severe = torso_temp >= BODYTEMP_VERY_HOT;
+        const time_duration freq = severe ? 10_minutes : 30_minutes;
+        if( complain_about( too_hot_string, freq, chat_snippets().snip_too_hot.translated(),
+                            false, sounds::sound_t::order ) ) {
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -5517,6 +5615,236 @@ bool outfit::adjust_worn( npc &guy )
             if( ( needs_change && guy.change_side( elem ) ) || takeoff( loc_for_takeoff, &temp_list, guy ) ) {
                 return true;
             }
+        }
+    }
+    return false;
+}
+
+bool npc::try_wear_warmer_clothing()
+{
+    // Collect unworn wearable items with warmth from inventory
+    std::vector<item *> candidates = items_with( [this]( const item & it ) {
+        return it.is_armor() && !is_worn( it ) && it.get_warmth() > 0;
+    } );
+    if( candidates.empty() ) {
+        complain_about( "too_cold_no_clothes", 5_minutes,
+                        _( "I'm freezing and I don't have anything warmer to wear!" ) );
+        return false;
+    }
+    // Try the warmest first
+    std::stable_sort( candidates.begin(), candidates.end(), []( const item * a, const item * b ) {
+        return a->get_warmth() > b->get_warmth();
+    } );
+    for( item *it : candidates ) {
+        item_location loc( *this, it );
+        if( can_wear( *it ).success() && wear( loc, true ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool npc::try_remove_warm_clothing()
+{
+    // Minimum warmth value worth removing when overheating
+    static constexpr int min_warmth_to_remove = 10;
+
+    // Critical items that should never be auto-removed regardless of temperature
+    auto is_critical_gear = []( const item & it ) {
+        return it.has_flag( flag_SPLINT ) ||
+               it.has_flag( flag_GAS_PROOF ) ||
+               it.has_flag( flag_RAD_PROOF );
+    };
+
+    std::vector<item *> warm_worn = items_with( [&]( const item & it ) {
+        return is_worn( it ) && !is_critical_gear( it ) && it.get_warmth() > min_warmth_to_remove;
+    } );
+    if( warm_worn.empty() ) {
+        return false;
+    }
+    // Sturdy armor won't be auto-removed - NPC complains and waits for a player order
+    std::vector<item *> removable;
+    item *warmest_sturdy = nullptr;
+    for( item *it : warm_worn ) {
+        if( it->has_flag( flag_STURDY ) ) {
+            if( !warmest_sturdy || it->get_warmth() > warmest_sturdy->get_warmth() ) {
+                warmest_sturdy = it;
+            }
+        } else {
+            removable.push_back( it );
+        }
+    }
+    if( removable.empty() ) {
+        if( warmest_sturdy ) {
+            complain_about( "too_hot_armor", 5_minutes,
+                            string_format(
+                                _( "My %s is making me overheat!  You'll have to tell me to take it off." ),
+                                warmest_sturdy->tname() ),
+                            false, sounds::sound_t::order );
+        }
+        return false;
+    }
+    item *warmest = *std::max_element( removable.begin(), removable.end(),
+    []( const item * a, const item * b ) {
+        return a->get_warmth() < b->get_warmth();
+    } );
+    item_location loc( *this, warmest );
+    if( can_takeoff( *warmest ).success() && takeoff( loc ) ) {
+        return true;
+    }
+    return false;
+}
+
+bool npc::seek_safe_temperature()
+{
+    const map &here = get_map();
+    const units::temperature torso_temp = get_part_temp_cur( body_part_torso.id() );
+    static constexpr int seek_radius = 15;
+    const field_type_id fire = ::fd_fire;
+
+    const auto try_move_to = [&]( const tripoint_bub_ms & dest ) -> bool {
+        if( pos_bub() == dest )
+        {
+            return false;
+        }
+        update_path( dest );
+        if( path.empty() )
+        {
+            return false;
+        }
+        move_to_next();
+        return true;
+    };
+
+    if( torso_temp <= BODYTEMP_COLD ) {
+        // Already in shelter — stay put
+        if( !here.is_outside( pos_bub() ) ) {
+            complain_about( "sheltering_cold", 5_minutes,
+                            _( "I'll stay in here until it warms up.  Tell me to follow you when you need me." ),
+                            false, sounds::sound_t::order );
+            move_pause();
+            return true;
+        }
+        // Look for a fire to stand near
+        tripoint_bub_ms best_fire_adj;
+        int best_fire_adj_dist = seek_radius + 1;
+        for( const tripoint_bub_ms &pt : here.points_in_radius( pos_bub(), seek_radius ) ) {
+            if( !here.get_field( pt, fire ) ) {
+                continue;
+            }
+            // Target an adjacent passable tile — don't walk into the fire itself
+            for( const tripoint_bub_ms &adj : here.points_in_radius( pt, 1 ) ) {
+                if( adj == pt || !here.passable( adj ) ) {
+                    continue;
+                }
+                const int d = rl_dist( pos_bub(), adj );
+                if( d > 0 && d < best_fire_adj_dist ) {
+                    best_fire_adj_dist = d;
+                    best_fire_adj = adj;
+                }
+            }
+        }
+        if( best_fire_adj_dist <= seek_radius ) {
+            complain_about( "seek_fire_warmth", 2_minutes,
+                            _( "I'm freezing!  I'm heading for that fire." ),
+                            false, sounds::sound_t::order );
+            return try_move_to( best_fire_adj );
+        }
+        // No fire found; if outside, seek nearest enclosed shelter
+        if( here.is_outside( pos_bub() ) ) {
+            tripoint_bub_ms shelter;
+            int shelter_dist = seek_radius + 1;
+            for( const tripoint_bub_ms &pt : here.points_in_radius( pos_bub(), seek_radius ) ) {
+                if( !here.is_outside( pt ) && here.passable( pt ) ) {
+                    const int d = rl_dist( pos_bub(), pt );
+                    if( d > 0 && d < shelter_dist ) {
+                        shelter_dist = d;
+                        shelter = pt;
+                    }
+                }
+            }
+            if( shelter_dist <= seek_radius ) {
+                const optional_vpart_position vp = here.veh_at( shelter );
+                if( vp ) {
+                    complain_about( "seek_cold_shelter", 2_minutes,
+                                    string_format( _( "I'm freezing!  I'm heading for that %s." ),
+                                                   vp->vehicle().name ),
+                                    false, sounds::sound_t::order );
+                } else {
+                    complain_about( "seek_cold_shelter", 2_minutes,
+                                    _( "It's too cold out here, I need to find shelter." ),
+                                    false, sounds::sound_t::order );
+                }
+                return try_move_to( shelter );
+            }
+        }
+    } else if( torso_temp >= BODYTEMP_HOT ) {
+        // Fire raises the air temperature in nearby tiles; use tile temperature to detect this.
+        // If current tile is significantly hotter than ambient (due to fire or other heat source),
+        // find the nearest passable tile that is back at ambient temperature.
+        // Skip if heat-immune (bionic heatsink, mutations, etc.)
+        if( !has_flag( flag_HEAT_IMMUNE ) ) {
+            weather_manager &weather_man = get_weather();
+            const units::temperature ambient = weather_man.temperature;
+            const units::temperature my_tile_temp = weather_man.get_temperature( pos_bub() );
+            // 5°C above ambient is a clear sign of fire/heat source nearby
+            static constexpr units::temperature_delta fire_heat_threshold = 5_C_delta;
+            if( my_tile_temp > ambient + fire_heat_threshold ) {
+                tripoint_bub_ms cool_spot;
+                int cool_dist = seek_radius + 1;
+                for( const tripoint_bub_ms &pt : here.points_in_radius( pos_bub(), seek_radius ) ) {
+                    if( pt == pos_bub() || !here.passable( pt ) || sees_dangerous_field( pt ) ) {
+                        continue;
+                    }
+                    if( weather_man.get_temperature( pt ) <= ambient + fire_heat_threshold ) {
+                        const int d = rl_dist( pos_bub(), pt );
+                        if( d < cool_dist ) {
+                            cool_dist = d;
+                            cool_spot = pt;
+                        }
+                    }
+                }
+                if( cool_dist <= seek_radius ) {
+                    complain_about( "flee_fire_heat", 2_minutes,
+                                    _( "The heat from that fire is unbearable!  I need to get away." ),
+                                    false, sounds::sound_t::order );
+                    return try_move_to( cool_spot );
+                }
+            }
+        }
+        // Already in shelter — stay put
+        if( !here.is_outside( pos_bub() ) ) {
+            complain_about( "sheltering_hot", 5_minutes,
+                            _( "I'll stay in here until it cools down.  Tell me to follow you when you need me." ),
+                            false, sounds::sound_t::order );
+            move_pause();
+            return true;
+        }
+        // Seek nearest enclosed shelter for shade
+        tripoint_bub_ms shelter;
+        int shelter_dist = seek_radius + 1;
+        for( const tripoint_bub_ms &pt : here.points_in_radius( pos_bub(), seek_radius ) ) {
+            if( !here.is_outside( pt ) && here.passable( pt ) ) {
+                const int d = rl_dist( pos_bub(), pt );
+                if( d > 0 && d < shelter_dist ) {
+                    shelter_dist = d;
+                    shelter = pt;
+                }
+            }
+        }
+        if( shelter_dist <= seek_radius ) {
+            const optional_vpart_position vp = here.veh_at( shelter );
+            if( vp ) {
+                complain_about( "seek_hot_shelter", 2_minutes,
+                                string_format( _( "It's too hot out here, I'm heading for that %s." ),
+                                               vp->vehicle().name ),
+                                false, sounds::sound_t::order );
+            } else {
+                complain_about( "seek_hot_shelter", 2_minutes,
+                                _( "It's too hot out here, I need to find some shade." ),
+                                false, sounds::sound_t::order );
+            }
+            return try_move_to( shelter );
         }
     }
     return false;

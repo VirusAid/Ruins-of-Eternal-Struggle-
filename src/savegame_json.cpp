@@ -306,6 +306,15 @@ void item_pocket::favorite_settings::serialize( JsonOut &json ) const
     json.end_object();
 }
 
+static cata::flat_set<itype_id> migrate_ids( const cata::flat_set<itype_id> &list )
+{
+    cata::flat_set<itype_id> new_list;
+    for( const itype_id &it : list ) {
+        new_list.insert( item_controller->migrate_id( it ) );
+    }
+    return new_list;
+}
+
 void item_pocket::favorite_settings::deserialize( const JsonObject &data )
 {
     data.allow_omitted_members();
@@ -315,6 +324,8 @@ void item_pocket::favorite_settings::deserialize( const JsonObject &data )
     data.read( "priority", priority_rating );
     data.read( "item_whitelist", item_whitelist );
     data.read( "item_blacklist", item_blacklist );
+    item_whitelist = migrate_ids( item_whitelist );
+    item_blacklist = migrate_ids( item_blacklist );
     data.read( "category_whitelist", category_whitelist );
     data.read( "category_blacklist", category_blacklist );
     if( data.has_member( "collapsed" ) ) {
@@ -1627,8 +1638,6 @@ void avatar::store( JsonOut &json ) const
     json.member( "completed_missions", mission::to_uid_vector( completed_missions ) );
     json.member( "failed_missions", mission::to_uid_vector( failed_missions ) );
 
-    json.member( "show_map_memory", show_map_memory );
-
     json.member( "assigned_invlet" );
     json.start_array();
     for( const auto &iter : inv->assigned_invlet ) {
@@ -1760,8 +1769,6 @@ void avatar::load( const JsonObject &data )
     if( active_mission && active_mission->has_failed() ) {
         update_active_mission();
     }
-
-    data.read( "show_map_memory", show_map_memory );
 
     for( JsonArray pair : data.get_array( "assigned_invlet" ) ) {
         inv->assigned_invlet[static_cast<char>( pair.get_int( 0 ) )] =
@@ -2251,8 +2258,12 @@ void npc::load( const JsonObject &data )
         complaints.emplace( member.name(), p );
     }
     data.read( "unique_id", unique_id );
+    // Temporarily clear activity so calc_focus_equilibrium() doesn't try to
+    // resolve item_locations before this NPC is in the critter tracker.
+    player_activity saved_activity = std::move( activity );
     clear_personality_traits();
     generate_personality_traits();
+    activity = std::move( saved_activity );
     data.read( "may_activity_occupancy_after_end_items_loc",
                may_activity_occupancy_after_end_items_loc );
 }
@@ -2894,7 +2905,9 @@ void item::io( Archive &archive )
     archive.io( "techniques", techniques, io::empty_default_tag() );
     archive.io( "faults", faults, io::empty_default_tag() );
     archive.io( "item_tags", item_tags, io::empty_default_tag() );
-    archive.io( "components", components, io::empty_default_tag() );
+    if( !has_flag( flag_NUTRIENT_OVERRIDE ) ) {
+        archive.io( "components", components, io::empty_default_tag() );
+    }
     archive.io( "specific_energy", specific_energy, units::from_joule_per_gram( -10.f ) );
     archive.io( "temperature", temperature, units::from_kelvin( 0.f ) );
     archive.io( "recipe_charges", recipe_charges, 1 );
@@ -4937,6 +4950,18 @@ void submap::store( JsonOut &jsout ) const
     }
     jsout.end_array();
 
+    // Output any recorded original terrain for phase reverts
+    jsout.member( "phase_reverts" );
+    jsout.start_array();
+    for( const auto &entry : original_terrain ) {
+        jsout.start_array();
+        jsout.write( entry.first.x() );
+        jsout.write( entry.first.y() );
+        jsout.write( entry.second.obj().id.str() );
+        jsout.end_array();
+    }
+    jsout.end_array();
+
     // Output the spawn points
     jsout.member( "spawns" );
     jsout.start_array();
@@ -5230,6 +5255,18 @@ void submap::load( const JsonValue &jv, const std::string &member_name, int vers
             }
             if( cosmetic_entry.has_more() ) {
                 cosmetic_entry.throw_error( "Too many values for cosmetics" );
+            }
+        }
+    } else if( member_name == "phase_reverts" ) {
+        JsonArray pr_json = jv;
+        while( pr_json.has_more() ) {
+            JsonArray entry = pr_json.next_array();
+            int i = entry.next_int();
+            int j = entry.next_int();
+            const point_sm_ms p( i, j );
+            ter_str_id tstr = ter_str_id( entry.next_string() );
+            if( tstr.is_valid() ) {
+                original_terrain.emplace( p, tstr.id() );
             }
         }
     } else if( member_name == "spawns" ) {

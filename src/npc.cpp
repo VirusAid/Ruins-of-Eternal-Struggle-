@@ -433,6 +433,8 @@ void npc_template::load( const JsonObject &jsobj, std::string_view src )
     jsobj.read( "<run_away>", tem.snippets.snip_run_away );
     jsobj.read( "<speech_warning>", tem.snippets.snip_speech_warning );
     jsobj.read( "<thirsty>", tem.snippets.snip_thirsty );
+    jsobj.read( "<too_cold>", tem.snippets.snip_too_cold );
+    jsobj.read( "<too_hot>", tem.snippets.snip_too_hot );
     jsobj.read( "<wait>", tem.snippets.snip_wait );
     jsobj.read( "<warn_sleep>", tem.snippets.snip_warn_sleep );
     jsobj.read( "<yawn>", tem.snippets.snip_yawn );
@@ -1125,6 +1127,7 @@ void npc::revert_after_activity()
 {
     mission = previous_mission;
     attitude = previous_attitude;
+    activity.canceled( *this );
     activity = player_activity();
     current_activity_id = activity_id::NULL_ID();
     clear_destination();
@@ -1423,30 +1426,64 @@ void npc::do_npc_read( bool ebook )
     item_location ereader;
 
     if( !ebook ) {
-        book = game_menus::inv::read( *npc_player );
+        book = game_menus::inv::read( *npc_player, false );
     } else {
         ereader = game_menus::inv::ereader_to_use( *npc_player );
         if( !ereader ) {
-            add_msg( _( "Never mind." ) );
+            add_msg( _( "Nevermind." ) );
             return;
+        }
+        // Activate the ereader screen before selecting the book so that the
+        // book item_location is created against the already-on ereader and
+        // remains valid across save/load cycles.
+        if( ereader->type->tool && ereader->type->tool->power_draw == 0_W ) {
+            npc_player->invoke_item( &*ereader, "transform", npc_player->pos_bub() );
         }
         book = game_menus::inv::ebookread( *npc_player, ereader );
     }
 
+    const auto deactivate = [&]() {
+        if( ereader && ereader->type->tool && ereader->type->tool->power_draw > 0_W ) {
+            npc_player->invoke_item( &*ereader, "transform", npc_player->pos_bub() );
+        }
+    };
+
     if( !book ) {
-        add_msg( _( "Never mind." ) );
+        deactivate();
         return;
     }
 
     std::vector<std::string> fail_reasons;
     Character *npc_character = as_character();
     if( !npc_character ) {
+        deactivate();
         return;
     }
 
-    book = book.obtain( *npc_character );
+    if( ebook ) {
+        if( !ereader->has_flag( flag_ALLOWS_REMOTE_USE ) ) {
+            item the_book = *book.get_item();
+            if( !npc_character->is_wielding( *ereader ) ) {
+                npc_character->wield( *ereader );
+                ereader = npc_character->get_wielded_item();
+            }
+            if( !ereader ) {
+                deactivate();
+                return;
+            }
+            item *newit = ereader->get_item_with( [&]( const item & it ) {
+                return it.typeId() == the_book.typeId();
+            } );
+            if( newit ) {
+                book = item_location( ereader, &*newit );
+            }
+        }
+    } else {
+        book = book.obtain( *npc_character );
+    }
     if( can_read( *book, fail_reasons ) ) {
-        add_msg_if_player_sees( pos_bub(), _( "%s starts reading." ), disp_name() );
+        add_msg_if_player_sees( pos_bub(), ebook ? _( "%s starts reading ebook %s." ) :
+                                _( "%s starts reading %s." ), disp_name(), book->type_name() );
 
         // NPCs can't read to other NPCs yet
         const time_duration time_taken = time_to_read( *book, *this );
@@ -1456,6 +1493,7 @@ void npc::do_npc_read( bool ebook )
         assign_activity( actor );
 
     } else {
+        deactivate();
         for( const std::string &reason : fail_reasons ) {
             say( reason );
         }
@@ -2731,10 +2769,6 @@ void npc::npc_dismount()
         return;
     }
     remove_effect( effect_riding );
-    if( mounted_creature->has_flag( mon_flag_RIDEABLE_MECH ) &&
-        !mounted_creature->type->mech_weapon.is_empty() ) {
-        get_wielded_item().remove_item();
-    }
     mounted_creature->remove_effect( effect_ridden );
     mounted_creature->add_effect( effect_controlled, 5_turns );
     mounted_creature = nullptr;
@@ -3926,6 +3960,7 @@ npc_follower_rules::npc_follower_rules()
     set_flag( ally_rule::ignore_noise );
     clear_flag( ally_rule::forbid_engage );
     clear_flag( ally_rule::follow_distance_2 );
+    set_flag( ally_rule::seek_shelter );
 }
 
 bool npc_follower_rules::has_flag( ally_rule test, bool check_override ) const

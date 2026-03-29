@@ -4449,7 +4449,9 @@ void overmap::place_special_forced( const overmap_special_id &special_id,
                                     const tripoint_om_omt &p,
                                     om_direction::type dir )
 {
-    static city invalid_city;
+    // Dummy city for place_special's road-connection fallback.
+    // "" avoids city() default ctor that eats RNG via SNIPPET.
+    static const city invalid_city( "" );
     place_special( *special_id, p, dir, invalid_city, false, true );
 }
 /**
@@ -4494,7 +4496,7 @@ void mongroup::wander( const overmap &om )
 
 horde_entity &overmap::spawn_monster( const tripoint_abs_ms &p, mtype_id id )
 {
-    return hordes.spawn_entity( p, id )->second;
+    return ( *hordes.spawn_entity( p, id ) )->second;
 }
 
 // Seeks through the submap looking for open areas.
@@ -4560,12 +4562,11 @@ horde_entity *overmap::entity_at( const tripoint_om_ms &p )
     return hordes.entity_at( p );
 }
 
-
 // This should really be const but I don't want to mess with it right now.
 std::vector<std::unordered_map<tripoint_abs_ms, horde_entity>*> overmap::hordes_at(
-    const tripoint_om_omt &p )
+    const tripoint_om_omt &p, int filter )
 {
-    return hordes.entity_group_at( p );
+    return hordes.entity_group_at( p, filter );
 }
 
 /**
@@ -6677,10 +6678,9 @@ void overmap::place_mongroups()
         const region_settings_ocean &settings_ocean = settings->get_settings_ocean();
         const om_noise::om_noise_layer_ocean f( global_base_point(), g->get_seed() );
         const point_abs_om this_om = pos();
-        const int northern_ocean = settings_ocean.ocean_start_north;
-        const int eastern_ocean = settings_ocean.ocean_start_east;
-        const int western_ocean = settings_ocean.ocean_start_west;
-        const int southern_ocean = settings_ocean.ocean_start_south;
+        const bool oceans_disabled = !settings_ocean.ocean_start_north.has_value() &&
+                                     !settings_ocean.ocean_start_east.has_value() &&
+                                     !settings_ocean.ocean_start_west.has_value() && !settings_ocean.ocean_start_south.has_value();
 
         // noise threshold adjuster for deep ocean. Increase to make deep ocean move further from the shore.
         constexpr float DEEP_OCEAN_THRESHOLD_ADJUST = 1.25;
@@ -6688,7 +6688,7 @@ void overmap::place_mongroups()
         // code taken from place_oceans, but noise threshold increased to determine "deep ocean".
         const auto is_deep_ocean = [&]( const point_om_omt & p ) {
             // credit to ehughsbaird for thinking up this inbounds solution to infinite flood fill lag.
-            if( northern_ocean == 0 && eastern_ocean == 0 && western_ocean == 0 && southern_ocean == 0 ) {
+            if( oceans_disabled ) {
                 // you know you could just turn oceans off in global_settings.json right?
                 return false;
             }

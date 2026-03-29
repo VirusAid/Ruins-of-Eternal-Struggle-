@@ -124,6 +124,8 @@ using drop_locations = std::list<drop_location>;
 
 using bionic_uid = unsigned int;
 
+static const matec_id no_technique_id( "" );
+
 constexpr int MAX_CLAIRVOYANCE = 40;
 // kcal in a kilogram of fat, used to convert stored kcal into body weight. 3500kcal/lb * 2.20462lb/kg = 7716.17
 constexpr float KCAL_PER_KG = 3500 * 2.20462;
@@ -681,6 +683,8 @@ class Character : public Creature, public visitable
         int get_enchantment_speed_bonus() const;
         // Strength modified by limb lifting score
         int get_arm_str() const;
+        // Perception modified by vision score (or NV, if it's dark).
+        int get_vision_per() const;
         // Defines distance from which CAMOUFLAGE mobs are visible
         int spot_check() const override;
 
@@ -988,7 +992,7 @@ class Character : public Creature, public visitable
         void update_stomach( const time_point &from, const time_point &to );
         /** Updates the mutations from enchantments */
         void update_cached_mutations();
-        /** Returns true if character needs food, false if character is an NPC with NO_NPC_FOOD set */
+        /** Returns true if character is the player or a member of their faction, otherwise false. */
         bool needs_food() const;
         /** Increases hunger, thirst, fatigue and stimulants wearing off. `rate_multiplier` is for retroactive updates. */
         void update_needs( int rate_multiplier );
@@ -1213,7 +1217,8 @@ class Character : public Creature, public visitable
                                     bool allow_unarmed = true, int forced_movecost = -1 );
 
         /** Handles reach melee attacks */
-        void reach_attack( const tripoint_bub_ms &p, int forced_movecost = -1 );
+        void reach_attack( const tripoint_bub_ms &p, int forced_movecost = -1,
+                           matec_id force_technique = no_technique_id );
 
         /**
          * Calls the to other melee_attack function with an empty technique id (meaning no specific
@@ -2798,6 +2803,8 @@ class Character : public Creature, public visitable
         /** Check if we're in a water tile and handle wetness effects.  Should be run when waiting or moving. */
         void water_immersion();
 
+        bool in_bath();
+
         /** Check player strong enough to lift an object unaided by equipment (jacks, levers etc) */
         bool can_lift( item &obj ) const;
         bool can_lift( vehicle &veh, map &here ) const;
@@ -3541,15 +3548,15 @@ class Character : public Creature, public visitable
         /** Returns 1 if the player is wearing an item of that count on one foot, 2 if on both,
          *  and zero if on neither */
         int shoe_type_count( const itype_id &it ) const;
-        /** Returns true if the player is wearing something on their feet that is not SKINTIGHT */
-        bool is_wearing_shoes( const side &check_side = side::BOTH ) const;
 
         // Adjusted squeamish penalty for traits and other issues.
         int get_squeamish_penalty( const bodypart_id &bp ) const;
 
-        /** Returns true if the player is not wearing anything that covers the soles of their feet,
-            ignoring INTEGRATED */
-        bool is_barefoot() const;
+        /**
+         * Returns true if the character doesn't have tough feet or anything rigid on their soles.
+         * Integrated items return false if they're rigid, such as hooves.
+         */
+        bool barefoot_penalty( const side &check_side = side::BOTH ) const;
 
         /** Returns true if the worn item is visible (based on layering and coverage) */
         bool is_worn_item_visible( std::list<item>::const_iterator ) const;

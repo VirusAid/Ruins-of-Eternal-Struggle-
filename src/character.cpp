@@ -215,6 +215,7 @@ static const efftype_id effect_airborne( "airborne" );
 static const efftype_id effect_alarm_clock( "alarm_clock" );
 static const efftype_id effect_bandaged( "bandaged" );
 static const efftype_id effect_beartrap( "beartrap" );
+static const efftype_id effect_bile( "bile" );
 static const efftype_id effect_bite( "bite" );
 static const efftype_id effect_bleed( "bleed" );
 static const efftype_id effect_blind( "blind" );
@@ -248,6 +249,7 @@ static const efftype_id effect_glowy_led( "glowy_led" );
 static const efftype_id effect_grabbed( "grabbed" );
 static const efftype_id effect_harnessed( "harnessed" );
 static const efftype_id effect_heavysnare( "heavysnare" );
+static const efftype_id effect_hot( "hot" );
 static const efftype_id effect_in_pit( "in_pit" );
 static const efftype_id effect_incorporeal( "incorporeal" );
 static const efftype_id effect_infected( "infected" );
@@ -255,7 +257,6 @@ static const efftype_id effect_jetinjector( "jetinjector" );
 static const efftype_id effect_lack_sleep( "lack_sleep" );
 static const efftype_id effect_lying_down( "lying_down" );
 static const efftype_id effect_masked_scent( "masked_scent" );
-static const efftype_id effect_mech_recon_vision( "mech_recon_vision" );
 static const efftype_id effect_melatonin( "melatonin" );
 static const efftype_id effect_mending( "mending" );
 static const efftype_id effect_meth( "meth" );
@@ -349,10 +350,11 @@ static const json_character_flag json_flag_PRED2( "PRED2" );
 static const json_character_flag json_flag_PRED3( "PRED3" );
 static const json_character_flag json_flag_PRED4( "PRED4" );
 static const json_character_flag json_flag_SEESLEEP( "SEESLEEP" );
+static const json_character_flag json_flag_SNOWWALKING( "SNOWWALKING" );
 static const json_character_flag json_flag_STEADY( "STEADY" );
 static const json_character_flag json_flag_STOP_SLEEP_DEPRIVATION( "STOP_SLEEP_DEPRIVATION" );
 static const json_character_flag json_flag_SUPER_CLAIRVOYANCE( "SUPER_CLAIRVOYANCE" );
-static const json_character_flag json_flag_TOUGH_FEET( "TOUGH_FEET" );
+static const json_character_flag json_flag_TOUGH_TAIL( "TOUGH_TAIL" );
 static const json_character_flag json_flag_UNCANNY_DODGE( "UNCANNY_DODGE" );
 static const json_character_flag json_flag_VERMINOUS( "VERMINOUS" );
 static const json_character_flag json_flag_WALK_UNDERWATER( "WALK_UNDERWATER" );
@@ -384,8 +386,10 @@ static const material_id material_lc_steel( "lc_steel" );
 static const material_id material_mc_steel( "mc_steel" );
 static const material_id material_qt_steel( "qt_steel" );
 static const material_id material_steel( "steel" );
+static const material_id material_water( "water" );
 
 static const morale_type morale_cold( "morale_cold" );
+static const morale_type morale_comfy( "morale_comfy" );
 static const morale_type morale_hot( "morale_hot" );
 
 static const move_mode_id move_mode_prone( "prone" );
@@ -1533,7 +1537,6 @@ int Character::overmap_modified_sight_range( float light_level ) const
     // When adding checks here, also call game::update_overmap_seen at the place they first become true
     const bool has_optic = cache_has_item_with( flag_ZOOM ) ||
                            has_flag( json_flag_ENHANCED_VISION ) ||
-                           ( is_mounted() && mounted_creature->has_flag( mon_flag_MECH_RECON_VISION ) ) ||
                            get_map().veh_at( pos_bub() ).avail_part_with_feature( "ENHANCED_VISION" ).has_value();
 
     const bool has_scoped_gun = cache_has_item_with( "is_gun", &item::is_gun, [&]( const item & gun ) {
@@ -1678,7 +1681,7 @@ int Character::swim_speed() const
     }
     /** @EFFECT_STR increases swim speed bonus from WEBBED_FEET */
     // TODO: Limbify this.
-    if( has_flag( json_flag_WEBBED_FEET ) && is_barefoot() ) {
+    if( has_flag( json_flag_WEBBED_FEET ) && worn.is_barefoot() ) {
         ret -= str_cur * 2.0f;
     }
     /** @EFFECT_SWIMMING increases swim speed */
@@ -1867,13 +1870,6 @@ void Character::mount_creature( monster &z )
         player_avatar.grab( object_type::NONE );
     }
     add_msg_if_player( m_good, _( "You climb on the %s." ), z.get_name() );
-    if( z.has_flag( mon_flag_RIDEABLE_MECH ) ) {
-        if( !z.type->mech_weapon.is_empty() ) {
-            item mechwep = item( z.type->mech_weapon );
-            set_wielded_item( mechwep );
-        }
-        add_msg_if_player( m_good, _( "You hear your %s whir to life." ), z.get_name() );
-    }
     if( is_avatar() ) {
         if( player_avatar.is_hauling() ) {
             player_avatar.stop_hauling();
@@ -1884,13 +1880,7 @@ void Character::mount_creature( monster &z )
         guy.setpos( here, pnt );
     }
     z.facing = facing;
-    // some rideable mechs have night-vision
     recalc_sight_limits();
-    if( is_avatar() && z.has_flag( mon_flag_MECH_RECON_VISION ) ) {
-        add_effect( effect_mech_recon_vision, 1_turns, true );
-        // mech night-vision counts as optics for overmap sight range.
-        g->update_overmap_seen();
-    }
     mod_moves( -100 );
 }
 
@@ -1993,14 +1983,9 @@ void Character::forced_dismount()
     map &here = get_map();
 
     remove_effect( effect_riding );
-    remove_effect( effect_mech_recon_vision );
     bool mech = false;
     if( mounted_creature ) {
         auto *mon = mounted_creature.get();
-        if( mon->has_flag( mon_flag_RIDEABLE_MECH ) && !mon->type->mech_weapon.is_empty() ) {
-            mech = true;
-            remove_item( weapon );
-        }
         mon->mounted_player_id = character_id();
         mon->remove_effect( effect_ridden );
         mon->add_effect( effect_controlled, 5_turns );
@@ -2111,13 +2096,8 @@ void Character::dismount()
         }
 
         remove_effect( effect_riding );
-        remove_effect( effect_mech_recon_vision );
         monster *critter = mounted_creature.get();
         critter->mounted_player_id = character_id();
-        if( critter->has_flag( mon_flag_RIDEABLE_MECH ) && !critter->type->mech_weapon.is_empty() &&
-            weapon.typeId() == critter->type->mech_weapon ) {
-            remove_item( weapon );
-        }
         avatar &player_character = get_avatar();
         if( is_avatar() && player_character.get_grab_type() != object_type::NONE ) {
             add_msg( m_warning, _( "You let go of the grabbed object." ) );
@@ -2329,7 +2309,7 @@ bool Character::uncanny_dodge()
     if( adjacent.xy() != pos_bub().xy() ) {
         set_pos_bub_only( here, adjacent );
 
-        //landed in a vehicle tile
+        // landed in a vehicle tile
         if( here.veh_at( pos_bub( here ) ) ) {
             here.board_vehicle( pos_bub( here ), this );
         }
@@ -2570,11 +2550,7 @@ steed_type Character::get_steed_type() const
 {
     steed_type steed;
     if( is_mounted() ) {
-        if( mounted_creature->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-            steed = steed_type::MECH;
-        } else {
-            steed = steed_type::ANIMAL;
-        }
+        steed = steed_type::ANIMAL;
     } else {
         steed = steed_type::NONE;
     }
@@ -2888,6 +2864,10 @@ void Character::calc_all_parts_hp( float hp_mod, float hp_adjustment, int str_ma
         if( has_bionic( bio_armor_torso ) && part.first == body_part_torso ) {
             new_max *= 1.09;
         }
+        if( has_flag( json_flag_TOUGH_TAIL ) &&
+            part.first.obj().primary_limb_type() == body_part_type::type::tail ) {
+            new_max *= 1.2;
+        }
 
         new_max = std::max( 1, new_max );
 
@@ -2951,8 +2931,7 @@ void Character::recalc_sight_limits()
     if( has_nv_goggles() ) {
         vision_mode_cache.set( NV_GOGGLES );
     }
-    if( has_trait( trait_NIGHTVISION3 ) ||
-        ( is_mounted() && mounted_creature->has_flag( mon_flag_MECH_RECON_VISION ) ) ) {
+    if( has_trait( trait_NIGHTVISION3 ) ) {
         vision_mode_cache.set( NIGHTVISION_3 );
     }
     if( has_trait( trait_ELFA_FNV ) ) {
@@ -3645,14 +3624,7 @@ units::mass Character::best_nearby_lifting_assist() const
 units::mass Character::best_nearby_lifting_assist( const tripoint_bub_ms &world_pos ) const
 {
     map &here = get_map();
-    int mech_lift = 0;
-    if( is_mounted() ) {
-        auto *mons = mounted_creature.get();
-        if( mons->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-            mech_lift = mons->mech_str_addition() + 10;
-        }
-    }
-    int lift_quality = std::max( { this->max_quality( qual_LIFT ), mech_lift,
+    int lift_quality = std::max( { this->max_quality( qual_LIFT ),
                                    map_selector( this->pos_bub(), PICKUP_RANGE ).max_quality( qual_LIFT ),
                                    vehicle_selector( here, world_pos, 4, true, true ).max_quality( qual_LIFT )
                                  } );
@@ -3747,13 +3719,6 @@ units::mass Character::weight_capacity() const
 
     if( ret < 0_gram ) {
         ret = 0_gram;
-    }
-    if( is_mounted() ) {
-        auto *mons = mounted_creature.get();
-        // the mech has an effective strength for other purposes, like hitting.
-        // but for lifting, its effective strength is even higher, due to its sturdy construction, leverage,
-        // and being built entirely for that purpose with hydraulics etc.
-        ret = mons->mech_str_addition() == 0 ? ret : ( mons->mech_str_addition() + 10 ) * 4_kilogram;
     }
     return ret;
 }
@@ -4177,10 +4142,7 @@ int Character::smash_ability() const
 {
     int ret = get_arm_str();
     ///\EFFECT_STR increases smashing capability
-    if( is_mounted() ) {
-        auto *mon = mounted_creature.get();
-        ret += mon->mech_str_addition() + mon->type->melee_dice * mon->type->melee_sides;
-    } else if( get_wielded_item() ) {
+    if( get_wielded_item() ) {
         ret += get_wielded_item()->damage_melee( damage_bash );
         ret = enchantment_cache->modify_melee_damage( damage_bash, ret );
     }
@@ -4214,7 +4176,7 @@ int Character::calc_focus_equilibrium( bool ignore_pain ) const
 {
     int focus_equilibrium = 100;
 
-    if( activity.id() == ACT_READ ) {
+    if( activity.id() == ACT_READ && !activity.targets.empty() ) {
         const item_location book = activity.targets[0];
         if( book && book->is_book() ) {
             const cata::value_ptr<islot_book> &bt = book->type->book;
@@ -4733,16 +4695,27 @@ int Character::get_arm_str() const
     return str_cur * get_modifier( character_modifier_limb_str_mod );
 }
 
-int Character::spot_check() const
+int Character::get_vision_per() const
 {
     float vision_score = get_limb_score( limb_score_vision );
+    // FIXME: We shouldn't use fine_detail_vision here as full night vis chars still need to be checking NV.
     if( fine_detail_vision_mod() > 4 ) {
         vision_score = std::min( get_limb_score( limb_score_vision ),
                                  get_limb_score( limb_score_night_vis ) );
     }
-    return ( Character::get_per() + int( Character::has_proficiency(
-            proficiency_prof_spotting ) ) *
-             Character::get_per_base() ) * vision_score ;
+    return Character::get_per() * vision_score;
+}
+
+int Character::spot_check() const
+{
+    float vision_score = get_limb_score( limb_score_vision );
+    if( fine_detail_vision_mod() > 4 ) {
+        // FIXME: We shouldn't use fine_detail_vision here as full night vis chars still need to be checking NV.
+        vision_score = std::min( get_limb_score( limb_score_vision ),
+                                 get_limb_score( limb_score_night_vis ) );
+    }
+    return ( get_per() + int( has_proficiency(
+                                  proficiency_prof_spotting ) ) * get_per_base() ) * vision_score;
 }
 
 int Character::ranged_dex_mod() const
@@ -5523,8 +5496,7 @@ bool Character::needs_food() const
                        get_option<bool>( "NO_NPC_FOOD" );
     return is_avatar() ||
            ( is_npc() && get_faction() != nullptr &&
-             is_ally( get_player_character() ) &&
-             !no_npc_food );
+             is_ally( get_player_character() ) );
 }
 
 void Character::update_needs( int rate_multiplier )
@@ -6096,7 +6068,7 @@ void Character::toolmod_add( item_location tool, item_location mod )
         if( !query_yn( _( "Permanently install your %1$s in your %2$s?" ),
                        colorize( mod->tname(), mod->color_in_inventory() ),
                        colorize( tool->tname(), tool->color_in_inventory() ) ) ) {
-            add_msg_if_player( _( "Never mind." ) );
+            add_msg_if_player( _( "Nevermind." ) );
             return; // player canceled installation
         }
     }
@@ -6319,7 +6291,7 @@ bool Character::is_rad_immune() const
 bool Character::is_knockdown_immune() const
 {
     // hard code for old tentacle mutation
-    bool knockdown_immune = has_trait( trait_LEG_TENT_BRACE ) && is_barefoot();
+    bool knockdown_immune = has_trait( trait_LEG_TENT_BRACE ) && worn.is_barefoot();
 
     // if we have 1.0 or greater knockdown resist
     knockdown_immune |= calculate_by_enchantment( 0.0, enchant_vals::mod::KNOCKDOWN_RESIST ) >= 1;
@@ -6347,10 +6319,6 @@ int Character::throw_range( const item &it ) const
     }
     // Increases as weight decreases until 150 g, then decreases again
     /** @ARM_STR increases throwing range, vs item weight (high or low) */
-    if( is_mounted() ) {
-        auto *mons = mounted_creature.get();
-        str = mons->mech_str_addition() != 0 ? mons->mech_str_addition() : str;
-    }
     int ret = ( str * 10 ) / ( tmp.weight() >= 150_gram ? tmp.weight() / 113_gram : 10 -
                                static_cast<int>(
                                    tmp.weight() / 15_gram ) );
@@ -6716,8 +6684,8 @@ float Character::healing_rate_medicine( float at_rest_quality, const bodypart_id
     rate_medicine *= 1.0f + std::max( at_rest_quality, -1.0f );
 
     // increase healing if character has both effects
-    if( has_effect( effect_bandaged ) && has_effect( effect_disinfected ) ) {
-        rate_medicine *= 1.25;
+    if( has_effect( effect_bandaged, bp ) && has_effect( effect_disinfected, bp ) ) {
+        rate_medicine *= 1.1;
     }
 
     if( get_lifestyle() > 0.0f ) {
@@ -7089,7 +7057,7 @@ void Character::mend_item( item_location &&obj, bool interactive )
         }
         menu.query();
         if( menu.ret < 0 ) {
-            add_msg( _( "Never mind." ) );
+            add_msg( _( "Nevermind." ) );
             return;
         }
         sel = menu.ret;
@@ -8221,7 +8189,9 @@ void Character::update_cached_mutations()
                     if( are_opposite_traits( it, iter.first ) || b_is_lower_trait_of_a( it, iter.first )
                         || are_same_type_traits( it, iter.first ) ) {
                         ++iter.second.corrupted;
-                        ++my_mutations[it].corrupted;
+                        if( my_mutations.count( it ) ) {
+                            ++my_mutations[it].corrupted;
+                        }
                     }
                 }
             }
@@ -8235,7 +8205,7 @@ void Character::update_cached_mutations()
         }
         for( const trait_id &it : new_muts ) {
             auto exists = find( old_muts.begin(), old_muts.end(), it );
-            if( exists == old_muts.end() ) {
+            if( exists == old_muts.end() && !cached_mutations.count( it ) ) {
                 mutations_to_add.insert( it );
             }
         }
@@ -8361,19 +8331,13 @@ ret_val<void> Character::can_wield( const item &it ) const
         return ret_val<void>::make_failure( _( "The %s prevents you from wielding the %s." ),
                                             weapname(), it.tname() );
     }
-    monster *mount = mounted_creature.get();
-    const itype_id mech_weapon = is_mounted() ? mount->type->mech_weapon : itype_id::NULL_ID();
-    bool mounted_mech = is_mounted() && mount->has_flag( mon_flag_RIDEABLE_MECH ) &&
-                        mech_weapon;
     bool armor_restricts_hands = worn_with_flag( flag_RESTRICT_HANDS );
     bool item_twohand = it.has_flag( flag_ALWAYS_TWOHAND );
     bool missing_arms = !has_two_arms_lifting();
     bool two_handed = it.is_two_handed( *this );
 
     if( two_handed &&
-        ( missing_arms || armor_restricts_hands ) &&
-        !( mounted_mech && it.typeId() == mech_weapon ) //ignore this check for mech weapons
-      ) {
+        ( missing_arms || armor_restricts_hands ) ) {
         if( armor_restricts_hands ) {
             return ret_val<void>::make_failure(
                        _( "Something you are wearing hinders the use of both hands." ) );
@@ -8384,9 +8348,6 @@ ret_val<void> Character::can_wield( const item &it ) const
             return ret_val<void>::make_failure( _( "You are too weak to wield the %s with only one arm." ),
                                                 it.tname() );
         }
-    }
-    if( mounted_mech && it.typeId() != mech_weapon ) {
-        return ret_val<void>::make_failure( _( "You cannot wield anything while piloting a mech." ) );
     }
     if( controlling_vehicle ) {
         if( two_handed ) {
@@ -8718,7 +8679,7 @@ void Character::apply_damage( Creature *source, bodypart_id hurt, int dam,
         }
     }
 
-    if( !weapon.is_null() && !can_wield( weapon ).success() &&
+    if( !weapon.is_null() && !is_hallucination() && !can_wield( weapon ).success() &&
         can_drop( weapon ).success() ) {
         if( is_avatar() ) {
             popup( _( "You are no longer able to wield your %s and drop it!" ),
@@ -9126,7 +9087,7 @@ void Character::rooted_message() const
 {
     if( ( has_trait( trait_ROOTS2 ) || has_trait( trait_ROOTS3 ) || has_trait( trait_CHLOROMORPH ) ) &&
         get_map().has_flag( ter_furn_flag::TFLAG_PLOWABLE, pos_bub() ) &&
-        is_barefoot() ) {
+        worn.is_barefoot() ) {
         add_msg( m_info, _( "You sink your roots into the soil." ) );
     }
 }
@@ -9137,7 +9098,7 @@ void Character::rooted()
 // Thirst level -40 puts it right in the middle of the 'Hydrated' zone.
 {
     if( ( has_trait( trait_ROOTS2 ) || has_trait( trait_ROOTS3 ) || has_trait( trait_CHLOROMORPH ) ) &&
-        get_map().has_flag( ter_furn_flag::TFLAG_PLOWABLE, pos_bub() ) && is_barefoot() ) {
+        get_map().has_flag( ter_furn_flag::TFLAG_PLOWABLE, pos_bub() ) && worn.is_barefoot() ) {
         int time_to_full = 43200; // 12 hours
         if( has_trait( trait_ROOTS3 ) || has_trait( trait_CHLOROMORPH ) ) {
             time_to_full += -14400;    // -4 hours
@@ -9580,6 +9541,18 @@ void Character::fall_asleep( const time_duration &duration )
         } else {
             cancel_activity();
         }
+    }
+    // Turn off any active e-file devices (tablets, laptops) when falling asleep
+    std::vector<item *> active_edevices;
+    visit_items( [&active_edevices]( item * it, item * ) -> VisitResponse {
+        if( it->type->can_use( "E_FILE_DEVICE" ) && it->type->transform_into )
+        {
+            active_edevices.push_back( it );
+        }
+        return VisitResponse::NEXT;
+    } );
+    for( item *it : active_edevices ) {
+        it->type->transform_into->transform( this, *it );
     }
     add_effect( effect_sleep, duration );
     get_event_bus().send<event_type::character_falls_asleep>( getID(), to_seconds<int>( duration ) );
@@ -10153,12 +10126,6 @@ units::energy Character::available_ups() const
 {
     units::energy available_charges = 0_kJ;
 
-    if( is_mounted() && mounted_creature.get()->has_flag( mon_flag_RIDEABLE_MECH ) ) {
-        auto *mons = mounted_creature.get();
-        available_charges += units::from_kilojoule( static_cast<std::int64_t>
-                             ( mons->battery_item->ammo_remaining( ) ) );
-    }
-
     bool has_bio_powered_ups = false;
     cache_visit_items_with( flag_IS_UPS, [&has_bio_powered_ups]( const item & it ) {
         if( it.has_flag( flag_USES_BIONIC_POWER ) && !has_bio_powered_ups ) {
@@ -10180,13 +10147,6 @@ units::energy Character::available_ups() const
 units::energy Character::consume_ups( units::energy qty, const int radius )
 {
     const units::energy wanted_qty = qty;
-
-    // UPS from mounted mech
-    if( qty != 0_kJ && is_mounted() && mounted_creature.get()->has_flag( mon_flag_RIDEABLE_MECH ) &&
-        mounted_creature.get()->battery_item ) {
-        auto *mons = mounted_creature.get();
-        qty -= mons->use_mech_power( qty );
-    }
 
     // UPS from bionic
     bool has_bio_powered_ups = false;
@@ -10759,39 +10719,13 @@ std::vector<run_cost_effect> Character::run_cost_effects( float &movecost ) cons
         }
     };
 
-    const bool flatground = movecost < 105;
     map &here = get_map();
-    // The "FLAT" tag includes soft surfaces, so not a good fit.
-    const bool on_road = flatground && here.has_flag( ter_furn_flag::TFLAG_ROAD, pos_bub() );
-    const bool on_fungus = here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_FUNGUS, pos_bub() );
 
     if( is_mounted() ) {
         return effects;
     }
 
-    if( movecost > 105 ) {
-        float obstacle_mult = enchantment_cache->modify_value( enchant_vals::mod::MOVECOST_OBSTACLE_MOD,
-                              1 );
-        run_cost_effect_mul( obstacle_mult, _( "Obstacle Muts." ) );
-
-        if( has_proficiency( proficiency_prof_parkour ) && is_running() ) {
-            run_cost_effect_mul( 0.5, _( "Parkour" ) );
-        }
-
-        if( movecost < 100 ) {
-            run_cost_effect effect { _( "Bonuses Capped" ) };
-            effects.push_back( effect );
-            movecost = 100;
-        }
-    }
-    if( has_trait( trait_M_IMMUNE ) && on_fungus ) {
-        if( movecost > 75 ) {
-            // Mycal characters are faster on their home territory, even through things like shrubs
-            run_cost_effect_add( 75 - movecost, _( "Mycus on Fungus" ) );
-        }
-    }
-
-    if( is_prone() ) {
+    if( is_prone() && !has_effect_with_flag( json_flag_LEVITATION ) ) {
         run_cost_effect_mul( get_modifier( character_modifier_crawl_speed_movecost_mod ),
                              _( "Crawling" ) );
     } else {
@@ -10799,82 +10733,114 @@ std::vector<run_cost_effect> Character::run_cost_effects( float &movecost ) cons
                              _( "Encum./Wounds" ) );
     }
 
-    if( flatground ) {
-        float flatground_mult = enchantment_cache->modify_value( enchant_vals::mod::MOVECOST_FLATGROUND_MOD,
-                                1 );
-        run_cost_effect_mul( flatground_mult, _( "Flat Ground Mut." ) );
-    }
+    if( !here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, pos_bub() ) &&
+        !has_effect_with_flag( json_flag_LEVITATION ) ) {
+        if( worn_with_flag( flag_FIN ) ) {
+            run_cost_effect_mul( 1.5f, _( "Swim Fins" ) );
+        }
+        const bool vehicle_floor = here.has_vehicle_floor( pos_bub() );
+        const bool flatground = here.has_flag( ter_furn_flag::TFLAG_ROAD, pos_bub() );
+        const bool on_road = here.has_flag( ter_furn_flag::TFLAG_ROAD, pos_bub() );
+        const bool on_fungus = here.has_flag_ter_or_furn( ter_furn_flag::TFLAG_FUNGUS, pos_bub() );
+        if( flatground && !is_on_ground() ) {
+            float flatground_mult = enchantment_cache->modify_value( enchant_vals::mod::MOVECOST_FLATGROUND_MOD,
+                                    1 );
+            run_cost_effect_mul( flatground_mult, _( "Flat Ground Mut." ) );
+        }
 
-    if( worn_with_flag( flag_FIN ) ) {
-        run_cost_effect_mul( 1.5f, _( "Swim Fins" ) );
-    }
 
-    if( worn_with_flag( flag_ROLLER_INLINE ) ) {
-        if( on_road ) {
-            if( is_running() ) {
-                run_cost_effect_mul( 0.65f, _( "Inline Skates" ) );
-            } else if( is_walking() ) {
-                run_cost_effect_mul( 0.65f, _( "Inline Skates" ) );
+        if( movecost > 105 ) {
+            float obstacle_mult = enchantment_cache->modify_value( enchant_vals::mod::MOVECOST_OBSTACLE_MOD,
+                                  1 );
+            run_cost_effect_mul( obstacle_mult, _( "Obstacle Muts." ) );
+
+            if( has_proficiency( proficiency_prof_parkour ) && is_running() ) {
+                run_cost_effect_mul( 0.5, _( "Parkour" ) );
             }
-        } else {
-            run_cost_effect_mul( 1.5f, _( "Inline Skates" ) );
-        }
-    }
 
-    // Quad skates might be more stable than inlines,
-    // but that also translates into a slower speed when on good surfaces.
-    if( worn_with_flag( flag_ROLLER_QUAD ) ) {
-        if( on_road ) {
-            if( is_running() ) {
-                run_cost_effect_mul( 0.75f, _( "Roller Skates" ) );
-            } else if( is_walking() ) {
-                run_cost_effect_mul( 0.75f, _( "Roller Skates" ) );
+            if( movecost < 100 ) {
+                run_cost_effect effect { _( "Bonuses Capped" ) };
+                effects.push_back( effect );
+                movecost = 100;
             }
-        } else {
-            run_cost_effect_mul( 1.3f, _( "Roller Skates" ) );
         }
-    }
-
-    // Skates with only one wheel (roller shoes) are fairly less stable
-    // and fairly slower as well
-    if( worn_with_flag( flag_ROLLER_ONE ) ) {
-        if( on_road ) {
-            if( is_running() ) {
-                run_cost_effect_mul( 0.8f, _( "Heelys" ) );
-            } else if( is_walking() ) {
-                run_cost_effect_mul( 0.8f, _( "Heelys" ) );
+        if( has_trait( trait_M_IMMUNE ) && on_fungus ) {
+            if( movecost > 75 ) {
+                // Mycal characters are faster on their home territory, even through things like shrubs
+                run_cost_effect_add( 75 - movecost, _( "Mycus on Fungus" ) );
             }
-        } else {
-            run_cost_effect_mul( 1.1f, _( "Heelys" ) );
+        }
+
+        if( worn_with_flag( flag_ROLLER_INLINE ) ) {
+            if( on_road && !vehicle_floor ) {
+                if( is_running() ) {
+                    run_cost_effect_mul( 0.65f, _( "Inline Skates" ) );
+                } else if( is_walking() ) {
+                    run_cost_effect_mul( 0.65f, _( "Inline Skates" ) );
+                }
+            } else {
+                run_cost_effect_mul( 1.5f, _( "Inline Skates" ) );
+            }
+        }
+
+        // Quad skates might be more stable than inlines,
+        // but that also translates into a slower speed when on good surfaces.
+        if( worn_with_flag( flag_ROLLER_QUAD ) ) {
+            if( on_road && !vehicle_floor ) {
+                if( is_running() ) {
+                    run_cost_effect_mul( 0.75f, _( "Roller Skates" ) );
+                } else if( is_walking() ) {
+                    run_cost_effect_mul( 0.75f, _( "Roller Skates" ) );
+                }
+            } else {
+                run_cost_effect_mul( 1.3f, _( "Roller Skates" ) );
+            }
+        }
+
+        // Skates with only one wheel (roller shoes) are fairly less stable
+        // and fairly slower as well
+        if( worn_with_flag( flag_ROLLER_ONE ) ) {
+            if( on_road && !vehicle_floor ) {
+                if( is_running() ) {
+                    run_cost_effect_mul( 0.8f, _( "Heelys" ) );
+                } else if( is_walking() ) {
+                    run_cost_effect_mul( 0.8f, _( "Heelys" ) );
+                }
+            } else {
+                run_cost_effect_mul( 1.1f, _( "Heelys" ) );
+            }
+        }
+
+
+        // Additional move cost for moving barefoot only if we're not swimming or on flat ground.
+        if( !on_road && !vehicle_floor &&
+            !here.has_flag( ter_furn_flag::TFLAG_RUG, pos_bub() ) ) {
+            const bool left_bare = barefoot_penalty( side::LEFT );
+            const bool right_bare = barefoot_penalty( side::RIGHT );
+            if( left_bare && right_bare ) {
+                run_cost_effect_add( 16, _( "No Shoes" ) );
+            } else if( left_bare || right_bare ) {
+                run_cost_effect_add( 8, left_bare ? _( "No Left Shoe" ) : _( "No Right Shoe" ) );
+            }
+        }
+
+        // ROOTS3 slows you down as your feet are actively trying to root in place.
+        if( ( has_trait( trait_ROOTS3 ) || has_trait( trait_CHLOROMORPH ) ) && !vehicle_floor &&
+            here.has_flag( ter_furn_flag::TFLAG_DIGGABLE, pos_bub() ) && worn.is_barefoot() ) {
+            run_cost_effect_add( 10, _( "Roots" ) );
         }
     }
 
-    // Additional move cost for moving barefoot only if we're not swimming
-    if( !here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, pos_bub() ) ) {
-        // ROOTS3 does slow you down as your roots are probing around for nutrients,
-        // whether you want them to or not.  ROOTS1 is just too squiggly without shoes
-        // to give you some stability.  Plants are a bit of a slow-mover.  Deal.
-        const bool mutfeet = has_flag( json_flag_TOUGH_FEET ) || worn_with_flag( flag_TOUGH_FEET );
-        bool no_left_shoe = false;
-        bool no_right_shoe = false;
-        if( !is_wearing_shoes( side::LEFT ) && !mutfeet ) {
-            no_left_shoe = true;
-        }
-        if( !is_wearing_shoes( side::RIGHT ) && !mutfeet ) {
-            no_right_shoe = true;
-        }
-        if( no_left_shoe && no_right_shoe ) {
-            run_cost_effect_add( 16, _( "No Shoes" ) );
-        } else if( no_left_shoe ) {
-            run_cost_effect_add( 8, _( "No Left Shoe" ) );
-        } else if( no_right_shoe ) {
-            run_cost_effect_add( 8, _( "No Right Shoe" ) );
-        }
-    }
 
-    if( ( has_trait( trait_ROOTS3 ) || has_trait( trait_CHLOROMORPH ) ) &&
-        here.has_flag( ter_furn_flag::TFLAG_DIGGABLE, pos_bub() ) && is_barefoot() ) {
-        run_cost_effect_add( 10, _( "Roots" ) );
+
+    // Snow depth movement penalty (outdoor, unroofed tiles only)
+    if( here.is_outside( pos_bub() ) && !here.is_roofed( pos_bub() ) ) {
+        const double snow_mm = get_weather().get_snow_depth_mm( pos_abs_omt() );
+        if( snow_mm >= 100 && !has_flag( json_flag_LEVITATION )
+            && !has_flag( json_flag_SNOWWALKING ) ) {
+            const int penalty = snow_mm >= 500 ? 100 : ( snow_mm >= 250 ? 50 : 20 );
+            run_cost_effect_add( penalty, _( "Snow" ) );
+        }
     }
 
     run_cost_effect_add( enchantment_cache->get_value_add( enchant_vals::mod::MOVE_COST ),
@@ -10893,7 +10859,8 @@ std::vector<run_cost_effect> Character::run_cost_effects( float &movecost ) cons
                          is_prone() ? _( "Prone" ) : _( "Walking" )
                        );
 
-    if( !is_mounted() && !is_prone() && has_effect( effect_downed ) ) {
+    if( !is_mounted() && !is_prone() && has_effect( effect_downed ) &&
+        !has_effect_with_flag( json_flag_LEVITATION ) ) {
         run_cost_effect_mul( get_modifier( character_modifier_crawl_speed_movecost_mod ) * 2.5,
                              _( "Downed" ) );
     }
@@ -11003,9 +10970,9 @@ std::vector<Creature *> Character::get_targetable_creatures( const int range, bo
 {
     map &here = get_map();
     return g->get_creatures_if( [this, range, melee, &here]( const Creature & critter ) -> bool {
-        // The call to map.sees is to make sure that even if we can see it through walls
-        // Via a mutation or cbm we only attack targets with a line of sight
-        bool can_see = ( ( sees( here, critter ) || sees_with_specials( critter ) ) && here.sees( pos_bub( here ), critter.pos_bub( here ), 100 ) );
+        //the call to map.sees is to make sure that even if we can see it through walls
+        //via a mutation or cbm we only attack targets with a line of sight
+        bool can_see = ( ( sees( here, critter ) || sees_with_specials( critter ) ) && !here.find_clear_path( pos_bub( here ), critter.pos_bub( here ), true ).empty() );
         if( can_see && melee )  //handles the case where we can see something with glass in the way for melee attacks
         {
 
@@ -11753,8 +11720,8 @@ void Character::stagger_check()
         balance_factor -= 2.0f;
     }
     if( ( ( has_trait( trait_GASTROPOD_BALANCE ) || has_trait( trait_LEG_TENT_BRACE ) ) &&
-          is_barefoot() ) || ( has_flag( json_flag_WEBWALK ) &&
-                               here.get_field( pos_bub(), field_fd_web ) != nullptr ) ) {
+          worn.is_barefoot() ) || ( has_flag( json_flag_WEBWALK ) &&
+                                    here.get_field( pos_bub(), field_fd_web ) != nullptr ) ) {
         balance_factor += 6.0f;
     }
     if( one_in( balance_factor ) ) {
@@ -11791,6 +11758,10 @@ void Character::stagger()
         }
     }
 
+    // Check if the character is currently inside an enclosed vehicle
+    const optional_vpart_position vp_here = here.veh_at( pos_bub() );
+    const bool currently_enclosed = vp_here && vp_here->vehicle().enclosed_at( &here, pos_bub() );
+
     creature_tracker &creatures = get_creature_tracker();
     std::vector<tripoint_bub_ms> &pool = preferred_stumbles.empty() ? valid_stumbles :
                                          preferred_stumbles;
@@ -11799,9 +11770,15 @@ void Character::stagger()
         bool blocked = false;
         const tripoint_bub_ms dest = random_entry_removed( pool );
         const optional_vpart_position vp_there = here.veh_at( dest );
-        if( vp_there ) {
-            vehicle &veh = vp_there->vehicle();
-            if( veh.enclosed_at( &here,  dest ) ) {
+        if( currently_enclosed ) {
+            // If we're in an enclosed vehicle, only allow stumbling within the same enclosed space
+            if( !vp_there || &vp_there->vehicle() != &vp_here->vehicle() ||
+                !vp_there->vehicle().enclosed_at( &here, dest ) ) {
+                blocked = true;
+            }
+        } else if( vp_there ) {
+            // If we're not enclosed, block stumbling into enclosed tiles
+            if( vp_there->vehicle().enclosed_at( &here, dest ) ) {
                 blocked = true;
             }
         }
@@ -14025,6 +14002,15 @@ void Character::water_immersion()
                 std::vector<bodypart_id> drenched_vec;
                 for( bodypart_id bp : drenched_parts ) {
                     drenched_vec.push_back( bp );
+                    if( has_effect( effect_corroding, bp ) ) {
+                        remove_effect( effect_corroding, bp );
+                    }
+                    if( has_effect( effect_bile, bp ) ) {
+                        remove_effect( effect_bile, bp );
+                    }
+                    if( has_effect( effect_glowing, bp ) ) {
+                        remove_effect( effect_glowing, bp );
+                    }
                 }
                 // Initialize exposure map
                 std::map<bodypart_id, float> exposure;
@@ -14049,6 +14035,52 @@ void Character::water_immersion()
             }
         }
     }
+    if( in_bath() ) {
+        if( has_effect( effect_onfire ) ) {
+            add_msg( _( "The water puts out the flames!" ) );
+            remove_effect( effect_onfire );
+            // Motherfucker riding a horse in the bath.
+            if( is_mounted() ) {
+                monster *mon = mounted_creature.get();
+                if( mon->has_effect( effect_onfire ) ) {
+                    mon->remove_effect( effect_onfire );
+                }
+            }
+        }
+        if( has_effect( effect_corroding ) ) {
+            remove_effect( effect_corroding );
+        }
+        if( has_effect( effect_bile ) ) {
+            remove_effect( effect_bile );
+        }
+        if( has_effect( effect_glowing ) ) {
+            remove_effect( effect_glowing );
+        }
+        drench( 100, get_drenching_body_parts(), false );
+    }
+}
+
+bool Character::in_bath()
+{
+    map &here = get_map();
+    if( !in_vehicle && here.has_flag( ter_furn_flag::TFLAG_SOAKING_TUB, pos_bub() ) ) {
+        // Requires at least 40 L of liquid in the furniture tile.
+        units::volume water_vol = 0_ml;
+        for( const item &it : here.i_at( pos_bub() ) ) {
+            // TODO: funny effects for non-water.
+            if( it.made_of( phase_id::LIQUID ) && it.made_of( material_water ) ) {
+                water_vol += it.volume();
+            }
+        }
+        // The bathtub spans two tiles but liquid is stored per-tile, so we only check the
+        // tile the character is on.
+        // TODO: Water should spread to contiguous tiles, check for non-water fluids, hot water, etc.
+        const units::volume min_vol = units::from_liter( 40 );
+        if( water_vol >= min_vol ) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Character::pause()
@@ -14165,10 +14197,6 @@ bool Character::can_lift( item &obj ) const
 {
     // avoid comparing by weight as different objects use differing scales (grams vs kilograms etc)
     int str = get_lift_str();
-    if( mounted_creature ) {
-        auto *const mons = mounted_creature.get();
-        str = mons->mech_str_addition() == 0 ? str : mons->mech_str_addition();
-    }
     const int npc_str = get_lift_assist();
     return str + npc_str >= obj.lift_strength();
 }
@@ -14177,10 +14205,6 @@ bool Character::can_lift( vehicle &veh, map &here ) const
 {
     // avoid comparing by weight as different objects use differing scales (grams vs kilograms etc)
     int str = get_lift_str();
-    if( mounted_creature ) {
-        auto *const mons = mounted_creature.get();
-        str = mons->mech_str_addition() == 0 ? str : mons->mech_str_addition();
-    }
     const int npc_str = get_lift_assist();
     return str + npc_str >= veh.lift_strength( here );
 }

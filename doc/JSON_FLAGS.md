@@ -66,7 +66,7 @@
 
 ## Notes
 
-- Some flags (items, effects, vehicle parts) have to be defined in `flags.json` or `vp_flags.json` (with type: `json_flag`) to work correctly.
+- Some flags (items, effects, vehicle parts, construction pre_flags) have to be defined in `flags.json` or `vp_flags.json` (with type: `json_flag`) to work correctly.
 - Many of the flags intended for one category or item type can be used in other categories or item types.  Experiment to see where else flags can be used.
 - Offensive and defensive flags can be used on any item type that can be wielded.
 
@@ -420,6 +420,7 @@ Character flags can be `trait_id`, `json_flag_id` or `flag_id`.  Some of these a
 - ```SHAPESHIFT_SIZE_SMALL``` Changes your size to `creature_size::small`.  Checked second of the shapeshift size category flags and before any normal size flag.
 - ```SHAPESHIFT_SIZE_TINY``` Changes your size to `creature_size::tiny`.  Checked second of the shapeshift size category flags and before any normal size flag.
 - ```SLUDGE_IMMUNE``` Critter is immune to sludge trail field (`fd_sludge`)
+- ```SNOWWALKING``` Character's movement is not slowed by snow depth
 - ```SMALL``` Changes your size to `creature_size::small`.  Checked second of the size category flags.
 - ```SPIRITUAL``` Changes character's moral behaviour in some situations.
 - ```STAB_IMMUNE``` You are immune to stabbing damage.
@@ -587,6 +588,7 @@ These are checked by hardcode for monsters (introducing new flags will require C
 ## Furniture and Terrain
 
 List of known flags, used in both `furniture` and `terrain`.  Some work for both, others are limited to either.
+Can also be used as `pre_flags` for `construction`.
 
 - ```ALARMED``` Sets off an alarm if smashed.
 - ```ALLOW_FIELD_EFFECT``` Apply field effects to items inside `SEALED` terrain/furniture.
@@ -1517,8 +1519,6 @@ These flags apply to the `use_action` field, instead of the `flags` field.
 - ```EXTINGUISHER``` Put out fires.
 - ```FIRECRACKER_ACT``` The saddest Fourth of July.
 - ```FIRECRACKER_PACK_ACT``` Keep the change you filthy animal.
-- ```FIRECRACKER_PACK``` Light an entire packet of firecrackers.
-- ```FIRECRACKER``` Light a singular firecracker.
 - ```FLASHBANG``` Pull the pin on a flashbang.
 - ```GEIGER``` Detect local radiation levels.
 - ```GRANADE_ACT``` Assaults enemies with source code fixes?
@@ -1554,7 +1554,6 @@ These flags apply to the `use_action` field, instead of the `flags` field.
 - ```PLACE_RANDOMLY``` This is very much like the flag in the `manhack` iuse, it prevents the item from querying the player as to where they want the monster unloaded to, and instead chooses randomly.
 - ```PORTABLE_GAME``` Play games.
 - ```PORTAL``` Create portal traps.
-- ```RADIO_OFF``` Turn the radio on.
 - ```RADIO_ON``` Turn the radio off.
 - ```RAG``` Stop the bleeding.
 - ```RESTAURANTMAP``` Learn of local eateries, and show roads.
@@ -1671,6 +1670,8 @@ Note: Vehicle parts requiring other parts is defined by setting a `requires_flag
 - ```FREEZER``` Can freeze items in below zero degrees Celsius temperature.
 - ```FRIDGE``` Can refrigerate items.
 - ```FUNNEL``` If installed over a vehicle tank, can collect rainwater during rains.
+- ```FURNITURE_LIFT_ASSIST``` This part has bonus effective strength when 'e'xamining it to load furniture onto it. Requires the part to also be FURNITURE_TIEDOWN. Bonus is currently set to 5.
+- ```FURNITURE_TIEDOWN``` This part can have furniture loaded onto it. Requires the part to also be CARGO.
 - ```HALF_CIRCLE_LIGHT``` Projects a directed half-circular radius of light when turned on.
 - ```HANDHELD_BATTERY_MOUNT``` Same as `BATTERY_MOUNT`, but for handheld battery mount.
 - ```HARNESS_bodytype``` Replace bodytype with `any` to accept any type, or with the targeted type.

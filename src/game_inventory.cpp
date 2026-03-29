@@ -486,6 +486,13 @@ item_location game::inv_map_splice( const item_filter &filter, const std::string
                          title, radius, none_message );
 }
 
+item_location game::inv_map_splice( const inventory_selector_preset &preset,
+                                    const std::string &title,
+                                    int radius, const std::string &none_message )
+{
+    return inv_internal( u, preset, title, radius, none_message );
+}
+
 item_location game::inv_map_splice( const item_location_filter &filter, const std::string &title,
                                     int radius, const std::string &none_message )
 {
@@ -1113,6 +1120,7 @@ class activatable_inventory_preset : public pickup_inventory_preset
         explicit activatable_inventory_preset() : pickup_inventory_preset( get_avatar() ),
             you( get_avatar() ) {
             _collate_entries = true;
+            _pk_type = { pocket_type::CONTAINER, pocket_type::MOD };
             if( get_option<bool>( "INV_USE_ACTION_NAMES" ) ) {
                 append_cell( [ this ]( const item_location & loc ) {
                     return string_format( "<color_light_green>%s</color>", get_action_name( *loc ) );
@@ -1121,7 +1129,8 @@ class activatable_inventory_preset : public pickup_inventory_preset
         }
 
         bool is_shown( const item_location &loc ) const override {
-            return loc->type->has_use() || loc->has_relic_activation();
+            return !loc.is_invisible_installed_gunmod( )
+                   && ( loc->type->has_use() || loc->has_relic_activation() );
         }
 
         std::string get_denial( const item_location &loc ) const override {
@@ -1488,10 +1497,19 @@ class read_inventory_preset: public pickup_inventory_preset
 
         bool is_shown( const item_location &loc ) const override {
             const item_location p_loc = loc.parent_item();
-            return ( loc->is_book() || loc->type->can_use( "learn_spell" ) ) &&
-                   ( !p_loc || ( !p_loc->is_estorage() || p_loc->is_estorage_usable( you ) ) ||
-                     !p_loc->uses_energy() ||
-                     p_loc->energy_remaining( p_loc.carrier(), false ) >= 1_kJ );
+            if( !( loc->is_book() || loc->type->can_use( "learn_spell" ) ) ) {
+                return false;
+            }
+            if( p_loc && p_loc->is_estorage() ) {
+                // Estorage device must be browsed before its files are readable.
+                // Additionally it must be usable (charged tablet) or not require energy (USB drive).
+                return p_loc->is_browsed() &&
+                       ( p_loc->is_estorage_usable( you ) || !p_loc->uses_energy() ||
+                         p_loc->energy_remaining( p_loc.carrier(), false ) >= 1_kJ );
+            }
+            return !p_loc ||
+                   !p_loc->uses_energy() ||
+                   p_loc->energy_remaining( p_loc.carrier(), false ) >= 1_kJ;
         }
 
         std::string get_denial( const item_location &loc ) const override {
@@ -1599,12 +1617,12 @@ class ebookread_inventory_preset : public read_inventory_preset
         }
 };
 
-item_location game_menus::inv::read( Character &you )
+item_location game_menus::inv::read( Character &you, bool include_ebooks )
 {
     const std::string msg = you.is_avatar() ? _( "You have nothing to read." ) :
                             string_format( _( "%s has nothing to read." ), you.disp_name() );
     return inv_internal( you, read_inventory_preset( you ), _( "Read" ), 1, msg, "", item_location(),
-                         true );
+                         include_ebooks );
 }
 
 item_location game_menus::inv::ebookread( Character &you, item_location &ereader )
@@ -1791,8 +1809,51 @@ drop_locations game_menus::inv::efile_select( Character &who, item_location &use
     bool copying = action == EF_COPY_FROM_THIS || action == EF_COPY_ONTO_THIS;
     bool wiping = action == EF_WIPE;
 
-    const inventory_filter_preset preset( [&copying]( const item_location & loc ) {
-        return loc.is_efile() && ( !copying || loc->is_ecopiable() );
+    // For copy actions, pre-compute the canonical source item for each typeId:
+    // - exclude files already on the destination device
+    // - when multiple source devices have the same file, use only the first occurrence
+    // E_FILE_COLLECTION items (recipe catalogs, photo collections) are exempt: add_efile
+    // merges their contents into an existing collection rather than creating a duplicate,
+    // so they must always be shown regardless of what is already on the destination.
+    std::map<itype_id, const item *> canonical_copy_sources;
+    if( copying ) {
+        std::set<itype_id> dest_typeids;
+        for( const item *f : to_edevice->efiles() ) {
+            if( !f->has_flag( flag_E_FILE_COLLECTION ) ) {
+                dest_typeids.insert( f->typeId() );
+            }
+        }
+        for( const item_location &src_dev : from_edevices ) {
+            if( !src_dev ) {
+                continue;
+            }
+            for( const item *f : src_dev->efiles() ) {
+                if( f->has_flag( flag_E_FILE_COLLECTION ) ) {
+                    continue; // not deduplicated; merged into existing collection by add_efile
+                }
+                const itype_id &tid = f->typeId();
+                if( !dest_typeids.count( tid ) && !canonical_copy_sources.count( tid ) ) {
+                    canonical_copy_sources[tid] = f;
+                }
+            }
+        }
+    }
+
+    const inventory_filter_preset preset( [&]( const item_location & loc ) {
+        if( !loc.is_efile() || ( copying && !loc->is_ecopiable() ) ) {
+            return false;
+        }
+        if( copying ) {
+            if( loc->has_flag( flag_E_FILE_COLLECTION ) ) {
+                // Always show: add_efile merges these rather than creating duplicates
+                return true;
+            }
+            // Only show the canonical item for each typeId (deduplicates across devices
+            // and hides files already present on the destination device)
+            auto it = canonical_copy_sources.find( loc->typeId() );
+            return it != canonical_copy_sources.end() && it->second == loc.get_item();
+        }
+        return true;
     } );
 
     const int available_charges = to_edevice->ammo_remaining( );
@@ -3008,12 +3069,23 @@ item_location game_menus::inv::change_sprite( Character &you )
                          _( "You have nothing to wear." ) );
 }
 
+class unload_selector_preset : public inventory_selector_preset
+{
+    public:
+        explicit unload_selector_preset() : you( get_avatar() ) {
+            _pk_type = { pocket_type::CONTAINER, pocket_type::MOD };
+        }
+        bool is_shown( const item_location &location ) const override {
+            return !location.is_invisible_installed_gunmod( ) &&
+                   you.rate_action_unload( *location ) == hint_rating::good;
+        }
+    private:
+        const Character &you;
+};
+
 std::pair<item_location, bool> game_menus::inv::unload( Character &you )
 {
-
-    const inventory_filter_preset preset( [&you]( const item_location & location ) {
-        return you.rate_action_unload( *location ) == hint_rating::good;
-    } );
+    const unload_selector_preset preset;
     unload_selector inv_s( you, preset );
 
     inv_s.set_title( _( "Unload item" ) );

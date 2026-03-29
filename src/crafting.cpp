@@ -315,12 +315,16 @@ float Character::crafting_speed_multiplier( const recipe &rec ) const
     float crafting_speed = morale_crafting_speed_multiplier( rec ) *
                            lighting_craft_speed_multiplier( rec ) *
                            limb_score * pain_multi;
-
+    float int_adjustment = get_int() / 100.f;
+    // Int makes up for speed penalties, but doesn't add speed on its own.
+    if( crafting_speed < 1.0f ) {
+        crafting_speed = std::min( 1.f, crafting_speed + int_adjustment );
+    }
     const float result = enchantment_cache->modify_value( enchant_vals::mod::CRAFTING_SPEED_MULTIPLIER,
                          crafting_speed );
-
-    add_msg_debug( debugmode::DF_CHARACTER, "Limb score multiplier %.1f, crafting speed multiplier %1f",
-                   get_limb_score( limb_score_manip ), result );
+    add_msg_debug( debugmode::DF_CHARACTER,
+                   "Limb score multiplier %1f, int adjustment %2f, crafting speed multiplier %3f",
+                   get_limb_score( limb_score_manip ), int_adjustment, result );
 
     return std::max( result, 0.0f );
 }
@@ -2662,7 +2666,7 @@ bool Character::disassemble()
 bool Character::disassemble( item_location target, bool interactive, bool disassemble_all )
 {
     if( !target ) {
-        add_msg( _( "Never mind." ) );
+        add_msg( _( "Nevermind." ) );
         return false;
     }
 
@@ -2675,12 +2679,12 @@ bool Character::disassemble( item_location target, bool interactive, bool disass
     }
 
     if( obj.is_favorite &&
-        !query_yn( _( "You're going to disassemble favorited item.\nAre you sure?" ) ) ) {
+        !query_yn( _( "This item is marked as a favorite.\nAre you sure?" ) ) ) {
         return false;
     }
 
-    if( obj.is_worn_by_player() &&
-        !query_yn( _( "You're going to disassemble worn item.\nAre you sure?" ) ) ) {
+    if( obj.is_worn_by_player() ) {
+        add_msg_if_player( _( "You must remove that before disassembling it." ) );
         return false;
     }
 
@@ -2728,7 +2732,7 @@ bool Character::disassemble( item_location target, bool interactive, bool disass
                                           obj.type_name( 1 ), obj.charges );
                 popup_input.title( title ).edit( num_dis );
                 if( popup_input.canceled() || num_dis <= 0 ) {
-                    add_msg( _( "Never mind." ) );
+                    add_msg( _( "Nevermind." ) );
                     return false;
                 }
                 num_dis = std::min( num_dis, obj.charges );
@@ -2840,7 +2844,7 @@ void Character::complete_disassemble( item_location target )
                                       obj.type_name( 1 ), obj.charges );
             popup_input.title( title ).edit( num_dis );
             if( popup_input.canceled() || num_dis <= 0 ) {
-                add_msg( _( "Never mind." ) );
+                add_msg( _( "Nevermind." ) );
                 activity.set_to_null();
                 return;
             }

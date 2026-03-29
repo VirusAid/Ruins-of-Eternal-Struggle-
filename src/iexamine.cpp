@@ -342,9 +342,7 @@ void iexamine::cvdmachine( Character &you, const tripoint_bub_ms & )
     item_location loc = g->inv_map_splice( []( const item & e ) {
         return e.has_edged_damage() &&
                !e.has_flag( flag_DIAMOND ) && !e.has_flag( flag_NO_CVD ) &&
-               ( e.made_of( material_steel ) || e.made_of( material_ch_steel ) ||
-                 e.made_of( material_hc_steel ) || e.made_of( material_lc_steel ) ||
-                 e.made_of( material_mc_steel ) || e.made_of( material_qt_steel ) );
+               ( e.made_of( material_steel ) );
     }, _( "Apply diamond coating" ), 1, _( "You don't have a suitable item to coat with diamond" ) );
 
     if( !loc ) {
@@ -1759,6 +1757,18 @@ void iexamine::pit_covered( Character &you, const tripoint_bub_ms &examp )
     you.mod_moves( -to_moves<int>( 1_seconds ) );
 }
 
+void iexamine::thin_ice( Character &you, const tripoint_bub_ms &examp )
+{
+    map &here = get_map();
+    const trap &tr = here.tr_at( examp );
+    if( !you.knows_trap( examp ) ) {
+        you.add_msg_if_player( m_warning, _( "The ice looks thin and won't support your weight." ) );
+        you.add_known_trap( examp, tr );
+    } else {
+        you.add_msg_if_player( m_info, _( "The ice here is thin." ) );
+    }
+}
+
 
 
 /**
@@ -2098,7 +2108,7 @@ void iexamine::door_peephole( Character &you, const tripoint_bub_ms &examp )
         here.open_door( you, examp, true, false );
         you.add_msg_if_player( _( "You open the door." ) );
     } else {
-        you.add_msg_if_player( _( "Never mind." ) );
+        you.add_msg_if_player( _( "Nevermind." ) );
     }
 }
 
@@ -2115,31 +2125,6 @@ static bool dead_plant( bool flower, Character &you, const tripoint_bub_ms &exam
         }
 
         iexamine::none( you, examp );
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Helper method to see if player has traits, hunger and mouthwear for drinking nectar.
- */
-static bool can_drink_nectar( const Character &you )
-{
-    return ( you.has_active_mutation( trait_PROBOSCIS )  ||
-             you.has_active_mutation( trait_BEAK_HUM ) ) &&
-           ( you.get_hunger() > 0 ) && ( !you.wearing_something_on( bodypart_id( "mouth" ) ) );
-}
-
-/**
- * Consume Nectar. -15 hunger.
- */
-bool iexamine_helper::drink_nectar( Character &you )
-{
-    if( can_drink_nectar( you ) ) {
-        add_msg( _( "You drink some nectar." ) );
-        item nectar( "nectar", calendar::turn, 1 );
-        you.assign_activity( consume_activity_actor( nectar ) );
         return true;
     }
 
@@ -2167,9 +2152,8 @@ void iexamine_helper::handle_harvest( Character &you, const std::string &itemid,
 }
 
 /**
- * Prompt pick (or drink nectar if able) poppy bud. Not safe for player.
+ * Prompt pick poppy bud. Not safe for player.
  *
- * Drinking causes: -25 hunger, +20 fatigue, pkill2-70 effect and, 1 in 20 pkiller-1 addiction.
  * Picking w/ env_resist < 5 causes 1 in 3  sleep for 12 min and 4 dmg to each leg
  */
 void iexamine::flower_poppy( Character &you, const tripoint_bub_ms &examp )
@@ -2178,23 +2162,6 @@ void iexamine::flower_poppy( Character &you, const tripoint_bub_ms &examp )
         return;
     }
     map &here = get_map();
-    // TODO: Get rid of this section and move it to eating
-    // Two y/n prompts is just too much
-    if( can_drink_nectar( you ) ) {
-        if( !query_yn( _( "You feel woozy as you explore the %s. Drink?" ),
-                       here.furnname( examp ) ) ) {
-            return;
-        }
-        add_msg( _( "You slowly suck up the nectar." ) );
-        item poppy( "poppy_nectar", calendar::turn, 1 );
-        you.assign_activity( consume_activity_actor( poppy ) );
-        you.mod_fatigue( 20 );
-        you.add_effect( effect_pkill2, 7_minutes );
-        // Please drink poppy nectar responsibly.
-        if( one_in( 20 ) ) {
-            you.add_addiction( STATIC( addiction_id( "opioid" ) ), 1 );
-        }
-    }
     if( !query_yn( _( "Pick %s?" ), here.furnname( examp ) ) ) {
         none( you, examp );
         return;
@@ -2256,15 +2223,11 @@ void iexamine::flower_cactus( Character &you, const tripoint_bub_ms &examp )
 }
 
 /**
- * Dig up its roots or drink its nectar if you can.
+ * Dig up its roots if you can.
  */
 void iexamine::flower_dahlia( Character &you, const tripoint_bub_ms &examp )
 {
     if( dead_plant( true, you, examp ) ) {
-        return;
-    }
-
-    if( iexamine_helper::drink_nectar( you ) ) {
         return;
     }
 
@@ -2325,32 +2288,10 @@ static bool query_pick( Character &who, const tripoint_bub_ms &target )
     return true;
 }
 
-void iexamine::harvest_furn_nectar( Character &you, const tripoint_bub_ms &examp )
-{
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       get_option<std::string>( "AUTO_FORAGING" ) == "all";
-    if( !auto_forage && !query_pick( you, examp ) ) {
-        return;
-    }
-    you.assign_activity( harvest_activity_actor( examp, auto_forage ) );
-}
-
 void iexamine::harvest_furn( Character &you, const tripoint_bub_ms &examp )
 {
     bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
                        get_option<std::string>( "AUTO_FORAGING" ) == "all";
-    if( !auto_forage && !query_pick( you, examp ) ) {
-        return;
-    }
-    you.assign_activity( harvest_activity_actor( examp, auto_forage ) );
-}
-
-void iexamine::harvest_ter_nectar( Character &you, const tripoint_bub_ms &examp )
-{
-    bool auto_forage = get_option<bool>( "AUTO_FEATURES" ) &&
-                       ( get_option<std::string>( "AUTO_FORAGING" ) == "all" ||
-                         get_option<std::string>( "AUTO_FORAGING" ) == "bushes" ||
-                         get_option<std::string>( "AUTO_FORAGING" ) == "trees" );
     if( !auto_forage && !query_pick( you, examp ) ) {
         return;
     }
@@ -2383,17 +2324,6 @@ void iexamine::flower_marloss( Character &you, const tripoint_bub_ms &examp )
         add_msg( m_info, _( "This flower is still alive, despite the harsh conditions…" ) );
     }
     map &here = get_map();
-    if( can_drink_nectar( you ) ) {
-        if( !query_yn( _( "You feel out of place as you explore the %s. Drink?" ),
-                       here.furnname( examp ) ) ) {
-            return;
-        }
-        you.mod_moves( -to_moves<int>
-                       ( 30_seconds ) ); // Takes 30 seconds, more or less if faster/slower than 100 speed
-        add_msg( m_bad, _( "This flower tastes very wrong…" ) );
-        // If you can drink flowers, you're post-thresh and the Mycus does not want you.
-        you.add_effect( effect_teleglow, 10_minutes );
-    }
     if( !query_yn( _( "Pick %s?" ), here.furnname( examp ) ) ) {
         none( you, examp );
         return;
@@ -2512,7 +2442,7 @@ void iexamine::dirtmound( Character &you, const tripoint_bub_ms &examp )
     }
     const itype_id &seed_id = std::get<0>( seed_entries[seed_index] );
 
-    ret_val<void>can_plant = warm_enough_to_plant( you.pos_bub(), seed_id );
+    ret_val<void>can_plant = warm_enough_to_plant( examp, seed_id );
     if( !can_plant.success() ) {
         you.add_msg_if_player( m_info, can_plant.c_str() );
         return;
@@ -2669,14 +2599,19 @@ void iexamine::harvest_plant( Character &you, const tripoint_bub_ms &examp, bool
             player_activity act( ACT_HARVEST, to_moves<int>( 60_seconds ) );
             you.assign_activity( act );
             here.i_clear( examp );
-
-            int skillLevel = round( you.get_skill_level( skill_survival ) );
-            ///\EFFECT_SURVIVAL increases number of plants harvested from a seed
-            int plant_count = rng( skillLevel / 2, skillLevel );
+            float skillLevel = you.get_skill_level( skill_survival );
+            ///\EFFECT_SURVIVAL increases number of plants harvested from a seed.
+            float skill_divisor = 4.f;
+            // Fertilizer reduces the odds of a bad harvest.
+            if( here.i_at( examp ).size() > 1 ) {
+                skill_divisor = 2.f;
+            }
+            float plant_count = rng_float( skillLevel / skill_divisor, skillLevel );
             const auto &fp = here.furn( examp )->plant;
             plant_count *= fp->harvest_multiplier;
-            plant_count = std::min( std::max( plant_count, 1 ), 12 );
-            int seedCount = std::max( 1, rng( plant_count / 4, plant_count / 2 ) );
+            int plant_count_int = static_cast<int>( std::round( plant_count ) );
+            plant_count = std::min( std::max( plant_count_int, 1 ), 10 );
+            int seedCount = rng( plant_count_int / 4, plant_count_int / 2 );
             for( item &i : get_harvest_items( type, plant_count, seedCount, true ) ) {
                 if( from_activity ) {
                     i.set_var( "activity_var", you.name );
@@ -2699,10 +2634,14 @@ ret_val<void> iexamine::can_fertilize( Character &you, const tripoint_bub_ms &ti
 {
     map &here = get_map();
     if( !here.has_flag_furn( ter_furn_flag::TFLAG_PLANT, tile ) ) {
-        return ret_val<void>::make_failure( _( "Tile isn't a plant" ) );
+        return ret_val<void>::make_failure( _( "That isn't a plant you can fertilize." ) );
+    }
+    if( here.has_flag_furn( ter_furn_flag::TFLAG_PLANT, tile ) &&
+        harvestable_now( tile ) ) {
+        return ret_val<void>::make_failure( _( "There's no point in fertilizing a mature plant." ) );
     }
     if( here.i_at( tile ).size() > 1 ) {
-        return ret_val<void>::make_failure( _( "Tile is already fertilized" ) );
+        return ret_val<void>::make_failure( _( "That area has already been fertilized." ) );
     }
     if( ( fertilizer->count_by_charges() && !you.has_charges( fertilizer, 1 ) ) ||
         !you.has_amount( fertilizer, 1 ) ) {
@@ -2730,10 +2669,6 @@ void iexamine::fertilize_plant( Character &you, const tripoint_bub_ms &tile,
         planted = you.use_amount( fertilizer, 1 );
     }
 
-    // Reduce the amount of time it takes until the next stage of the plant by
-    // 20% of a seasons length. (default 2.8 days).
-    const time_duration fertilizerEpoch = calendar::season_length() * 0.2;
-
     map &here = get_map();
     // Can't use item_stack::only_item() since there might be fertilizer
     map_stack items = here.i_at( tile );
@@ -2747,11 +2682,6 @@ void iexamine::fertilize_plant( Character &you, const tripoint_bub_ms &tile,
         return;
     }
 
-    // TODO: item should probably clamp the value on its own
-    seed->set_birthday( seed->birthday() - fertilizerEpoch );
-    // The plant furniture has the NOITEM token which prevents adding items on that square,
-    // spawned items are moved to an adjacent field instead, but the fertilizer token
-    // must be on the square of the plant, therefore this hack:
     const furn_id &old_furn = here.furn( tile );
     here.furn_set( tile, furn_str_id::NULL_ID() );
     here.spawn_item( tile, itype_fertilizer, 1, 1, calendar::turn );
@@ -3567,7 +3497,7 @@ void iexamine::fvat_empty( Character &you, const tripoint_bub_ms &examp )
                 break;
             }
             default:
-                add_msg( _( "Never mind." ) );
+                add_msg( _( "Nevermind." ) );
                 return;
         }
     }
@@ -3796,7 +3726,7 @@ void iexamine::compost_empty( Character &you, const tripoint_bub_ms &examp )
                 break;
             }
             default:
-                add_msg( _( "Never mind." ) );
+                add_msg( _( "Nevermind." ) );
                 return;
         }
     }
@@ -4863,7 +4793,7 @@ void iexamine::curtains( Character &you, const tripoint_bub_ms &examp )
         you.mod_moves( -to_moves<int>( 10_seconds ) );
         you.add_msg_if_player( _( "You tear the curtains and curtain rod off the windowframe." ) );
     } else {
-        you.add_msg_if_player( _( "Never mind." ) );
+        you.add_msg_if_player( _( "Nevermind." ) );
     }
 }
 
@@ -6641,7 +6571,7 @@ static void mill_load_food( Character &you, const tripoint_bub_ms &examp,
     smenu.query();
 
     if( smenu.ret < 0 || static_cast<size_t>( smenu.ret ) >= entries.size() ) {
-        add_msg( m_info, _( "Never mind." ) );
+        add_msg( m_info, _( "Nevermind." ) );
         return;
     }
     int count = 0;
@@ -6659,7 +6589,7 @@ static void mill_load_food( Character &you, const tripoint_bub_ms &examp,
     int amount = max_count;
     if( !query_int( amount, true, _( "Insert how many %s into the mill?" ),
                     item::nname( what->typeId(), count ) ) || amount <= 0 ) {
-        add_msg( m_info, _( "Never mind." ) );
+        add_msg( m_info, _( "Nevermind." ) );
         return;
     } else if( amount > count ) {
         add_msg( m_info, _( "You don't have that many." ) );
@@ -6858,7 +6788,7 @@ void iexamine::quern_examine( Character &you, const tripoint_bub_ms &examp )
             }
             break;
         default:
-            add_msg( m_info, _( "Never mind." ) );
+            add_msg( m_info, _( "Nevermind." ) );
             break;
         case 4:
             const furn_id &f = here.furn( examp );
@@ -7091,7 +7021,7 @@ void iexamine::smoker_options( Character &you, const tripoint_bub_ms &examp )
         }
         break;
         default:
-            add_msg( m_info, _( "Never mind." ) );
+            add_msg( m_info, _( "Nevermind." ) );
             break;
         case 7:
             if( portable ) {
@@ -7318,6 +7248,7 @@ iexamine_functions iexamine_functions_from_string( const std::string &function_n
             { "portable_structure", &iexamine::portable_structure },
             { "pit", &iexamine::pit },
             { "pit_covered", &iexamine::pit_covered },
+            { "thin_ice", &iexamine::thin_ice },
             { "safe", &iexamine::safe },
             { "bulletin_board", &iexamine::bulletin_board },
             { "pedestal_wyrm", &iexamine::pedestal_wyrm },
@@ -7334,9 +7265,7 @@ iexamine_functions iexamine_functions_from_string( const std::string &function_n
             { "compost_empty", &iexamine::compost_empty },
             { "compost_full", &iexamine::compost_full },
             { "keg", &iexamine::keg },
-            { "harvest_furn_nectar", &iexamine::harvest_furn_nectar },
             { "harvest_furn", &iexamine::harvest_furn },
-            { "harvest_ter_nectar", &iexamine::harvest_ter_nectar },
             { "harvest_ter", &iexamine::harvest_ter },
             { "clear_overgrown", &iexamine::clear_overgrown },
             { "harvest_plant_ex", &iexamine::harvest_plant_ex },
@@ -7378,9 +7307,7 @@ iexamine_functions iexamine_functions_from_string( const std::string &function_n
     };
 
     static const std::set<std::string> harvestable_functions = {
-        "harvest_furn_nectar",
         "harvest_furn",
-        "harvest_ter_nectar",
         "harvest_ter",
         "harvest_plant",
     };

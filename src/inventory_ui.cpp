@@ -44,7 +44,6 @@
 #include "ui_manager.h"
 #include "units.h"
 #include "units_utility.h"
-#include "value_ptr.h"
 #include "vehicle.h"
 #include "vehicle_selector.h"
 #include "vpart_position.h"
@@ -681,15 +680,8 @@ inventory_selector_preset::inventory_selector_preset()
     } ) );
 }
 
-bool inventory_selector_preset::is_shown( const item_location &loc ) const
+bool inventory_selector_preset::is_shown( const item_location & ) const
 {
-    if( loc->is_gunmod() ) {
-        item_location parent = loc.parent_item();
-        const bool installed = parent && parent->is_gun();
-        if( installed && !loc->type->gunmod->is_visible_when_installed ) {
-            return false;
-        }
-    }
     return true;
 }
 
@@ -3092,7 +3084,7 @@ void inventory_column::remove_duplicate_itypes( bool include_variants )
             }
         }
     };
-    //sort out duplicates, clear list, then reconstruct entries
+    // Sort out duplicates, clear list, then reconstruct entries.
     audit_entries( entries );
     audit_entries( entries_hidden );
     clear();
@@ -4249,8 +4241,13 @@ inventory_selector::stats inventory_insert_selector::get_raw_stats() const
                         }
                     }
                 }
-                selected_weight += w * overflow_counter;
-                selected_volume += v * overflow_counter;
+                if( e->any_item()->count_by_charges() ) {
+                    selected_weight += w * overflow_counter / e->get_total_charges();
+                    selected_volume += v * overflow_counter / e->get_total_charges();
+                } else {
+                    selected_weight += w * overflow_counter;
+                    selected_volume += v * overflow_counter;
+                }
             }
         }
     }

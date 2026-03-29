@@ -331,7 +331,8 @@ enum class ally_rule : int {
     forbid_engage = 16384,
     follow_distance_2 = 32768,
     lock_doors = 65536,
-    avoid_locks = 131072
+    avoid_locks = 131072,
+    seek_shelter = 262144
 };
 
 struct ally_rule_data {
@@ -465,6 +466,13 @@ const std::unordered_map<std::string, ally_rule_data> ally_rule_strs = { {
                 ally_rule::follow_distance_2,
                 "<ally_rule_follow_distance_2_true_text>",
                 "<ally_rule_follow_distance_2_false_text>"
+            }
+        },
+        {
+            "seek_shelter", {
+                ally_rule::seek_shelter,
+                "<ally_rule_seek_shelter_true_text>",
+                "<ally_rule_seek_shelter_false_text>"
             }
         }
     }
@@ -960,6 +968,9 @@ class npc : public Character
         void drop( const drop_locations &what, const tripoint_bub_ms &target,
                    bool stash ) override;
         bool adjust_worn();
+        bool try_wear_warmer_clothing();
+        bool try_remove_warm_clothing();
+        bool seek_safe_temperature();
         bool has_healing_item( healing_options try_to_fix );
         healing_options patient_assessment( const Character &c );
         healing_options has_healing_options();
@@ -968,6 +979,7 @@ class npc : public Character
         bool has_painkiller();
         bool took_painkiller() const;
         void use_painkiller();
+        float rate_food( const item &it, int want_nutr, int want_quench );
         void activate_item( item &it );
         bool has_identified( const itype_id & ) const override {
             return true;
@@ -1472,7 +1484,7 @@ class standard_npc : public npc
         explicit standard_npc( const std::string &name = "",
                                const tripoint_bub_ms &pos = tripoint_bub_ms( HALF_MAPSIZE_X, HALF_MAPSIZE_Y, 0 ),
                                const std::vector<std::string> &clothing = {},
-                               int sk_lvl = 4, int s_str = 8, int s_dex = 8, int s_int = 8, int s_per = 8 );
+                               int sk_lvl = 4, int s_str = 10, int s_dex = 10, int s_int = 10, int s_per = 10 );
 };
 
 // instances of this can be accessed via string_id<npc_template>.

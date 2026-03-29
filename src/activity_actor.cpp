@@ -78,6 +78,7 @@
 #include "math_parser_diag_value.h"
 #include "memory_fast.h"
 #include "messages.h"
+#include "mongroup.h"
 #include "monster.h"
 #include "morale_types.h"
 #include "mtype.h"
@@ -137,6 +138,7 @@ static const activity_id ACT_EAT_MENU( "ACT_EAT_MENU" );
 static const activity_id ACT_EBOOKSAVE( "ACT_EBOOKSAVE" );
 static const activity_id ACT_E_FILE( "ACT_E_FILE" );
 static const activity_id ACT_FIRSTAID( "ACT_FIRSTAID" );
+static const activity_id ACT_FISH( "ACT_FISH" );
 static const activity_id ACT_FORAGE( "ACT_FORAGE" );
 static const activity_id ACT_FURNITURE_MOVE( "ACT_FURNITURE_MOVE" );
 static const activity_id ACT_GLIDE( "ACT_GLIDE" );
@@ -158,6 +160,7 @@ static const activity_id ACT_MILK( "ACT_MILK" );
 static const activity_id ACT_MOP( "ACT_MOP" );
 static const activity_id ACT_MOVE_ITEMS( "ACT_MOVE_ITEMS" );
 static const activity_id ACT_MULTIPLE_CHOP_TREES( "ACT_MULTIPLE_CHOP_TREES" );
+static const activity_id ACT_MULTIPLE_FISH( "ACT_MULTIPLE_FISH" );
 static const activity_id ACT_OPEN_GATE( "ACT_OPEN_GATE" );
 static const activity_id ACT_OXYTORCH( "ACT_OXYTORCH" );
 static const activity_id ACT_PICKUP( "ACT_PICKUP" );
@@ -173,6 +176,7 @@ static const activity_id ACT_SHEARING( "ACT_SHEARING" );
 static const activity_id ACT_STASH( "ACT_STASH" );
 static const activity_id ACT_TENT_DECONSTRUCT( "ACT_TENT_DECONSTRUCT" );
 static const activity_id ACT_TENT_PLACE( "ACT_TENT_PLACE" );
+static const activity_id ACT_TIDY_UP( "ACT_TIDY_UP" );
 static const activity_id ACT_TRY_SLEEP( "ACT_TRY_SLEEP" );
 static const activity_id ACT_UNLOAD( "ACT_UNLOAD" );
 static const activity_id ACT_UNLOAD_LOOT( "ACT_UNLOAD_LOOT" );
@@ -243,6 +247,8 @@ static const json_character_flag json_flag_BLIND_READ_FAST( "BLIND_READ_FAST" );
 static const json_character_flag json_flag_BLIND_READ_SLOW( "BLIND_READ_SLOW" );
 static const json_character_flag json_flag_SAFECRACK_NO_TOOL( "SAFECRACK_NO_TOOL" );
 
+static const mongroup_id GROUP_FISH( "GROUP_FISH" );
+
 static const morale_type morale_book( "morale_book" );
 static const morale_type morale_feeling_good( "morale_feeling_good" );
 static const morale_type morale_haircut( "morale_haircut" );
@@ -259,6 +265,7 @@ static const proficiency_id proficiency_prof_lockpicking_expert( "prof_lockpicki
 static const proficiency_id proficiency_prof_safecracking( "prof_safecracking" );
 
 static const quality_id qual_CUT( "CUT" );
+static const quality_id qual_FISHING_ROD( "FISHING_ROD" );
 static const quality_id qual_HACK( "HACK" );
 static const quality_id qual_LOCKPICK( "LOCKPICK" );
 static const quality_id qual_PRY( "PRY" );
@@ -1700,6 +1707,44 @@ void read_activity_actor::start( player_activity &act, Character &who )
     // starting the activity should cost a charge to boot up the ebook app
     if( using_ereader ) {
         ereader->ammo_consume( ereader->ammo_required(), who.pos_bub(), &who );
+        // Try to plug the ereader into a nearby appliance/powergrid to charge while reading.
+        // Search within cable length — any appliance tile in the network works.
+        if( ereader->can_link_up() && ereader->has_no_links() ) {
+            map &here = get_map();
+            const link_up_actor *link_actor = static_cast<const link_up_actor *>(
+                                                  ereader->get_use( "link_up" )->get_actor_ptr() );
+            const int cable_len = link_actor->cable_length == -1 ?
+                                  ereader->type->maximum_charges() : link_actor->cable_length;
+            bool plugged_in = false;
+            for( const tripoint_bub_ms &pt : here.points_in_radius( who.pos_bub(), cable_len ) ) {
+                // points_in_radius uses Chebyshev (square), but process_link uses rl_dist (Euclidean).
+                // Skip tiles that would immediately exceed max_length after plugging in.
+                if( rl_dist( who.pos_bub(), pt ) > cable_len ) {
+                    continue;
+                }
+                const optional_vpart_position ovp = here.veh_at( pt );
+                if( !ovp ) {
+                    continue;
+                }
+                if( ovp->vehicle().avail_linkable_part( ovp->mount_pos(), true ) == -1 ) {
+                    continue;
+                }
+                if( ereader->link_to( ovp, link_state::vehicle_port ).success() ) {
+                    who.add_msg_player_or_npc(
+                        string_format( _( "You plug your %s into the %s." ),
+                                       ereader->tname(), ovp->vehicle().name ),
+                        string_format( _( "<npcname> plugs their %s into the %s." ),
+                                       ereader->tname(), ovp->vehicle().name ) );
+                    plugged_in = true;
+                    break;
+                }
+            }
+            if( !plugged_in ) {
+                add_msg_if_player_sees( who,
+                                        _( "%1$s can't find a nearby power grid to plug their %2$s into." ),
+                                        who.disp_name(), ereader->tname() );
+            }
+        }
     }
 
     act.moves_total = moves_total;
@@ -2052,9 +2097,11 @@ bool read_activity_actor::npc_read( npc &learner )
                      book->type_name() );
         }
 
-    } else if( display_messages && skill ) {
-        add_msg( m_info, _( "%s can no longer learn from %s." ), learner.disp_name(),
-                 book->type_name() );
+    } else if( skill ) {
+        if( display_messages ) {
+            add_msg( m_info, _( "%s can no longer learn from %s." ), learner.disp_name(),
+                     book->type_name() );
+        }
         continuous = false;
         // read non-skill books only once
     } else if( !skill ) {
@@ -2066,7 +2113,20 @@ bool read_activity_actor::npc_read( npc &learner )
 
 void read_activity_actor::finish( player_activity &act, Character &who )
 {
+    // Deactivate ereader screen (turn off) if it was activated when reading started
+    auto deactivate_ereader = [&]() {
+        if( using_ereader && ereader && ereader->type->tool &&
+            ereader->type->tool->power_draw > 0_W ) {
+            // Disconnect from powergrid before turning off
+            if( ereader->can_link_up() && !ereader->has_no_links() ) {
+                ereader->reset_link( false );
+            }
+            who.invoke_item( &*ereader, "transform", who.pos_bub() );
+        }
+    };
+
     if( cancel_if_book_invalid( act, book, who ) ) {
+        deactivate_ereader();
         return;
     }
 
@@ -2078,6 +2138,7 @@ void read_activity_actor::finish( player_activity &act, Character &who )
                                  player_readma( *who.as_avatar() ) : player_read( *who.as_avatar() );
 
         if( should_null ) {
+            deactivate_ereader();
             act.set_to_null();
             return;
         }
@@ -2085,11 +2146,13 @@ void read_activity_actor::finish( player_activity &act, Character &who )
 
         // npcs can't read martial arts books yet
         if( is_mabook ) {
+            deactivate_ereader();
             act.set_to_null();
             return;
         }
 
         if( npc_read( static_cast<npc &>( who ) ) ) {
+            deactivate_ereader();
             act.set_to_null();
             return;
         }
@@ -2114,6 +2177,7 @@ void read_activity_actor::finish( player_activity &act, Character &who )
                 for( const std::string &reason : fail_messages ) {
                     add_msg( m_bad, reason );
                 }
+                deactivate_ereader();
                 act.set_to_null();
                 return;
             }
@@ -2123,16 +2187,55 @@ void read_activity_actor::finish( player_activity &act, Character &who )
                            to_string_writable( time_taken ) );
         }
 
-        // restart the activity
+        // restart the activity without deactivating — ereader stays on while reading
         moves_total = to_moves<int>( time_taken );
         act.moves_total = to_moves<int>( time_taken );
         act.moves_left = to_moves<int>( time_taken );
         return;
     } else  {
-        who.add_msg_if_player( m_info, _( "You finish reading." ) );
+        if( using_ereader ) {
+            who.add_msg_player_or_npc( m_info,
+                                       string_format( _( "You finish reading ebook %s." ),
+                                               book->type_name() ),
+                                       string_format( _( "<npcname> finishes reading ebook %s." ),
+                                               book->type_name() ) );
+        } else {
+            who.add_msg_player_or_npc( m_info,
+                                       string_format( _( "You finish reading %s." ),
+                                               book->type_name() ),
+                                       string_format( _( "<npcname> finishes reading %s." ),
+                                               book->type_name() ) );
+        }
     }
 
+    deactivate_ereader();
     act.set_to_null();
+}
+
+void read_activity_actor::canceled( player_activity &/*act*/, Character &who )
+{
+    if( is_valid_book( book ) ) {
+        if( using_ereader ) {
+            who.add_msg_player_or_npc( m_info,
+                                       string_format( _( "You stop reading ebook %s." ),
+                                               book->type_name() ),
+                                       string_format( _( "<npcname> stops reading ebook %s." ),
+                                               book->type_name() ) );
+        } else {
+            who.add_msg_player_or_npc( m_info,
+                                       string_format( _( "You stop reading %s." ),
+                                               book->type_name() ),
+                                       string_format( _( "<npcname> stops reading %s." ),
+                                               book->type_name() ) );
+        }
+    }
+    if( using_ereader && ereader && ereader->type->tool &&
+        ereader->type->tool->power_draw > 0_W ) {
+        if( ereader->can_link_up() && !ereader->has_no_links() ) {
+            ereader->reset_link( false );
+        }
+        who.invoke_item( &*ereader, "transform", who.pos_bub() );
+    }
 }
 
 bool read_activity_actor::can_resume_with_internal( const activity_actor &other,
@@ -3230,6 +3333,18 @@ void efile_activity_actor::completed_processing_current_efile( player_activity &
     add_msg_if_player_sees( who, m_info, string_format( _( "%s %s %s." ),
                             who.disp_name( false, true ), efile_action_name( action_type, true, false ),
                             current_efile->display_name() ) );
+    // Helper: remove a stale item_location from selected_efiles by raw pointer.
+    // Must be called BEFORE the item is removed from its pocket, while the pointer is still valid.
+    auto erase_from_selected = [&]( const item_location & loc ) {
+        const item *ptr = loc.get_item();
+        selected_efiles.erase(
+            std::remove_if( selected_efiles.begin(), selected_efiles.end(),
+        [ptr]( const item_location & l ) {
+            return l.get_item() == ptr; // NOLINT(clang-analyzer-core.NullDereference)
+        } ),
+        selected_efiles.end() );
+    };
+
     switch( action_type ) {
         case EF_BROWSE:
             if( current_efile->typeId() == itype_efile_junk ) {
@@ -3248,6 +3363,9 @@ void efile_activity_actor::completed_processing_current_efile( player_activity &
             remove_efile( current_edevice, *current_efile );
             break;
         case EF_MOVE_FROM_THIS:
+            // Erase from selected_efiles before destroying the item so the item_location
+            // cannot be serialised with a stale (now-invalid) traversal index on save.
+            erase_from_selected( current_efile );
             add_efile( current_edevice, *current_efile, false );
             remove_efile( used_edevice, *current_efile );
             break;
@@ -3439,14 +3557,27 @@ void efile_activity_actor::canceled( player_activity &act, Character &who )
 
 void efile_activity_actor::serialize( JsonOut &jsout ) const
 {
+    // Filter out any item_locations that have become invalid (e.g. items moved/deleted since last
+    // load).  Writing an invalid traversal index would trigger a debug error on the next load.
+    auto valid_locs = []( const std::vector<item_location> &locs ) {
+        std::vector<item_location> out;
+        out.reserve( locs.size() );
+        for( const item_location &loc : locs ) {
+            if( loc && loc.get_item() != nullptr ) {
+                out.push_back( loc );
+            }
+        }
+        return out;
+    };
+
     jsout.start_object();
     jsout.member( "used_edevice", used_edevice );
     jsout.member( "target_edevices", target_edevices );
     jsout.member( "target_edevices_copy", target_edevices_copy );
     jsout.member( "action_type", action_type );
     jsout.member( "combo_type", combo_type );
-    jsout.member( "selected_efiles", selected_efiles );
-    jsout.member( "currently_processed_efiles", currently_processed_efiles );
+    jsout.member( "selected_efiles", valid_locs( selected_efiles ) );
+    jsout.member( "currently_processed_efiles", valid_locs( currently_processed_efiles ) );
     jsout.member( "target_edevices_count", target_edevices_count );
     jsout.member( "processed_edevices", processed_edevices );
     jsout.member( "failed_edevices", failed_edevices );
@@ -3605,6 +3736,123 @@ bool efile_activity_actor::efile_skip_copy( const efile_transfer &transfer, cons
     }
     return false;
 }
+
+// fish-with-rod fish catching function.
+static void rod_fish( Character &who, const std::vector<monster *> &fishables )
+{
+    map &here = get_map();
+    constexpr auto caught_corpse = []( Character & who, map & here, const mtype & corpse_type ) {
+        item corpse = item::make_corpse( corpse_type.id,
+                                         calendar::turn + rng( 0_turns,
+                                                 3_hours ) );
+        corpse.set_var( "activity_var", who.name );
+        item_location loc = here.add_item_or_charges_ret_loc( who.pos_bub(), corpse );
+        if( who.is_avatar() ) {
+            popup( _( "You caught a %s." ), corpse_type.nname() );
+        }
+        if( loc ) {
+            who.may_activity_occupancy_after_end_items_loc.push_back( loc );
+        }
+    };
+    //if the vector is empty (no fish around) the player is still given a small chance to get a (let us say it was hidden) fish
+    if( fishables.empty() ) {
+        const std::vector<mtype_id> fish_group = MonsterGroupManager::GetMonstersFromGroup(
+                    GROUP_FISH, true );
+        const mtype_id fish_mon = random_entry_ref( fish_group );
+        caught_corpse( who, here, fish_mon.obj() );
+    } else {
+        monster *chosen_fish = random_entry( fishables );
+        chosen_fish->fish_population -= 1;
+        if( chosen_fish->fish_population <= 0 ) {
+            Character *who_ptr = &who;
+            g->catch_a_monster( chosen_fish, who.pos_bub(), who_ptr, 50_hours );
+        } else {
+            if( chosen_fish->type != nullptr ) {
+                caught_corpse( who, here, *( chosen_fish->type ) );
+            }
+        }
+    }
+}
+
+void fish_activity_actor::start( player_activity &act, Character & )
+{
+    act.moves_left = to_moves<int>( fishing_duration );
+}
+
+void fish_activity_actor::do_turn( player_activity &, Character &who )
+{
+
+    float fish_chance = 1.0f;
+    float survival_skill = who.get_skill_level( skill_survival );
+    switch( fishing_rod->get_quality( qual_FISHING_ROD ) ) {
+        case 1:
+            survival_skill += dice( 1, 6 );
+            break;
+        case 2:
+            // Much better chances with a good fishing implement.
+            survival_skill += dice( 4, 9 );
+            survival_skill *= 2;
+            break;
+        default:
+            debugmsg( "ERROR: Invalid FISHING_ROD tool quality on %s", item::nname( fishing_rod->typeId() ) );
+            break;
+    }
+    std::vector<monster *> fishables = g->get_fishable_monsters( fishing_zone );
+    // Fish are always there, even if it doesn't seem like they are visible!
+    if( fishables.empty() ) {
+        fish_chance += survival_skill / 2;
+    } else {
+        // if they are visible however, it implies a larger population
+        for( monster *elem : fishables ) {
+            fish_chance += elem->fish_population;
+        }
+        fish_chance += survival_skill;
+    }
+    // no matter the population of fish, your skill and tool limits the ease of catching.
+    fish_chance = std::min( survival_skill * 10, fish_chance );
+    if( x_in_y( fish_chance, 500000 ) ) {
+        who.add_msg_if_player( m_good, _( "You feel a tug on your line!" ) );
+        rod_fish( who, fishables );
+    }
+    if( calendar::once_every( 60_minutes ) ) {
+        who.practice( skill_survival, rng( 1, 3 ) );
+    }
+}
+
+void fish_activity_actor::finish( player_activity &act, Character &who )
+{
+    act.set_to_null();
+    who.add_msg_if_player( m_info, _( "You finish fishing" ) );
+    if( !who.backlog.empty() && who.backlog.front().id() == ACT_MULTIPLE_FISH ) {
+        who.backlog.clear();
+        who.assign_activity( ACT_TIDY_UP );
+    }
+}
+
+void fish_activity_actor::serialize( JsonOut &jsout ) const
+{
+    jsout.start_object();
+
+    jsout.member( "fishing_zone", fishing_zone );
+    jsout.member( "fishing_rod", fishing_rod );
+    jsout.member( "fishing_duration", fishing_duration );
+
+    jsout.end_object();
+}
+
+std::unique_ptr<activity_actor> fish_activity_actor::deserialize( JsonValue &jsin )
+{
+    fish_activity_actor actor;
+
+    JsonObject data = jsin.get_object();
+
+    data.read( "fishing_zone", actor.fishing_zone );
+    data.read( "fishing_rod", actor.fishing_rod );
+    data.read( "fishing_duration", actor.fishing_duration );
+
+    return actor.clone();
+}
+
 void migration_cancel_activity_actor::do_turn( player_activity &act, Character &who )
 {
     // Stop the activity
@@ -4780,9 +5028,6 @@ void harvest_activity_actor::start( player_activity &act, Character &who )
                 return;
             }
             exam_furn = true;
-        } else if( furn->has_examine( iexamine::harvest_furn_nectar ) )  {
-            exam_furn = true;
-            nectar = true;
         }
     }
 
@@ -4814,24 +5059,21 @@ void harvest_activity_actor::finish( player_activity &act, Character &who )
 
     map &here = get_map();
 
-    // If nothing can be harvested, neither can nectar
-    // Incredibly low priority TODO: Allow separating nectar seasons
-    if( nectar && iexamine_helper::drink_nectar( who ) ) {
-        return;
-    }
-
     const float survival_skill = who.get_skill_level( skill_survival );
     bool got_anything = false;
     for( const harvest_entry &entry : here.get_harvest( target ).obj() ) {
-        int forage_roll = rng( 0, 49 );
+        /* Assuming perfect visibility and 10 perception, entry.difficulty is the
+           survival skill that would be required to reach the cap. 0 entry.difficulty
+           bypasses the hard cap. */
+        int difficulty = entry.difficulty * 3 + 13;
+        int forage_roll = rng( 0, difficulty );
         const float min_num = entry.scale_num.first * survival_skill + entry.base_num.first;
         const float max_num = entry.scale_num.second * survival_skill + entry.base_num.second;
         int vision_factor = std::clamp( 5 - static_cast<int>( std::floor( who.fine_detail_vision_mod() ) ),
                                         -4, 4 );
         const int roll = std::min<int>( entry.max, std::round( rng_float( min_num, max_num ) ) );
-        got_anything = ( std::min( ( survival_skill * 3 + ( who.per_cur + vision_factor ) ),
-                                   42.0f ) > forage_roll ) &&
-                       ( roll > 0 );
+        got_anything |= ( ( survival_skill * 3 + ( who.get_vision_per() + vision_factor ) ) > forage_roll )
+                        && roll > 0 && ( entry.difficulty == 0 || rng( 0, 49 ) < 40 );
         if( got_anything ) {
             for( int i = 0; i < roll; i++ ) {
                 iexamine_helper::handle_harvest( who, entry.drop, false );
@@ -4857,7 +5099,6 @@ void harvest_activity_actor::serialize( JsonOut &jsout ) const
     jsout.start_object();
     jsout.member( "target", target );
     jsout.member( "exam_furn", exam_furn );
-    jsout.member( "nectar", nectar );
     jsout.member( "auto_forage", auto_forage );
     jsout.end_object();
 }
@@ -4869,7 +5110,6 @@ std::unique_ptr<activity_actor> harvest_activity_actor::deserialize( JsonValue &
     JsonObject jsobj = jsin.get_object();
     jsobj.read( "target", actor.target );
     jsobj.read( "exam_furn", actor.exam_furn );
-    jsobj.read( "nectar", actor.nectar );
     jsobj.read( "auto_forage", actor.auto_forage );
     return actor.clone();
 }
@@ -5017,7 +5257,6 @@ bool disable_activity_actor::can_disable_or_reprogram( const monster &monster )
 
     return ( ( monster.friendly != 0 || ( monster.has_effect( effect_sensor_stun ) &&
                                           !monster.in_species( species_ZOMBIE ) ) ) &&
-             !monster.has_flag( mon_flag_RIDEABLE_MECH ) &&
              !( monster.has_flag( mon_flag_PAY_BOT ) && monster.has_effect( effect_paid ) ) ) &&
            ( !monster.type->revert_to_itype.is_empty() || monster.type->id == mon_manhack );
 }
@@ -5893,6 +6132,11 @@ static bool check_if_disassemble_okay( item_location target, Character &who )
 {
     item *disassembly = target.get_item();
 
+    if( who.is_worn( *disassembly ) ) {
+        who.add_msg_if_player(
+            _( "You can't disassemble an item while you're wearing it." ) );
+        return false;
+    }
     // item_location::get_item() will return nullptr if the item is lost
     if( !disassembly ) {
         who.add_msg_player_or_npc(
@@ -6751,6 +6995,11 @@ std::unique_ptr<activity_actor> haircut_activity_actor::deserialize( JsonValue &
 static bool check_stealing( Character &who, item &it )
 {
     if( !it.is_owned_by( who, true ) ) {
+        // Don't flag taking items from hostile factions as stealing.
+        const faction *owner_fac = g->faction_manager_ptr->get( it.get_owner(), false );
+        if( owner_fac && owner_fac->likes_u < -10 ) {
+            return true;
+        }
         // Has the player given input on if stealing is ok?
         if( who.get_value( "THIEF_MODE" ).str() == "THIEF_ASK" ) {
             Pickup::query_thief();
@@ -8428,8 +8677,7 @@ void heat_activity_actor::finish( player_activity &act, Character &p )
         if( cold_item->count_by_charges() ) {
             item copy( *cold_item );
             copy.charges = ait.second;
-            copy.unset_flag( flag_FROZEN );
-            copy.set_flag( flag_HOT );
+            copy.heat_up();
             cold_item->charges -= ait.second;
             if( cold_item->charges <= 0 ) {
                 cold_item.remove_item();
@@ -8440,8 +8688,7 @@ void heat_activity_actor::finish( player_activity &act, Character &p )
                 p.i_add_or_drop( copy );
             }
         } else {
-            cold_item->unset_flag( flag_FROZEN );
-            cold_item->set_flag( flag_HOT );
+            cold_item->heat_up();
             if( cold_item.get_item()->made_of( phase_id::LIQUID ) ) {
                 liquid_handler::handle_all_liquid( *cold_item, PICKUP_RANGE );
             } else {
@@ -8652,6 +8899,10 @@ void pulp_activity_actor::do_turn( player_activity &act, Character &you )
             } else if( corpse.volume() <= 483750_ml ) {
                 divisor = 125_ml;
             }
+            // Frozen corpses take twice as long to pulp.
+            if( corpse.has_flag( flag_FROZEN ) ) {
+                divisor /= 2;
+            }
             double corpse_volume_factor = corpse.volume() / divisor;
             while( corpse.damage() < corpse.max_damage() ) {
                 // Increase damage as we keep smashing ensuring we do eventually smash the target.
@@ -8826,6 +9077,7 @@ deserialize_functions = {
     { ACT_E_FILE, &efile_activity_actor::deserialize },
     { ACT_EBOOKSAVE, &ebooksave_activity_actor::deserialize },
     { ACT_FIRSTAID, &firstaid_activity_actor::deserialize },
+    { ACT_FISH, &fish_activity_actor::deserialize },
     { ACT_FORAGE, &forage_activity_actor::deserialize },
     { ACT_FURNITURE_MOVE, &move_furniture_activity_actor::deserialize },
     { ACT_GLIDE, &glide_activity_actor::deserialize },

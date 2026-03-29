@@ -73,7 +73,6 @@
 static const std::string comesttype_DRINK( "DRINK" );
 static const std::string comesttype_FOOD( "FOOD" );
 
-static const bionic_id bio_faulty_grossfood( "bio_faulty_grossfood" );
 static const bionic_id bio_syringe( "bio_syringe" );
 static const bionic_id bio_taste_blocker( "bio_taste_blocker" );
 
@@ -598,14 +597,18 @@ std::pair<int, int> Character::fun_for( const item &comest, bool ignore_already_
         }
     }
 
-    if( has_bionic( bio_faulty_grossfood ) && comest.is_food() ) {
-        fun -= 13;
-    }
-
     if( fun < 0 && has_active_bionic( bio_taste_blocker ) &&
         get_power_level() > units::from_kilojoule( static_cast<std::int64_t>( std::abs(
                     comest.get_comestible_fun() ) ) ) ) {
         fun = 0;
+    }
+
+    // Zombie meat doesn't taste good, but it's tolerable for those who can eat it.
+    if( has_trait( trait_EATDEAD ) && comest.poison > 0 ) {
+        if( fun < -1.f ) {
+            fun_max = fun;
+            fun *= 0.25f;
+        }
     }
 
     return { static_cast< int >( fun ), static_cast< int >( fun_max ) };
@@ -917,7 +920,7 @@ ret_val<edible_rating> Character::can_eat( const item &food ) const
     }
 
     if( !has_flag( json_flag_SAPIOVORE ) &&
-        !has_flag( STATIC( json_character_flag( "CANNIBAL" ) ) ) &&
+        !has_flag( json_flag_CANNIBAL ) &&
         !has_flag( json_flag_PSYCHOPATH ) &&
         !( food.has_flag( flag_HEMOVORE_FUN ) && has_flag( json_flag_HEMOVORE ) ) &&
         food.has_vitamin( vitamin_human_flesh_vitamin ) &&
@@ -1003,7 +1006,7 @@ ret_val<edible_rating> Character::will_eat( const item &food, bool interactive )
 
     const bool carnivore = has_trait( trait_CARNIVORE );
     const bool food_is_human_flesh = food.has_vitamin( vitamin_human_flesh_vitamin );
-    if( ( food_is_human_flesh && !has_flag( STATIC( json_character_flag( "CANNIBAL" ) ) ) &&
+    if( ( food_is_human_flesh && !has_flag( json_flag_CANNIBAL ) &&
           !has_flag( json_flag_PSYCHOPATH ) && !has_flag( json_flag_SAPIOVORE ) ) &&
         !( has_flag( json_flag_HEMOVORE ) && food.has_flag( flag_HEMOVORE_FUN ) ) ) {
         add_consequence( _( "The thought of eating human flesh makes you feel sick." ), CANNIBALISM );
@@ -1439,17 +1442,17 @@ void Character::modify_morale( item &food, const int nutr )
         const bool apex_predator = has_flag( json_flag_PRED4 );
         if( apex_predator ) {
             // Largest bonus, balances out to around +5 or +10. Some organs may still be negative.
-            add_morale( morale_meatarian, 20, 10, 4_hours, 3_hours );
+            add_morale( morale_meatarian, 20, 10, 4_hours, 3_hours, true );
             add_msg_if_player( m_good,
                                _( "As you tear into the raw flesh, you feel satisfied with your meal." ) );
         } else if( predator || hunter ) {
             // Should approximately balance the fun to 0 for normal meat.
-            add_morale( morale_meatarian, 15, 5, 3_hours, 2_hours );
+            add_morale( morale_meatarian, 15, 5, 3_hours, 2_hours, true );
             add_msg_if_player( m_good,
                                _( "Raw flesh doesn't taste all that bad, actually." ) );
         } else if( carnivore || culler ) {
             // Only a small bonus (+5), still negative fun.
-            add_morale( morale_meatarian, 5, 0, 2_hours, 1_hours );
+            add_morale( morale_meatarian, 5, 0, 2_hours, 1_hours, true );
             add_msg_if_player( m_bad,
                                _( "This doesn't taste very good, but meat is meat." ) );
         } else if( has_trait( trait_SQUEAMISH ) ) {
@@ -1462,12 +1465,12 @@ void Character::modify_morale( item &food, const int nutr )
         const morale_type allergy = allergy_type( food );
         if( allergy != morale_type::NULL_ID() ) {
             add_msg_if_player( m_bad, _( "Your stomach begins gurgling and you feel bloated and ill." ) );
-            add_morale( allergy, -75, -400, 2_hours, 1_hours );
+            add_morale( allergy, -35, -75, 2_hours, 1_hours, true );
         }
         if( food.has_flag( flag_ALLERGEN_JUNK ) ) {
             if( has_trait( trait_PROJUNK ) ) {
                 add_msg_if_player( m_good, _( "Mmm, junk food." ) );
-                add_morale( morale_sweettooth, 5, 30, 2_hours, 1_hours );
+                add_morale( morale_sweettooth, 5, 25, 2_hours, 1_hours, true );
             }
             if( has_trait( trait_PROJUNK2 ) ) {
                 if( !one_in( 100 ) ) {
@@ -1475,13 +1478,13 @@ void Character::modify_morale( item &food, const int nutr )
                 } else {
                     add_msg_if_player( m_good, _( "Snack attack!" ) );
                 }
-                add_morale( morale_sweettooth, 10, 50, 2_hours, 1_hours );
+                add_morale( morale_sweettooth, 10, 30, 2_hours, 1_hours, true );
             }
             // Carnivores CAN eat junk food, but they won't like it much.
             // Pizza-scraping happens in consume_effects.
             if( has_trait( trait_CARNIVORE ) && !food.has_flag( flag_CARNIVORE_OK ) ) {
                 add_msg_if_player( m_bad, _( "Your stomach begins gurgling and you feel bloated and ill." ) );
-                add_morale( morale_no_digest, -25, -125, 2_hours, 1_hours );
+                add_morale( morale_no_digest, -30, -60, 2_hours, 1_hours, true );
             }
         }
     }
@@ -1490,7 +1493,7 @@ void Character::modify_morale( item &food, const int nutr )
     if( !food.rotten() && chew && has_trait( trait_SAPROPHAGE ) ) {
         // It's OK to *drink* things that haven't rotted.  Alternative is to ban water.  D:
         add_msg_if_player( m_bad, _( "Your stomach begins gurgling and you feel bloated and ill." ) );
-        add_morale( morale_no_digest, -75, -400, 2_hours, 1_hours );
+        add_morale( morale_no_digest, -50, -100, 2_hours, 1_hours, true );
     }
     if( food.has_flag( flag_URSINE_HONEY ) && ( !crossed_threshold() ||
             has_trait( trait_THRESH_URSINE ) ) &&
@@ -1501,7 +1504,7 @@ void Character::modify_morale( item &food, const int nutr )
         } else {
             add_msg_if_player( m_good, _( "You feast upon the sweet honey." ) );
         }
-        add_morale( morale_honey, honey_fun, 100, 4_hours, 3_hours );
+        add_morale( morale_honey, honey_fun, 100, 4_hours, 3_hours, true );
     }
     if( nausea_chance > 5 ) {
         if( has_trait( trait_PICKYEATER ) ) {

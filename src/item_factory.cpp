@@ -41,6 +41,7 @@
 #include "item_contents.h"
 #include "item_group.h"
 #include "item_pocket.h"
+#include "item_transformation.h"
 #include "itype.h"
 #include "iuse_actor.h"
 #include "make_static.h"
@@ -1006,16 +1007,21 @@ void Item_factory::finalize_post_armor( itype &obj )
             data.avg_thickness = thic_acc;
         }
 
-        // Precalc hardness and comfort for these parts of the armor. uncomfortable material supersedes softness (all rigid materials are assumed to be uncomfy)
-        for( const part_material &m : data.materials ) {
-            if( m.cover > islot_armor::test_threshold ) {
-                if( m.id->soft() ) {
-                    data.comfortable = true;
-                } else {
-                    data.rigid = true;
-                }
-                if( m.id->uncomfortable() ) {
-                    data.comfortable = false;
+        // Precalc hardness and comfort for these parts of the armor.
+        for( armor_portion_data &data : obj.armor->sub_data ) {
+            // If rigid_override is set, don't overwrite it here.
+            if( !data.rigid_override ) {
+                for( const part_material &m : data.materials ) {
+                    if( m.cover > islot_armor::test_threshold ) {
+                        if( m.id->soft() ) {
+                            data.comfortable = true;
+                        } else {
+                            data.rigid = true;
+                        }
+                        if( m.id->uncomfortable() ) {
+                            data.comfortable = false;
+                        }
+                    }
                 }
             }
         }
@@ -1915,7 +1921,6 @@ void Item_factory::init()
     add_iuse( "BLECH", &iuse::blech );
     add_iuse( "BLECH_BECAUSE_UNCLEAN", &iuse::blech_because_unclean );
     add_iuse( "BOLTCUTTERS", &iuse::boltcutters );
-    add_iuse( "C4", &iuse::c4 );
     add_iuse( "CAMERA", &iuse::camera );
     add_iuse( "CAN_GOO", &iuse::can_goo );
     add_iuse( "COIN_FLIP", &iuse::coin_flip );
@@ -1951,8 +1956,6 @@ void Item_factory::init()
     add_iuse( "EXTINGUISHER", &iuse::extinguisher );
     add_iuse( "EYEDROPS", &iuse::eyedrops );
     add_iuse( "FILL_PIT", &iuse::fill_pit );
-    add_iuse( "FIRECRACKER", &iuse::firecracker );
-    add_iuse( "FIRECRACKER_PACK", &iuse::firecracker_pack );
     add_iuse( "FIRECRACKER_PACK_ACT", &iuse::firecracker_pack_act );
     add_iuse( "FISH_ROD", &iuse::fishing_rod );
     add_iuse( "FISH_TRAP", &iuse::fish_trap );
@@ -1996,7 +1999,6 @@ void Item_factory::init()
     add_iuse( "MARLOSS_GEL", &iuse::marloss_gel );
     add_iuse( "MARLOSS_SEED", &iuse::marloss_seed );
     add_iuse( "MA_MANUAL", &iuse::ma_manual );
-    add_iuse( "MANAGE_EXOSUIT", &iuse::manage_exosuit );
     add_iuse( "MEDITATE", &iuse::meditate );
     add_iuse( "METH", &iuse::meth );
     add_iuse( "MININUKE", &iuse::mininuke );
@@ -2005,8 +2007,6 @@ void Item_factory::init()
     add_iuse( "MP3", &iuse::mp3 );
     add_iuse( "MP3_ON", &iuse::mp3_on );
     add_iuse( "MP3_DEACTIVATE", &iuse::mp3_deactivate );
-    add_iuse( "MULTICOOKER", &iuse::multicooker );
-    add_iuse( "MULTICOOKER_TICK", &iuse::multicooker_tick );
     add_iuse( "MYCUS", &iuse::mycus );
     add_iuse( "NOISE_EMITTER_ON", &iuse::noise_emitter_on );
     add_iuse( "OXYGEN_BOTTLE", &iuse::oxygen_bottle );
@@ -2018,17 +2018,16 @@ void Item_factory::init()
     add_iuse( "PICKAXE", &iuse::pickaxe );
     add_iuse( "PLANTBLECH", &iuse::plantblech );
     add_iuse( "POISON", &iuse::poison );
+    add_iuse( "POISON_TAINTED", &iuse::poison_tainted );
     add_iuse( "PORTABLE_GAME", &iuse::portable_game );
     add_iuse( "PORTAL", &iuse::portal );
     add_iuse( "POST_UP", &iuse::post_up );
     add_iuse( "PROZAC", &iuse::prozac );
     add_iuse( "PURIFY_SMART", &iuse::purify_smart );
     add_iuse( "RADIOCAR", &iuse::radiocar );
-    add_iuse( "RADIOCARON", &iuse::radiocaron );
     add_iuse( "RADIOCONTROL", &iuse::radiocontrol );
     add_iuse( "RADIOCONTROL_TICK", &iuse::radiocontrol_tick );
     add_iuse( "RADIO_MOD", &iuse::radio_mod );
-    add_iuse( "RADIO_OFF", &iuse::radio_off );
     add_iuse( "RADIO_ON", &iuse::radio_on );
     add_iuse( "RADIO_TICK", &iuse::radio_tick );
     add_iuse( "BINDER_ADD_RECIPE", &iuse::binder_add_recipe );
@@ -2694,7 +2693,7 @@ void Item_factory::check_definitions() const
             for( const ammotype &at : type->tool->ammo_id ) {
                 check_ammo_type( msg, at );
             }
-            if( !type->tool->revert_msg.empty() && !type->revert_to ) {
+            if( !type->tool->revert_msg.empty() && !type->transform_into ) {
                 msg += "cannot specify revert_msg without revert_to\n";
             }
             if( !type->tool->subtype.is_empty() && !has_template( type->tool->subtype ) ) {
@@ -2726,9 +2725,10 @@ void Item_factory::check_definitions() const
             }
         }
 
-        if( type->revert_to && ( !has_template( *type->revert_to ) ||
-                                 type->revert_to->is_null() ) ) {
-            msg += string_format( "invalid revert_to property %s\n does not exist", type->revert_to->c_str() );
+        if( type->transform_into && ( !has_template( type->transform_into.value().target ) ||
+                                      type->transform_into.value().target.is_null() ) ) {
+            msg += string_format( "invalid revert_to property %s\n does not exist",
+                                  type->transform_into.value().target.c_str() );
         }
 
         if( msg.empty() ) {
@@ -3098,9 +3098,18 @@ void armor_portion_data::deserialize( const JsonObject &jo )
     }
     optional( jo, false, "coverage", coverage, 0 );
 
-    // load a breathability override
+    // Load a breathability override.
     breathability_rating temp_enum = breathability_rating::last;
     optional( jo, false, "breathability", temp_enum, breathability_rating::last );
+
+    // Load a rigidity override.
+    bool rigid_override = false;
+    if( jo.has_member( "rigid" ) ) {
+        rigid_override = false;
+        optional( jo, false, "rigid", rigid_override, rigid_override );
+        rigid = rigid_override;
+    }
+
     if( temp_enum != breathability_rating::last ) {
         breathability = material_type::breathability_to_rating( temp_enum );
     }
@@ -4073,7 +4082,7 @@ void itype::load( const JsonObject &jo, std::string_view src )
         degrade_increments_ = std::isnan( adjusted_inc ) ? 0 : std::round( adjusted_inc );
     }
 
-    name = translation( translation::plural_tag() );
+    name.make_plural();
     mandatory( jo, was_loaded, "name", name );
     optional( jo, was_loaded, "conditional_names", conditional_names );
     optional( jo, was_loaded, "description", description );
@@ -4140,7 +4149,19 @@ void itype::load( const JsonObject &jo, std::string_view src )
     optional( jo, was_loaded, "techniques", techniques, auto_flags_reader<matec_id> {} );
 
     optional( jo, was_loaded, "countdown_interval", countdown_interval );
-    optional( jo, was_loaded, "revert_to", revert_to );
+
+    optional( jo, was_loaded, "transform_into", transform_into );
+
+    if( jo.has_member( "revert_to" ) ) {
+        item_transformation default_transformation;
+        transform_into = default_transformation;
+        mandatory( jo, was_loaded, "revert_to", transform_into.value().target );
+    }
+
+    if( jo.has_member( "revert_to" ) && jo.has_member( "transform_into" ) ) {
+        jo.throw_error_at( "transform_into",
+                           "Item specified both transform_into and revert_to: they're mutually exclusive" );
+    }
 
     //First, check for copy-from
     if( jo.has_member( "copy-from" ) ) {

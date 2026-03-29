@@ -78,6 +78,7 @@ class eoc_events;
 class event_bus;
 class faction_manager;
 class field_entry;
+class inventory_selector_preset;
 class item;
 class kill_tracker;
 class live_view;
@@ -89,6 +90,7 @@ class monster;
 class npc;
 class npc_template;
 class overmap;
+class power_network_manager;
 class save_t;
 class scenario;
 class scent_map;
@@ -146,7 +148,6 @@ class game
 {
         friend class editmap;
         friend class main_menu;
-        friend class exosuit_interact;
         friend class swap_map;
         friend achievements_tracker &get_achievements();
         friend event_bus &get_event_bus();
@@ -736,6 +737,8 @@ class game
         /** Custom-filtered menu for inventory and nearby items and those that within specified radius */
         item_location inv_map_splice( const item_filter &filter, const std::string &title, int radius = 0,
                                       const std::string &none_message = "" );
+        item_location inv_map_splice( const inventory_selector_preset &preset, const std::string &title,
+                                      int radius = 0, const std::string &none_message = "" );
         item_location inv_map_splice( const item_location_filter &filter, const std::string &title,
                                       int radius = 0, const std::string &none_message = "" );
 
@@ -1127,6 +1130,7 @@ class game
         pimpl<memorial_logger> memorial_logger_ptr; // NOLINT(cata-serialize)
         pimpl<spell_events> spell_events_ptr; // NOLINT(cata-serialize)
         pimpl<eoc_events> eoc_events_ptr; // NOLINT(cata-serialize)
+        pimpl<power_network_manager> power_networks_ptr;
 
         map &m; // NOLINT(cata-serialize)
         // 'current_map' will be identical to 'm' as you can save only at the top of the main loop.
@@ -1151,6 +1155,7 @@ class game
         queued_eocs queued_global_effect_on_conditions;
 
         spell_events &spell_events_subscriber();
+        power_network_manager &power_networks();
 
         pimpl<creature_tracker> critter_tracker;
         pimpl<faction_manager> faction_manager_ptr; // NOLINT(cata-serialize)

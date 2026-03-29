@@ -509,6 +509,23 @@
   },
   {
     "type": "effect_type",
+    "id": "winded_gastropod_foot",
+    "name": [ "Winded (Foot)" ],
+    "desc": [ "You're short of breath.  Your foot has impaired function until you recover." ],
+    "rating": "bad",
+    "max_duration": "30 s",
+    "base_mods": { "speed_mod": [ -5 ], "pain_min": [ 1 ], "pain_chance": [ 10 ], "pain_max_val": [ 20 ] },
+    "limb_score_mods": [
+      { "limb_score": "block", "modifier": 0.81 },
+      { "limb_score": "swim", "modifier": 0.49 },
+      { "limb_score": "move_speed", "modifier": 0.75 },
+      { "limb_score": "footing", "modifier": 0.7 },
+      { "limb_score": "balance", "modifier": 0.7 }
+    ],
+    "flags": [ "EFFECT_LIMB_SCORE_MOD" ]
+  },
+  {
+    "type": "effect_type",
     "id": "winded_leg_r",
     "name": [ "Winded (Right Leg)" ],
     "desc": [ "You're short of breath.  Your right leg has impaired function until you recover." ],
@@ -569,6 +586,60 @@
       { "limb_score": "move_speed", "modifier": 0.5 },
       { "limb_score": "footing", "modifier": 0.5 },
       { "limb_score": "balance", "modifier": 0.5 }
+    ],
+    "flags": [ "EFFECT_LIMB_SCORE_MOD", "EFFECT_LIMB_DISABLE_CONDITIONAL_FLAGS" ]
+  },
+  {
+    "type": "effect_type",
+    "id": "winded_cephalopod_arm_lower",
+    "name": [ "Winded (Arms)" ],
+    "desc": [ "You're short of breath.  Your arms have impaired function until you recover." ],
+    "rating": "bad",
+    "max_duration": "30 s",
+    "base_mods": {
+      "dex_mod": [ -1 ],
+      "str_mod": [ -1 ],
+      "speed_mod": [ -5 ],
+      "pain_min": [ 1 ],
+      "pain_chance": [ 10 ],
+      "pain_max_val": [ 20 ]
+    },
+    "limb_score_mods": [
+      { "limb_score": "lift", "modifier": 0.8 },
+      { "limb_score": "block", "modifier": 0.8 },
+      { "limb_score": "swim", "modifier": 0.8 },
+      { "limb_score": "manip", "modifier": 0.8 },
+      { "limb_score": "grip", "modifier": 0.8 },
+      { "limb_score": "move_speed", "modifier": 0.8 },
+      { "limb_score": "footing", "modifier": 0.8 },
+      { "limb_score": "balance", "modifier": 0.8 }
+    ],
+    "flags": [ "EFFECT_LIMB_SCORE_MOD", "EFFECT_LIMB_DISABLE_CONDITIONAL_FLAGS" ]
+  },
+  {
+    "type": "effect_type",
+    "id": "winded_cephalopod_arm_upper",
+    "name": [ "Winded (Arms)" ],
+    "desc": [ "You're short of breath.  Your arms have impaired function until you recover." ],
+    "rating": "bad",
+    "max_duration": "30 s",
+    "base_mods": {
+      "dex_mod": [ -1 ],
+      "str_mod": [ -1 ],
+      "speed_mod": [ -5 ],
+      "pain_min": [ 1 ],
+      "pain_chance": [ 10 ],
+      "pain_max_val": [ 20 ]
+    },
+    "limb_score_mods": [
+      { "limb_score": "lift", "modifier": 0.8 },
+      { "limb_score": "block", "modifier": 0.8 },
+      { "limb_score": "swim", "modifier": 0.8 },
+      { "limb_score": "manip", "modifier": 0.8 },
+      { "limb_score": "grip", "modifier": 0.8 },
+      { "limb_score": "move_speed", "modifier": 0.8 },
+      { "limb_score": "footing", "modifier": 0.8 },
+      { "limb_score": "balance", "modifier": 0.8 }
     ],
     "flags": [ "EFFECT_LIMB_SCORE_MOD", "EFFECT_LIMB_DISABLE_CONDITIONAL_FLAGS" ]
   },
@@ -780,7 +851,9 @@
       "pain_min": [ 1 ],
       "pain_chance": [ 150, 900 ],
       "hurt_min": [ 1 ],
-      "hurt_chance": [ 450, 2700 ]
+      "hurt_chance": [ 450, 2700 ],
+      "health_chance": [ 500, 1000 ],
+      "health_min": [ -1 ]
     },
     "show_in_info": true,
     "blood_analysis_description": "Poison"
@@ -806,10 +879,41 @@
       "pain_chance": [ 100, 500 ],
       "hurt_min": [ 1 ],
       "hurt_max": [ 2 ],
-      "hurt_chance": [ 300, 1800 ]
+      "hurt_chance": [ 200, 400 ],
+      "health_chance": [ 300, 600 ],
+      "health_min": [ -1 ]
     },
     "show_in_info": true,
     "blood_analysis_description": "Poison"
+  },
+  {
+    "type": "effect_type",
+    "id": "poison_tainted",
+    "name": [ "Necrotic Poison" ],
+    "desc": [ "You have been horribly poisoned!" ],
+    "miss_messages": [ [ "You feel like you're dying.", 2 ] ],
+    "rating": "bad",
+    "immune_bp_flags": [ "BIONIC_LIMB" ],
+    "resist_traits": [ "POISRESIST" ],
+    "immune_flags": [ "EATDEAD" ],
+    "pain_sizing": true,
+    "hurt_sizing": true,
+    "main_parts_only": true,
+    "base_mods": {
+      "per_mod": [ -4, -2 ],
+      "dex_mod": [ -4, -2 ],
+      "str_mod": [ -6, -3 ],
+      "speed_mod": [ -20, -10 ],
+      "pain_min": [ 3, 1 ],
+      "pain_chance": [ 100, 500 ],
+      "hurt_min": [ 1, 1 ],
+      "hurt_max": [ 6, 3 ],
+      "hurt_chance": [ 300, 600 ],
+      "health_chance": [ 200, 400 ],
+      "health_min": [ -1 ]
+    },
+    "show_in_info": true,
+    "blood_analysis_description": "Systemic Necrosis"
   },
   {
     "type": "effect_type",
@@ -836,7 +940,7 @@
     "show_in_info": true,
     "limb_score_mods": [ { "limb_score": "breathing", "modifier": 0.6 } ],
     "flags": [ "EFFECT_LIMB_SCORE_MOD" ],
-    "blood_analysis_description": "Unknown Organic Toxin"
+    "blood_analysis_description": "Severe Histamine Reaction"
   },
   {
     "id": "venom_dmg",
@@ -1470,7 +1574,7 @@
   },
   {
     "type": "effect_type",
-    "id": "mutagen_lupine",
+    "id": "mutagen_canine",
     "name": [ "Canine Mutation", "Canine Transformation", "Canine Metamorphosis" ],
     "desc": [
       "You consumed canine mutagen.",
@@ -1919,6 +2023,7 @@
     "max_duration": "3 m",
     "max_intensity": 4,
     "int_decay_tick": 40,
+    "base_mods": { "health_chance": [ 300, 600 ], "health_min": [ -1 ] },
     "scaling_mods": { "str_mod": [ -1 ], "dex_mod": [ -1 ], "cough_chance": [ 10 ] },
     "limb_score_mods": [
       { "limb_score": "breathing", "resist_modifier": 1, "scaling": -0.25 },
@@ -3199,7 +3304,10 @@
       "winded_leg_l",
       "winded_leg_r",
       "winded_arm_l",
-      "winded_arm_r"
+      "winded_arm_r",
+      "winded_cephalopod_arm_upper",
+      "winded_cephalopod_arm_lower",
+      "winded_gastropod_foot"
     ],
     "base_mods": { "str_mod": [ -1 ], "dex_mod": [ -2 ], "per_mod": [ -2 ], "int_mod": [ -1 ] },
     "scaling_mods": { "str_mod": [ 2 ], "dex_mod": [ 3 ], "per_mod": [ 3 ], "int_mod": [ 1 ] },
@@ -3215,7 +3323,16 @@
     "rating": "good",
     "max_intensity": 2,
     "int_dur_factor": "50 s",
-    "removes_effects": [ "winded", "winded_leg_l", "winded_leg_r", "winded_arm_l", "winded_arm_r" ],
+    "removes_effects": [
+      "winded",
+      "winded_leg_l",
+      "winded_leg_r",
+      "winded_arm_l",
+      "winded_arm_r",
+      "winded_cephalopod_arm_upper",
+      "winded_cephalopod_arm_lower",
+      "winded_gastropod_foot"
+    ],
     "base_mods": { "speed_mod": [ -5 ], "dex_mod": [ -2 ], "per_mod": [ -1 ], "int_mod": [ -2 ] },
     "scaling_mods": {
       "speed_mod": [ 15 ],
@@ -3239,7 +3356,16 @@
     "miss_messages": [ [ "Your comedown throws you off.", 1 ] ],
     "max_intensity": 2,
     "int_dur_factor": "150 s",
-    "removes_effects": [ "winded", "winded_leg_l", "winded_leg_r", "winded_arm_l", "winded_arm_r" ],
+    "removes_effects": [
+      "winded",
+      "winded_leg_l",
+      "winded_leg_r",
+      "winded_arm_l",
+      "winded_arm_r",
+      "winded_cephalopod_arm_upper",
+      "winded_cephalopod_arm_lower",
+      "winded_gastropod_foot"
+    ],
     "base_mods": {
       "speed_mod": [ -10 ],
       "str_mod": [ -2 ],
@@ -3421,15 +3547,9 @@
   },
   {
     "type": "effect_type",
-    "id": "amigara",
-    "apply_message": "You can't look away from the faultline…",
-    "rating": "bad"
-  },
-  {
-    "type": "effect_type",
     "id": "fearparalyze",
-    "name": [ "Feared" ],
-    "desc": [ "You have been paralyzed by the fear." ],
+    "name": [ "Frightened" ],
+    "desc": [ "You are paralyzed by fear." ],
     "rating": "bad",
     "show_in_info": true
   },
@@ -5125,5 +5245,14 @@
     "max_duration": "3 m",
     "name": [ "" ],
     "desc": [ "" ]
+  },
+  {
+    "type": "effect_type",
+    "id": "effect_slit_nostrils_breathing_penalty",
+    "//": "Hidden effect, provides the limb score penalty from Slit Nostrils",
+    "name": [ "" ],
+    "desc": [ "" ],
+    "limb_score_mods": [ { "limb_score": "breathing", "modifier": 0.9 } ],
+    "flags": [ "EFFECT_LIMB_SCORE_MOD" ]
   }
 ]

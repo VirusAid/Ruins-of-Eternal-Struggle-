@@ -95,6 +95,8 @@ struct wrapped_vehicle {
 using VehicleList = std::vector<wrapped_vehicle>;
 class map;
 
+class weather_generator;
+
 enum class ter_furn_flag : int;
 struct pathfinding_cache;
 struct pathfinding_settings;
@@ -403,6 +405,16 @@ class map
         // Constructors & Initialization
         map() : map( MAPSIZE, true ) { }
         virtual ~map();
+
+        // Apply phase-change logic for a single map square based on historical
+        // weather (10-day average at 08:00). Currently implements "water_freeze".
+        void temp_based_phase_change_at( const tripoint_bub_ms &p, const class weather_generator &wgen );
+
+        // Original terrain recording for phase changes
+        bool has_original_terrain_at( const tripoint_bub_ms &p ) const;
+        ter_id get_original_terrain_at( const tripoint_bub_ms &p ) const;
+        void set_original_terrain_at( const tripoint_bub_ms &p, const ter_id &t );
+        void clear_original_terrain_at( const tripoint_bub_ms &p );
 
         map &operator=( const map & ) = delete;
         // NOLINTNEXTLINE(performance-noexcept-move-constructor)
@@ -731,9 +743,10 @@ class map
          * Iteratively tries Bresenham lines with different biases
          * until it finds a clear line or decides there isn't one.
          * returns the line found, which may be the straight line, but blocked.
+         * With empty_on_fail returns empty vector
          */
         std::vector<tripoint_bub_ms> find_clear_path( const tripoint_bub_ms &source,
-                const tripoint_bub_ms &destination ) const;
+                const tripoint_bub_ms &destination, bool empty_on_fail = false ) const;
 
         /**
          * Check whether the player can access the items located @p. Certain furniture/terrain
@@ -790,6 +803,12 @@ class map
         int extra_cost( const tripoint_bub_ms &cur, const tripoint_bub_ms &p,
                         const pathfinding_settings &settings,
                         PathfindingFlags p_special ) const;
+        // Catches up renewable generation (solar/wind/water) for off-map vehicles
+        // that are connected to in-bubble grids via cables.
+        void resolve_off_map_grid_generation();
+        // Re-enables appliance parts that were disabled by power_parts() deficit
+        // when the connected grid actually has battery charge available.
+        void resolve_appliance_grid_power();
     public:
 
         // Vehicles: Common to 2D and 3D
@@ -1100,6 +1119,12 @@ class map
         }
 
         bool is_outside( const tripoint_bub_ms &p ) const;
+        // Returns true if precipitation cannot reach this tile. Walks upward
+        // through z-levels looking for any blocking surface: solid floor,
+        // TRANSPARENT_FLOOR (glass/ramps/grates), NO_FLOOR_WATER, SUN_ROOF_ABOVE
+        // furniture, or vehicle with ROOF/OPAQUE. Uses floor_cache when valid,
+        // falls back to direct terrain/furniture/vehicle checks otherwise.
+        bool is_roofed( const tripoint_bub_ms &p ) const;
         /**
          * Returns whether or not the terrain at the given location can be dived into
          * (by monsters that can swim or are aquatic or non-breathing).
@@ -1337,10 +1362,11 @@ class map
          *  @warning function is relatively expensive and meant for user initiated actions, not mapgen
          */
         item_location add_item_or_charges_ret_loc( const tripoint_bub_ms &pos, item obj,
-                bool overflow = true );
-        item &add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow = true );
+                bool overflow = true, bool force = false );
+        item &add_item_or_charges( const tripoint_bub_ms &pos, item obj, bool overflow = true,
+                                   bool force = false );
         item &add_item_or_charges( const tripoint_bub_ms &pos, item obj, int &copies_remaining,
-                                   bool overflow = true );
+                                   bool overflow = true, bool force = false );
 
         /**
          * Gets spawn_rate value for item category of 'itm'.
@@ -1634,7 +1660,7 @@ class map
             Map &m, const tripoint_bub_ms &p, const field_type_id &type );
 
         std::pair<item *, tripoint_bub_ms> _add_item_or_charges( const tripoint_bub_ms &pos, item obj,
-                int &copies_remaining, bool overflow = true );
+                int &copies_remaining, bool overflow = true, bool force = false );
     public:
 
         // Splatters of various kind
@@ -2479,16 +2505,18 @@ class tinymap : private map
             return map::add_item( rebase_bub( p ), std::move( new_item ) );
         }
         item &add_item_or_charges( const point_omt_ms &p, const item &obj,
-                                   bool overflow = true ) {
-            return map::add_item_or_charges( tripoint_bub_ms( rebase_bub( p ), abs_sub.z() ), obj, overflow );
+                                   bool overflow = true, bool force = false ) {
+            return map::add_item_or_charges( tripoint_bub_ms( rebase_bub( p ), abs_sub.z() ), obj, overflow,
+                                             force );
         }
         std::vector<item *> put_items_from_loc(
             const item_group_id &group_id, const tripoint_omt_ms &p,
             const time_point &turn = calendar::start_of_cataclysm ) {
             return map::put_items_from_loc( group_id, rebase_bub( p ), turn );
         }
-        item &add_item_or_charges( const tripoint_omt_ms &pos, item obj, bool overflow = true ) {
-            return map::add_item_or_charges( rebase_bub( pos ), std::move( obj ), overflow );
+        item &add_item_or_charges( const tripoint_omt_ms &pos, item obj, bool overflow = true,
+                                   bool force = false ) {
+            return map::add_item_or_charges( rebase_bub( pos ), std::move( obj ), overflow, force );
         }
         std::vector<item *> place_items(
             const item_group_id &group_id, int chance, const tripoint_omt_ms &p1, const tripoint_omt_ms &p2,
@@ -2563,6 +2591,9 @@ class tinymap : private map
         };
         bool is_outside( const tripoint_omt_ms &p ) const {
             return map::is_outside( rebase_bub( p ) );
+        }
+        bool is_roofed( const tripoint_omt_ms &p ) const {
+            return map::is_roofed( rebase_bub( p ) );
         }
         int get_radiation( const tripoint_omt_ms &p ) const {
             return map::get_radiation( rebase_bub( p ) );

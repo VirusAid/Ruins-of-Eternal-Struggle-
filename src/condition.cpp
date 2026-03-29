@@ -1650,7 +1650,8 @@ conditional_t::func f_is_on_liquid( bool is_npc )
 {
     return [is_npc]( const_dialogue const & d ) {
         map &here = get_map();
-        return !get_map().is_dry( d.const_actor( is_npc )->pos_bub( here ) );
+        return !get_map().is_dry( d.const_actor( is_npc )->pos_bub( here ) ) &&
+               !d.const_actor( is_npc )->in_bath();
     };
 }
 
@@ -2102,6 +2103,18 @@ conditional_t::func f_using_martial_art( const JsonObject &jo, std::string_view 
     };
 }
 
+conditional_t::func f_is_rotten()
+{
+    return []( const_dialogue const & d ) {
+        item_location const *it = d.const_actor( true )->get_const_item();
+        if( it ) {
+            return ( *it )->get_relative_rot() > 1;
+        } else {
+            debugmsg( "beta talker must be Item" );
+            return false;
+        }
+    };
+}
 
 } // namespace
 } // namespace conditional_fun
@@ -2620,6 +2633,7 @@ parsers_simple = {
     {"u_is_sinking", "npc_is_sinking", &conditional_fun::f_is_sinking },
     {"u_is_on_rails", "npc_is_on_rails", &conditional_fun::f_is_on_rails },
     {"u_is_avatar_passenger", "npc_is_avatar_passenger", &conditional_fun::f_is_avatar_passenger },
+    {"is_rotten", &conditional_fun::f_is_rotten },
 };
 
 conditional_t::conditional_t( const JsonObject &jo )

@@ -42,6 +42,7 @@
 #include "overmap_types.h"
 #include "overmap_map_data_cache.h"
 #include "path_info.h"
+#include "power_network.h"
 #include "regional_settings.h"
 #include "scent_map.h"
 #include "stats_tracker.h"
@@ -257,6 +258,7 @@ void game::unserialize_impl( const JsonObject &data )
     std::string loaded_dimension_prefix;
     if( data.read( "dimension_prefix", loaded_dimension_prefix ) ) {
         dimension_prefix = loaded_dimension_prefix;
+        load_dimension_data();
     }
 
     data.read( "auto_travel_mode", auto_travel_mode );
@@ -658,7 +660,7 @@ void overmap::unserialize( const JsonObject &jsobj )
             JsonArray monster_map_json = om_member;
             while( monster_map_json.has_more() ) {
                 tripoint_abs_ms monster_location;
-                std::unordered_map<tripoint_abs_ms, horde_entity>::iterator result;
+                std::optional<std::unordered_map<tripoint_abs_ms, horde_entity>::iterator> result;
                 monster_location.deserialize( monster_map_json.next_value() );
                 point_abs_om omp;
                 tripoint_om_sm monster_submap;
@@ -673,10 +675,18 @@ void overmap::unserialize( const JsonObject &jsobj )
                     result = hordes.spawn_entity( monster_location, new_monster );
                 }
 
-                result->second.destination.deserialize( monster_map_json.next_value() );
-                result->second.tracking_intensity = monster_map_json.next_int();
-                result->second.last_processed.deserialize( monster_map_json.next_value() );
-                result->second.moves = monster_map_json.next_int();
+                if( result.has_value() ) {
+                    ( *result )->second.destination.deserialize( monster_map_json.next_value() );
+                    ( *result )->second.tracking_intensity = monster_map_json.next_int();
+                    ( *result )->second.last_processed.deserialize( monster_map_json.next_value() );
+                    ( *result )->second.moves = monster_map_json.next_int();
+                } else {
+                    // We deserialized something nasty, skip the rest of the stored values
+                    monster_map_json.next_value();
+                    monster_map_json.next_int();
+                    monster_map_json.next_value();
+                    monster_map_json.next_int();
+                }
             }
         } else if( name == "map_data" ) {
             JsonArray map_data_json = om_member;
@@ -1699,6 +1709,7 @@ void game::unserialize_dimension_data( const cata_path &file_name, std::istream 
 
 void game::unserialize_dimension_data( const JsonValue &jv )
 {
+    power_networks().clear();
     JsonObject game_json = jv;
     for( JsonMember jsin : game_json ) {
         std::string name = jsin.name();
@@ -1710,6 +1721,8 @@ void game::unserialize_dimension_data( const JsonValue &jv )
             overmap_buffer.deserialize_placed_unique_specials( jsin );
         } else if( name == "region_type" ) {
             jsin.read( overmap_buffer.current_region_type );
+        } else if( name == "power_networks" ) {
+            power_networks().deserialize( jsin );
         }
     }
 }
@@ -1736,6 +1749,21 @@ void weather_manager::serialize_all( JsonOut &json )
     if( weather.forced_temperature ) {
         json.member( "forced_temperature", units::to_fahrenheit( *weather.forced_temperature ) );
     }
+    if( !weather.snow_depth_map.empty() ) {
+        json.member( "snow_depth" );
+        json.start_array();
+        for( const auto &pair : weather.snow_depth_map ) {
+            if( pair.second.depth_mm > 0.001 ) {
+                json.start_object();
+                json.member( "x", pair.first.x() );
+                json.member( "y", pair.first.y() );
+                json.member( "depth_mm", pair.second.depth_mm );
+                json.member( "last_update", pair.second.last_update );
+                json.end_object();
+            }
+        }
+        json.end_array();
+    }
     json.end_object();
 }
 
@@ -1755,6 +1783,25 @@ void weather_manager::unserialize_all( const JsonObject &w )
         get_weather().forced_temperature = units::from_fahrenheit( read_forced_temp );
     } else {
         get_weather().forced_temperature.reset();
+    }
+    get_weather().snow_depth_map.clear();
+    if( w.has_array( "snow_depth" ) ) {
+        for( JsonObject entry : w.get_array( "snow_depth" ) ) {
+            // Normalize z to 0: snow depth is z-agnostic
+            tripoint_abs_omt pos( entry.get_int( "x" ), entry.get_int( "y" ), 0 );
+            // Consume "z" if present (old save format stored per-z entries)
+            if( entry.has_int( "z" ) ) {
+                entry.get_int( "z" );
+            }
+            omt_snow_state state;
+            entry.read( "depth_mm", state.depth_mm );
+            entry.read( "last_update", state.last_update );
+            // If duplicate xy from different z-levels, keep the deeper snow
+            auto it = get_weather().snow_depth_map.find( pos );
+            if( it == get_weather().snow_depth_map.end() || state.depth_mm > it->second.depth_mm ) {
+                get_weather().snow_depth_map[pos] = state;
+            }
+        }
     }
 }
 
@@ -1866,6 +1913,10 @@ void game::serialize_dimension_data( std::ostream &fout )
         weather_manager::serialize_all( json );
 
         json.member( "region_type", overmap_buffer.current_region_type );
+
+        json.member( "power_networks" );
+        power_networks().serialize( json );
+
         json.end_object();
     } catch( const JsonError &e ) {
         debugmsg( "error saving to %s: %s", SAVE_DIMENSION_DATA, e.c_str() );
@@ -1997,8 +2048,7 @@ void overmap_global_state::serialize( JsonOut &json ) const
     json.write_as_array( placed_unique_specials );
     json.member( "overmap_count", overmap_count );
     json.member( "unique_special_count", unique_special_count );
-    json.member( "overmap_highway_intersections", highway_intersections );
-    json.member( "overmap_highway_offset", highway_global_offset );
+    json.member( "overmap_highway_intersection_grid", highway_intersections );
     json.member( "major_river_count", major_river_count );
 
     json.end_object();
@@ -2016,8 +2066,18 @@ void overmap_global_state::deserialize( const JsonObject &json )
     json.read( "overmap_count", overmap_count );
 
     highway_intersections.clear();
-    json.read( "overmap_highway_intersections", highway_intersections );
-    json.read( "overmap_highway_offset", highway_global_offset );
+    //TODO: remove legacy loading in 0.J
+    if( json.has_member( "overmap_highway_intersections" ) ) {
+        std::map<std::string, overmap_feature_grid_node> feature_grid;
+        json.read( "overmap_highway_intersections", feature_grid );
+        point_abs_om highway_global_offset;
+        json.read( "overmap_highway_offset", highway_global_offset );
+
+        highway_intersections.set_feature_grid( feature_grid );
+        highway_intersections.set_grid_origin( highway_global_offset );
+    } else {
+        json.read( "overmap_highway_intersection_grid", highway_intersections );
+    }
     json.read( "major_river_count", major_river_count );
 }
 

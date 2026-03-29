@@ -146,6 +146,11 @@ are interpreted.
 | `lake_depth`                               | Depth of lakes, expressed in Z-levels (e.g. -1 to -10).                     |
 | `shore_extendable_overmap_terrain`         | List of overmap terrains that can be extended to the shore if adjacent.     |
 | `shore_extendable_overmap_terrain_aliases` | Overmap terrains to treat as different overmap terrain for extending shore. |
+| `invert_lakes`                             | Invert drawing of lakes. What would be a lake is land, what would be land is a lake. |
+| `shore_ter`                                | Overmap terrain id of shore terrain place on boundary with land. |
+| `surface_ter`                              | Overmap terrain id of surface terrain, placed on z = 0. |
+| `interior_ter`                             | Overmap terrain id of interior terrain, placed between surface terrain and bed terrain. |
+| `bed_ter`                                  | Overmap terrain id of bed terrain, placed on bottom of the lake. |
 
 ### Example
 
@@ -383,15 +388,14 @@ The **overmap_connection_settings** section defines the `overmap_connection_id`s
 The **overmap_highway_settings** section defines the attributes used in generating highways
 on the overmap including the specials containing the maps used.
 
+Basic overmap settings can be found in external options.
+
 ### Fields
 
 |               Identifier          |                              Description                               
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `grid_column_seperation`          | The distance between north-south highways in overmaps, with the whole overmap gap being `grid_column_seperation` - 1.                                                                                                                        |
-| `grid_row_seperation`             | The distance between east-west highways in overmaps, with the whole overmap gap being `grid_row_seperation` - 1.                                                                                                                             |
 | `width_of_segments`               | The width of the segments defined below in `om_terrain`s. Used to tell the C++ what width the segments provided are, not to change the width placed.                                                                                         |
 | `straightness_chance`             | For one overmap, the chance for a highway's end points to (mostly) line up.                                                                                                                                                                  |
-| `intersection_max_radius`         | The maximum number of overmaps that an intersection can deviate from its gridded position. Cannot be greater than or equal to row / 2 or column / 2, may cause bugs for > row / 4, column / 4.                                               |
 | `reserved_terrain_id`             | The `om_terrain` used to reserve land and air for highways before their actual `om_terrain` placement.                                                                                                                                       |
 | `reserved_terrain_water_id`       | The `om_terrain` used to reserve water for highways before their actual `om_terrain` placement.                                                                                                                                              |
 | `four_way_intersections`          | An object with a list of specials and their respective weights to place at four way highway intersections. The [0,0,0] point should be the NW corner of the intersection formed before placement.                                            |
@@ -595,4 +599,15 @@ This is currently used to provide a mechanism for whitelisting and blacklisting 
 		"whitelist": []
 	}
 }
+```
+
+### Extending and deleting feature flags from default region
+
+```jsonc
+  {
+    "type": "region_settings",
+    "id": "default",
+    "copy-from": "default",
+    "feature_flag_settings": { "extend": { "blacklist": [ "HIGHLANDS" ] }, "delete": { "whitelist" : [ "CLASSIC" ]} }
+  }
 ```

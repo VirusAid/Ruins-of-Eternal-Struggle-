@@ -109,7 +109,7 @@
       { "item": "backpack", "prob": 100 },
       { "item": "canteen", "prob": 100, "contents-item": "water_clean" },
       { "item": "mre_beef", "prob": 80 },
-      { "item": "mre_veggy", "prob": 80 },
+      { "item": "mre_vegetarian_taco", "prob": 80 },
       { "item": "bandages", "prob": 100, "count": 3 },
       { "item": "flashlight", "prob": 100 },
       { "item": "wristwatch", "prob": 100 },
@@ -138,8 +138,8 @@
     "id": "NC_VOSKHOD_weapon",
     "subtype": "distribution",
     "entries": [
-      { "item": "m4a1", "prob": 70, "ammo-item": "556", "charges": 30 },
-      { "item": "m16a4", "prob": 30, "ammo-item": "556", "charges": 30 }
+      { "group": "nested_m4_carbine", "prob": 70 },
+      { "group": "nested_m16_auto_rifle", "prob": 30 }
     ]
   },
   {
@@ -147,8 +147,8 @@
     "id": "NC_VOSKHOD_weapon_medic",
     "subtype": "distribution",
     "entries": [
-      { "item": "glock_19", "prob": 80, "ammo-item": "9mm", "charges": 15, "container-item": "holster" },
-      { "item": "m9", "prob": 20, "ammo-item": "9mm", "charges": 15, "container-item": "holster" }
+      { "group": "nested_glock_19", "prob": 80, "container-item": "tactical_holster" },
+      { "group": "nested_m9", "prob": 20, "container-item": "tactical_holster" }
     ]
   }
 ]

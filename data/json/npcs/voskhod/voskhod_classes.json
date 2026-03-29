@@ -96,8 +96,9 @@
       { "item": "boots_combat", "prob": 100 },
       { "item": "socks", "prob": 100 },
       { "item": "tshirt", "prob": 100 },
-      { "item": "ballistic_vest_light", "prob": 100 },
-      { "item": "helmet_army", "prob": 80 },
+      { "distribution": [ { "item": "ballistic_vest_heavy", "prob": 40 }, { "item": "ballistic_vest_light", "prob": 60 } ] },
+      { "group": "tac_helmet_nvg", "prob": 30 },
+      { "item": "helmet_army", "prob": 65 },
       { "item": "gloves_tactical", "prob": 90 }
     ]
   },

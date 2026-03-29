@@ -14,6 +14,10 @@
       {
         "monster": "mon_zombie_crawler",
         "freq": 20
+      },
+      {
+        "group": "GROUP_VANILLA_DORMANT",
+        "freq": 40
       }
     ],
     "name": "apoc_core_level1"
@@ -29,6 +33,10 @@
       {
         "monster": "mon_apoc_zombie_rad",
         "freq": 50
+      },
+      {
+        "group": "GROUP_VANILLA_DORMANT",
+        "freq": 25
       },
       {
         "monster": "mon_zombie_hulk",

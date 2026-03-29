@@ -8,7 +8,8 @@
     "see_cost": "high",
     "flags": [
       "KNOWN_DOWN",
-      "NO_ROTATE"
+      "NO_ROTATE",
+      "PP_GENERATE_RIOT_DAMAGE"
     ]
   },
   {

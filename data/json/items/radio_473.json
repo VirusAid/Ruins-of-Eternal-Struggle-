@@ -1,13 +1,14 @@
 [
   {
-    "type": "TOOL",
+    "type": "ITEM",
+    "subtypes": [ "TOOL" ],
     "id": "radio_tuned_473",
     "name": { "str": "настроенная рация", "str_pl": "настроенные рации" },
     "description": "Старая военная рация, настроенная на частоту 47.3 Гц.  Инфразвуковой диапазон.  На дисплее мелькают помехи, но иногда сквозь шум пробивается что-то — не совсем слова, не совсем музыка.  Что-то среднее.",
     "weight": "900 g",
     "volume": "750 ml",
-    "price": 500,
-    "price_postapoc": 5000,
+    "price": "5 USD",
+    "price_postapoc": "50 USD",
     "material": [ "plastic", "aluminum" ],
     "symbol": "[",
     "color": "green",

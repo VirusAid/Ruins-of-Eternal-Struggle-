@@ -1,22 +1,26 @@
 [
   {
-    "type": "COMESTIBLE",
+    "type": "ITEM",
+    "subtypes": [ "COMESTIBLE" ],
     "id": "mutagen_suppressor_lebedev",
     "name": { "str": "подавитель мутаций Лебедева", "str_pl": "подавители мутаций Лебедева" },
     "description": "Мутная жидкость в медицинском флаконе.  Экспериментальный состав профессора Лебедева: блокирует частоту 47.3 Гц на клеточном уровне.  Одна доза — 24 часа защиты от мутагенного воздействия Ядра.",
     "weight": "120 g",
     "volume": "100 ml",
-    "price": 0,
-    "price_postapoc": 25000,
+    "price": "0 cent",
+    "price_postapoc": "250 USD",
     "material": [ "glass" ],
     "symbol": "!",
     "color": "light_cyan",
     "comestible_type": "MED",
-    "use_action": {
-      "type": "effect_on_conditions",
-      "description": "Выпить подавитель",
-      "effect_on_conditions": [ "eoc_lebedev_suppressor_use" ]
-    },
+    "use_action": [
+      {
+        "type": "effect_on_conditions",
+        "menu_text": "Выпить подавитель",
+        "description": "Выпить подавитель мутаций",
+        "effect_on_conditions": [ "eoc_lebedev_suppressor_use" ]
+      }
+    ],
     "flags": [ "NPC_SAFE", "IRREPLACEABLE" ]
   },
   {

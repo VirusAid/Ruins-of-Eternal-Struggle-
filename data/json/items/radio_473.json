@@ -21,6 +21,7 @@
   },
   {
     "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
     "result": "radio_tuned_473",
     "category": "CC_ELECTRONIC",
     "subcategory": "CSC_ELECTRONIC_OTHER",

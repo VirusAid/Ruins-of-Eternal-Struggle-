@@ -25,6 +25,7 @@
   },
   {
     "type": "recipe",
+    "activity_level": "MODERATE_EXERCISE",
     "result": "mutagen_suppressor_lebedev",
     "category": "CC_CHEM",
     "subcategory": "CSC_CHEM_MUTAGEN",

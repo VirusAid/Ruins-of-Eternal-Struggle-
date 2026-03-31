@@ -3,54 +3,20 @@
     "type": "overmap_special",
     "id": "apoc_core",
     "overmaps": [
-      {
-        "point": [
-          0,
-          0,
-          0
-        ],
-        "overmap": "apoc_core_entry"
-      },
-      {
-        "point": [
-          0,
-          0,
-          -1
-        ],
-        "overmap": "apoc_core_l1"
-      },
-      {
-        "point": [
-          0,
-          0,
-          -2
-        ],
-        "overmap": "apoc_core_l2"
-      },
-      {
-        "point": [
-          0,
-          0,
-          -3
-        ],
-        "overmap": "apoc_core_l3"
-      },
-      {
-        "point": [
-          0,
-          0,
-          -4
-        ],
-        "overmap": "apoc_core_l4"
-      },
-      {
-        "point": [
-          0,
-          0,
-          -5
-        ],
-        "overmap": "apoc_core_l5"
-      }
+      { "point": [ 0, 0, 0 ], "overmap": "apoc_surface_nw" },
+      { "point": [ 1, 0, 0 ], "overmap": "apoc_surface_n" },
+      { "point": [ 2, 0, 0 ], "overmap": "apoc_surface_ne" },
+      { "point": [ 0, 1, 0 ], "overmap": "apoc_surface_w" },
+      { "point": [ 1, 1, 0 ], "overmap": "apoc_core_entry" },
+      { "point": [ 2, 1, 0 ], "overmap": "apoc_surface_e" },
+      { "point": [ 0, 2, 0 ], "overmap": "apoc_surface_sw" },
+      { "point": [ 1, 2, 0 ], "overmap": "apoc_surface_s" },
+      { "point": [ 2, 2, 0 ], "overmap": "apoc_surface_se" },
+      { "point": [ 1, 1, -1 ], "overmap": "apoc_core_l1" },
+      { "point": [ 1, 1, -2 ], "overmap": "apoc_core_l2" },
+      { "point": [ 1, 1, -3 ], "overmap": "apoc_core_l3" },
+      { "point": [ 1, 1, -4 ], "overmap": "apoc_core_l4" },
+      { "point": [ 1, 1, -5 ], "overmap": "apoc_core_l5" }
     ],
     "locations": [
       "forest",

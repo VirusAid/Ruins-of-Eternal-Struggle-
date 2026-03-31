@@ -1,0 +1,695 @@
+[
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_nw",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "bbbbbbbbbbbbbbbbbbbbbbbb",
+        "b......................b",
+        "b......................b",
+        "b...####.......r.r.....b",
+        "b...#ff#.......r.......b",
+        "b...#ff+...............b",
+        "b...#ff#...............b",
+        "b...####...............b",
+        "b......................b",
+        "b......................b",
+        "b..........WW..........b",
+        "b..........WW..........b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b....rrr...............b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "........................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "r": "t_dirt",
+        "W": "t_dirt"
+      },
+      "furniture": {
+        "W": "f_wreckage",
+        "r": "f_rubble"
+      },
+      "place_items": [
+        {
+          "item": "collapsed_building_rubble",
+          "x": [
+            4,
+            6
+          ],
+          "y": [
+            4,
+            6
+          ],
+          "chance": 60
+        },
+        {
+          "item": "metal_wreckage",
+          "x": [
+            10,
+            11
+          ],
+          "y": [
+            10,
+            11
+          ],
+          "chance": 50
+        }
+      ],
+      "place_monsters": [
+        {
+          "monster": "GROUP_ZOMBIE",
+          "x": [
+            2,
+            20
+          ],
+          "y": [
+            2,
+            20
+          ],
+          "density": 0.05
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_n",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "........................",
+        "........................",
+        "pppppppppppppppppppppppp",
+        "pppppppppppppppppppppppp",
+        "........................",
+        "........................",
+        "......SSSSSSSSSS........",
+        "......S########S........",
+        "......S#fffffsc#S.......",
+        "......S#fffffff#S.......",
+        "......S#fffffff#S.......",
+        "......S#+fffff.#S.......",
+        "......S########S........",
+        "......SSSSSSSSSS........",
+        "........................",
+        "...WW...................",
+        "...WW...................",
+        "........................",
+        "........................",
+        "...rr...................",
+        "...rr...................",
+        "........................",
+        "........................",
+        "........................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "p": "t_pavement",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "s": "t_thconc_floor",
+        "c": "t_thconc_floor",
+        "S": "t_chainfence",
+        "r": "t_dirt",
+        "W": "t_dirt"
+      },
+      "furniture": {
+        "s": "f_sign",
+        "c": "f_counter",
+        "W": "f_wreckage",
+        "r": "f_rubble"
+      },
+      "place_signs": [
+        {
+          "x": 12,
+          "y": 8,
+          "signage": "КОНТРОЛЬНО-ПРОПУСКНОЙ ПУНКТ\nОБЪЕКТ АПОКАЛИПСИС\nПроезд только по спецпропускам"
+        }
+      ],
+      "place_items": [
+        {
+          "item": "mil_armor",
+          "x": [
+            8,
+            13
+          ],
+          "y": [
+            8,
+            11
+          ],
+          "chance": 30
+        },
+        {
+          "item": "mil_food",
+          "x": [
+            8,
+            13
+          ],
+          "y": [
+            8,
+            11
+          ],
+          "chance": 40
+        }
+      ],
+      "place_monsters": [
+        {
+          "monster": "GROUP_LAB_MILITARY",
+          "x": [
+            6,
+            18
+          ],
+          "y": [
+            6,
+            14
+          ],
+          "density": 0.06
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_ne",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "bbbbbbbbbbbbbbbbbbbbbbbb",
+        "b......................b",
+        "b......................b",
+        "b.....!...!...!........b",
+        "b......................b",
+        "b......................b",
+        "b.......!...!..........b",
+        "b......................b",
+        "b......................b",
+        "b.....!...!...!........b",
+        "b......................b",
+        "b......................b",
+        "b.......!...!..........b",
+        "b......................b",
+        "b......................b",
+        "b....s.................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "b......................b",
+        "........................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "!": "t_grass_dead",
+        "s": "t_grass_dead"
+      },
+      "furniture": {
+        "s": "f_sign"
+      },
+      "place_signs": [
+        {
+          "x": 5,
+          "y": 15,
+          "signage": "МИННОЕ ПОЛЕ\nСМЕРТЕЛЬНО ОПАСНО\nПроход запрещён!"
+        }
+      ],
+      "place_traps": [
+        {
+          "trap": "tr_landmine_buried",
+          "x": [
+            3,
+            18
+          ],
+          "y": [
+            3,
+            13
+          ],
+          "repeat": [
+            8,
+            14
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_w",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "b.......................",
+        "b.......................",
+        "b..################.....",
+        "b..#ffffffffffff.f#.....",
+        "b..#fBfBfBfBfBfBff#.....",
+        "b..#ffffffffffff.f#.....",
+        "b..#ff+fff+fff+ff.#.....",
+        "b..#ff#fff#fff#ffL#.....",
+        "b..#ff#fff#fff#fff#.....",
+        "b..################.....",
+        "b.......................",
+        "b.......................",
+        "b...rrr...WW............",
+        "b...rrr...WW............",
+        "b.......................",
+        "b.......................",
+        "b...##########..........",
+        "b...#ffffffff#..........",
+        "b...#ffffffLf#..........",
+        "b...#ffffffff#..........",
+        "b...#+########..........",
+        "b.......................",
+        "b.......................",
+        "........................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "B": "t_thconc_floor",
+        "L": "t_thconc_floor",
+        "r": "t_dirt",
+        "W": "t_dirt"
+      },
+      "furniture": {
+        "B": "f_bed",
+        "L": "f_locker",
+        "W": "f_wreckage",
+        "r": "f_rubble"
+      },
+      "place_items": [
+        {
+          "item": "mil_armor",
+          "x": [
+            4,
+            17
+          ],
+          "y": [
+            3,
+            8
+          ],
+          "chance": 40
+        },
+        {
+          "item": "mil_food",
+          "x": [
+            4,
+            12
+          ],
+          "y": [
+            17,
+            19
+          ],
+          "chance": 50
+        },
+        {
+          "item": "cannedfood",
+          "x": [
+            4,
+            12
+          ],
+          "y": [
+            17,
+            19
+          ],
+          "chance": 30
+        }
+      ],
+      "place_monsters": [
+        {
+          "monster": "GROUP_LAB_MILITARY",
+          "x": [
+            3,
+            18
+          ],
+          "y": [
+            3,
+            9
+          ],
+          "density": 0.08
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_e",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "......................bb",
+        "......................bb",
+        "....################.bb.",
+        "....#ffffffffffLffL#.bb.",
+        "....#fCCCCffffffff.#.bb.",
+        "....#fCCCCffffffff.#.bb.",
+        "....#fCCCCffLffLff.#.bb.",
+        "....#fffffffffffLff#.bb.",
+        "....#+##############.bb.",
+        "........................",
+        "........................",
+        "....rrrr................",
+        "....rrrr................",
+        "........................",
+        "....################.bb.",
+        "....#ffffffLffffffL#.bb.",
+        "....#fffffffffffLff#.bb.",
+        "....#fffffffLffffff#.bb.",
+        "....#fCCCCCCCCCffff#.bb.",
+        "....#fCCCCCCCCCffff#.bb.",
+        "....#+##############.bb.",
+        "......................bb",
+        "......................bb",
+        "......................bb"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "C": "t_thconc_floor",
+        "L": "t_thconc_floor",
+        "r": "t_dirt"
+      },
+      "furniture": {
+        "C": "f_crate_c",
+        "L": "f_locker",
+        "r": "f_rubble"
+      },
+      "place_items": [
+        {
+          "item": "mil_armor",
+          "x": [
+            5,
+            18
+          ],
+          "y": [
+            3,
+            7
+          ],
+          "chance": 50
+        },
+        {
+          "item": "mil_surplus",
+          "x": [
+            5,
+            18
+          ],
+          "y": [
+            14,
+            19
+          ],
+          "chance": 60
+        },
+        {
+          "item": "ammo",
+          "x": [
+            5,
+            18
+          ],
+          "y": [
+            14,
+            19
+          ],
+          "chance": 20
+        }
+      ],
+      "place_monsters": [
+        {
+          "monster": "GROUP_LAB_MILITARY",
+          "x": [
+            4,
+            20
+          ],
+          "y": [
+            2,
+            20
+          ],
+          "density": 0.08
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_sw",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "b.......................",
+        "b.......................",
+        "b.......................",
+        "b....OO.................",
+        "b....OO.................",
+        "b..........OOO..........",
+        "b..........OOO..........",
+        "b.......................",
+        "b.......................",
+        "b........WWWWWW.........",
+        "b........WWWWWW.........",
+        "b........WWWWWW.........",
+        "b.......................",
+        "b..........OO...........",
+        "b..........OO...........",
+        "b.......................",
+        "b.......................",
+        "b.......................",
+        "b....RR.................",
+        "b....RR.................",
+        "b....RR.................",
+        "b.......................",
+        "b.......................",
+        "bb......................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "O": "t_pit",
+        "W": "t_dirt",
+        "R": "t_dirt"
+      },
+      "furniture": {
+        "W": "f_wreckage",
+        "R": "f_rubble"
+      },
+      "place_items": [
+        {
+          "item": "metal_wreckage",
+          "x": [
+            8,
+            13
+          ],
+          "y": [
+            9,
+            11
+          ],
+          "chance": 70
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_s",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "...SSS..........SSS.....",
+        "...S##########..S.......",
+        "...S#fffffsc.#..S.......",
+        "...S#ffffffff#..S.......",
+        "...S#+########..S.......",
+        "...S............S.......",
+        "...SSSS....SSSSS........",
+        "........................",
+        "pppppppppppppppppppppppp",
+        "pppppppppYYppppppppppppp",
+        "pppppppppppppppppppppppp",
+        "........................",
+        ".......BBBB.............",
+        "........................",
+        "........WW..............",
+        "........WW..............",
+        "........................",
+        "........................",
+        "........................",
+        "........................"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "p": "t_pavement",
+        "Y": "t_pavement_y",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "s": "t_thconc_floor",
+        "c": "t_thconc_floor",
+        "S": "t_chainfence",
+        "B": "t_grass_dead",
+        "W": "t_dirt"
+      },
+      "furniture": {
+        "s": "f_sign",
+        "c": "f_counter",
+        "B": "f_barricade_road",
+        "W": "f_wreckage"
+      },
+      "place_signs": [
+        {
+          "x": 10,
+          "y": 6,
+          "signage": "КПП ОБЪЕКТ АПОКАЛИПСИС\n\nВнимание! Зона отчуждения.\nВъезд запрещён.\nНарушители будут уничтожены."
+        }
+      ],
+      "place_items": [
+        {
+          "item": "mil_armor",
+          "x": [
+            5,
+            11
+          ],
+          "y": [
+            6,
+            7
+          ],
+          "chance": 35
+        },
+        {
+          "item": "apoc_checkpoint_supplies",
+          "x": [
+            5,
+            11
+          ],
+          "y": [
+            6,
+            7
+          ],
+          "chance": 50
+        }
+      ],
+      "place_monsters": [
+        {
+          "monster": "GROUP_LAB_MILITARY",
+          "x": [
+            2,
+            20
+          ],
+          "y": [
+            4,
+            14
+          ],
+          "density": 0.06
+        }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "apoc_surface_se",
+    "weight": 1000,
+    "object": {
+      "fill_ter": "t_grass_dead",
+      "rows": [
+        "......................bb",
+        "......................bb",
+        "....##########......bbb.",
+        "....#ffffffff#......bbb.",
+        "....#fGGGGGff#......bbb.",
+        "....#fGGGGGff#......bbb.",
+        "....#ffffffff#......bbb.",
+        "....#fff+ffff#......bbb.",
+        "....#ffffffLf#......bbb.",
+        "....#+########......bbb.",
+        "......................bb",
+        "......rrrr............bb",
+        "......rrrr............bb",
+        "......................bb",
+        "......WW..............bb",
+        "......WW..............bb",
+        "......................bb",
+        "......................bb",
+        "......................bb",
+        "......................bb",
+        "......................bb",
+        "......................bb",
+        "......................bb",
+        "......................bb"
+      ],
+      "terrain": {
+        ".": "t_grass_dead",
+        "b": "t_fence_barbed",
+        "#": "t_concrete_wall",
+        "+": "t_door_c",
+        "f": "t_thconc_floor",
+        "G": "t_thconc_floor",
+        "L": "t_thconc_floor",
+        "r": "t_dirt",
+        "W": "t_dirt"
+      },
+      "furniture": {
+        "G": "f_machinery_heavy",
+        "L": "f_locker",
+        "r": "f_rubble",
+        "W": "f_wreckage"
+      },
+      "place_items": [
+        {
+          "item": "electronics",
+          "x": [
+            5,
+            12
+          ],
+          "y": [
+            4,
+            8
+          ],
+          "chance": 40
+        },
+        {
+          "item": "hardware",
+          "x": [
+            5,
+            12
+          ],
+          "y": [
+            4,
+            8
+          ],
+          "chance": 30
+        }
+      ]
+    }
+  }
+]

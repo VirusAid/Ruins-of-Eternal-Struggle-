@@ -14,6 +14,78 @@
   },
   {
     "type": "overmap_terrain",
+    "id": "apoc_surface_nw",
+    "name": "руины: периметр",
+    "sym": "R",
+    "color": "dark_gray",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_n",
+    "name": "руины: блокпост",
+    "sym": "B",
+    "color": "yellow",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_ne",
+    "name": "руины: минное поле",
+    "sym": "!",
+    "color": "red",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_w",
+    "name": "руины: казарма",
+    "sym": "K",
+    "color": "dark_gray",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_e",
+    "name": "руины: склад",
+    "sym": "S",
+    "color": "dark_gray",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_sw",
+    "name": "руины: воронки",
+    "sym": "O",
+    "color": "brown",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_s",
+    "name": "руины: КПП",
+    "sym": "G",
+    "color": "yellow",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "apoc_surface_se",
+    "name": "руины: генераторная",
+    "sym": "E",
+    "color": "dark_gray",
+    "see_cost": "high",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
     "id": "apoc_core_l1",
     "name": "Ядро Апокалипсиса: ур. -1",
     "sym": "A",

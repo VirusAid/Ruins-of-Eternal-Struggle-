@@ -21,7 +21,7 @@
         "effect_on_conditions": [ "eoc_lebedev_suppressor_use" ]
       }
     ],
-    "flags": [ "NPC_SAFE", "IRREPLACEABLE" ]
+    "flags": [ "NPC_SAFE", "IRREPLACEABLE_CONSUMABLE" ]
   },
   {
     "type": "recipe",

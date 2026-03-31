@@ -17,6 +17,6 @@
       "description": "Активировать передатчик «Сигма»",
       "effect_on_conditions": [ "eoc_sigma_beacon_activate" ]
     },
-    "flags": [ "IRREPLACEABLE" ]
+    "flags": [ "IRREPLACEABLE_CONSUMABLE" ]
   }
 ]

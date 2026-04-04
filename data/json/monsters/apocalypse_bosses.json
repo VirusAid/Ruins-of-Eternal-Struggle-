@@ -3,10 +3,14 @@
     "type": "MONSTER",
     "id": "mon_apoc_boss_brute",
     "copy-from": "mon_zombie_brute",
-    "name": { "str": "Страж-1", "str_pl": "Стражи-1" },
-    "description": "Первый страж Ядра. Массивный мутировавший труп, усиленный радиацией подземелья.",
+    "name": { "str": "Страж-1 «Громила»", "str_pl": "Стражи-1 «Громила»" },
+    "description": "Первый страж Ядра. Массивный мутировавший труп, усиленный радиацией подземелья. Его кулаки крошат бетон.",
     "hp": 300,
     "speed": 90,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 8,
+    "armor": { "bash": 5, "cut": 5, "bullet": 3 },
     "special_attacks": [
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_brute_swipe", "cooldown": 3, "damage_max_instance": [ { "damage_type": "bash", "amount": 20, "armor_multiplier": 0.5 } ] }
     ],
@@ -16,38 +20,55 @@
     "type": "MONSTER",
     "id": "mon_apoc_boss_hulk",
     "copy-from": "mon_zombie_hulk",
-    "name": { "str": "Страж-2", "str_pl": "Стражи-2" },
-    "description": "Второй страж Ядра. Гигантский зомби-куль, его удары сотрясают стены.",
+    "name": { "str": "Страж-2 «Колосс»", "str_pl": "Стражи-2 «Колосс»" },
+    "description": "Второй страж Ядра. Гигантский зомби-халк, его удары сотрясают стены. Толстая мутировавшая шкура отражает пули.",
     "hp": 400,
     "speed": 75,
+    "melee_skill": 5,
+    "melee_dice": 3,
+    "melee_dice_sides": 8,
+    "armor": { "bash": 10, "cut": 8, "bullet": 6 },
+    "special_attacks": [
+      { "type": "monster_attack", "attack_type": "melee", "id": "apoc_hulk_slam", "cooldown": 4, "damage_max_instance": [ { "damage_type": "bash", "amount": 30, "armor_multiplier": 0.4 } ] }
+    ],
     "flags": [ "SEES", "HEARS", "SMELLS", "CAN_OPEN_DOORS", "PUSH_MON", "BASHES", "DESTROYS" ]
   },
   {
     "type": "MONSTER",
     "id": "mon_apoc_boss_necromancer",
     "copy-from": "mon_zombie_master",
-    "name": { "str": "Страж-3", "str_pl": "Стражи-3" },
-    "description": "Третий страж Ядра. Некромантическая аномалия Ядра — постоянно призывает подкрепление.",
+    "name": { "str": "Страж-3 «Вестник»", "str_pl": "Стражи-3 «Вестник»" },
+    "description": "Третий страж Ядра. Некромантическая аномалия — мёртвые вокруг него поднимаются снова и снова. Его крик разносится по всему уровню.",
     "hp": 350,
     "speed": 100,
+    "melee_skill": 5,
+    "melee_dice": 2,
+    "melee_dice_sides": 6,
+    "armor": { "bash": 8, "cut": 12, "bullet": 8 },
     "special_attacks": [
-      [ "SHRIEK_ALERT", 200 ]
+      [ "SHRIEK_ALERT", 150 ],
+      { "type": "monster_attack", "attack_type": "melee", "id": "apoc_necro_touch", "cooldown": 5, "damage_max_instance": [ { "damage_type": "biological", "amount": 15, "armor_multiplier": 0.2 } ] }
     ],
-    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "CAN_OPEN_DOORS" ]
   },
   {
     "type": "MONSTER",
     "id": "mon_apoc_boss_master",
     "copy-from": "mon_zombie_master",
-    "name": { "str": "Страж-4", "str_pl": "Стражи-4" },
-    "description": "Четвёртый страж Ядра. Управляет разумом выживших и подчинённых зомби.",
+    "name": { "str": "Страж-4 «Доминатор»", "str_pl": "Стражи-4 «Доминатор»" },
+    "description": "Четвёртый страж Ядра. Телепатическая аномалия — управляет разумом выживших и подчинённых зомби. Вокруг него воздух дрожит от ментального давления.",
     "hp": 450,
     "speed": 110,
+    "melee_skill": 6,
+    "melee_dice": 3,
+    "melee_dice_sides": 6,
+    "armor": { "bash": 12, "cut": 15, "bullet": 10 },
     "special_attacks": [
-      [ "SHRIEK_ALERT", 200 ],
-      [ "UPGRADE", 300 ]
+      [ "SHRIEK_ALERT", 120 ],
+      [ "UPGRADE", 250 ],
+      { "type": "monster_attack", "attack_type": "melee", "id": "apoc_master_psi", "cooldown": 6, "damage_max_instance": [ { "damage_type": "biological", "amount": 20, "armor_multiplier": 0.1 } ] }
     ],
-    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "PUSH_MON" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "REVIVES_HEALTHY", "PUSH_MON", "CAN_OPEN_DOORS" ]
   },
   {
     "type": "MONSTER",
@@ -72,29 +93,42 @@
     "id": "mon_apoc_zombie",
     "copy-from": "mon_zombie",
     "name": { "str": "заражённый Ядра", "str_pl": "заражённые Ядра" },
-    "description": "Зомби, поглощённый радиацией Ядра. Двигается быстрее обычного.",
+    "description": "Зомби, поглощённый радиацией Ядра. Двигается быстрее обычного. Кожа покрыта люминесцентными язвами.",
     "hp": 80,
-    "speed": 100
+    "speed": 100,
+    "melee_skill": 3,
+    "melee_dice": 2,
+    "melee_dice_sides": 4,
+    "armor": { "bash": 2, "cut": 2 }
   },
   {
     "type": "MONSTER",
     "id": "mon_apoc_zombie_rad",
     "copy-from": "mon_zombie_smoker",
     "name": { "str": "радиоактивный труп", "str_pl": "радиоактивные трупы" },
-    "description": "Зомби, насыщенный радиацией. При приближении излучает смертоносное поле.",
+    "description": "Зомби, насыщенный радиацией. При приближении излучает смертоносное поле. Светится в темноте.",
     "hp": 60,
     "speed": 95,
+    "melee_skill": 2,
+    "melee_dice": 1,
+    "melee_dice_sides": 6,
+    "armor": { "bash": 1, "cut": 1 },
     "special_attacks": [
       [ "TAZER", 5 ]
-    ]
+    ],
+    "luminance": 4
   },
   {
     "type": "MONSTER",
     "id": "mon_apoc_zombie_soldier",
     "copy-from": "mon_zombie_soldier",
     "name": { "str": "часовой Ядра", "str_pl": "часовые Ядра" },
-    "description": "Бывший военный, мутировавший под воздействием Ядра. Сохранил боевые рефлексы.",
+    "description": "Бывший военный, мутировавший под воздействием Ядра. Сохранил боевые рефлексы и фрагменты тактической подготовки.",
     "hp": 120,
-    "speed": 105
+    "speed": 105,
+    "melee_skill": 4,
+    "melee_dice": 2,
+    "melee_dice_sides": 6,
+    "armor": { "bash": 4, "cut": 6, "bullet": 8 }
   }
 ]

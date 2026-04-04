@@ -2,55 +2,92 @@
   {
     "type": "ITEM",
     "id": "echo_cata_scientist_note",
-    "name": { "str": "обгоревший лабораторный журнал", "str_pl": "обгоревшие лабораторные журналы" },
+    "name": {
+      "str": "обгоревший лабораторный журнал",
+      "str_pl": "обгоревшие лабораторные журналы"
+    },
     "description": "Страницы почти уничтожены огнём.  Между обугленных листов — схемы, формулы и запись: «Эксперимент вышел из-под контроля.  Образцы реагируют.  Бог нам не поможет.»  Применить — прочитать.",
     "weight": "180 g",
     "volume": "300 ml",
     "price": "0 USD",
-    "material": [ "paper" ],
+    "material": [
+      "paper"
+    ],
     "symbol": "?",
     "color": "brown",
-    "flags": [ "TRADER_AVOID" ],
+    "flags": [
+      "TRADER_AVOID"
+    ],
     "use_action": {
       "type": "effect_on_conditions",
       "description": "Вы открываете журнал...",
-      "effect_on_conditions": [ "eoc_echo_cata_scientist_trigger" ]
-    }
+      "effect_on_conditions": [
+        "eoc_echo_cata_scientist_trigger"
+      ]
+    },
+    "subtypes": [
+      "GENERIC"
+    ]
   },
   {
     "type": "ITEM",
     "id": "echo_cata_military_radio",
-    "name": { "str": "разбитая военная рация", "str_pl": "разбитые военные рации" },
+    "name": {
+      "str": "разбитая военная рация",
+      "str_pl": "разбитые военные рации"
+    },
     "description": "Корпус треснут, антенна сломана, но индикатор мигает.  При включении из динамика идут обрывки последних переговоров — паника, приказы, крики.  Применить — прослушать.",
     "weight": "650 g",
     "volume": "500 ml",
     "price": "0 USD",
-    "material": [ "plastic", "steel" ],
+    "material": [
+      "plastic",
+      "steel"
+    ],
     "symbol": "?",
     "color": "light_green",
-    "flags": [ "TRADER_AVOID" ],
+    "flags": [
+      "TRADER_AVOID"
+    ],
     "use_action": {
       "type": "effect_on_conditions",
       "description": "Вы включаете рацию...",
-      "effect_on_conditions": [ "eoc_echo_cata_military_trigger" ]
-    }
+      "effect_on_conditions": [
+        "eoc_echo_cata_military_trigger"
+      ]
+    },
+    "subtypes": [
+      "GENERIC"
+    ]
   },
   {
     "type": "ITEM",
     "id": "echo_cata_survivor_tape",
-    "name": { "str": "диктофон с записью", "str_pl": "диктофоны с записью" },
+    "name": {
+      "str": "диктофон с записью",
+      "str_pl": "диктофоны с записью"
+    },
     "description": "Старый цифровой диктофон.  Батарея почти разряжена.  На экране — одна запись: «ПОСЛЕДНИЙ ДЕНЬ».  Голос на записи принадлежит человеку, который видел слишком много.  Применить — прослушать.",
     "weight": "120 g",
     "volume": "150 ml",
     "price": "0 USD",
-    "material": [ "plastic" ],
+    "material": [
+      "plastic"
+    ],
     "symbol": "?",
     "color": "yellow",
-    "flags": [ "TRADER_AVOID" ],
+    "flags": [
+      "TRADER_AVOID"
+    ],
     "use_action": {
       "type": "effect_on_conditions",
       "description": "Вы нажимаете кнопку воспроизведения...",
-      "effect_on_conditions": [ "eoc_echo_cata_survivor_trigger" ]
-    }
+      "effect_on_conditions": [
+        "eoc_echo_cata_survivor_trigger"
+      ]
+    },
+    "subtypes": [
+      "GENERIC"
+    ]
   }
 ]

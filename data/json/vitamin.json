@@ -616,5 +616,16 @@
     "rate": "24 s",
     "//2": "TODO: update effect so vitamin excess scales correctly",
     "disease_excess": [ [ 1, 1000 ], [ 1001, 2000 ], [ 2001, 3000 ], [ 3001, 4000 ], [ 4001, 10000 ] ]
+  },
+  {
+    "id": "mutagen_echo",
+    "type": "vitamin",
+    "vit_type": "counter",
+    "name": { "str": "Echo Mutagen" },
+    "excess": "mutagen_echo",
+    "min": 0,
+    "max": 2000,
+    "rate": "30 m",
+    "disease_excess": [ [ 100, 500 ], [ 501, 1000 ], [ 1001, 2000 ] ]
   }
 ]

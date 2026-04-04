@@ -1,0 +1,13 @@
+[
+  {
+    "type": "mutation_category",
+    "id": "ECHO",
+    "name": "Эхо",
+    "threshold_mut": "THRESH_ECHO",
+    "mutagen_message": "Частота 47.3 Гц пронизывает каждую клетку.  Ты слышишь голоса мёртвого мира.",
+    "memorial_message": "Стал Эхом.",
+    "vitamin": "mutagen_echo",
+    "base_removal_chance": 25,
+    "base_removal_cost_mul": 3.0
+  }
+]

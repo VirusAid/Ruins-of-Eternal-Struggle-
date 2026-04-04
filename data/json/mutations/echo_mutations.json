@@ -1,0 +1,299 @@
+[
+  {
+    "//": "=== TIER 1: НАЧАЛЬНЫЕ МУТАЦИИ (получаются первыми) ===",
+    "type": "mutation",
+    "id": "ECHO_WHISPERS",
+    "name": { "str": "Шёпот Ядра" },
+    "points": 1,
+    "visibility": 0,
+    "ugliness": 0,
+    "description": "Вы слышите слабый гул на грани восприятия — частоту 47.3 Гц.  Иногда кажется, что в шуме различимы слова.  Восприятие +1.",
+    "category": [ "ECHO" ],
+    "changes_to": [ "ECHO_RESONANCE" ],
+    "enchantments": [
+      { "values": [ { "value": "PERCEPTION", "add": 1 } ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_THICK_SKIN",
+    "name": { "str": "Кожа Руин" },
+    "points": 2,
+    "visibility": 2,
+    "ugliness": 2,
+    "description": "Кожа загрубела и потемнела, покрывшись узором, напоминающим трещины в бетоне.  +3 к защите от ударов и порезов.",
+    "category": [ "ECHO" ],
+    "changes_to": [ "ECHO_CHITIN" ],
+    "cancels": [ "FLIMSY", "FLIMSY2", "FLIMSY3" ],
+    "enchantments": [
+      { "values": [
+        { "value": "ARMOR_BASH", "add": 3 },
+        { "value": "ARMOR_CUT", "add": 3 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_CELL_REGEN",
+    "name": { "str": "Клеточная память" },
+    "points": 2,
+    "visibility": 0,
+    "ugliness": 0,
+    "description": "Ваши раны затягиваются быстрее обычного — клетки будто помнят, какими были.  Ускоренная регенерация.",
+    "category": [ "ECHO" ],
+    "types": [ "HEALING" ],
+    "changes_to": [ "ECHO_MARROW" ],
+    "enchantments": [
+      { "values": [
+        { "value": "REGEN_HP", "multiply": 0.35 },
+        { "value": "REGEN_HP_AWAKE", "multiply": 0.1 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_ADRENALINE",
+    "name": { "str": "Импульс Ядра" },
+    "points": 1,
+    "visibility": 0,
+    "ugliness": 0,
+    "description": "При опасности тело реагирует раньше разума — резкий выброс адреналина, управляемый частотой Ядра.  +5% скорости.",
+    "category": [ "ECHO" ],
+    "changes_to": [ "ECHO_OVERDRIVE" ],
+    "enchantments": [
+      { "values": [ { "value": "SPEED", "multiply": 0.05 } ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_NIGHTSIGHT",
+    "name": { "str": "Зрение Бездны" },
+    "points": 2,
+    "visibility": 3,
+    "ugliness": 2,
+    "description": "Зрачки расширились до нечеловеческих размеров и перестали сужаться.  В темноте вы видите почти как днём, но яркий свет болезнен.",
+    "category": [ "ECHO" ],
+    "changes_to": [ "ECHO_ECHOLOCATION" ],
+    "cancels": [ "EAGLEEYED" ],
+    "enchantments": [
+      { "values": [ { "value": "NIGHT_VIS", "add": 6 } ] }
+    ]
+  },
+
+  {
+    "//": "=== TIER 2: СРЕДНИЕ МУТАЦИИ (усиленные версии начальных) ===",
+    "type": "mutation",
+    "id": "ECHO_RESONANCE",
+    "name": { "str": "Резонанс" },
+    "points": 3,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "Частота 47.3 Гц стала частью вас.  Вы ощущаете живых существ сквозь стены — вибрация их тел отдаётся эхом в ваших костях.  Восприятие +2, обнаружение существ в радиусе 3 тайлов.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_WHISPERS" ],
+    "changes_to": [ "ECHO_PULSE" ],
+    "enchantments": [
+      { "values": [
+        { "value": "PERCEPTION", "add": 2 },
+        { "value": "FOOTSTEP_NOISE", "add": -2 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_CHITIN",
+    "name": { "str": "Хитин Руин" },
+    "points": 4,
+    "visibility": 5,
+    "ugliness": 4,
+    "description": "Кожа покрылась тёмными пластинами, похожими на спёкшийся бетон с металлическим отблеском.  +6 к защите от ударов и порезов, +4 от пуль.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_THICK_SKIN" ],
+    "changes_to": [ "ECHO_FORTRESS" ],
+    "enchantments": [
+      { "values": [
+        { "value": "ARMOR_BASH", "add": 6 },
+        { "value": "ARMOR_CUT", "add": 6 },
+        { "value": "ARMOR_BULLET", "add": 4 }
+      ] }
+    ],
+    "social_modifiers": { "intimidate": 5 }
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_MARROW",
+    "name": { "str": "Костный мозг Ядра" },
+    "points": 4,
+    "visibility": 0,
+    "ugliness": 0,
+    "description": "Костный мозг перестроился.  Кровь стала гуще, темнее.  Раны затягиваются на глазах, переломы срастаются за часы, а не недели.",
+    "category": [ "ECHO" ],
+    "types": [ "HEALING" ],
+    "prereqs": [ "ECHO_CELL_REGEN" ],
+    "changes_to": [ "ECHO_PULSE" ],
+    "enchantments": [
+      { "values": [
+        { "value": "REGEN_HP", "multiply": 0.75 },
+        { "value": "REGEN_HP_AWAKE", "multiply": 0.3 },
+        { "value": "MENDING_MODIFIER", "multiply": 0.5 },
+        { "value": "MAX_HP", "multiply": 0.1 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_OVERDRIVE",
+    "name": { "str": "Форсаж" },
+    "points": 3,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "Мышцы стали плотнее и эластичнее.  Каждое движение — контролируемый взрыв силы.  +10% скорости, +1 к уклонению.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_ADRENALINE" ],
+    "changes_to": [ "ECHO_FORTRESS" ],
+    "enchantments": [
+      { "values": [
+        { "value": "SPEED", "multiply": 0.1 },
+        { "value": "BONUS_DODGE", "add": 1 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_ECHOLOCATION",
+    "name": { "str": "Эхолокация" },
+    "points": 4,
+    "visibility": 3,
+    "ugliness": 3,
+    "description": "Вам больше не нужен свет.  Вы воспринимаете пространство вибрациями — стены, коридоры, существа.  Полное ночное зрение.  Под землёй — бонус к уклонению.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_NIGHTSIGHT" ],
+    "changes_to": [ "ECHO_PULSE" ],
+    "enchantments": [
+      { "values": [ { "value": "NIGHT_VIS", "add": 12 } ] },
+      {
+        "condition": { "math": [ "u_val('pos_z')", "<", "0" ] },
+        "values": [
+          { "value": "BONUS_DODGE", "add": 2 },
+          { "value": "BONUS_BLOCK", "add": 1 }
+        ]
+      }
+    ]
+  },
+
+  {
+    "//": "=== TIER 3: ПРОДВИНУТЫЕ МУТАЦИИ (конвергенция веток) ===",
+    "type": "mutation",
+    "id": "ECHO_PULSE",
+    "name": { "str": "Пульс Ядра" },
+    "points": 6,
+    "visibility": 4,
+    "ugliness": 3,
+    "description": "Ваше сердце бьётся в ритме 47.3 Гц.  Вы чувствуете каждое живое и мёртвое существо в радиусе десятков метров.  Восприятие +3, скорость +5%, регенерация +++.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_RESONANCE" ],
+    "prereqs2": [ "ECHO_MARROW", "ECHO_ECHOLOCATION" ],
+    "changes_to": [ "THRESH_ECHO" ],
+    "enchantments": [
+      { "values": [
+        { "value": "PERCEPTION", "add": 3 },
+        { "value": "SPEED", "multiply": 0.05 },
+        { "value": "REGEN_HP", "multiply": 0.5 },
+        { "value": "REGEN_HP_AWAKE", "multiply": 0.2 }
+      ] }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_FORTRESS",
+    "name": { "str": "Крепость" },
+    "points": 6,
+    "visibility": 6,
+    "ugliness": 5,
+    "description": "Тело стало живой бронёй.  Пластины хитина переплетены с мышечными волокнами, создавая непробиваемый каркас.  Скорость снижена, но вас почти невозможно убить.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_CHITIN" ],
+    "prereqs2": [ "ECHO_OVERDRIVE" ],
+    "changes_to": [ "THRESH_ECHO" ],
+    "enchantments": [
+      { "values": [
+        { "value": "ARMOR_BASH", "add": 10 },
+        { "value": "ARMOR_CUT", "add": 10 },
+        { "value": "ARMOR_BULLET", "add": 8 },
+        { "value": "MAX_HP", "multiply": 0.15 },
+        { "value": "SPEED", "multiply": -0.05 }
+      ] }
+    ],
+    "social_modifiers": { "intimidate": 10 }
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_FREQUENCY",
+    "name": { "str": "Носитель частоты" },
+    "points": 5,
+    "visibility": 2,
+    "ugliness": 2,
+    "description": "Вы излучаете частоту 47.3 Гц.  Мёртвые вокруг вас замедляются, как будто прислушиваются.  Живые чувствуют необъяснимый страх.  Радиация вам больше не вредит.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_RESONANCE", "ECHO_MARROW" ],
+    "changes_to": [ "THRESH_ECHO" ],
+    "enchantments": [
+      { "values": [
+        { "value": "SOCIAL_INTIMIDATE", "add": 8 },
+        { "value": "PERCEPTION", "add": 1 }
+      ] }
+    ],
+    "flags": [ "RAD_IMMUNE" ]
+  },
+  {
+    "type": "mutation",
+    "id": "ECHO_ADAPTATION",
+    "name": { "str": "Полная адаптация" },
+    "points": 5,
+    "visibility": 1,
+    "ugliness": 0,
+    "description": "Тело достигло равновесия с мутагеном Ядра.  Болезни, яды, радиация — ничто из этого вас больше не касается.  Вы — идеальная машина выживания.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_MARROW", "ECHO_OVERDRIVE" ],
+    "changes_to": [ "THRESH_ECHO" ],
+    "enchantments": [
+      { "values": [
+        { "value": "MAX_HP", "multiply": 0.1 },
+        { "value": "SPEED", "multiply": 0.05 },
+        { "value": "REGEN_HP", "multiply": 0.3 }
+      ] }
+    ],
+    "flags": [ "TOXIN_IMMUNE" ]
+  },
+
+  {
+    "//": "=== ПОРОГ: ФИНАЛЬНАЯ МУТАЦИЯ ===",
+    "type": "mutation",
+    "id": "THRESH_ECHO",
+    "name": { "str": "Эхо Ядра" },
+    "points": 8,
+    "visibility": 7,
+    "ugliness": 6,
+    "threshold": true,
+    "description": "Вы перестали быть человеком.  Частота 47.3 Гц — это вы.  Ваше тело — резонатор, передатчик, оружие.  Мёртвые расступаются перед вами.  Живые отводят глаза.  Вы — Эхо Ядра.  Последний продукт Объекта Нулевой.\n\n+4 Восприятие, +15% скорости, +12 броня, полная регенерация, иммунитет к радиации и ядам.  Но назад пути нет.",
+    "category": [ "ECHO" ],
+    "prereqs": [ "ECHO_PULSE", "ECHO_FORTRESS", "ECHO_FREQUENCY", "ECHO_ADAPTATION" ],
+    "cancels": [ "FLIMSY", "FLIMSY2", "FLIMSY3" ],
+    "enchantments": [
+      { "values": [
+        { "value": "PERCEPTION", "add": 4 },
+        { "value": "SPEED", "multiply": 0.15 },
+        { "value": "ARMOR_BASH", "add": 12 },
+        { "value": "ARMOR_CUT", "add": 12 },
+        { "value": "ARMOR_BULLET", "add": 10 },
+        { "value": "MAX_HP", "multiply": 0.2 },
+        { "value": "REGEN_HP", "multiply": 1.0 },
+        { "value": "REGEN_HP_AWAKE", "multiply": 0.5 },
+        { "value": "MENDING_MODIFIER", "multiply": 1.0 },
+        { "value": "NIGHT_VIS", "add": 8 }
+      ] }
+    ],
+    "flags": [ "RAD_IMMUNE", "TOXIN_IMMUNE" ],
+    "social_modifiers": { "intimidate": 15 }
+  }
+]

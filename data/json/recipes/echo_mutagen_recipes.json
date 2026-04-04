@@ -1,0 +1,48 @@
+[
+  {
+    "type": "recipe",
+    "result": "mutagen_echo",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "difficulty": 8,
+    "time": "120 m",
+    "autolearn": false,
+    "book_learn": [],
+    "//": "Requires serum from the Core + base mutagen + chemicals",
+    "components": [
+      [ [ "apoc_mutation_serum", 2 ] ],
+      [ [ "mutagen", 1 ] ],
+      [ [ "bleach", 2 ] ],
+      [ [ "water_clean", 3 ] ]
+    ],
+    "tools": [
+      [ [ "hotplate", 40 ] ],
+      [ [ "beaker", -1 ] ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "iv_mutagen_echo",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "difficulty": 10,
+    "time": "240 m",
+    "autolearn": false,
+    "book_learn": [],
+    "//": "Extremely difficult to create — requires multiple doses + advanced chemistry",
+    "components": [
+      [ [ "mutagen_echo", 3 ] ],
+      [ [ "apoc_mutation_serum", 3 ] ],
+      [ [ "charcoal", 20 ] ],
+      [ [ "bleach", 3 ] ],
+      [ [ "water_clean", 5 ] ]
+    ],
+    "tools": [
+      [ [ "hotplate", 80 ] ],
+      [ [ "beaker", -1 ] ],
+      [ [ "chemistry_set", -1 ] ]
+    ]
+  }
+]

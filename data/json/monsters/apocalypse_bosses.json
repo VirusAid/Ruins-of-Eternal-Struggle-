@@ -39,12 +39,12 @@
     "copy-from": "mon_zombie_master",
     "name": { "str": "Страж-3 «Вестник»", "str_pl": "Стражи-3 «Вестник»" },
     "description": "Третий страж Ядра. Некромантическая аномалия — мёртвые вокруг него поднимаются снова и снова. Его крик разносится по всему уровню.",
-    "hp": 350,
+    "hp": 420,
     "speed": 100,
     "melee_skill": 5,
     "melee_dice": 2,
-    "melee_dice_sides": 6,
-    "armor": { "bash": 8, "cut": 12, "bullet": 8 },
+    "melee_dice_sides": 8,
+    "armor": { "bash": 10, "cut": 14, "bullet": 10 },
     "special_attacks": [
       [ "SHRIEK_ALERT", 150 ],
       { "type": "monster_attack", "attack_type": "melee", "id": "apoc_necro_touch", "cooldown": 5, "damage_max_instance": [ { "damage_type": "biological", "amount": 15, "armor_multiplier": 0.2 } ] }

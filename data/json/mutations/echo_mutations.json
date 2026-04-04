@@ -91,7 +91,7 @@
     "description": "Частота 47.3 Гц стала частью вас.  Вы ощущаете живых существ сквозь стены — вибрация их тел отдаётся эхом в ваших костях.  Восприятие +2, обнаружение существ в радиусе 3 тайлов.",
     "category": [ "ECHO" ],
     "prereqs": [ "ECHO_WHISPERS" ],
-    "changes_to": [ "ECHO_PULSE" ],
+    "changes_to": [ "ECHO_PULSE", "ECHO_FREQUENCY" ],
     "enchantments": [
       { "values": [
         { "value": "PERCEPTION", "add": 2 },
@@ -130,7 +130,7 @@
     "category": [ "ECHO" ],
     "types": [ "HEALING" ],
     "prereqs": [ "ECHO_CELL_REGEN" ],
-    "changes_to": [ "ECHO_PULSE" ],
+    "changes_to": [ "ECHO_PULSE", "ECHO_FREQUENCY", "ECHO_ADAPTATION" ],
     "enchantments": [
       { "values": [
         { "value": "REGEN_HP", "multiply": 0.75 },
@@ -150,7 +150,7 @@
     "description": "Мышцы стали плотнее и эластичнее.  Каждое движение — контролируемый взрыв силы.  +10% скорости, +1 к уклонению.",
     "category": [ "ECHO" ],
     "prereqs": [ "ECHO_ADRENALINE" ],
-    "changes_to": [ "ECHO_FORTRESS" ],
+    "changes_to": [ "ECHO_FORTRESS", "ECHO_ADAPTATION" ],
     "enchantments": [
       { "values": [
         { "value": "SPEED", "multiply": 0.1 },

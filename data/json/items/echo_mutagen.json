@@ -1,6 +1,7 @@
 [
   {
-    "type": "COMESTIBLE",
+    "type": "ITEM",
+    "subtypes": [ "COMESTIBLE" ],
     "id": "mutagen_echo",
     "copy-from": "mutagen",
     "name": { "str": "мутаген «Эхо»" },
@@ -9,7 +10,8 @@
     "vitamins": [ [ "mutagen_echo", 600 ] ]
   },
   {
-    "type": "COMESTIBLE",
+    "type": "ITEM",
+    "subtypes": [ "COMESTIBLE" ],
     "id": "iv_mutagen_echo",
     "copy-from": "iv_mutagen",
     "name": { "str": "элитный мутаген «Эхо»", "str_pl": "элитные мутагены «Эхо»" },

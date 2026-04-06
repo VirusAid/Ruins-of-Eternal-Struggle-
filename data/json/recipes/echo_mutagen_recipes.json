@@ -1,6 +1,7 @@
 [
   {
     "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
     "result": "mutagen_echo",
     "category": "CC_CHEM",
     "subcategory": "CSC_CHEM_MUTAGEN",
@@ -23,6 +24,7 @@
   },
   {
     "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
     "result": "iv_mutagen_echo",
     "category": "CC_CHEM",
     "subcategory": "CSC_CHEM_MUTAGEN",

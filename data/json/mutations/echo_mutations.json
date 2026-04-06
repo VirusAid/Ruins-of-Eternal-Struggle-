@@ -25,12 +25,7 @@
     "category": [ "ECHO" ],
     "changes_to": [ "ECHO_CHITIN" ],
     "cancels": [ "FLIMSY", "FLIMSY2", "FLIMSY3" ],
-    "enchantments": [
-      { "values": [
-        { "value": "ARMOR_BASH", "add": 3 },
-        { "value": "ARMOR_CUT", "add": 3 }
-      ] }
-    ]
+    "armor": [ { "part_types": [ "ALL" ], "bash": 3, "cut": 3 } ]
   },
   {
     "type": "mutation",
@@ -106,17 +101,11 @@
     "points": 4,
     "visibility": 5,
     "ugliness": 4,
-    "description": "Кожа покрылась тёмными пластинами, похожими на спёкшийся бетон с металлическим отблеском.  +6 к защите от ударов и порезов, +4 от пуль.",
+    "description": "Кожа покрылась тёмными пластинами, похожими на спёкшийся бетон с металлическим отблеском.  +6 к защите от ударов и порезов.",
     "category": [ "ECHO" ],
     "prereqs": [ "ECHO_THICK_SKIN" ],
     "changes_to": [ "ECHO_FORTRESS" ],
-    "enchantments": [
-      { "values": [
-        { "value": "ARMOR_BASH", "add": 6 },
-        { "value": "ARMOR_CUT", "add": 6 },
-        { "value": "ARMOR_BULLET", "add": 4 }
-      ] }
-    ],
+    "armor": [ { "part_types": [ "ALL" ], "bash": 6, "cut": 6 } ],
     "social_modifiers": { "intimidate": 5 }
   },
   {
@@ -215,11 +204,9 @@
     "prereqs": [ "ECHO_CHITIN" ],
     "prereqs2": [ "ECHO_OVERDRIVE" ],
     "changes_to": [ "THRESH_ECHO" ],
+    "armor": [ { "part_types": [ "ALL" ], "bash": 10, "cut": 10 } ],
     "enchantments": [
       { "values": [
-        { "value": "ARMOR_BASH", "add": 10 },
-        { "value": "ARMOR_CUT", "add": 10 },
-        { "value": "ARMOR_BULLET", "add": 8 },
         { "value": "MAX_HP", "multiply": 0.15 },
         { "value": "SPEED", "multiply": -0.05 }
       ] }
@@ -279,13 +266,11 @@
     "category": [ "ECHO" ],
     "prereqs": [ "ECHO_PULSE", "ECHO_FORTRESS", "ECHO_FREQUENCY", "ECHO_ADAPTATION" ],
     "cancels": [ "FLIMSY", "FLIMSY2", "FLIMSY3" ],
+    "armor": [ { "part_types": [ "ALL" ], "bash": 12, "cut": 12 } ],
     "enchantments": [
       { "values": [
         { "value": "PERCEPTION", "add": 4 },
         { "value": "SPEED", "multiply": 0.15 },
-        { "value": "ARMOR_BASH", "add": 12 },
-        { "value": "ARMOR_CUT", "add": 12 },
-        { "value": "ARMOR_BULLET", "add": 10 },
         { "value": "MAX_HP", "multiply": 0.2 },
         { "value": "REGEN_HP", "multiply": 1.0 },
         { "value": "REGEN_HP_AWAKE", "multiply": 0.5 },

@@ -1,0 +1,29 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": "roes_voskhod_camp",
+    "name": "укреплённый блокпост «Восход»",
+    "sym": "V",
+    "color": "light_green",
+    "see_cost": "low",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "roes_otrazhenie_temple",
+    "name": "храм «Отражения»",
+    "sym": "O",
+    "color": "magenta",
+    "see_cost": "medium",
+    "flags": [ "NO_ROTATE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "roes_svobodnye_farm",
+    "name": "ферма «Свободных»",
+    "sym": "S",
+    "color": "yellow",
+    "see_cost": "low",
+    "flags": [ "NO_ROTATE" ]
+  }
+]

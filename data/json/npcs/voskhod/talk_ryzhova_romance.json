@@ -1,0 +1,192 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_MEDIC_PERSONAL",
+    "dynamic_line": {
+      "u_has_var": "ryzhova_romance", "value": "4",
+      "yes": "*Она берёт твою руку.  Тихо.*  Знаешь...  я рада, что маяк работал.  Очень рада.",
+      "no": {
+        "u_has_var": "ryzhova_romance", "value": "3",
+        "yes": "*Она смотрит внимательно.  Мягче, чем обычно.*  Ты пришёл.  Хорошо.",
+        "no": {
+          "u_has_var": "ryzhova_romance", "value": "2",
+          "yes": "Опять ты.  *Лёгкая улыбка, которую она быстро прячет.*  Что-то болит?",
+          "no": {
+            "u_has_var": "ryzhova_romance", "value": "1",
+            "yes": "Мы уже виделись.  Есть что-то медицинское или просто поговорить?",
+            "no": "Ты пришёл не за бинтами.  Или за ними?"
+          }
+        }
+      }
+    },
+    "responses": [
+      {
+        "text": "[Этап 1] Ты...  нормально себя чувствуешь?  Ты ведь тоже человек.",
+        "topic": "TALK_RYZHOVA_ROMANCE_1A",
+        "condition": { "and": [
+          { "not": { "u_has_var": "ryzhova_romance", "value": "1" } },
+          { "not": { "u_has_var": "ryzhova_romance", "value": "2" } },
+          { "not": { "u_has_var": "ryzhova_romance", "value": "3" } },
+          { "not": { "u_has_var": "ryzhova_romance", "value": "4" } },
+          { "u_has_var": "voskhod_missions_done", "value": "2" }
+        ] }
+      },
+      {
+        "text": "[Этап 2] Рыжова...  Вера.  Можно — Вера?",
+        "topic": "TALK_RYZHOVA_ROMANCE_2A",
+        "condition": { "and": [
+          { "u_has_var": "ryzhova_romance", "value": "1" },
+          { "u_has_var": "voskhod_missions_done", "value": "4" }
+        ] }
+      },
+      {
+        "text": "[Этап 3] Вера.  Я не за бинтами.  Я — к тебе.",
+        "topic": "TALK_RYZHOVA_ROMANCE_3A",
+        "condition": { "and": [
+          { "u_has_var": "ryzhova_romance", "value": "2" },
+          { "u_has_var": "voskhod_missions_done", "value": "6" }
+        ] }
+      },
+      {
+        "text": "[Этап 4] Вера.  Мне нужно тебе кое-что сказать.",
+        "topic": "TALK_RYZHOVA_ROMANCE_4A",
+        "condition": { "and": [
+          { "u_has_var": "ryzhova_romance", "value": "3" },
+          { "u_has_var": "voskhod_missions_done", "value": "8" }
+        ] }
+      },
+      {
+        "text": "Просто проведать.", "topic": "TALK_VOSKHOD_MEDIC"
+      }
+    ]
+  },
+
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_1A",
+    "dynamic_line": "*Пауза.  Она не привыкла, что кто-то спрашивает.*\n\n...Нормально.  Я — врач.  Врач не болеет.\n\n*Тихо.*  Устала.  Но это...  не важно.",
+    "responses": [
+      { "text": "Это важно.  Ты тоже заслуживаешь заботы.", "topic": "TALK_RYZHOVA_ROMANCE_1B" },
+      { "text": "Ладно.  Извини.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_1B",
+    "dynamic_line": "*Она смотрит на тебя.  Долго.  Впервые — без диагностического взгляда.  Просто — смотрит.*\n\n...Спасибо.  Давно...  давно никто не говорил такого.\n\nВ бункере...  я — функция.  Врач.  Здесь — тоже функция.\n\n*Маленькая пауза.*\n\nНо ты...  видишь человека.  Это...  ценно.",
+    "responses": [
+      { "text": "Ты не функция.  Ты — Вера.", "topic": "TALK_RYZHOVA_ROMANCE_1C" },
+      { "text": "Не за что.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_1C",
+    "dynamic_line": "*Она быстро отворачивается.  Но ты замечаешь — уголок рта дёргается вверх.*\n\n...Лейтенант Рыжова.  Вера Сергеевна.\n\n*Пауза.*\n\nПриходи ещё.  Если...  если хочешь.",
+    "responses": [
+      { "text": "Приду.", "topic": "TALK_DONE",
+        "effect": { "u_add_var": "ryzhova_romance", "value": "1" }
+      }
+    ]
+  },
+
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_2A",
+    "dynamic_line": "*Она замирает.  Бинт в руках останавливается.*\n\n...Вера.  Да.  Можно.\n\n*Тихо.*  Никто не называл меня по имени...  с начала всего этого.  «Лейтенант».  «Доктор».  «Рыжова».\n\nВера.  *Она пробует вслух.  Как будто — чужое имя.*  Да.  Вера.",
+    "responses": [
+      { "text": "Вера.  Расскажи о себе.  Не как врач — как человек.", "topic": "TALK_RYZHOVA_ROMANCE_2B" },
+      { "text": "Ладно, потом.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_2B",
+    "dynamic_line": "*Она садится.  Впервые — садится, а не стоит.*\n\nДо катастрофы?  Госпиталь.  Двенадцатичасовые смены.  Кофе.  Сигареты.  Бессонница.\n\nПарень был.  Дениска.  Программист.  *Пауза.*  Не выжил.\n\n*Она смотрит на свои руки.*\n\nЯ спасла 131 человека в бункере.  А его — не смогла.  Его телефон звонил.  Всё звонил.  Его номер до сих пор в моём контактном списке.  В телефоне, который давно мёртв.\n\n*Длинная тишина.*\n\nИзвини.  Ты не это хотел услышать.",
+    "responses": [
+      { "text": "Именно это.  Настоящее.  Спасибо, Вера.", "topic": "TALK_RYZHOVA_ROMANCE_2C" },
+      { "text": "Мне жаль.", "topic": "TALK_RYZHOVA_ROMANCE_2C" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_2C",
+    "dynamic_line": "*Она вытирает глаза.  Быстро.  По-военному.*\n\nВсё.  Хватит.  Лейтенант Рыжова вернулась.\n\n*Но улыбка — остаётся.*\n\nПриходи.  ...Пожалуйста.",
+    "responses": [
+      { "text": "Обязательно, Вера.", "topic": "TALK_DONE",
+        "effect": { "u_add_var": "ryzhova_romance", "value": "2" }
+      }
+    ]
+  },
+
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_3A",
+    "dynamic_line": "*Она опускает аптечку.  Руки слегка дрожат.*\n\n...Ко мне.\n\n*Тихо.  Неуверенно.*\n\nЯ знаю.  Я...  заметила.  Давно.\n\nТы приходишь.  Не за бинтами.  Не за таблетками.  Просто — приходишь.\n\n*Она снимает латексные перчатки.  Медленно.*\n\nМне...  страшно.  Последний раз, когда я...  позволила себе...  Дениска умер.\n\nИ с тех пор я — функция.  Врач.  Доктор.  Лейтенант.\n\nНо ты...  *Она смотрит тебе в глаза.*  Ты — единственный, кто видит Веру.",
+    "responses": [
+      { "text": "Вера.  Я вижу тебя.  И я никуда не уйду.",
+        "trial": { "type": "PERSUADE", "difficulty": 5 },
+        "success": { "topic": "TALK_RYZHOVA_ROMANCE_3B" },
+        "failure": { "topic": "TALK_RYZHOVA_ROMANCE_3F" }
+      },
+      { "text": "Ты права.  Не время.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_3B",
+    "dynamic_line": "*Она делает шаг.  Потом ещё один.  Маленькие, осторожные шаги.*\n\n*Берёт твою руку.  Кладёт на своё лицо.  На шрам через левую скулу.*\n\nОсколок.  Бункер.  Авария на третьем месяце.\n\n*Тихо.*\n\nНикто не видел этого шрама.  Я прячу его.  Всегда.\n\n*Она закрывает глаза.  Твоя рука — на её лице.*\n\n...Не уходи.  Пожалуйста.",
+    "responses": [
+      { "text": "Не уйду.  Обещаю.", "topic": "TALK_DONE",
+        "effect": [
+          { "u_add_var": "ryzhova_romance", "value": "3" },
+          { "u_add_morale": "morale_feeling_good", "bonus": 30, "max_bonus": 50, "duration": "4 hours" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_3F",
+    "dynamic_line": "*Она отступает.  Быстро.  Стена возвращается.*\n\n...Нет.  Извини.  Я не...  не могу.\n\n*Надевает перчатки.*  У меня — пациенты.",
+    "responses": [
+      { "text": "Понимаю.  Извини.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  },
+
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_4A",
+    "dynamic_line": "*Она знает.  По глазам — знает.*\n\n...Говори.",
+    "responses": [
+      { "text": "Вера.  Я люблю тебя.  В этом мёртвом мире — ты — живая.",
+        "trial": { "type": "PERSUADE", "difficulty": 3 },
+        "success": { "topic": "TALK_RYZHOVA_ROMANCE_4B" },
+        "failure": { "topic": "TALK_RYZHOVA_ROMANCE_4F" }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_4B",
+    "dynamic_line": "*Тишина.  Длинная.  Абсолютная.*\n\n*Она снимает шлем.  Рыжие волосы — короткие, взъерошенные.  Шрам через скулу.  Глаза — голубые, мокрые.*\n\nЯ...  *Голос ломается.*\n\nЧетырнадцать месяцев в бункере.  Шестнадцать смертей на моих руках.  Дениска.  Мёртвый мир.\n\nИ ты.  Ты, который пришёл.  Который видел.  Который...  остался.\n\n*Она шагает к тебе.  Прижимается лбом к твоему плечу.  Тихо.  Маленькая, хрупкая, не-лейтенант.*\n\n...Я тоже.  *Шёпот.*  Я тоже.\n\n*Её руки — привыкшие к скальпелю — обнимают тебя.  Сильно.  Отчаянно.*\n\nНе умирай.  *Хриплый шёпот.*  Только — не умирай.",
+    "responses": [
+      { "text": "*Обнять в ответ.*  Не умру.  Обещаю.", "topic": "TALK_DONE",
+        "effect": [
+          { "u_add_var": "ryzhova_romance", "value": "4" },
+          { "u_add_var": "ryzhova_partner", "value": "yes" },
+          { "u_add_effect": "ryzhova_bond", "duration": "PERMANENT" },
+          { "u_add_morale": "morale_feeling_good", "bonus": 50, "max_bonus": 100, "duration": "12 hours" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_RYZHOVA_ROMANCE_4F",
+    "dynamic_line": "*Она смотрит.  Долго.*\n\n...Слова.  Красивые слова.\n\n*Тихо.*\n\nНо я...  мне нужно больше.  Мне нужно время.  Приходи позже.",
+    "responses": [
+      { "text": "Приду.", "topic": "TALK_VOSKHOD_MEDIC" }
+    ]
+  }
+]

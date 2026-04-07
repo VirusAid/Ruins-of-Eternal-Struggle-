@@ -1,0 +1,231 @@
+[
+  {
+    "type": "npc_class",
+    "id": "NC_OTRAZHENIE_PRIEST",
+    "name": { "str": "Жрец «Отражения»" },
+    "job_description": "Духовный лидер культа «Отражение».  Слышит частоту 47.3 Гц и проповедует эволюцию.",
+    "common": false,
+    "sells_belongings": false,
+    "bonus_str": { "rng": [ 0, 1 ] },
+    "bonus_dex": { "rng": [ 0, 1 ] },
+    "bonus_int": { "rng": [ 3, 5 ] },
+    "bonus_per": { "rng": [ 2, 4 ] },
+    "bonus_aggression": -2,
+    "bonus_bravery": 3,
+    "bonus_altruism": 4,
+    "traits": [
+      { "group": "Appearance_demographics" },
+      { "trait": "RETURN_TO_START_POS" }
+    ],
+    "skills": [
+      { "skill": "ALL", "level": { "rng": [ 1, 2 ] } },
+      { "skill": "speech", "bonus": { "rng": [ 5, 7 ] } },
+      { "skill": "firstaid", "bonus": { "rng": [ 2, 4 ] } },
+      { "skill": "chemistry", "bonus": { "rng": [ 3, 5 ] } }
+    ],
+    "worn_override": "NC_OTRAZHENIE_worn_priest",
+    "weapon_override": "NC_OTRAZHENIE_weapon_priest"
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_OTRAZHENIE_ALCHEMIST",
+    "name": { "str": "Алхимик «Отражения»" },
+    "job_description": "Создаёт мутагены и эхо-артефакты.  Торгует с достойными.",
+    "common": false,
+    "sells_belongings": false,
+    "bonus_str": { "rng": [ 0, 1 ] },
+    "bonus_dex": { "rng": [ 1, 3 ] },
+    "bonus_int": { "rng": [ 3, 5 ] },
+    "bonus_per": { "rng": [ 2, 4 ] },
+    "bonus_aggression": -3,
+    "bonus_bravery": 2,
+    "bonus_altruism": 2,
+    "traits": [
+      { "group": "Appearance_demographics" },
+      { "trait": "RETURN_TO_START_POS" }
+    ],
+    "skills": [
+      { "skill": "ALL", "level": { "rng": [ 1, 2 ] } },
+      { "skill": "chemistry", "bonus": { "rng": [ 5, 7 ] } },
+      { "skill": "cooking", "bonus": { "rng": [ 3, 5 ] } },
+      { "skill": "firstaid", "bonus": { "rng": [ 3, 5 ] } },
+      { "skill": "speech", "bonus": { "rng": [ 2, 4 ] } }
+    ],
+    "worn_override": "NC_OTRAZHENIE_worn_alchemist",
+    "weapon_override": "NC_OTRAZHENIE_weapon_alchemist",
+    "shopkeeper_item_group": [
+      { "group": "ROES_OTRAZHENIE_shop_basic", "rigid": true },
+      { "group": "ROES_OTRAZHENIE_shop_trusted", "rigid": true, "trust": 4 }
+    ],
+    "restock_interval": "7 days"
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_OTRAZHENIE_ADEPT",
+    "name": { "str": "Адепт «Отражения»" },
+    "job_description": "Последователь культа.  Частично мутировавший, верный делу.",
+    "common": false,
+    "sells_belongings": false,
+    "bonus_str": { "rng": [ 1, 3 ] },
+    "bonus_dex": { "rng": [ 2, 4 ] },
+    "bonus_int": { "rng": [ 0, 2 ] },
+    "bonus_per": { "rng": [ 1, 3 ] },
+    "bonus_aggression": 1,
+    "bonus_bravery": 3,
+    "bonus_altruism": 1,
+    "traits": [
+      { "group": "Appearance_demographics" },
+      { "trait": "RETURN_TO_START_POS" }
+    ],
+    "skills": [
+      { "skill": "ALL", "level": { "rng": [ 1, 2 ] } },
+      { "skill": "melee", "bonus": { "rng": [ 3, 5 ] } },
+      { "skill": "dodge", "bonus": { "rng": [ 3, 5 ] } },
+      { "skill": "unarmed", "bonus": { "rng": [ 2, 4 ] } }
+    ],
+    "worn_override": "NC_OTRAZHENIE_worn_adept",
+    "weapon_override": "NC_OTRAZHENIE_weapon_adept"
+  },
+  {
+    "type": "npc_class",
+    "id": "NC_OTRAZHENIE_GUARDIAN",
+    "name": { "str": "Страж «Отражения»" },
+    "job_description": "Тяжело мутировавший защитник храма.  Почти не говорит.",
+    "common": false,
+    "sells_belongings": false,
+    "bonus_str": { "rng": [ 4, 6 ] },
+    "bonus_dex": { "rng": [ 1, 2 ] },
+    "bonus_int": { "rng": [ -1, 1 ] },
+    "bonus_per": { "rng": [ 0, 2 ] },
+    "bonus_aggression": 2,
+    "bonus_bravery": 5,
+    "bonus_altruism": 0,
+    "traits": [
+      { "group": "Appearance_demographics" },
+      { "trait": "RETURN_TO_START_POS" }
+    ],
+    "skills": [
+      { "skill": "ALL", "level": { "rng": [ 1, 2 ] } },
+      { "skill": "melee", "bonus": { "rng": [ 5, 7 ] } },
+      { "skill": "unarmed", "bonus": { "rng": [ 4, 6 ] } },
+      { "skill": "dodge", "bonus": { "rng": [ 2, 4 ] } }
+    ],
+    "worn_override": "NC_OTRAZHENIE_worn_guardian",
+    "weapon_override": "NC_OTRAZHENIE_weapon_guardian"
+  },
+
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_worn_priest",
+    "subtype": "collection",
+    "entries": [
+      { "item": "cassock", "prob": 100 },
+      { "item": "boots", "prob": 100 },
+      { "item": "socks", "prob": 100 },
+      { "item": "gloves_leather", "prob": 60 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_worn_alchemist",
+    "subtype": "collection",
+    "entries": [
+      { "item": "coat_lab", "prob": 100 },
+      { "item": "pants", "prob": 100 },
+      { "item": "boots_steel", "prob": 100 },
+      { "item": "socks", "prob": 100 },
+      { "item": "gloves_rubber", "prob": 100 },
+      { "item": "mask_gas", "prob": 60 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_worn_adept",
+    "subtype": "collection",
+    "entries": [
+      { "item": "hoodie", "prob": 100 },
+      { "item": "pants_cargo", "prob": 100 },
+      { "item": "boots", "prob": 100 },
+      { "item": "socks", "prob": 100 },
+      { "item": "arm_warmers", "prob": 50 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_worn_guardian",
+    "subtype": "collection",
+    "entries": [
+      { "item": "leather_armor_suit", "prob": 100 },
+      { "item": "pants_leather", "prob": 100 },
+      { "item": "boots_steel", "prob": 100 },
+      { "item": "socks", "prob": 100 },
+      { "item": "gloves_leather", "prob": 100 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_weapon_priest",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "knife_butcher", "prob": 70 },
+      { "item": "knife_steak", "prob": 30 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_weapon_alchemist",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "knife_hunting", "prob": 60 },
+      { "item": "scalpel", "prob": 40 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_weapon_adept",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "machete", "prob": 50 },
+      { "item": "knife_combat", "prob": 30 },
+      { "item": "spear_wood", "prob": 20 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "NC_OTRAZHENIE_weapon_guardian",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "hammer_sledge", "prob": 50 },
+      { "item": "fire_ax", "prob": 30 },
+      { "item": "bat_metal", "prob": 20 }
+    ]
+  },
+
+  {
+    "type": "item_group",
+    "id": "ROES_OTRAZHENIE_shop_basic",
+    "subtype": "collection",
+    "entries": [
+      { "item": "mutagen", "prob": 80, "count": [ 1, 3 ] },
+      { "item": "purifier", "prob": 60, "count": [ 1, 2 ] },
+      { "item": "bandages", "prob": 100, "count": [ 3, 6 ] },
+      { "item": "aspirin", "prob": 80, "count": [ 3, 8 ] },
+      { "item": "disinfectant", "prob": 60, "count": [ 1, 2 ] },
+      { "item": "water_clean", "prob": 100, "count": [ 3, 6 ] },
+      { "item": "pine_tea", "prob": 60, "count": [ 2, 4 ] }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "ROES_OTRAZHENIE_shop_trusted",
+    "subtype": "collection",
+    "entries": [
+      { "item": "mutagen", "prob": 100, "count": [ 2, 5 ] },
+      { "item": "iv_mutagen", "prob": 40, "count": [ 1, 2 ] },
+      { "item": "purifier", "prob": 100, "count": [ 2, 4 ] },
+      { "item": "mutagen_echo", "prob": 30, "count": [ 1, 2 ] },
+      { "item": "antibiotics", "prob": 60, "count": [ 2, 4 ] },
+      { "item": "morphine", "prob": 40, "count": [ 1, 2 ] }
+    ]
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "id": "MISSION_VOSKHOD_01_RECON",
+    "type": "mission_definition",
+    "name": { "str": "Разведка периметра" },
+    "description": "Капитан Ковалёв просит провести разведку окрестностей блокпоста — зачистить ближайшую территорию от мертвецов.",
+    "goal": "MGOAL_KILL_MONSTER_TYPE",
+    "monster_type": "mon_zombie",
+    "monster_kill_goal": 10,
+    "difficulty": 2,
+    "value": 50000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_02_SUPPLIES",
+    "dialogue": {
+      "describe": "Нужна разведка.",
+      "offer": "Первое задание — простое.  Зачисти периметр.  Десять мертвецов в радиусе — это десять потенциальных проблем.  Убери их.",
+      "accepted": "Хорошо.  Возьми патроны, если нужно — Зубов даст.  Возвращайся, когда территория будет чистой.",
+      "rejected": "Понял.  Когда будешь готов — скажи.",
+      "advice": "Не лезь в здания.  Работай на открытом пространстве.",
+      "inquire": "Периметр чист?",
+      "success": "Десять.  Хорошо.  Ты работаешь чисто.  *Кивает с одобрением.*  У меня есть ещё задание.",
+      "success_lie": "Хм.  Ладно.  Верю.",
+      "failure": "Не успел.  Бывает.  Попробуй ещё."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "1" },
+        { "u_spawn_item": "556", "count": 30 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_02_SUPPLIES",
+    "type": "mission_definition",
+    "name": { "str": "Снабжение блокпоста" },
+    "description": "Ковалёв просит найти припасы — аптечки и еду для гарнизона.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "and": [ { "u_has_items": { "item": "mre_beef", "count": 5 } }, { "u_has_items": { "item": "bandages", "count": 5 } } ] },
+    "difficulty": 3,
+    "value": 80000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_03_OUTPOST",
+    "dialogue": {
+      "describe": "Нужны припасы.",
+      "offer": "Мы на сухом пайке третий день.  Нужно 5 армейских рационов и 5 бинтов.  Найдёшь — на счету.",
+      "accepted": "Проверяй супермаркеты, склады, дома.  Только аккуратно.",
+      "rejected": "Понял.  Мы подождём.",
+      "advice": "Рационы ищи на вояках и в военных грузовиках.",
+      "inquire": "Припасы нашёл?",
+      "success": "Отлично.  *Принимает груз, передаёт Рыжовой.*  Это спасёт людей.  Серьёзно.",
+      "success_lie": "Выглядит нормально.",
+      "failure": "Не хватает.  Ищи ещё."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "2" },
+        { "u_spawn_item": "9mm", "count": 50 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_03_OUTPOST",
+    "type": "mission_definition",
+    "name": { "str": "Зачистка аванпоста" },
+    "description": "Ковалёв нашёл на карте заброшенный полицейский участок.  Нужно зачистить его для расширения.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 4,
+    "value": 100000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_04_RADIO",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "police",
+        "reveal_radius": 1,
+        "random": true,
+        "min_distance": 20
+      }
+    },
+    "dialogue": {
+      "describe": "Есть объект для зачистки.",
+      "offer": "На карте — полицейский участок.  Крепкие стены, решётки.  Идеальная точка.  Зачисти его — будем расширяться.",
+      "accepted": "Координаты переданы.  Будь осторожен — мертвецы в форме опаснее голых.",
+      "rejected": "Хорошо.  Вернёшься, когда будешь готов.",
+      "advice": "Там могут быть армейские зомби.  Бронебойные пули не помешают.",
+      "inquire": "Участок чист?",
+      "success": "Отлично.  Это серьёзная победа.  *Отмечает на карте.*  Демидов, готовь группу.",
+      "success_lie": "Принято.",
+      "failure": "Не получилось.  Попробуй снова."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "3" },
+        { "u_spawn_item": "ballistic_vest_light" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_04_RADIO",
+    "type": "mission_definition",
+    "name": { "str": "Установить связь" },
+    "description": "Ковалёв хочет наладить связь с бункером «Заря-9».  Нужна радиовышка.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 4,
+    "value": 100000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_05_CULT",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "radio_tower",
+        "reveal_radius": 1,
+        "random": true,
+        "min_distance": 30
+      }
+    },
+    "dialogue": {
+      "describe": "Нужна радиовышка.",
+      "offer": "Мы потеряли связь с «Зарёй-9».  Нужна радиовышка — доберись до ближайшей, включи передатчик.  Без связи мы слепы.",
+      "accepted": "Вышка далеко.  Возьми рацию — Демидов настроил частоту.",
+      "rejected": "Понимаю.  Это далеко.",
+      "advice": "Вышки обычно на холмах.  Будь готов к лестницам.",
+      "inquire": "Дошёл до вышки?",
+      "success": "*Рация шипит.  Потом — голос.  Далёкий, с помехами, но живой.*\n\n...«Заря-9» слышит вас.  «Заря-9» слышит...\n\n*Ковалёв закрывает глаза.  Несколько секунд.*  Спасибо.",
+      "success_lie": "Принято.",
+      "failure": "Вышка ещё не активна."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "4" },
+        { "u_add_var": "voskhod_radio_established", "value": "yes" },
+        { "u_spawn_item": "two_way_radio" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_05_CULT",
+    "type": "mission_definition",
+    "name": { "str": "Угроза «Отражения»" },
+    "description": "Разведка обнаружила культ мутантов «Отражение».  Ковалёв хочет разведданные.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 5,
+    "value": 120000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_06_ARMOR",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "roes_otrazhenie_temple",
+        "reveal_radius": 1,
+        "random": false,
+        "min_distance": 0
+      }
+    },
+    "dialogue": {
+      "describe": "Разведка — культ.",
+      "offer": "Демидов видел людей.  Мутировавших.  Организованных.  Они называют себя «Отражение».\n\nДоберись до их базы.  Осмотри.  НЕ вступай в бой.  Мне нужна информация — сколько их, чем вооружены, что хотят.",
+      "accepted": "Это разведка, не атака.  Подходи осторожно.  Осмотри и вернись.",
+      "rejected": "Хорошо.  Позже.",
+      "advice": "Они живут в лесу.  Храм какой-то.",
+      "inquire": "Что узнал?",
+      "success": "*Слушает отчёт.*  Понятно.  Культ.  Мутагены.  Поклонение Ядру.\n\n*Длинная пауза.*  Это опасно.  Очень.  Но пока — наблюдаем.",
+      "success_lie": "Принято.",
+      "failure": "Не дошёл?"
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "5" },
+        { "u_add_var": "voskhod_knows_otrazhenie", "value": "yes" },
+        { "u_spawn_item": "556", "count": 60 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_06_ARMOR",
+    "type": "mission_definition",
+    "name": { "str": "Бронированный конвой" },
+    "description": "Ковалёв хочет получить тяжёлую броню из военного склада.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "ballistic_vest_heavy", "count": 2 } },
+    "difficulty": 5,
+    "value": 150000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_07_HUNTER",
+    "dialogue": {
+      "describe": "Нужна тяжёлая броня.",
+      "offer": "Наши жилеты потрёпаны.  Нужны два тяжёлых бронежилета — для Демидова и меня.  Военные склады, полиция, национальная гвардия — ищи там.",
+      "accepted": "Два тяжёлых жилета.  Не лёгких — тяжёлых.",
+      "rejected": "Понял.",
+      "advice": "В военных складах бывает.",
+      "inquire": "Есть броня?",
+      "success": "*Примеряет жилет.*  Идеально.  Теперь мы серьёзнее.\n\nСпасибо.  Ты — ценный ресурс.",
+      "success_lie": "Хм.",
+      "failure": "Мало.  Нужно два."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "6" },
+        { "u_spawn_item": "helmet_army" },
+        { "u_spawn_item": "gloves_tactical" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_07_HUNTER",
+    "type": "mission_definition",
+    "name": { "str": "Охота на Альфу" },
+    "description": "Элитный мутант терроризирует окрестности.  Ковалёв хочет его голову.",
+    "goal": "MGOAL_KILL_MONSTER_TYPE",
+    "monster_type": "mon_zombie_hulk",
+    "monster_kill_goal": 1,
+    "difficulty": 6,
+    "value": 200000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_08_SABOTAGE",
+    "dialogue": {
+      "describe": "Охота на монстра.",
+      "offer": "Демидов видел НЕЧТО.  Двухметровый, мускулы — как броня.  Один удар — и стена лопается.\n\nНайди его.  Убей.  Если сможешь.",
+      "accepted": "Бери самое тяжёлое оружие.  Патронов не жалей.",
+      "rejected": "Разумно.",
+      "advice": "Целься в голову.  Много раз.",
+      "inquire": "Убил?",
+      "success": "*Смотрит с уважением.  Долго.*\n\nТы убил халка.  В одиночку.\n\n*Протягивает руку.*  Капитан Ковалёв рекомендует тебя к повышению.  Если бы ещё существовала армия.",
+      "success_lie": "Серьёзно?",
+      "failure": "Он ещё жив."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "7" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_08_SABOTAGE",
+    "type": "mission_definition",
+    "name": { "str": "Саботаж «Отражения»" },
+    "description": "Ковалёв приказывает уничтожить запасы мутагенов культа.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 7,
+    "value": 250000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_09_ESCORT",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "roes_otrazhenie_temple",
+        "reveal_radius": 1,
+        "random": false,
+        "min_distance": 0
+      }
+    },
+    "dialogue": {
+      "describe": "Саботаж.",
+      "offer": "«Отражение» копит мутагены.  Они готовят массовую мутацию.  Если это произойдёт — мы потеряем регион.\n\nПроникни в их лабораторию.  Уничтожь запасы.  Тихо, если можно.",
+      "accepted": "Это не разведка — это операция.  Будь готов к бою.",
+      "rejected": "Понимаю.  Это серьёзно.",
+      "advice": "Лаборатория — в задней части храма.  Химикаты горят хорошо.",
+      "inquire": "Операция завершена?",
+      "success": "Чисто.  *Кивает.*  Ты только что спас сотни жизней.  Они этого не знают.  Но я — знаю.",
+      "success_lie": "Ладно.",
+      "failure": "Ещё нет?"
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "8" },
+        { "u_add_var": "otrazhenie_sabotaged", "value": "yes" },
+        { "u_spawn_item": "762_51", "count": 60 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_09_ESCORT",
+    "type": "mission_definition",
+    "name": { "str": "Конвой из «Зари-9»" },
+    "description": "Конвой из бункера идёт к блокпосту.  Нужно обеспечить безопасность маршрута.",
+    "goal": "MGOAL_KILL_MONSTER_TYPE",
+    "monster_type": "mon_zombie",
+    "monster_kill_goal": 20,
+    "difficulty": 7,
+    "value": 300000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_VOSKHOD_10_CORE",
+    "dialogue": {
+      "describe": "Нужен эскорт.",
+      "offer": "Связь установлена.  «Заря-9» высылает конвой — двадцать человек, припасы, техника.\n\nПроблема — маршрут идёт через заражённую зону.  Нужно расчистить путь.  Двадцать тварей минимум.",
+      "accepted": "Расчисти зону.  Конвой будет через три дня.",
+      "rejected": "Понял.",
+      "advice": "Работай систематично.  От блокпоста — на юго-восток.",
+      "inquire": "Маршрут чист?",
+      "success": "*На горизонте — движение.  Грузовики.  Люди.  Оружие.*\n\nОни здесь.  *Голос Ковалёва дрожит.*  Они здесь.\n\n*Впервые за всё время — он улыбается.*",
+      "success_lie": "Надеюсь.",
+      "failure": "Мало.  Ещё есть."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "9" },
+        { "u_add_var": "voskhod_convoy_arrived", "value": "yes" },
+        { "u_spawn_item": "rifle_apocalypse" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_VOSKHOD_10_CORE",
+    "type": "mission_definition",
+    "name": { "str": "Операция «Закат»" },
+    "description": "Финальная миссия.  Ковалёв готов к штурму Объекта Нулевой.  «Восход» идёт с тобой.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_var": "echo_story_core_entered", "value": "yes" },
+    "difficulty": 10,
+    "value": 500000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "dialogue": {
+      "describe": "Финальная операция.",
+      "offer": "Всё готово.  Конвой на месте.  Связь работает.  Разведка проведена.\n\nОбъект Нулевой.  Это — конец.  Или — начало.\n\n*Он встаёт.  Полная экипировка.  Шлем.  Автомат.*\n\nЗа «Восход».  За «Зарю-9».  За каждого, кто умер в этом мире.\n\nВеди нас.",
+      "accepted": "Мы готовы.  Демидов, Рыжова — на позиции.  Зубов, Кравцов — прикрытие.\n\nЖдём твоей команды.",
+      "rejected": "Когда будешь готов — скажи.",
+      "advice": "Внутри Ядра — мы будем за тобой.  Но решения — твои.",
+      "inquire": "Объект взят?",
+      "success": "*Тишина.  Долгая, абсолютная тишина.*\n\nТы сделал это.  Ты...\n\n*Ковалёв снимает шлем.  Садится на землю.*\n\nВойна окончена.  *Тихо.*  Война окончена.",
+      "success_lie": "...",
+      "failure": "Ядро ещё работает."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "voskhod_missions_done", "value": "10" },
+        { "u_add_var": "voskhod_ending", "value": "yes" }
+      ]
+    }
+  }
+]

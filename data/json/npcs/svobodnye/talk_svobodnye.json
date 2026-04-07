@@ -1,0 +1,198 @@
+[
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_ELDER",
+    "dynamic_line": {
+      "u_has_var": "svobodnye_met_elder", "value": "yes",
+      "yes": "С возвращением, путник.  Чем мы можем помочь?  Или — чем ты можешь помочь нам?  *Тёплая улыбка.*",
+      "no": "*Женщина средних лет в тёплой куртке.  Лицо — обычное, ненатренированное, но доброе.  Руки — натруженные.*\n\nЗдравствуй!  Не бойся.  Мы не кусаемся.\n\n*Она протягивает руку.*\n\nТамара Ильинична.  Старшина «Свободных».  Бывший учитель математики.  Нынешний — всё.\n\nПроходи.  Зина сварила суп."
+    },
+    "speaker_effect": {
+      "sentinel": "svobodnye_elder_first_meet",
+      "effect": [
+        { "u_add_var": "svobodnye_met_elder", "value": "yes" }
+      ]
+    },
+    "responses": [
+      { "text": "Что такое «Свободные»?", "topic": "TALK_SVOBODNYE_ABOUT" },
+      { "text": "Мне нужна помощь.", "topic": "TALK_SVOBODNYE_HELP" },
+      { "text": "Я хочу помочь.", "topic": "TALK_SVOBODNYE_MISSION" },
+      { "text": "Кто здесь живёт?", "topic": "TALK_SVOBODNYE_PEOPLE" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_ABOUT",
+    "dynamic_line": "«Свободные» — это мы.  Тридцать человек.  Семь детей.  Фермеры, механики, доктор, повар.\n\nМы не воюем.  Мы — живём.  Ферма кормит.  Борис чинит.  Олег лечит.  Зина готовит.  Марина разведывает.\n\nНикакой политики.  Никаких фракций.  Просто — люди, которые хотят жить.\n\nЕсли ты — такой же — добро пожаловать.",
+    "responses": [
+      { "text": "Красиво.", "topic": "TALK_SVOBODNYE_ELDER" },
+      { "text": "А если кто-то нападёт?", "topic": "TALK_SVOBODNYE_DEFENSE" },
+      { "text": "Вернёмся.", "topic": "TALK_SVOBODNYE_ELDER" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_DEFENSE",
+    "dynamic_line": "*Вздох.*\n\nМарина.  У неё — винтовка.  Борис — лом.  Олег — нож.\n\nМы...  не очень воюем.  Поэтому — нам нужны друзья.\n\n*Смотрит на тебя.*  Хорошие друзья.",
+    "responses": [
+      { "text": "Я буду таким другом.", "topic": "TALK_SVOBODNYE_ELDER" },
+      { "text": "Понятно.", "topic": "TALK_SVOBODNYE_ELDER" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_HELP",
+    "dynamic_line": "Борис торгует.  Запчасти, инструменты, материалы.  Поговори с ним.\n\nОлег может осмотреть раны — бесплатно.\n\nЗина...  Зина накормит.  Тоже бесплатно.  Она такая.",
+    "responses": [
+      { "text": "Спасибо.", "topic": "TALK_SVOBODNYE_ELDER" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MISSION",
+    "dynamic_line": "Помочь?  *Глаза загораются.*\n\nНам всегда нужна помощь.  Еда.  Инструменты.  Медикаменты.  Безопасность.\n\nЧто готов делать?",
+    "responses": [
+      { "text": "Давай задание.", "topic": "TALK_DONE",
+        "effect": { "assign_mission": "MISSION_SVOBODNYE_01_FOOD" }
+      },
+      { "text": "Потом.", "topic": "TALK_SVOBODNYE_ELDER" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_PEOPLE",
+    "dynamic_line": "Борис — механик.  Руки — золотые.  Чинит всё.\n\nОлег Петрович — наш доктор.  Бывший хирург.\n\nМарина — разведчица.  Бывший егерь.  Единственный, кто умеет стрелять по-настоящему.\n\nЗина — повар.  Бабушка Зина.  63 года.  Суп из ничего.\n\nИ дети.  Семь.  От четырёх до двенадцати.  Их нужно защитить.  Любой ценой.",
+    "responses": [
+      { "text": "Я помогу.", "topic": "TALK_SVOBODNYE_ELDER" },
+      { "text": "Вернёмся.", "topic": "TALK_SVOBODNYE_ELDER" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MECHANIC",
+    "dynamic_line": {
+      "u_has_var": "svobodnye_met_elder", "value": "yes",
+      "yes": "А, знакомый!  Нужно что починить?  Или закупиться?",
+      "no": "*Огромный мужчина в промасленном комбинезоне.  Руки — как лопаты.*\n\nБорис.  Механик.  Если Тамара тебя пропустила — значит, ты нормальный.\n\nЧто нужно?"
+    },
+    "responses": [
+      { "text": "Хочу торговать.", "topic": "TALK_SVOBODNYE_MECHANIC_TRADE" },
+      { "text": "Расскажи о себе.", "topic": "TALK_SVOBODNYE_MECHANIC_ABOUT" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MECHANIC_TRADE",
+    "dynamic_line": "Смотри.  Запчасти, инструменты, материалы.  Цены — человеческие.",
+    "responses": [
+      { "text": "Покажи.", "topic": "TALK_DONE", "effect": "start_trade" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MECHANIC_ABOUT",
+    "dynamic_line": "Борис.  40.  Механик.  До катастрофы — чинил грузовики на трассе.  Свой гараж.  Три помощника.  Собака.\n\n*Пауза.*\n\nГараж — сгорел.  Помощники...  *Пауза.*  Собака — тоже.\n\nТеперь — чиню генераторы Тамаре.  И всё, что Марина приносит из рейдов.",
+    "responses": [
+      { "text": "Сочувствую.", "topic": "TALK_SVOBODNYE_MECHANIC" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_DOCTOR",
+    "dynamic_line": "*Мужчина в очках.  Халат — поверх свитера.  Руки — хирургические, точные.*\n\nОлег Петрович.  Врач.  Если болит — покажи.  Если не болит — тоже покажи.  Лучше рано, чем поздно.",
+    "responses": [
+      { "text": "Мне нужна помощь.", "topic": "TALK_SVOBODNYE_DOCTOR_HEAL" },
+      { "text": "Расскажи о себе.", "topic": "TALK_SVOBODNYE_DOCTOR_ABOUT" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_DOCTOR_HEAL",
+    "dynamic_line": "Давай посмотрю.  *Достаёт стетоскоп.*  Раздевайся не обязательно — и так видно.\n\n*Осматривает.*  Обработаю, что могу.",
+    "speaker_effect": {
+      "sentinel": "svobodnye_doctor_heal",
+      "effect": [
+        { "u_add_effect": "bandaged", "duration": "6 hours", "target_part": "head" },
+        { "u_add_effect": "bandaged", "duration": "6 hours", "target_part": "torso" },
+        { "u_add_effect": "bandaged", "duration": "6 hours", "target_part": "arm_l" },
+        { "u_add_effect": "bandaged", "duration": "6 hours", "target_part": "arm_r" },
+        { "u_add_effect": "disinfected", "duration": "6 hours", "target_part": "torso" }
+      ]
+    },
+    "responses": [
+      { "text": "Спасибо, Олег Петрович.", "topic": "TALK_SVOBODNYE_DOCTOR" },
+      { "text": "Благодарю.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_DOCTOR_ABOUT",
+    "dynamic_line": "Хирург.  Двадцать лет стажа.  Городская больница №3.\n\nВ день катастрофы оперировал.  Пациент...  *пауза* ...встал.  С открытой брюшной полостью.  Встал и пошёл.\n\nС тех пор — здесь.  Лечу живых.  Мёртвых — не трогаю.  Хватило.",
+    "responses": [
+      { "text": "Кошмар.", "topic": "TALK_SVOBODNYE_DOCTOR" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MARINA",
+    "dynamic_line": {
+      "u_has_var": "svobodnye_met_marina", "value": "yes",
+      "yes": "*Она чистит винтовку.  Замечает тебя.  Кивает.*\n\nВернулся.  Хорошо.  Что нового?",
+      "no": "*Женщина в охотничьей куртке.  Стройная, подтянутая.  Волосы собраны в хвост.  На плече — винтовка.*\n\nСтой.  *Оценивающий взгляд.*\n\n...Ладно.  Не мертвец.  Это уже хорошо.\n\nМарина.  Разведчица.  Если Тамара тебя впустила — значит, ты в порядке.  Но я слежу."
+    },
+    "speaker_effect": {
+      "sentinel": "svobodnye_marina_first_meet",
+      "effect": [
+        { "u_add_var": "svobodnye_met_marina", "value": "yes" }
+      ]
+    },
+    "responses": [
+      { "text": "Расскажи о себе.", "topic": "TALK_SVOBODNYE_MARINA_ABOUT" },
+      { "text": "Как обстановка снаружи?", "topic": "TALK_SVOBODNYE_MARINA_RECON" },
+      { "text": "*Поговорить лично*", "topic": "TALK_MARINA_PERSONAL" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MARINA_ABOUT",
+    "dynamic_line": "Марина.  34.  Бывший егерь.  Лесничество, Уральский район.\n\nУмею стрелять, ставить ловушки, читать следы, ориентироваться.  Обычный набор.\n\n*Не смотрит в глаза.*\n\nДо катастрофы — жила одна.  Домик в лесу.  Собака — Рыжик.  Ушёл в лес и не вернулся.  Понятно, что с ним случилось.\n\nТеперь — здесь.  Тамара подобрала.  Дети...  *пауза* ...дети заставляют продолжать.",
+    "responses": [
+      { "text": "Ты сильная.", "topic": "TALK_SVOBODNYE_MARINA" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_MARINA_RECON",
+    "dynamic_line": "На юге — орда.  Медленно движется на запад.  Если повезёт — мимо.\n\nНа востоке — тихо.  Подозрительно тихо.\n\nНа севере — слышала стрельбу.  Военные?\n\n*Пожимает плечами.*\n\nКак обычно.  Мир мёртв, но не скучен.",
+    "responses": [
+      { "text": "Спасибо за разведку.", "topic": "TALK_SVOBODNYE_MARINA" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_COOK",
+    "dynamic_line": "*Маленькая пожилая женщина в фартуке с цветочками.  Мешает что-то в кастрюле.*\n\nОй!  Гость!  Садись, садись!  Суп почти готов!\n\n*Она несёт миску.*  Бабушка Зина.  Повар.  Ну, повар — это громко сказано.  Я просто — варю из того, что есть.\n\nЕшь, пока горячее!",
+    "responses": [
+      { "text": "Спасибо, Зина.  Вкусно.", "topic": "TALK_SVOBODNYE_COOK_TALK" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SVOBODNYE_COOK_TALK",
+    "dynamic_line": "Вкусно?  *Расплывается в улыбке.*  Ну что ты!  Это — из подножного корма.  Если бы у меня были нормальные продукты...\n\nДо катастрофы я пекла пирожки.  На рынке.  Очередь стояла!  *Мечтательно.*\n\nТеперь — суп из крапивы и сухарей.  Но дети едят.  И улыбаются.  Значит — нормально.\n\n*Подмигивает.*  Добавки?",
+    "responses": [
+      { "text": "Ещё!", "topic": "TALK_DONE" },
+      { "text": "Спасибо, Зина.", "topic": "TALK_DONE" }
+    ]
+  }
+]

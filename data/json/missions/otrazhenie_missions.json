@@ -1,0 +1,310 @@
+[
+  {
+    "id": "MISSION_OTRAZHENIE_01_OFFERING",
+    "type": "mission_definition",
+    "name": { "str": "Подношение Голосу" },
+    "description": "Жрец «Отражения» просит принести мутаген — как знак доверия.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "mutagen", "count": 2 } },
+    "difficulty": 3,
+    "value": 60000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_02_TRIAL",
+    "dialogue": {
+      "describe": "Приношение.",
+      "offer": "*Голос смотрит сквозь тебя.  Глаза — неестественно яркие.*\n\nРебёнок поверхности.  Ты пришёл.\n\nЧастота привела тебя.  Но частота требует подтверждения.  Принеси две дозы мутагена.  Любого.  Это — твой первый шаг.",
+      "accepted": "Мутаген — это язык нового мира.  Принеси его.  Мы подождём.",
+      "rejected": "Частота терпелива.",
+      "advice": "Лаборатории.  Госпитали.  Мертвецы в халатах.",
+      "inquire": "Ты принёс подношение?",
+      "success": "*Берёт мутаген.  Подносит к уху.  Слушает.*\n\nДа.  Он поёт.  Хорошо.\n\n*Ставит на алтарь.*  Ты — на пороге.",
+      "success_lie": "Хм.",
+      "failure": "Ещё нет."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "1" },
+        { "u_spawn_item": "purifier", "count": 2 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_02_TRIAL",
+    "type": "mission_definition",
+    "name": { "str": "Испытание тишиной" },
+    "description": "Голос хочет, чтобы ты услышал Частоту.  Иди к Объекту Нулевому — и вернись.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 5,
+    "value": 80000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_03_HARVEST",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "apoc_core_surface",
+        "reveal_radius": 1,
+        "random": false,
+        "min_distance": 0
+      }
+    },
+    "dialogue": {
+      "describe": "Испытание.",
+      "offer": "Ядро зовёт.  47.3 Герца.  Ты должен услышать.\n\nИди к Объекту.  Не входи.  Просто — стой.  Слушай.  Потом вернись и расскажи, что слышал.",
+      "accepted": "Иди.  Слушай.  Не бойся.",
+      "rejected": "Страх — это тоже ответ.",
+      "advice": "Закрой глаза.  Стой тихо.  Частота сама найдёт тебя.",
+      "inquire": "Ты слышал?",
+      "success": "*Его глаза расширяются.*\n\nТы слышал.  Я вижу по твоим глазам.  Ты СЛЫШАЛ.\n\n*Улыбка — тонкая, нечеловеческая.*  Добро пожаловать в «Отражение».",
+      "success_lie": "Ложь звенит.  Но... ладно.",
+      "failure": "Ещё нет."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "2" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_03_HARVEST",
+    "type": "mission_definition",
+    "name": { "str": "Урожай спор" },
+    "description": "Лилит просит собрать биоматериал — грибные споры из опасной зоны.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "mushroom", "count": 10 } },
+    "difficulty": 3,
+    "value": 70000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_04_MUTATE",
+    "dialogue": {
+      "describe": "Нужны споры.",
+      "offer": "Мне нужны грибы.  Десять.  Не для еды — для экстракции.  Споры содержат белок, который усиливает мутагенную реакцию.\n\nИщи в подвалах, лесах, болотах.",
+      "accepted": "Десять грибов.  Свежих.",
+      "rejected": "Хорошо.",
+      "advice": "В болотных зонах их больше всего.",
+      "inquire": "Принёс споры?",
+      "success": "*Осматривает грибы с нежностью учёного.*\n\nИдеально.  Споры живые.  Белок активен.\n\nСпасибо.  Возьми это — очиститель.  На случай, если мутация пойдёт не туда.",
+      "success_lie": "Хм.",
+      "failure": "Мало."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "3" },
+        { "u_spawn_item": "purifier", "count": 3 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_04_MUTATE",
+    "type": "mission_definition",
+    "name": { "str": "Первая трансформация" },
+    "description": "Голос предлагает принять мутацию — выпить мутаген Эхо.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_any_trait": [ "ECHO_WHISPERS", "ECHO_THICK_SKIN", "ECHO_CELL_REGEN", "ECHO_ADRENALINE", "ECHO_NIGHTSIGHT" ] },
+    "difficulty": 4,
+    "value": 100000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_05_CHEMISTRY",
+    "dialogue": {
+      "describe": "Прими мутагенез.",
+      "offer": "Ты слышал Частоту.  Ты принёс дары.  Теперь — стань частью.\n\nВыпей мутаген Эхо.  Один глоток.  Первая мутация — это рождение.\n\nЛилит подготовила дозу.  Решение — твоё.",
+      "accepted": "Пей.  Не бойся боли.  Боль — это рост.",
+      "rejected": "Страх.  Понятно.  Приходи, когда будешь готов.",
+      "advice": "После мутагена — очиститель, если результат нежелателен.",
+      "inquire": "Ты изменился?",
+      "success": "*Голос подходит.  Трогает твоё лицо.  Изучает.*\n\nДа.  Вот она.  Первая нота новой симфонии.\n\nТы — один из нас.  Добро пожаловать, дитя Частоты.",
+      "success_lie": "Не вижу. Но верю.",
+      "failure": "Мутация ещё не проявилась."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "4" },
+        { "u_spawn_item": "mutagen_echo" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_05_CHEMISTRY",
+    "type": "mission_definition",
+    "name": { "str": "Химические реагенты" },
+    "description": "Лилит нужны реагенты для создания элитного мутагена.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "and": [ { "u_has_items": { "item": "bleach", "count": 5 } }, { "u_has_items": { "item": "charcoal", "count": 30 } } ] },
+    "difficulty": 4,
+    "value": 120000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_06_SABOTAGE",
+    "dialogue": {
+      "describe": "Нужны химикаты.",
+      "offer": "Я близка к прорыву.  Элитный мутаген — направленные мутации, без побочных.  Но мне нужны реагенты: 5 отбеливателей и 30 угольных палочек.\n\nНайдёшь — и я создам нечто невероятное.",
+      "accepted": "Ищи в прачечных, химлабораториях, складах.",
+      "rejected": "Хорошо.",
+      "advice": "Отбеливатель — в магазинах.  Уголь — в кузницах.",
+      "inquire": "Реагенты есть?",
+      "success": "*Глаза загораются.*\n\nДа!  Полный комплект.  Теперь...\n\n*Она разворачивает лабораторный набор прямо на алтаре.*  Дай мне три дня.  Результат тебя удивит.",
+      "success_lie": "Хм.",
+      "failure": "Мало реагентов."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "5" },
+        { "u_spawn_item": "iv_mutagen_echo" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_06_SABOTAGE",
+    "type": "mission_definition",
+    "name": { "str": "Шёпот в казарме" },
+    "description": "Голос хочет подорвать влияние «Восхода» — украсть документы из их блокпоста.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 6,
+    "value": 150000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_07_ECHO",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "roes_voskhod_camp",
+        "reveal_radius": 1,
+        "random": false,
+        "min_distance": 0
+      }
+    },
+    "dialogue": {
+      "describe": "Саботаж — «Восход».",
+      "offer": "Военные.  Они боятся того, чего не понимают.  Они хотят уничтожить Ядро.  УНИЧТОЖИТЬ.\n\nЭто нельзя допустить.  Частота — это будущее.\n\nДоберись до блокпоста.  Забери карту — документы, координаты, планы.  Без них они слепы.",
+      "accepted": "Тихо.  Незаметно.  Частота защитит тебя.",
+      "rejected": "Понятно.",
+      "advice": "Ночью.  Когда спят.",
+      "inquire": "Документы?",
+      "success": "*Изучает бумаги.*\n\nОперация «Закат».  Штурм Ядра.\n\n*Его лицо темнеет.*  Они хотят убить будущее.  Теперь — не смогут.\n\nТы спас Частоту.",
+      "success_lie": "Хм.",
+      "failure": "Документов нет?"
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "6" },
+        { "u_add_var": "voskhod_sabotaged", "value": "yes" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_07_ECHO",
+    "type": "mission_definition",
+    "name": { "str": "Голос Ядра" },
+    "description": "Голос хочет установить ретранслятор Частоты 47.3 Гц.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 6,
+    "value": 180000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_08_DEEP",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "radio_tower",
+        "reveal_radius": 1,
+        "random": true,
+        "min_distance": 20
+      }
+    },
+    "dialogue": {
+      "describe": "Ретранслятор Частоты.",
+      "offer": "Мы — маленькие.  Частота — тихая.  Но если установить ретранслятор на радиовышку — Частота зазвучит на десятки километров.\n\nКаждый, кто услышит — проснётся.",
+      "accepted": "Иди.  Установи.  Мир должен услышать.",
+      "rejected": "Боишься?",
+      "advice": "Вышка.  Высоко.  Тебе нужно добраться до антенны.",
+      "inquire": "Ретранслятор работает?",
+      "success": "*Голос закрывает глаза.  Слушает.*\n\n...Слышу.  47.3.  Чистая.  Сильная.\n\n*Он плачет.  Тихо, без звука.*  Мир просыпается.",
+      "success_lie": "Надеюсь.",
+      "failure": "Ещё нет."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "7" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_08_DEEP",
+    "type": "mission_definition",
+    "name": { "str": "Глубинный образец" },
+    "description": "Лилит хочет образец из Объекта Нулевой — живую ткань мутанта Ядра.",
+    "goal": "MGOAL_KILL_MONSTER_TYPE",
+    "monster_type": "mon_apoc_zombie",
+    "monster_kill_goal": 5,
+    "difficulty": 7,
+    "value": 200000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_09_RITUAL",
+    "dialogue": {
+      "describe": "Образец из Ядра.",
+      "offer": "Мне нужен образец.  Не обычный мутант — мутант Ядра.  Те, что живут внутри Объекта.\n\nУбей пятерых.  Принеси ткань.  Эта ткань — ключ к совершенному мутагену.",
+      "accepted": "Внутрь Объекта.  Пять заражённых Ядра.",
+      "rejected": "Хорошо.",
+      "advice": "Они сильнее обычных.  Намного.",
+      "inquire": "Образцы есть?",
+      "success": "*Она берёт образец пинцетом.  Рассматривает на свет.*\n\nЖивой.  Даже сейчас — живой.  Клетки делятся.  Адаптируются.\n\n*Шёпот.*  Красиво.",
+      "success_lie": "Хм.",
+      "failure": "Мало."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "8" },
+        { "u_spawn_item": "mutagen_echo", "count": 3 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_09_RITUAL",
+    "type": "mission_definition",
+    "name": { "str": "Ритуал Единения" },
+    "description": "Голос готовит ритуал массовой мутации.  Нужна сыворотка Ядра.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "apoc_mutation_serum", "count": 3 } },
+    "difficulty": 8,
+    "value": 300000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_OTRAZHENIE_10_ASCENSION",
+    "dialogue": {
+      "describe": "Ритуал.",
+      "offer": "Время пришло.  Ритуал Единения — массовая трансформация.\n\nМне нужно три дозы сыворотки Мутации Ядра.  Та, что из боссов.\n\nС ней — мы перейдём.  Все.  Вместе.",
+      "accepted": "Три дозы.  Из Объекта.  Из самых глубоких уровней.",
+      "rejected": "Страх — это якорь.",
+      "advice": "Сыворотка — с тел стражей Объекта.",
+      "inquire": "Сыворотка?",
+      "success": "*Голос берёт сыворотку.  Руки дрожат.*\n\nСегодня — последний день старого мира.\n\nЗавтра — первый день нового.\n\n*Он поворачивается к пастве.*  БРАТЬЯ!  СЁСТРЫ!\n\n*Крик.  Восторг.  Ужас.  Всё вместе.*",
+      "success_lie": "...",
+      "failure": "Мало сыворотки."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "9" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_OTRAZHENIE_10_ASCENSION",
+    "type": "mission_definition",
+    "name": { "str": "Вознесение" },
+    "description": "Финальная миссия.  Голос ведёт «Отражение» к Объекту Нулевому.  Не уничтожить — активировать.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_var": "echo_story_core_entered", "value": "yes" },
+    "difficulty": 10,
+    "value": 500000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "dialogue": {
+      "describe": "Вознесение.",
+      "offer": "Ядро ждёт.  Частота зовёт.  Мы — готовы.\n\n*Голос стоит перед алтарём.  Тело — наполовину мутировавшее.  Глаза — яркие, нечеловеческие.*\n\nНе уничтожить.  ПРОБУДИТЬ.\n\nВойди в Ядро.  Активируй консоль.  Выбери — поглощение.\n\nОбъект Нулевой — это не оружие.  Это — дверь.\n\nОткрой её.",
+      "accepted": "Мы идём с тобой.  Частота — внутри.  Всегда была.",
+      "rejected": "Когда будешь готов.",
+      "advice": "Внутри — выбери поглощение.  Не разрушение.",
+      "inquire": "Ядро пробудилось?",
+      "success": "*ЧАСТОТА.\n\n47.3 Гц.\n\nОна заполняет всё.  Воздух.  Землю.  Кости.  Мысли.\n\nГолос падает на колени.  Не от боли — от счастья.*\n\nМы дома.  Наконец-то — дома.",
+      "success_lie": "...",
+      "failure": "Ядро молчит."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "otrazhenie_missions_done", "value": "10" },
+        { "u_add_var": "otrazhenie_ending", "value": "yes" }
+      ]
+    }
+  }
+]

@@ -23,6 +23,10 @@
         "condition": { "u_has_var": "echo_story_core_entered", "value": "yes" }
       },
       { "text": "Я могу использовать вашу помощь.", "topic": "TALK_VOSKHOD_COMMANDER_HELP" },
+      { "text": "Есть задание для меня?", "topic": "TALK_DONE",
+        "effect": { "assign_mission": "MISSION_VOSKHOD_01_RECON" },
+        "condition": { "u_has_var": "voskhod_met_commander", "value": "yes" }
+      },
       { "text": "Мне пора.  Рад, что вы живы.", "topic": "TALK_DONE" }
     ]
   },
@@ -133,6 +137,7 @@
     "responses": [
       { "text": "Кто ты?", "topic": "TALK_VOSKHOD_MEDIC_ABOUT" },
       { "text": "Мне нужна медицинская помощь.", "topic": "TALK_VOSKHOD_MEDIC_HEAL" },
+      { "text": "*Поговорить лично*", "topic": "TALK_VOSKHOD_MEDIC_PERSONAL" },
       { "text": "Мне пора.", "topic": "TALK_DONE" }
     ]
   },
@@ -161,6 +166,54 @@
     "responses": [
       { "text": "Спасибо.  Давно никто не лечил меня по-настоящему.", "topic": "TALK_VOSKHOD_MEDIC" },
       { "text": "Благодарю.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_GUNSMITH",
+    "dynamic_line": {
+      "u_has_var": "voskhod_met_commander", "value": "yes",
+      "yes": "Зубов.  Оружие, боеприпасы, снаряжение.  Что нужно?",
+      "no": "*Коренастый мужчина в промасленном бронежилете.  На столе перед ним — разобранный автомат.*\n\nЗубов.  Прапорщик.  Оружейник.\n\nЕсли командир сказал «свой» — значит, свой.  Подходи.  Посмотрим, что есть."
+    },
+    "responses": [
+      { "text": "Хочу посмотреть товар.", "topic": "TALK_VOSKHOD_GUNSMITH_TRADE" },
+      { "text": "Расскажи о себе.", "topic": "TALK_VOSKHOD_GUNSMITH_ABOUT" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_GUNSMITH_TRADE",
+    "dynamic_line": "Смотри.  Трогай.  Только не ломай.  *Кивает на стол.*",
+    "responses": [
+      { "text": "Давай посмотрим.", "topic": "TALK_DONE", "effect": "start_trade" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_GUNSMITH_ABOUT",
+    "dynamic_line": "Зубов.  44 года.  Оружейник.  До катастрофы — арсенал, полигон, ремонт.  После — то же самое, только клиенты другие.\n\nВ бункере я обслуживал 80 единиц оружия.  Один.  Четырнадцать месяцев.  Каждый ствол — мой ребёнок.\n\n*Гладит автомат.*  Металл не предаёт.  Люди — бывает.  Металл — никогда.",
+    "responses": [
+      { "text": "Философ.", "topic": "TALK_VOSKHOD_GUNSMITH" },
+      { "text": "Мне пора.", "topic": "TALK_DONE" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_GUARD",
+    "dynamic_line": "*Молодой солдат.  Бледный, но решительный.  Автомат — наперевес.*\n\nРядовой Кравцов.  Ты — к командиру?  Проходи.  Только без фокусов.",
+    "responses": [
+      { "text": "Без фокусов.", "topic": "TALK_DONE" },
+      { "text": "Как обстановка?", "topic": "TALK_VOSKHOD_GUARD_STATUS" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_VOSKHOD_GUARD_STATUS",
+    "dynamic_line": "Тихо.  Пока — тихо.\n\n*Нервно оглядывается.*\n\nНо я слышу их ночью.  Шарканье.  Стоны.  Они знают, что мы здесь.",
+    "responses": [
+      { "text": "Держись.", "topic": "TALK_DONE" }
     ]
   }
 ]

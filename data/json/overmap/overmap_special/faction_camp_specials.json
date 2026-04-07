@@ -1,0 +1,38 @@
+[
+  {
+    "type": "overmap_special",
+    "id": "roes_voskhod_camp_special",
+    "overmaps": [
+      { "point": [ 0, 0, 0 ], "overmap": "roes_voskhod_camp" }
+    ],
+    "locations": [ "field", "forest_without_trail" ],
+    "city_distance": [ 8, -1 ],
+    "city_sizes": [ 1, 20 ],
+    "occurrences": [ 1, 1 ],
+    "flags": [ "CLASSIC", "OVERMAP_UNIQUE", "MAN_MADE" ]
+  },
+  {
+    "type": "overmap_special",
+    "id": "roes_otrazhenie_temple_special",
+    "overmaps": [
+      { "point": [ 0, 0, 0 ], "overmap": "roes_otrazhenie_temple" }
+    ],
+    "locations": [ "forest_without_trail", "swamp" ],
+    "city_distance": [ 10, -1 ],
+    "city_sizes": [ 1, 20 ],
+    "occurrences": [ 1, 1 ],
+    "flags": [ "CLASSIC", "OVERMAP_UNIQUE", "MAN_MADE" ]
+  },
+  {
+    "type": "overmap_special",
+    "id": "roes_svobodnye_farm_special",
+    "overmaps": [
+      { "point": [ 0, 0, 0 ], "overmap": "roes_svobodnye_farm" }
+    ],
+    "locations": [ "field" ],
+    "city_distance": [ 4, -1 ],
+    "city_sizes": [ 1, 20 ],
+    "occurrences": [ 1, 1 ],
+    "flags": [ "CLASSIC", "OVERMAP_UNIQUE", "MAN_MADE" ]
+  }
+]

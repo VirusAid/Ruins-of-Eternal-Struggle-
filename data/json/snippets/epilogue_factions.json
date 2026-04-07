@@ -92,5 +92,35 @@
         "text": "    The library continued to grow through the years despite constant survival challenges and internal battles over the direction of the campus.  While maintaining a reputation as a haven for learning and adaptation to this new world, the library's leadership developed and spread some pragmatic understanding of how to stay alive.  The collection grew and became famous among survivors as a resource for vital survival skills as well as a distraction from the terrors of the world."
       }
     ]
+  },
+  {
+    "type": "snippet",
+    "category": "epilogue_factions",
+    "text": [
+      {
+        "id": "epilogue_roes_voskhod_weak",
+        "text": "    Подразделение «Восход» не смогло закрепиться.  Бункер «Заря-9» был эвакуирован, бойцы рассеялись.  Память о них осталась только в записях."
+      },
+      {
+        "id": "epilogue_roes_voskhod_strong",
+        "text": "    «Восход» установил контроль над регионом.  Бункер «Заря-9» стал столицей нового порядка.  Объект Нулевой — запечатан.  Капитан Ковалёв возглавил Совет."
+      },
+      {
+        "id": "epilogue_roes_otrazhenie_weak",
+        "text": "    Культ «Отражение» распался.  Мутации вышли из-под контроля.  Храм пуст."
+      },
+      {
+        "id": "epilogue_roes_otrazhenie_strong",
+        "text": "    «Отражение» процветает.  Частота 47.3 Гц звучит по всей территории.  Мутанты — новая норма.  Храм стал центром нового мира."
+      },
+      {
+        "id": "epilogue_roes_svobodnye_weak",
+        "text": "    Ферма «Свободных» опустела.  Торговля замерла.  Выжившие ушли кто куда."
+      },
+      {
+        "id": "epilogue_roes_svobodnye_strong",
+        "text": "    «Свободные» построили настоящее поселение.  Ферма кормит сотни.  Мастерская ремонтирует транспорт.  Это — будущее."
+      }
+    ]
   }
 ]

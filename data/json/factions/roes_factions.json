@@ -1,0 +1,111 @@
+[
+  {
+    "type": "faction",
+    "id": "roes_voskhod",
+    "name": "«Восход»",
+    "description": "Подразделение «Восход» — военная разведгруппа из бункера «Заря-9».  Дисциплинированные, вооружённые, верящие в порядок.  Цель — уничтожить Объект Нулевой и восстановить контроль над территорией.",
+    "likes_u": 10,
+    "respects_u": 10,
+    "trusts_u": 0,
+    "known_by_u": false,
+    "size": 15,
+    "power": 80,
+    "wealth": 60000000,
+    "currency": "FMCNote",
+    "consumes_food": false,
+    "relations": {
+      "roes_voskhod": {
+        "kill on sight": false, "watch your back": true, "share my stuff": true,
+        "guard your stuff": true, "lets you in": true, "defends your space": true, "knows your voice": true
+      },
+      "roes_svobodnye": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": true, "defends your space": false, "knows your voice": true
+      },
+      "roes_otrazhenie": {
+        "kill on sight": true, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": false, "defends your space": false, "knows your voice": false
+      },
+      "your_followers": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": true, "defends your space": false, "knows your voice": true
+      }
+    },
+    "epilogues": [
+      { "power_min": 0, "power_max": 99, "id": "epilogue_roes_voskhod_weak" },
+      { "power_min": 100, "id": "epilogue_roes_voskhod_strong" }
+    ]
+  },
+  {
+    "type": "faction",
+    "id": "roes_otrazhenie",
+    "name": "«Отражение»",
+    "description": "Культ мутантов, поклоняющихся частоте 47.3 Гц.  Верят, что Объект Нулевой — не угроза, а следующий этап эволюции.  Практикуют направленную мутацию.  Живут в заброшенном храме, перестроенном в мутагенную лабораторию.",
+    "likes_u": -5,
+    "respects_u": 0,
+    "trusts_u": 0,
+    "known_by_u": false,
+    "size": 20,
+    "power": 60,
+    "wealth": 30000000,
+    "consumes_food": false,
+    "relations": {
+      "roes_otrazhenie": {
+        "kill on sight": false, "watch your back": true, "share my stuff": true,
+        "guard your stuff": true, "lets you in": true, "defends your space": true, "knows your voice": true
+      },
+      "roes_svobodnye": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": false, "defends your space": false, "knows your voice": true
+      },
+      "roes_voskhod": {
+        "kill on sight": true, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": false, "defends your space": false, "knows your voice": false
+      },
+      "your_followers": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": false, "defends your space": false, "knows your voice": false
+      }
+    },
+    "epilogues": [
+      { "power_min": 0, "power_max": 99, "id": "epilogue_roes_otrazhenie_weak" },
+      { "power_min": 100, "id": "epilogue_roes_otrazhenie_strong" }
+    ]
+  },
+  {
+    "type": "faction",
+    "id": "roes_svobodnye",
+    "name": "«Свободные»",
+    "description": "Община выживших — фермеры, механики, торговцы.  Не воюют, а строят.  Укреплённая ферма стала их домом.  Торгуют со всеми, кто не стреляет.  Цель — жить дальше, невзирая ни на что.",
+    "likes_u": 5,
+    "respects_u": 5,
+    "trusts_u": 0,
+    "known_by_u": false,
+    "size": 30,
+    "power": 40,
+    "wealth": 80000000,
+    "consumes_food": false,
+    "relations": {
+      "roes_svobodnye": {
+        "kill on sight": false, "watch your back": true, "share my stuff": true,
+        "guard your stuff": true, "lets you in": true, "defends your space": true, "knows your voice": true
+      },
+      "roes_voskhod": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": true, "defends your space": false, "knows your voice": true
+      },
+      "roes_otrazhenie": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": false, "defends your space": false, "knows your voice": true
+      },
+      "your_followers": {
+        "kill on sight": false, "watch your back": false, "share my stuff": false,
+        "guard your stuff": false, "lets you in": true, "defends your space": false, "knows your voice": true
+      }
+    },
+    "epilogues": [
+      { "power_min": 0, "power_max": 99, "id": "epilogue_roes_svobodnye_weak" },
+      { "power_min": 100, "id": "epilogue_roes_svobodnye_strong" }
+    ]
+  }
+]

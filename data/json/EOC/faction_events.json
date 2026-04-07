@@ -1,0 +1,115 @@
+[
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_faction_discovery_voskhod",
+    "eoc_type": "EVENT",
+    "required_event": "avatar_moves",
+    "condition": {
+      "and": [
+        { "not": { "u_has_var": "voskhod_camp_discovered", "value": "yes" } },
+        { "u_near_om_location": "roes_voskhod_camp", "range": 3 }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "voskhod_camp_discovered", "value": "yes" },
+      { "u_message": "Ты видишь укреплённый блокпост.  Мешки с песком, колючая проволока, антенна.  На флаге — восходящее солнце.\n\nЭто «Восход».", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_faction_discovery_otrazhenie",
+    "eoc_type": "EVENT",
+    "required_event": "avatar_moves",
+    "condition": {
+      "and": [
+        { "not": { "u_has_var": "otrazhenie_temple_discovered", "value": "yes" } },
+        { "u_near_om_location": "roes_otrazhenie_temple", "range": 3 }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "otrazhenie_temple_discovered", "value": "yes" },
+      { "u_message": "Из леса выступает здание — бывший храм, увитый мутировавшими лозами.  На стенах — символы, нарисованные чем-то тёмным.  Воздух вибрирует.\n\nЭто «Отражение».", "popup": true }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_faction_discovery_svobodnye",
+    "eoc_type": "EVENT",
+    "required_event": "avatar_moves",
+    "condition": {
+      "and": [
+        { "not": { "u_has_var": "svobodnye_farm_discovered", "value": "yes" } },
+        { "u_near_om_location": "roes_svobodnye_farm", "range": 3 }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "svobodnye_farm_discovered", "value": "yes" },
+      { "u_message": "Впереди — огороженная ферма.  Дым из трубы.  Детские голоса.  Запах горячей еды.\n\nЭто «Свободные».", "popup": true }
+    ]
+  },
+
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_faction_conflict_check",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "voskhod_missions_done", "value": "5" },
+        { "u_has_var": "otrazhenie_missions_done", "value": "5" }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "faction_war_tension", "value": "yes" },
+      { "u_message": "Три фракции знают о тебе.  Каждая — считает тебя своим.  Но скоро — придётся выбрать.", "popup": true }
+    ]
+  },
+
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_romance_ryzhova_daily",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": { "u_has_var": "ryzhova_partner", "value": "yes" },
+    "effect": [
+      { "u_add_morale": "morale_feeling_good", "bonus": 10, "max_bonus": 20, "duration": "6 hours" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_romance_lilith_daily",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": { "u_has_var": "lilith_partner", "value": "yes" },
+    "effect": [
+      { "u_add_morale": "morale_feeling_good", "bonus": 10, "max_bonus": 20, "duration": "6 hours" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_romance_marina_daily",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": { "u_has_var": "marina_partner", "value": "yes" },
+    "effect": [
+      { "u_add_morale": "morale_feeling_good", "bonus": 10, "max_bonus": 20, "duration": "6 hours" }
+    ]
+  },
+
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_sabotage_otrazhenie",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "otrazhenie_sabotaged", "value": "yes" },
+        { "not": { "u_has_var": "otrazhenie_sabotage_noticed", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "otrazhenie_sabotage_noticed", "value": "yes" },
+      { "u_message": "Ты уничтожил запасы мутагенов «Отражения».  Лаборатория Лилит — в руинах.  Колбы разбиты, реагенты — на полу.\n\nЕсли у тебя были отношения с Лилит — они висят на волоске.", "popup": true }
+    ]
+  }
+]

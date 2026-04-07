@@ -1,0 +1,95 @@
+[
+  {
+    "type": "mapgen",
+    "om_terrain": "roes_otrazhenie_temple",
+    "weight": 100,
+    "object": {
+      "fill_ter": "t_grass",
+      "rows": [
+        "TTTTTTTTTTTTTTTTTTTTTTTT",
+        "TTT..................TTT",
+        "TT..WWWWWWWWWWWWWW....TT",
+        "TT..W............W....TT",
+        "TT..W.....aa.....W....TT",
+        "TT..W............W....TT",
+        "TT..W............W....TT",
+        "TT..W............W....TT",
+        "TT..W............W....TT",
+        "TT..WWWWWWWdWWWWWW....TT",
+        "TTT..................TTT",
+        "TT..WWWWWWWW..........TT",
+        "TT..W......W..........TT",
+        "TT..W......W..........TT",
+        "TT..WWWdWWWW..........TT",
+        "TTT..................TTT",
+        "TTT..................TTT",
+        "TT..WWWWWWWW..........TT",
+        "TT..W......W..........TT",
+        "TT..W......W..........TT",
+        "TT..WWWdWWWW..........TT",
+        "TTT..................TTT",
+        "TTT..................TTT",
+        "TTTTTTTTTTTTTTTTTTTTTTTT"
+      ],
+      "terrain": {
+        "T": "t_tree",
+        ".": "t_grass",
+        "W": "t_wall_wood",
+        "d": "t_door_c",
+        "a": "t_floor"
+      },
+      "place_npcs": [
+        { "class": "NPC_OTRAZHENIE_PRIEST", "x": 10, "y": 5, "unique_id": "otrazhenie_priest" },
+        { "class": "NPC_OTRAZHENIE_LILITH", "x": 7, "y": 12, "unique_id": "otrazhenie_lilith" },
+        { "class": "NPC_OTRAZHENIE_ADEPT1", "x": 6, "y": 18, "unique_id": "otrazhenie_adept1" },
+        { "class": "NPC_OTRAZHENIE_ADEPT2", "x": 8, "y": 19, "unique_id": "otrazhenie_adept2" },
+        { "class": "NPC_OTRAZHENIE_GUARDIAN", "x": 10, "y": 8, "unique_id": "otrazhenie_guardian" }
+      ],
+      "place_furniture": [
+        { "furn": "f_displaycase", "x": 9, "y": 4 },
+        { "furn": "f_displaycase", "x": 10, "y": 4 },
+
+        { "furn": "f_brazier", "x": 5, "y": 3 },
+        { "furn": "f_brazier", "x": 16, "y": 3 },
+        { "furn": "f_brazier", "x": 5, "y": 8 },
+        { "furn": "f_brazier", "x": 16, "y": 8 },
+
+        { "furn": "f_stool", "x": 7, "y": 5 },
+        { "furn": "f_stool", "x": 13, "y": 5 },
+        { "furn": "f_stool", "x": 7, "y": 7 },
+        { "furn": "f_stool", "x": 13, "y": 7 },
+        { "furn": "f_stool", "x": 9, "y": 6 },
+        { "furn": "f_stool", "x": 11, "y": 6 },
+
+        { "furn": "f_bookcase", "x": 15, "y": 4 },
+        { "furn": "f_bookcase", "x": 15, "y": 5 },
+        { "furn": "f_bookcase", "x": 15, "y": 6 },
+
+        { "furn": "f_table", "x": 5, "y": 12 },
+        { "furn": "f_table", "x": 6, "y": 12 },
+        { "furn": "f_table", "x": 7, "y": 12 },
+        { "furn": "f_rack", "x": 5, "y": 13 },
+        { "furn": "f_rack", "x": 6, "y": 13 },
+        { "furn": "f_crate_c", "x": 9, "y": 13 },
+        { "furn": "f_crate_c", "x": 10, "y": 13 },
+
+        { "furn": "f_bed", "x": 5, "y": 18 },
+        { "furn": "f_bed", "x": 5, "y": 19 },
+        { "furn": "f_bed", "x": 9, "y": 18 },
+        { "furn": "f_bed", "x": 9, "y": 19 },
+        { "furn": "f_stool", "x": 7, "y": 18 },
+
+        { "furn": "f_brazier", "x": 9, "y": 10 },
+        { "furn": "f_brazier", "x": 9, "y": 16 },
+        { "furn": "f_brazier", "x": 9, "y": 21 }
+      ],
+      "place_items": [
+        { "item": "drugs_rare", "x": [ 5, 7 ], "y": 12, "chance": 60, "repeat": [ 1, 3 ] },
+        { "item": "chem_lab", "x": [ 5, 6 ], "y": 13, "chance": 50, "repeat": [ 1, 2 ] },
+        { "item": "religious_books", "x": [ 15, 15 ], "y": [ 4, 6 ], "chance": 40, "repeat": [ 1, 3 ] },
+        { "item": "church", "x": [ 9, 10 ], "y": 4, "chance": 80, "repeat": [ 3, 6 ] },
+        { "item": "common_mutation_books", "x": [ 9, 10 ], "y": [ 13, 13 ], "chance": 30, "repeat": [ 1, 2 ] }
+      ]
+    }
+  }
+]

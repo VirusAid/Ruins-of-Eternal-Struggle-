@@ -1,0 +1,209 @@
+[
+  {
+    "type": "effect_type",
+    "id": "ryzhova_bond",
+    "name": [
+      {
+        "str": "Связь с Верой"
+      }
+    ],
+    "desc": [
+      {
+        "str": "Вера Рыжова — рядом.  В мыслях, если не физически.  Ты не один."
+      }
+    ],
+    "max_intensity": 1,
+    "rating": "good",
+    "apply_message": "Мысль о Вере согревает.  Ты — не один.",
+    "base_mods": {
+      "per_mod": [
+        1,
+        0
+      ],
+      "speed_mod": [
+        3
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "lilith_bond",
+    "name": [
+      {
+        "str": "Резонанс с Лилит"
+      }
+    ],
+    "desc": [
+      {
+        "str": "47.3 Гц.  Ваши клетки резонируют.  Связь — глубже, чем слова."
+      }
+    ],
+    "max_intensity": 1,
+    "rating": "good",
+    "apply_message": "Частота внутри — тёплая.  Лилит рядом.",
+    "base_mods": {
+      "int_mod": [
+        1,
+        0
+      ],
+      "per_mod": [
+        1,
+        0
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "marina_bond",
+    "name": [
+      {
+        "str": "Дом — Марина"
+      }
+    ],
+    "desc": [
+      {
+        "str": "Дом — это не место.  Дом — это Марина.  У тебя есть место, куда возвращаться."
+      }
+    ],
+    "max_intensity": 1,
+    "rating": "good",
+    "apply_message": "У тебя есть дом.  У тебя есть Марина.  Это меняет всё.",
+    "base_mods": {
+      "str_mod": [
+        1,
+        0
+      ],
+      "speed_mod": [
+        3
+      ]
+    }
+  },
+  {
+    "type": "effect_type",
+    "id": "voskhod_reputation",
+    "name": [
+      {
+        "str": "Репутация «Восхода»"
+      }
+    ],
+    "desc": [
+      {
+        "str": "«Восход» знает тебя.  Чем больше миссий — тем больше доверия."
+      }
+    ],
+    "max_intensity": 10,
+    "rating": "good",
+    "int_dur_factor": "30 days",
+    "apply_message": "«Восход» ценит тебя.",
+    "base_mods": {}
+  },
+  {
+    "type": "effect_type",
+    "id": "otrazhenie_reputation",
+    "name": [
+      {
+        "str": "Репутация «Отражения»"
+      }
+    ],
+    "desc": [
+      {
+        "str": "«Отражение» видит тебя.  Частота знает твоё имя."
+      }
+    ],
+    "max_intensity": 10,
+    "rating": "good",
+    "int_dur_factor": "30 days",
+    "apply_message": "Частота знает тебя.",
+    "base_mods": {}
+  },
+  {
+    "type": "effect_type",
+    "id": "svobodnye_reputation",
+    "name": [
+      {
+        "str": "Репутация «Свободных»"
+      }
+    ],
+    "desc": [
+      {
+        "str": "«Свободные» считают тебя другом.  Тамара Ильинична улыбается, когда ты приходишь."
+      }
+    ],
+    "max_intensity": 10,
+    "rating": "good",
+    "int_dur_factor": "30 days",
+    "apply_message": "«Свободные» рады тебе.",
+    "base_mods": {}
+  },
+  {
+    "type": "effect_type",
+    "id": "mutagen_echo",
+    "name": [
+      "Echo Mutation",
+      "Echo Transformation",
+      "Echo Metamorphosis"
+    ],
+    "desc": [
+      "Ты принял мутаген «Эхо».  Частота 47.3 Гц вибрирует в каждой клетке.",
+      "Эхо усиливается.  Ты слышишь голоса в стенах.",
+      "Полная трансформация.  Ты — часть Частоты."
+    ],
+    "main_parts_only": true,
+    "max_intensity": 3,
+    "resist_traits": [
+      "THRESH_ECHO"
+    ],
+    "base_mods": {
+      "vomit_chance": [
+        1150
+      ],
+      "vomit_tick": [
+        120
+      ],
+      "hurt_min": [
+        1
+      ],
+      "hurt_max": [
+        2
+      ],
+      "hurt_chance": [
+        500
+      ],
+      "hurt_tick": [
+        150
+      ],
+      "pain_min": [
+        1
+      ],
+      "pain_max": [
+        2
+      ],
+      "pain_chance": [
+        90
+      ],
+      "pain_tick": [
+        50
+      ]
+    },
+    "scaling_mods": {
+      "vomit_chance": [
+        -450
+      ],
+      "hurt_chance": [
+        -240,
+        -50
+      ],
+      "hurt_tick": [
+        -25
+      ],
+      "pain_chance": [
+        -30
+      ]
+    },
+    "rating": "bad",
+    "flags": [
+      "MUTAGEN_EFFECT"
+    ],
+    "blood_analysis_description": "Echo Mutagen"
+  }
+]

@@ -1,0 +1,305 @@
+[
+  {
+    "id": "MISSION_SVOBODNYE_01_FOOD",
+    "type": "mission_definition",
+    "name": { "str": "Хлеб насущный" },
+    "description": "Тамара Ильинична просит принести еду для общины.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "and": [ { "u_has_items": { "item": "can_beans", "count": 5 } }, { "u_has_items": { "item": "water_clean", "count": 5 } } ] },
+    "difficulty": 2,
+    "value": 40000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_02_TOOLS",
+    "dialogue": {
+      "describe": "Нужна еда.",
+      "offer": "*Женщина средних лет протирает руки фартуком.  Лицо — уставшее, но глаза — добрые.*\n\nЗдравствуй, путник.  Мы — «Свободные».  Община.  Фермеры, механики, обычные люди.\n\nУ нас — дети.  Семь детей.  И еды — на два дня.  Пять банок бобов и пять бутылок воды — это неделя жизни.\n\nПоможешь?",
+      "accepted": "Спасибо.  Мы не забудем.  Никогда не забудем.",
+      "rejected": "Понимаю.  Каждый выживает как может.",
+      "advice": "Супермаркеты, склады, подвалы домов.",
+      "inquire": "Принёс еду?",
+      "success": "*Она берёт банки.  Руки дрожат.*\n\nЗина!  Зина!  У нас еда!  Настоящая еда!\n\n*Откуда-то бежит ребёнок.  Потом ещё один.  И ещё.*\n\nСпасибо.  *Голос срывается.*  Спасибо.",
+      "success_lie": "Надеюсь...",
+      "failure": "Мало ещё."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "1" },
+        { "u_spawn_item": "jerky", "count": 10 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_02_TOOLS",
+    "type": "mission_definition",
+    "name": { "str": "Инструменты Бориса" },
+    "description": "Механик Борис просит найти инструменты для мастерской.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "and": [ { "u_has_items": { "item": "wrench", "count": 1 } }, { "u_has_items": { "item": "hacksaw", "count": 1 } } ] },
+    "difficulty": 3,
+    "value": 60000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_03_MEDICINE",
+    "dialogue": {
+      "describe": "Нужны инструменты.",
+      "offer": "*Огромный мужчина в промасленном комбинезоне.*\n\nБорис.  Механик.  До катастрофы чинил грузовики.  После — чиню всё.\n\nМне нужен гаечный ключ и ножовка.  С ними я могу починить генератор.  Без них — мы без света.",
+      "accepted": "Гараж, автомастерская, строительный склад.",
+      "rejected": "Ладно.",
+      "advice": "В гаражах должно быть.",
+      "inquire": "Нашёл?",
+      "success": "*Берёт инструменты.  Любовно.*\n\nКрасота.  Сталь.  Настоящая сталь.\n\n*Через час — генератор рычит.  Лампочка загорается.  Дети кричат от радости.*",
+      "success_lie": "Хм.",
+      "failure": "Нужны оба."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "2" },
+        { "u_spawn_item": "duct_tape", "count": 100 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_03_MEDICINE",
+    "type": "mission_definition",
+    "name": { "str": "Доктор просит" },
+    "description": "Олег Петрович нуждается в медикаментах — антибиотиках.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "antibiotics", "count": 3 } },
+    "difficulty": 4,
+    "value": 80000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_04_SCOUT",
+    "dialogue": {
+      "describe": "Нужны медикаменты.",
+      "offer": "У меня — двое больных.  Инфекция.  Без антибиотиков — умрут через неделю.\n\nТри курса антибиотиков.  Это всё, что я прошу.\n\nАптеки, госпитали, ветклиники — там бывает.",
+      "accepted": "Спасибо.  Вы спасёте жизни.",
+      "rejected": "Понимаю.",
+      "advice": "В госпиталях — больше всего.",
+      "inquire": "Антибиотики?",
+      "success": "*Доктор проверяет упаковки.  Читает сроки годности.*\n\nГодны.  *Облегчение.*  Два месяца — но годны.\n\nСпасибо.  Через три дня они будут на ногах.",
+      "success_lie": "Хм.",
+      "failure": "Мало."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "3" },
+        { "u_spawn_item": "bandages", "count": 10 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_04_SCOUT",
+    "type": "mission_definition",
+    "name": { "str": "Разведка с Мариной" },
+    "description": "Марина предлагает вместе разведать ближайший городок.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 4,
+    "value": 80000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_05_TRADE",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "megastore",
+        "reveal_radius": 1,
+        "random": true,
+        "min_distance": 15
+      }
+    },
+    "dialogue": {
+      "describe": "Разведка.",
+      "offer": "*Женщина в охотничьей куртке.  Движения — быстрые, точные.*\n\nМарина.  Разведчица.  Бывший егерь.\n\nЕсть гипермаркет неподалёку.  Может — не разграблен.  Пойдём вместе?  Вдвоём — безопаснее.",
+      "accepted": "Отлично.  Я знаю тропы.  Пойдём.",
+      "rejected": "Ладно.  Пойду одна.",
+      "advice": "Двигайся тихо.  Магазины — магнит для мертвецов.",
+      "inquire": "Добрался?",
+      "success": "*Она улыбается.  Первый раз.*\n\nНеплохо.  Ты быстрый.  И тихий.  Мне нравится.\n\n*Пауза.*  В смысле — нравится работать с тобой.",
+      "success_lie": "Хм.",
+      "failure": "Ещё не добрался."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "4" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_05_TRADE",
+    "type": "mission_definition",
+    "name": { "str": "Торговый маршрут" },
+    "description": "Тамара хочет наладить торговый маршрут с кочевниками.",
+    "goal": "MGOAL_FIND_NPC",
+    "difficulty": 4,
+    "value": 100000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_06_DEFENSE",
+    "dialogue": {
+      "describe": "Торговля.",
+      "offer": "Мы слышали — на севере есть кочевники.  Торговцы.  Если наладить маршрут — мы будем получать то, что сами не производим.\n\nНайди их.  Договорись.",
+      "accepted": "Север.  Дороги.  Будь осторожен.",
+      "rejected": "Хорошо.",
+      "advice": "Кочевники двигаются.  Ищи следы на дорогах.",
+      "inquire": "Нашёл торговцев?",
+      "success": "Торговый маршрут!  Настоящий торговый маршрут!\n\n*Тамара Ильинична обнимает тебя.*  Ты не представляешь, что это значит для нас.",
+      "success_lie": "Надеюсь.",
+      "failure": "Продолжай искать."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "5" },
+        { "u_add_var": "svobodnye_trade_route", "value": "yes" },
+        { "u_spawn_item": "water_clean", "count": 10 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_06_DEFENSE",
+    "type": "mission_definition",
+    "name": { "str": "Оборона фермы" },
+    "description": "Орда мертвецов замечена на подходе.  Нужно зачистить.",
+    "goal": "MGOAL_KILL_MONSTER_TYPE",
+    "monster_type": "mon_zombie",
+    "monster_kill_goal": 15,
+    "difficulty": 5,
+    "value": 120000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_07_GENERATOR",
+    "dialogue": {
+      "describe": "Орда идёт.",
+      "offer": "Беда.  Марина видела орду — пятнадцать, может больше — идут к ферме.\n\nУ нас — дети.  Старики.  Повар Зина, которая едва держит нож.\n\nПожалуйста.  Останови их.  Не дай им дойти.",
+      "accepted": "Спасибо.  *Голос дрожит.*  Спасибо.",
+      "rejected": "Я... понимаю.",
+      "advice": "Встреть их на подходе.  Не у стен.",
+      "inquire": "Ферма в безопасности?",
+      "success": "*Тамара Ильинична стоит на крыльце.  За ней — дети.  Глаза — мокрые.*\n\nТы спас нас.  Всех нас.\n\n*Бабушка Зина выходит с тарелкой.  Горячая каша.*\n\nПоешь.  Ты заслужил.",
+      "success_lie": "Надеюсь...",
+      "failure": "Они ещё идут."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "6" },
+        { "u_spawn_item": "22_lr", "count": 50 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_07_GENERATOR",
+    "type": "mission_definition",
+    "name": { "str": "Большой генератор" },
+    "description": "Борис хочет постоянный источник энергии — нужен автомобильный генератор.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_items": { "item": "motor", "count": 1 } },
+    "difficulty": 5,
+    "value": 150000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_08_DIPLOMACY",
+    "dialogue": {
+      "describe": "Нужен мотор.",
+      "offer": "Генератор сдох.  Окончательно.  Мне нужен двигатель — настоящий мотор.  Из машины, грузовика, чего угодно.\n\nС ним я построю нормальную электростанцию.  Свет.  Тепло.  Может — даже радио.",
+      "accepted": "Мотор.  Один.  Тяжёлый — но один.",
+      "rejected": "Понял.",
+      "advice": "В гаражах.  В автомастерских.  На дороге — в мёртвых машинах.",
+      "inquire": "Мотор?",
+      "success": "*Борис обнимает мотор, как ребёнка.*\n\nКрасавец.  Четыре цилиндра.  Рабочий.\n\n*Через два дня — ферма гудит.  Лампочки горят.  Борис курит и улыбается.*",
+      "success_lie": "Хм.",
+      "failure": "Ещё нет."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "7" },
+        { "u_spawn_item": "soldering_iron" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_08_DIPLOMACY",
+    "type": "mission_definition",
+    "name": { "str": "Дипломатия руин" },
+    "description": "Тамара хочет наладить контакт с «Восходом» — мир лучше войны.",
+    "goal": "MGOAL_GO_TO_TYPE",
+    "difficulty": 5,
+    "value": 120000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_09_KIDS",
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "roes_voskhod_camp",
+        "reveal_radius": 1,
+        "random": false,
+        "min_distance": 0
+      }
+    },
+    "dialogue": {
+      "describe": "Дипломатия.",
+      "offer": "Мы слышали о военных.  «Восход».  Они — сила.  Мы — ресурсы.\n\nВместе — мы сильнее.  Доберись до них.  Передай: «Свободные» предлагают мир и торговлю.\n\nНикакого оружия — только слова.",
+      "accepted": "Спасибо.  Мир — лучшее оружие.",
+      "rejected": "Понимаю.",
+      "advice": "Они военные.  Говори прямо.  Без лирики.",
+      "inquire": "Как «Восход»?",
+      "success": "Они согласны на торговлю?  *Глаза широко.*\n\nЭто...  это настоящий мир.  Настоящий.\n\n*Она садится.  Закрывает лицо руками.  Плечи дрожат.*\n\nИзвини.  Просто...  давно не было хороших новостей.",
+      "success_lie": "Надеюсь.",
+      "failure": "Ещё не добрался."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "8" },
+        { "u_add_var": "svobodnye_voskhod_peace", "value": "yes" }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_09_KIDS",
+    "type": "mission_definition",
+    "name": { "str": "Детская радость" },
+    "description": "Бабушка Зина просит найти игрушки для детей.  Серьёзно.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_item_category": "toys", "count": 3 },
+    "difficulty": 2,
+    "value": 50000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "followup": "MISSION_SVOBODNYE_10_HOME",
+    "dialogue": {
+      "describe": "Игрушки.",
+      "offer": "*Маленькая старушка в фартуке с цветочками.*\n\nМилый.  Я знаю — мир рухнул.  Я знаю — мертвецы ходят.  Я ЗНАЮ.\n\nНо дети — есть дети.  И дети должны играть.  Три игрушки.  Любые.  Мячик, куклу, книжку с картинками.\n\nПожалуйста.  Для них.",
+      "accepted": "Спасибо, милый.  Ты — хороший человек.",
+      "rejected": "Ну...  понятно.",
+      "advice": "Детские магазины.  Дома.  Школы.",
+      "inquire": "Нашёл?",
+      "success": "*Зина берёт игрушки.  Несёт к детям.*\n\nСмотрите!  СМОТРИТЕ!\n\n*Крик.  Визг.  Смех.  Давно — очень давно — здесь не слышали детского смеха.*\n\n*Зина поворачивается к тебе.  Глаза — мокрые.  Улыбка — огромная.*\n\nСпасибо.  Спасибо.",
+      "success_lie": "Хм.",
+      "failure": "Ещё нет."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "9" },
+        { "u_spawn_item": "homemade_bread", "count": 5 }
+      ]
+    }
+  },
+  {
+    "id": "MISSION_SVOBODNYE_10_HOME",
+    "type": "mission_definition",
+    "name": { "str": "Дом" },
+    "description": "Финальная миссия.  Тамара хочет закрыть Объект Нулевой — навсегда.  Чтобы дети росли в безопасности.",
+    "goal": "MGOAL_CONDITION",
+    "goal_condition": { "u_has_var": "echo_story_core_entered", "value": "yes" },
+    "difficulty": 10,
+    "value": 500000,
+    "origins": [ "ORIGIN_SECONDARY" ],
+    "dialogue": {
+      "describe": "Закрыть Ядро.",
+      "offer": "*Тамара Ильинична сидит на крыльце.  Закат.  Тихо.*\n\nЗнаешь...  я была учителем.  Математика.  Третий класс.\n\nМои ученики...  большинство — мертвы.  Или хуже.\n\nНо здесь — семь детей.  Семь.  И они заслуживают мир, где не нужно бояться каждый день.\n\nЗакрой Объект.  Не уничтожь — уничтожение породит хаос.  Не активируй — активация уничтожит то, что осталось.\n\nЗакрой.  Запечатай.  Навсегда.\n\nПусть дети растут.",
+      "accepted": "Спасибо.  *Она берёт твою руку.  Тёплые, натруженные ладони.*\n\nВозвращайся.  Мы будем ждать.  Зина приготовит пирог.",
+      "rejected": "Понимаю.",
+      "advice": "Третий вариант.  Не уничтожить, не активировать — запечатать.",
+      "inquire": "Ядро закрыто?",
+      "success": "*Тамара Ильинична стоит у ворот фермы.  За ней — все.  Борис.  Олег.  Марина.  Зина.  Дети.*\n\n*Тишина.  Долгая.*\n\nДома.  *Тихо, почти шёпот.*  Ты дома.\n\n*Ребёнок берёт тебя за руку.  Маленькая, тёплая ладошка.*\n\nПойдём есть пирог.",
+      "success_lie": "...",
+      "failure": "Ядро ещё открыто."
+    },
+    "end": {
+      "effect": [
+        { "u_add_var": "svobodnye_missions_done", "value": "10" },
+        { "u_add_var": "svobodnye_ending", "value": "yes" }
+      ]
+    }
+  }
+]

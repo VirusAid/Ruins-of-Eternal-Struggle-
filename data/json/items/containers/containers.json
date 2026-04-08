@@ -1837,7 +1837,8 @@
         "rigid": true,
         "watertight": true,
         "max_contains_volume": "1500 ml",
-        "max_item_volume": "32 ml",
+        "max_item_volume": "600 ml",
+        "max_item_length": "20 cm",
         "max_contains_weight": "3 kg"
       }
     ],

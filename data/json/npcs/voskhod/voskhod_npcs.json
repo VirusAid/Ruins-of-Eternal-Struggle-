@@ -10,6 +10,7 @@
     "attitude": 0,
     "mission": 7,
     "chat": "TALK_VOSKHOD_COMMANDER",
+    "mission_offered": "MISSION_VOSKHOD_01_RECON",
     "age": 38,
     "height": 182,
     "str": 11,

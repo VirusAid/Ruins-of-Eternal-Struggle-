@@ -10,6 +10,7 @@
     "attitude": 0,
     "mission": 7,
     "chat": "TALK_SVOBODNYE_ELDER",
+    "mission_offered": "MISSION_SVOBODNYE_01_FOOD",
     "age": 56,
     "height": 165,
     "str": 8,

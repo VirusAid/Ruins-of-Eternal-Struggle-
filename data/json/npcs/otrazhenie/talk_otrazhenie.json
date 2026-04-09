@@ -17,6 +17,10 @@
       { "text": "Что такое «Отражение»?", "topic": "TALK_OTRAZHENIE_ABOUT" },
       { "text": "Что за частота 47.3 Гц?", "topic": "TALK_OTRAZHENIE_FREQUENCY" },
       { "text": "Мне нужна помощь.", "topic": "TALK_OTRAZHENIE_HELP" },
+      { "text": "Насчёт того задания...", "topic": "TALK_MISSION_INQUIRE",
+        "condition": "has_assigned_mission" },
+      { "text": "У меня несколько заданий...", "topic": "TALK_MISSION_LIST_ASSIGNED",
+        "condition": "has_many_assigned_missions" },
       { "text": "Вы — культ мутантов?", "topic": "TALK_OTRAZHENIE_CULT" },
       { "text": "Мне пора.", "topic": "TALK_DONE" }
     ]
@@ -82,9 +86,7 @@
     "id": "TALK_OTRAZHENIE_JOIN",
     "dynamic_line": "Чтобы стать частью «Отражения» — нужно услышать Частоту.  А для этого — нужно доказать, что ты готов.\n\nПринеси подношение.  Два мутагена.  Любых.  Это — первый шаг.",
     "responses": [
-      { "text": "Я сделаю.", "topic": "TALK_DONE",
-        "effect": { "assign_mission": "MISSION_OTRAZHENIE_01_OFFERING" }
-      },
+      { "text": "Я сделаю.", "topic": "TALK_MISSION_LIST" },
       { "text": "Потом.", "topic": "TALK_OTRAZHENIE_PRIEST" }
     ]
   },
@@ -93,9 +95,7 @@
     "id": "TALK_OTRAZHENIE_MISSION",
     "dynamic_line": "Принеси два мутагена.  Это — твоё первое испытание.",
     "responses": [
-      { "text": "Принесу.", "topic": "TALK_DONE",
-        "effect": { "assign_mission": "MISSION_OTRAZHENIE_01_OFFERING" }
-      },
+      { "text": "Принесу.", "topic": "TALK_MISSION_LIST" },
       { "text": "Не сейчас.", "topic": "TALK_OTRAZHENIE_PRIEST" }
     ]
   },

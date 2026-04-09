@@ -23,9 +23,14 @@
         "condition": { "u_has_var": "echo_story_core_entered", "value": "yes" }
       },
       { "text": "Я могу использовать вашу помощь.", "topic": "TALK_VOSKHOD_COMMANDER_HELP" },
-      { "text": "Есть задание для меня?", "topic": "TALK_DONE",
-        "effect": { "assign_mission": "MISSION_VOSKHOD_01_RECON" },
+      { "text": "Есть задание для меня?", "topic": "TALK_MISSION_LIST",
         "condition": { "u_has_var": "voskhod_met_commander", "value": "yes" }
+      },
+      { "text": "Насчёт того задания...", "topic": "TALK_MISSION_INQUIRE",
+        "condition": { "and": [ { "u_has_var": "voskhod_met_commander", "value": "yes" }, "has_assigned_mission" ] }
+      },
+      { "text": "У меня несколько заданий...", "topic": "TALK_MISSION_LIST_ASSIGNED",
+        "condition": { "and": [ { "u_has_var": "voskhod_met_commander", "value": "yes" }, "has_many_assigned_missions" ] }
       },
       { "text": "Мне пора.  Рад, что вы живы.", "topic": "TALK_DONE" }
     ]

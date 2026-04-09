@@ -16,8 +16,10 @@
     "responses": [
       { "text": "Что такое «Свободные»?", "topic": "TALK_SVOBODNYE_ABOUT" },
       { "text": "Мне нужна помощь.", "topic": "TALK_SVOBODNYE_HELP" },
-      { "text": "Я хочу помочь.", "topic": "TALK_SVOBODNYE_MISSION" },
-      { "text": "Кто здесь живёт?", "topic": "TALK_SVOBODNYE_PEOPLE" },
+      { "text": "Я хочу помочь.", "topic": "TALK_SVOBODNYE_MISSION" },      { "text": "Насчёт того задания...", "topic": "TALK_MISSION_INQUIRE",
+        "condition": "has_assigned_mission" },
+      { "text": "У меня несколько заданий...", "topic": "TALK_MISSION_LIST_ASSIGNED",
+        "condition": "has_many_assigned_missions" },      { "text": "Кто здесь живёт?", "topic": "TALK_SVOBODNYE_PEOPLE" },
       { "text": "Мне пора.", "topic": "TALK_DONE" }
     ]
   },
@@ -54,9 +56,7 @@
     "id": "TALK_SVOBODNYE_MISSION",
     "dynamic_line": "Помочь?  *Глаза загораются.*\n\nНам всегда нужна помощь.  Еда.  Инструменты.  Медикаменты.  Безопасность.\n\nЧто готов делать?",
     "responses": [
-      { "text": "Давай задание.", "topic": "TALK_DONE",
-        "effect": { "assign_mission": "MISSION_SVOBODNYE_01_FOOD" }
-      },
+      { "text": "Давай задание.", "topic": "TALK_MISSION_LIST" },
       { "text": "Потом.", "topic": "TALK_SVOBODNYE_ELDER" }
     ]
   },

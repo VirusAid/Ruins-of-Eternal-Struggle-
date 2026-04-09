@@ -680,5 +680,34 @@
         { "u_add_morale": "morale_feeling_good", "bonus": 30, "max_bonus": 30, "duration": "12 hours" }
       ]
     }
+  },
+
+  {
+    "//": "=== INFECTED START SCENARIO ===",
+    "type": "mission_definition",
+    "id": "MISSION_INFECTED_START_FIND_ANTIBIOTICS",
+    "name": { "str": "Find Antibiotics" },
+    "goal": "MGOAL_FIND_ITEM",
+    "item": "antibiotics",
+    "count": 1,
+    "difficulty": 3,
+    "value": 5000,
+    "origins": [ "ORIGIN_OPENER_NPC" ],
+    "dialogue": {
+      "describe": "Find antibiotics to treat the infection.",
+      "offer": "You are infected.  Without antibiotics, you will die.",
+      "accepted": "You need to find antibiotics.  Fast.",
+      "rejected": "The infection won't wait.",
+      "advice": "Try pharmacies, hospitals, or bathroom cabinets.",
+      "inquire": "Did you find antibiotics?",
+      "success": "You found antibiotics.  Take them immediately.",
+      "success_lie": "Are you sure?",
+      "failure": "The infection is getting worse."
+    },
+    "end": {
+      "effect": [
+        { "u_message": "You found antibiotics!  Take them now before the infection spreads further.", "popup": true }
+      ]
+    }
   }
 ]

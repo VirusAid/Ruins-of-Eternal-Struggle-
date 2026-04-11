@@ -493,9 +493,10 @@
         }
       ],
       "assign_mission_target": {
-        "om_terrain": "s_book",
+        "om_terrain": "s_bookstore",
         "om_terrain_match_type": "PREFIX",
-        "reveal_radius": 3
+        "reveal_radius": 3,
+        "z": 0
       }
     },
     "end": {

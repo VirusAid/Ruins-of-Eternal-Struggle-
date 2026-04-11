@@ -6,8 +6,8 @@
     "object": {
       "fill_ter": "t_grass",
       "rows": [
-        "TTTTTTTTTTTTTTTTTTTTTTTT",
-        "TTT..................TTT",
+        "TT......TTT..TTT......TT",
+        "TT....................TT",
         "TT..WWWWWWWWWWWWWW....TT",
         "TT..W............W....TT",
         "TT..W.....aa.....W....TT",
@@ -28,8 +28,8 @@
         "TT..W......W..........TT",
         "TT..WWWdWWWW..........TT",
         "TTT..................TTT",
-        "TTT..................TTT",
-        "TTTTTTTTTTTTTTTTTTTTTTTT"
+        "TT....................TT",
+        "TT......TTT..TTT......TT"
       ],
       "terrain": {
         "T": "t_tree",

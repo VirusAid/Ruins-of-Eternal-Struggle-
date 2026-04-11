@@ -24,7 +24,7 @@
     "end": {
       "effect": [
         { "u_add_var": "otrazhenie_missions_done", "value": "1" },
-        { "u_spawn_item": "purifier", "count": 2 }
+        { "u_spawn_item": "purifier", "count": 2, "container": "flask_glass" }
       ]
     }
   },
@@ -88,7 +88,7 @@
     "end": {
       "effect": [
         { "u_add_var": "otrazhenie_missions_done", "value": "3" },
-        { "u_spawn_item": "purifier", "count": 3 }
+        { "u_spawn_item": "purifier", "count": 3, "container": "flask_glass" }
       ]
     }
   },
@@ -117,7 +117,7 @@
     "end": {
       "effect": [
         { "u_add_var": "otrazhenie_missions_done", "value": "4" },
-        { "u_spawn_item": "mutagen_echo" }
+        { "u_spawn_item": "mutagen_echo", "container": "flask_glass" }
       ]
     }
   },
@@ -146,7 +146,7 @@
     "end": {
       "effect": [
         { "u_add_var": "otrazhenie_missions_done", "value": "5" },
-        { "u_spawn_item": "iv_mutagen_echo" }
+        { "u_spawn_item": "iv_mutagen_echo", "container": "flask_glass" }
       ]
     }
   },
@@ -247,7 +247,7 @@
     "end": {
       "effect": [
         { "u_add_var": "otrazhenie_missions_done", "value": "8" },
-        { "u_spawn_item": "mutagen_echo", "count": 3 }
+        { "u_spawn_item": "mutagen_echo", "count": 3, "container": "flask_glass" }
       ]
     }
   },

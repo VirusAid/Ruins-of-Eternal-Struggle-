@@ -146,7 +146,7 @@
       "effect": [
         { "u_add_var": "svobodnye_missions_done", "value": "5" },
         { "u_add_var": "svobodnye_trade_route", "value": "yes" },
-        { "u_spawn_item": "water_clean", "count": 10 }
+        { "u_spawn_item": "water_clean", "count": 10, "container": "bottle_plastic" }
       ]
     }
   },

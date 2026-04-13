@@ -60,3 +60,6 @@ Ruins of Eternal Struggle распространяется под лицензи
 #### Как создать новый мир?
 
 В главном меню выберите **Мир** → **Создать мир**.
+
+<a href="https://ibb.co/6c346qpR"><img src="https://i.ibb.co/5XN5qJzW/Screenshot-2026-04-13-150742.png" alt="Screenshot-2026-04-13-150742" border="0"></a>
+<a href="https://ibb.co/n8cdRxdm"><img src="https://i.ibb.co/Cs7CWRC8/Screenshot-2026-04-13-150935.png" alt="Screenshot-2026-04-13-150935" border="0"></a>

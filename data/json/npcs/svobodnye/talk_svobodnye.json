@@ -14,6 +14,17 @@
       ]
     },
     "responses": [
+      { "text": "Тамара.  Нам нужно серьёзно поговорить.  О войне.",
+        "topic": "TALK_SVOBODNYE_CONFLICT_PEACE",
+        "condition": {
+          "and": [
+            { "u_has_var": "svobodnye_missions_done", "value": "5" },
+            { "not": { "u_has_var": "conflict_chose_peace", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_voskhod", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" } }
+          ]
+        }
+      },
       { "text": "Что такое «Свободные»?", "topic": "TALK_SVOBODNYE_ABOUT" },
       { "text": "Мне нужна помощь.", "topic": "TALK_SVOBODNYE_HELP" },
       { "text": "Я хочу помочь.", "topic": "TALK_SVOBODNYE_MISSION" },      { "text": "Насчёт того задания...", "topic": "TALK_MISSION_INQUIRE",

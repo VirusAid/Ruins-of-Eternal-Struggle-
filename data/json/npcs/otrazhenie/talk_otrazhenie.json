@@ -14,6 +14,21 @@
       ]
     },
     "responses": [
+      { "text": "*Голос.  Нам нужно поговорить.*",
+        "topic": "TALK_OTRAZHENIE_PRIEST_BETRAYED",
+        "condition": { "u_has_var": "conflict_chose_voskhod", "value": "yes" }
+      },
+      { "text": "Частота говорит о военных?",
+        "topic": "TALK_OTRAZHENIE_CONFLICT_OFFER",
+        "condition": {
+          "and": [
+            { "u_has_var": "otrazhenie_missions_done", "value": "5" },
+            { "not": { "u_has_var": "conflict_chose_voskhod", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_peace", "value": "yes" } }
+          ]
+        }
+      },
       { "text": "Что такое «Отражение»?", "topic": "TALK_OTRAZHENIE_ABOUT" },
       { "text": "Что за частота 47.3 Гц?", "topic": "TALK_OTRAZHENIE_FREQUENCY" },
       { "text": "Мне нужна помощь.", "topic": "TALK_OTRAZHENIE_HELP" },
@@ -114,6 +129,10 @@
       ]
     },
     "responses": [
+      { "text": "Лилит, я...",
+        "topic": "TALK_OTRAZHENIE_LILITH_BETRAYED",
+        "condition": { "u_has_var": "conflict_chose_voskhod", "value": "yes" }
+      },
       { "text": "Хочу торговать.", "topic": "TALK_OTRAZHENIE_LILITH_TRADE" },
       { "text": "Расскажи о себе.", "topic": "TALK_OTRAZHENIE_LILITH_ABOUT" },
       { "text": "Расскажи о мутагенах.", "topic": "TALK_OTRAZHENIE_LILITH_MUTAGEN" },

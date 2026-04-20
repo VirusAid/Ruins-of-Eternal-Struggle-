@@ -14,6 +14,21 @@
       ]
     },
     "responses": [
+      { "text": "*Ковалёв.  Нам нужно поговорить.*",
+        "topic": "TALK_VOSKHOD_COMMANDER_BETRAYED",
+        "condition": { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" }
+      },
+      { "text": "Есть серьёзный разговор.  Про «Отражение».",
+        "topic": "TALK_VOSKHOD_CONFLICT_OFFER",
+        "condition": {
+          "and": [
+            { "u_has_var": "voskhod_missions_done", "value": "5" },
+            { "not": { "u_has_var": "conflict_chose_voskhod", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" } },
+            { "not": { "u_has_var": "conflict_chose_peace", "value": "yes" } }
+          ]
+        }
+      },
       { "text": "Да, это мой маяк.  Вы реальные?",
         "topic": "TALK_VOSKHOD_COMMANDER_REAL",
         "condition": { "not": { "u_has_var": "voskhod_met_commander", "value": "yes" } }

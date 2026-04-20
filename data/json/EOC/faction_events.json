@@ -111,5 +111,107 @@
       { "u_add_var": "otrazhenie_sabotage_noticed", "value": "yes" },
       { "u_message": "Ты уничтожил запасы мутагенов «Отражения».  Лаборатория Лилит — в руинах.  Колбы разбиты, реагенты — на полу.\n\nЕсли у тебя были отношения с Лилит — они висят на волоске.", "popup": true }
     ]
+  },
+
+  {
+    "//": "=== РЕПУТАЦИЯ: После каждой миссии фракции ===",
+    "type": "effect_on_condition",
+    "id": "eoc_rep_voskhod_up",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "voskhod_met_commander", "value": "yes" },
+        { "not": { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_effect": "voskhod_reputation", "intensity": 1, "duration": "30 days" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_rep_otrazhenie_up",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "otrazhenie_met_priest", "value": "yes" },
+        { "not": { "u_has_var": "conflict_chose_voskhod", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_effect": "otrazhenie_reputation", "intensity": 1, "duration": "30 days" }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_rep_svobodnye_up",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": { "u_has_var": "svobodnye_met_elder", "value": "yes" },
+    "effect": [
+      { "u_add_effect": "svobodnye_reputation", "intensity": 1, "duration": "30 days" }
+    ]
+  },
+
+  {
+    "//": "=== КОНФЛИКТ: Последствия выбора Восхода ===",
+    "type": "effect_on_condition",
+    "id": "eoc_conflict_voskhod_consequences",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "conflict_chose_voskhod", "value": "yes" },
+        { "not": { "u_has_var": "conflict_voskhod_applied", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "conflict_voskhod_applied", "value": "yes" },
+      { "u_add_effect": "voskhod_reputation", "intensity": 3, "duration": "90 days" },
+      { "u_add_morale": "morale_feeling_bad", "bonus": -10, "max_bonus": -10, "duration": "3 days" },
+      { "u_message": "Ты выбрал сторону «Восхода».  «Отражение» закрыто для тебя навсегда.\n\nНо Ковалёв и его люди теперь доверяют тебе полностью.", "popup": true }
+    ]
+  },
+  {
+    "//": "=== КОНФЛИКТ: Последствия выбора Отражения ===",
+    "type": "effect_on_condition",
+    "id": "eoc_conflict_otrazhenie_consequences",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "conflict_chose_otrazhenie", "value": "yes" },
+        { "not": { "u_has_var": "conflict_otrazhenie_applied", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "conflict_otrazhenie_applied", "value": "yes" },
+      { "u_add_effect": "otrazhenie_reputation", "intensity": 3, "duration": "90 days" },
+      { "u_add_morale": "morale_feeling_bad", "bonus": -10, "max_bonus": -10, "duration": "3 days" },
+      { "u_message": "Ты выбрал сторону «Отражения».  «Восход» закрыт для тебя навсегда.\n\nНо Голос и Лилит теперь считают тебя своим.", "popup": true }
+    ]
+  },
+  {
+    "//": "=== КОНФЛИКТ: Последствия выбора Мира ===",
+    "type": "effect_on_condition",
+    "id": "eoc_conflict_peace_consequences",
+    "eoc_type": "RECURRING",
+    "recurrence": "1 days",
+    "condition": {
+      "and": [
+        { "u_has_var": "conflict_chose_peace", "value": "yes" },
+        { "not": { "u_has_var": "conflict_peace_applied", "value": "yes" } }
+      ]
+    },
+    "effect": [
+      { "u_add_var": "conflict_peace_applied", "value": "yes" },
+      { "u_add_effect": "voskhod_reputation", "intensity": 2, "duration": "90 days" },
+      { "u_add_effect": "otrazhenie_reputation", "intensity": 2, "duration": "90 days" },
+      { "u_add_effect": "svobodnye_reputation", "intensity": 3, "duration": "90 days" },
+      { "u_add_morale": "morale_feeling_good", "bonus": 20, "max_bonus": 30, "duration": "7 days" },
+      { "u_message": "Мир.  Хрупкий, неуверенный — но мир.\n\nВсе три фракции начали сотрудничать.  Свободные торгуют.  Восход защищает.  Отражение исследует.\n\nТы — связующее звено.", "popup": true }
+    ]
   }
 ]

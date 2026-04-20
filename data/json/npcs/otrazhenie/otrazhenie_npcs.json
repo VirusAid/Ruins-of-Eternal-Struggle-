@@ -10,7 +10,7 @@
     "attitude": 0,
     "mission": 7,
     "chat": "TALK_OTRAZHENIE_PRIEST",
-    "mission_offered": "MISSION_OTRAZHENIE_01_OFFERING",
+    "mission_offered": [ "MISSION_OTRAZHENIE_01_OFFERING", "MISSION_CONFLICT_OTRAZHENIE_STEAL_WEAPONS" ],
     "age": 50,
     "height": 190,
     "str": 9,

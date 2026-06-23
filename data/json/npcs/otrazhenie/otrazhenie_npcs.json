@@ -7,10 +7,13 @@
     "gender": "male",
     "class": "NC_OTRAZHENIE_PRIEST",
     "faction": "roes_otrazhenie",
-    "attitude": 0,
+    "attitude": 1,
     "mission": 7,
     "chat": "TALK_OTRAZHENIE_PRIEST",
-    "mission_offered": [ "MISSION_OTRAZHENIE_01_OFFERING", "MISSION_CONFLICT_OTRAZHENIE_STEAL_WEAPONS" ],
+    "mission_offered": [
+      "MISSION_OTRAZHENIE_01_OFFERING",
+      "MISSION_CONFLICT_OTRAZHENIE_STEAL_WEAPONS"
+    ],
     "age": 50,
     "height": 190,
     "str": 9,
@@ -26,7 +29,7 @@
     "gender": "female",
     "class": "NC_OTRAZHENIE_ALCHEMIST",
     "faction": "roes_otrazhenie",
-    "attitude": 0,
+    "attitude": 1,
     "mission": 3,
     "chat": "TALK_OTRAZHENIE_LILITH",
     "age": 28,
@@ -44,7 +47,7 @@
     "gender": "male",
     "class": "NC_OTRAZHENIE_ADEPT",
     "faction": "roes_otrazhenie",
-    "attitude": 0,
+    "attitude": 1,
     "mission": 7,
     "chat": "TALK_OTRAZHENIE_ADEPT",
     "age": 33,
@@ -62,7 +65,7 @@
     "gender": "female",
     "class": "NC_OTRAZHENIE_ADEPT",
     "faction": "roes_otrazhenie",
-    "attitude": 0,
+    "attitude": 1,
     "mission": 7,
     "chat": "TALK_OTRAZHENIE_ADEPT",
     "age": 25,
@@ -80,7 +83,7 @@
     "gender": "male",
     "class": "NC_OTRAZHENIE_GUARDIAN",
     "faction": "roes_otrazhenie",
-    "attitude": 0,
+    "attitude": 1,
     "mission": 7,
     "chat": "TALK_OTRAZHENIE_GUARDIAN",
     "age": 38,
@@ -88,6 +91,7 @@
     "str": 16,
     "dex": 9,
     "int": 6,
-    "per": 8
+    "per": 8,
+    "aggro_character": true
   }
-]
+]\n

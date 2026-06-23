@@ -1,0 +1,42 @@
+[
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_COMMANDER",
+    "name_suffix": "командир",
+    "class": "NC_VOSKHOD_COMMANDER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_SOLDIER",
+    "name_suffix": "боец",
+    "class": "NC_VOSKHOD_SOLDIER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_MEDIC",
+    "name_suffix": "медик",
+    "class": "NC_VOSKHOD_MEDIC",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_VOSKHOD_GUNSMITH",
+    "name_suffix": "оружейник",
+    "class": "NC_VOSKHOD_GUNSMITH",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  }
+]

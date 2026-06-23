@@ -6,110 +6,403 @@
     "object": {
       "fill_ter": "t_grass",
       "rows": [
-        "........................",
-        ".FFFFFFFFFFFFFFFFFFFFFF.",
-        ".F,,,,,,,,,,,,,,,,,,,,F.",
-        ".F,,,,,,,,,,,,,,,,,,,,F.",
-        ".F,,,,,,,,,,,,,,,,,,,,F.",
-        ".F....................F.",
-        ".F....................F.",
-        ".F.WWWWWWWW..WWWWWWWW.F.",
-        ".F.W......W..W......W.F.",
-        ".F.W......W..W......W.F.",
-        ".F.W......W..W......W.F.",
-        ".F.WWdWWWWW..WWdWWWWW.F.",
-        ".F....................F.",
-        ".F....................F.",
-        ".F.WWWWWWWWWWWWWWWWWW.F.",
-        ".F.W................W.F.",
-        ".F.W................W.F.",
-        ".F.W................W.F.",
-        ".F.WWWWWWWWdWWWWWWWWW.F.",
-        ".F....................F.",
-        ".F....................F.",
-        ".F..T...T......T...T..F.",
-        ".FFFFFFFFFFGGFFFFFFFFFF.",
+        "SSSSSSSSSSSSSSSSSSSSSSSS",
+        "S......................S",
+        "S..T....T..T..........TS",
+        "S......................S",
+        "S.########.##########..S",
+        "S.#ssssss#.#ssssssss#..S",
+        "S.#ssssss#.#ssssssss#..S",
+        "S.###d####.####d#####..S",
+        "S......................S",
+        "S..,,,,,,,,,,,,,,......S",
+        "S..,,,,,,,,,,,,,,......S",
+        "S......................S",
+        "S.....################.S",
+        "S.....#ssssssssssssss#.S",
+        "S.....#ssssssssssssss#.S",
+        "S.....#ssssssssssssss#.S",
+        "S.....#######d#########S",
+        "S......................S",
+        "S.###d###..####d###....S",
+        "S.#sssss#..#ssssss#....S",
+        "S.#sssss#..#ssssss#....S",
+        "S.#######..#########...S",
+        "SGGSSSSSSSSSSSSSSSSSSSSS",
         "........................"
       ],
       "terrain": {
-        ".": "t_grass",
-        "F": "t_fence",
-        "G": "t_fencegate_c",
-        "d": "t_door_c",
+        "S": "t_splitrail_fence",
+        "G": "t_splitrail_fencegate_c",
         ",": "t_dirt",
-        "W": "t_wall_wood",
-        "T": "t_tree_apple"
+        ".": "t_grass",
+        "T": "t_tree_apple",
+        "#": "t_wall_wood",
+        "d": "t_door_c",
+        "s": "t_floor"
       },
       "place_npcs": [
-        { "class": "NPC_SVOBODNYE_ELDER", "x": 6, "y": 9, "unique_id": "svobodnye_elder" },
-        { "class": "NPC_SVOBODNYE_MECHANIC", "x": 16, "y": 9, "unique_id": "svobodnye_mechanic" },
-        { "class": "NPC_SVOBODNYE_DOCTOR", "x": 6, "y": 16, "unique_id": "svobodnye_doctor" },
-        { "class": "NPC_SVOBODNYE_MARINA", "x": 16, "y": 16, "unique_id": "svobodnye_marina" },
-        { "class": "NPC_SVOBODNYE_COOK", "x": 11, "y": 3, "unique_id": "svobodnye_cook" }
+        {
+          "class": "NPC_SVOBODNYE_ELDER",
+          "unique_id": "svobodnye_elder",
+          "x": 4,
+          "y": 19
+        },
+        {
+          "class": "NPC_SVOBODNYE_MECHANIC",
+          "unique_id": "svobodnye_mechanic",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "class": "NPC_SVOBODNYE_DOCTOR",
+          "unique_id": "svobodnye_doctor",
+          "x": 13,
+          "y": 14
+        },
+        {
+          "class": "NPC_SVOBODNYE_SCOUT",
+          "unique_id": "svobodnye_marina",
+          "x": 12,
+          "y": 19
+        },
+        {
+          "class": "NPC_SVOBODNYE_COOK",
+          "unique_id": "svobodnye_cook",
+          "x": 9,
+          "y": 14
+        }
       ],
       "place_furniture": [
-        { "furn": "f_fireplace", "x": 11, "y": 2 },
-        { "furn": "f_wood_keg", "x": 9, "y": 2 },
-        { "furn": "f_wood_keg", "x": 13, "y": 2 },
-        { "furn": "f_counter", "x": 10, "y": 3 },
-        { "furn": "f_counter", "x": 12, "y": 3 },
-        { "furn": "f_bench", "x": 10, "y": 4 },
-        { "furn": "f_bench", "x": 11, "y": 4 },
-        { "furn": "f_bench", "x": 12, "y": 4 },
-
-        { "furn": "f_table", "x": 5, "y": 8 },
-        { "furn": "f_table", "x": 6, "y": 8 },
-        { "furn": "f_camp_chair", "x": 5, "y": 9 },
-        { "furn": "f_camp_chair", "x": 7, "y": 9 },
-        { "furn": "f_bookcase", "x": 4, "y": 10 },
-        { "furn": "f_desk", "x": 8, "y": 10 },
-        { "furn": "f_bench", "x": 4, "y": 8 },
-
-        { "furn": "f_workbench", "x": 15, "y": 8 },
-        { "furn": "f_workbench", "x": 16, "y": 8 },
-        { "furn": "f_rack", "x": 14, "y": 10 },
-        { "furn": "f_rack", "x": 15, "y": 10 },
-        { "furn": "f_crate_c", "x": 18, "y": 8 },
-        { "furn": "f_crate_c", "x": 19, "y": 8 },
-        { "furn": "f_anvil", "x": 19, "y": 10 },
-
-        { "furn": "f_bed", "x": 4, "y": 15 },
-        { "furn": "f_bed", "x": 4, "y": 16 },
-        { "furn": "f_table", "x": 6, "y": 15 },
-        { "furn": "f_rack", "x": 8, "y": 15 },
-        { "furn": "f_rack", "x": 8, "y": 16 },
-        { "furn": "f_stool", "x": 5, "y": 15 },
-
-        { "furn": "f_bed", "x": 12, "y": 15 },
-        { "furn": "f_bed", "x": 12, "y": 16 },
-        { "furn": "f_bed", "x": 14, "y": 15 },
-        { "furn": "f_bed", "x": 14, "y": 16 },
-        { "furn": "f_bed", "x": 16, "y": 15 },
-        { "furn": "f_bed", "x": 18, "y": 15 },
-        { "furn": "f_bed", "x": 18, "y": 16 },
-        { "furn": "f_locker", "x": 19, "y": 15 },
-        { "furn": "f_locker", "x": 19, "y": 16 },
-        { "furn": "f_table", "x": 10, "y": 17 },
-        { "furn": "f_bench", "x": 11, "y": 17 },
-        { "furn": "f_bench", "x": 9, "y": 17 },
-
-        { "furn": "f_bench", "x": 6, "y": 5 },
-        { "furn": "f_bench", "x": 7, "y": 5 },
-        { "furn": "f_bench", "x": 14, "y": 5 },
-        { "furn": "f_bench", "x": 15, "y": 5 },
-
-        { "furn": "f_bench", "x": 5, "y": 12 },
-        { "furn": "f_bench", "x": 6, "y": 12 },
-        { "furn": "f_bench", "x": 15, "y": 12 },
-        { "furn": "f_bench", "x": 16, "y": 12 }
+        {
+          "furn": "f_workbench",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "furn": "f_workbench",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "furn": "f_anvil",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "furn": "f_rack",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "furn": "f_rack",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "furn": "f_locker",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "furn": "f_locker",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 5,
+          "y": 7
+        },
+        {
+          "furn": "f_bed",
+          "x": 11,
+          "y": 5
+        },
+        {
+          "furn": "f_bed",
+          "x": 12,
+          "y": 5
+        },
+        {
+          "furn": "f_bed",
+          "x": 14,
+          "y": 5
+        },
+        {
+          "furn": "f_bed",
+          "x": 15,
+          "y": 5
+        },
+        {
+          "furn": "f_bed",
+          "x": 11,
+          "y": 6
+        },
+        {
+          "furn": "f_bed",
+          "x": 14,
+          "y": 6
+        },
+        {
+          "furn": "f_locker",
+          "x": 12,
+          "y": 6
+        },
+        {
+          "furn": "f_locker",
+          "x": 15,
+          "y": 6
+        },
+        {
+          "furn": "f_fireplace",
+          "x": 16,
+          "y": 10
+        },
+        {
+          "furn": "f_bench",
+          "x": 14,
+          "y": 10
+        },
+        {
+          "furn": "f_bench",
+          "x": 15,
+          "y": 10
+        },
+        {
+          "furn": "f_bench",
+          "x": 14,
+          "y": 11
+        },
+        {
+          "furn": "f_table",
+          "x": 7,
+          "y": 13
+        },
+        {
+          "furn": "f_table",
+          "x": 8,
+          "y": 13
+        },
+        {
+          "furn": "f_table",
+          "x": 9,
+          "y": 13
+        },
+        {
+          "furn": "f_table",
+          "x": 10,
+          "y": 13
+        },
+        {
+          "furn": "f_counter",
+          "x": 7,
+          "y": 14
+        },
+        {
+          "furn": "f_counter",
+          "x": 8,
+          "y": 14
+        },
+        {
+          "furn": "f_bench",
+          "x": 11,
+          "y": 13
+        },
+        {
+          "furn": "f_bench",
+          "x": 12,
+          "y": 13
+        },
+        {
+          "furn": "f_rack",
+          "x": 13,
+          "y": 14
+        },
+        {
+          "furn": "f_rack",
+          "x": 14,
+          "y": 14
+        },
+        {
+          "furn": "f_rack",
+          "x": 15,
+          "y": 14
+        },
+        {
+          "furn": "f_desk",
+          "x": 3,
+          "y": 19
+        },
+        {
+          "furn": "f_desk",
+          "x": 4,
+          "y": 19
+        },
+        {
+          "furn": "f_bookcase",
+          "x": 6,
+          "y": 19
+        },
+        {
+          "furn": "f_bookcase",
+          "x": 7,
+          "y": 19
+        },
+        {
+          "furn": "f_bed",
+          "x": 3,
+          "y": 20
+        },
+        {
+          "furn": "f_bed",
+          "x": 4,
+          "y": 20
+        },
+        {
+          "furn": "f_rack",
+          "x": 11,
+          "y": 19
+        },
+        {
+          "furn": "f_rack",
+          "x": 12,
+          "y": 19
+        },
+        {
+          "furn": "f_bed",
+          "x": 13,
+          "y": 19
+        },
+        {
+          "furn": "f_bed",
+          "x": 14,
+          "y": 19
+        },
+        {
+          "furn": "f_locker",
+          "x": 15,
+          "y": 19
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 13,
+          "y": 20
+        }
       ],
       "place_items": [
-        { "item": "produce", "x": [ 3, 20 ], "y": [ 2, 4 ], "chance": 60, "repeat": [ 3, 6 ] },
-        { "item": "farming_tools", "x": [ 14, 15 ], "y": 10, "chance": 50, "repeat": [ 1, 3 ] },
-        { "item": "mechanics", "x": [ 18, 19 ], "y": [ 8, 10 ], "chance": 40, "repeat": [ 1, 2 ] },
-        { "item": "softdrugs", "x": [ 8, 8 ], "y": [ 15, 16 ], "chance": 50, "repeat": [ 2, 4 ] },
-        { "item": "cannedfood", "x": [ 10, 11 ], "y": 17, "chance": 50, "repeat": [ 1, 3 ] },
-        { "item": "kitchen", "x": [ 9, 13 ], "y": [ 2, 3 ], "chance": 40, "repeat": [ 2, 4 ] }
+        {
+          "item": "mechanics",
+          "x": [
+            3,
+            7
+          ],
+          "y": [
+            5,
+            7
+          ],
+          "chance": 70,
+          "repeat": [
+            2,
+            5
+          ]
+        },
+        {
+          "item": "tools_common",
+          "x": [
+            3,
+            7
+          ],
+          "y": [
+            5,
+            7
+          ],
+          "chance": 60,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "cannedfood",
+          "x": [
+            7,
+            10
+          ],
+          "y": [
+            13,
+            15
+          ],
+          "chance": 90,
+          "repeat": [
+            4,
+            8
+          ]
+        },
+        {
+          "item": "produce",
+          "x": [
+            7,
+            10
+          ],
+          "y": [
+            13,
+            15
+          ],
+          "chance": 70,
+          "repeat": [
+            2,
+            5
+          ]
+        },
+        {
+          "item": "meds",
+          "x": [
+            13,
+            15
+          ],
+          "y": [
+            13,
+            15
+          ],
+          "chance": 70,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "manuals",
+          "x": [
+            6,
+            7
+          ],
+          "y": [
+            19,
+            19
+          ],
+          "chance": 60,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "softdrugs",
+          "x": [
+            11,
+            15
+          ],
+          "y": [
+            19,
+            20
+          ],
+          "chance": 50,
+          "repeat": [
+            1,
+            2
+          ]
+        }
       ]
     }
   }

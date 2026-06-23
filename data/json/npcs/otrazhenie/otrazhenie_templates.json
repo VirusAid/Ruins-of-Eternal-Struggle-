@@ -1,0 +1,42 @@
+[
+  {
+    "type": "npc",
+    "id": "NPC_OTRAZHENIE_PRIEST",
+    "name_suffix": "жрец",
+    "class": "NC_OTRAZHENIE_PRIEST",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_OTRAZHENIE_ALCHEMIST",
+    "name_suffix": "алхимик",
+    "class": "NC_OTRAZHENIE_ALCHEMIST",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_OTRAZHENIE_ADEPT",
+    "name_suffix": "адепт",
+    "class": "NC_OTRAZHENIE_ADEPT",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_OTRAZHENIE_GUARDIAN",
+    "name_suffix": "страж",
+    "class": "NC_OTRAZHENIE_GUARDIAN",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  }
+]

@@ -4,110 +4,562 @@
     "om_terrain": "roes_voskhod_camp",
     "weight": 100,
     "object": {
-      "fill_ter": "t_grass",
+      "fill_ter": "t_dirt",
       "rows": [
-        "T......................T",
-        ".######################.",
-        ".#....................#.",
-        ".#.WWWWWW......WWWWWW.#.",
-        ".#.W....W......W....W.#.",
-        ".#.W....W......W....W.#.",
-        ".#.W....W......W....W.#.",
-        ".#.WWdWWW......WWdWWW.#.",
-        ".#....................#.",
-        ".#.......BBBBBB.......#.",
-        ".#.......B....B.......#.",
-        ".#.......BBBBBB.......#.",
-        ".#....................#.",
-        ".#.WWWWWW......WWWWWW.#.",
-        ".#.W....W......W....W.#.",
-        ".#.W....W......W....W.#.",
-        ".#.W....W......W....W.#.",
-        ".#.WWdWWW......WWdWWW.#.",
-        ".#....................#.",
-        ".#....................#.",
-        ".#....................#.",
-        ".#....................#.",
-        ".##########GG##########.",
-        "T......................T"
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "X......................X",
+        "X.##d##...##d##..##d##.X",
+        "X.#bb##...#mmm#..#rrr#.X",
+        "X.#bb##...#mmm#..#rrr#.X",
+        "X.##d##...##d##..##d##.X",
+        "X......................X",
+        "X......................X",
+        "X.......tttt...........X",
+        "X......tFFFFt..........X",
+        "X......tFFFFt..........X",
+        "X.......tttt...........X",
+        "X......................X",
+        "X.#########.##########.X",
+        "X.#MMM.....#.#AAAAAA#..X",
+        "X.#MMM.....d..dAAAAAA#.X",
+        "X.#MMM.....#.#AAAAAA#..X",
+        "X.##d######..#########.X",
+        "X......................X",
+        "X......................X",
+        "X.####d##.######d#####.X",
+        "X.#ssssss.#ssssssssss#.X",
+        "XGXX.......X.........GXX",
+        "XVVVVVVVVVVVVVVVVVVVVVVX"
       ],
       "terrain": {
-        ".": "t_grass",
-        "#": "t_chainfence",
-        "G": "t_chaingate_c",
-        "W": "t_wall_wood",
-        "B": "t_concrete_wall",
+        "X": "t_concrete_wall",
+        "#": "t_wall_wood",
+        ".": "t_floor",
         "d": "t_door_c",
-        "T": "t_tree",
-        ",": "t_dirt"
+        "G": "t_chaingate_c",
+        "V": "t_pavement",
+        "b": "t_floor",
+        "m": "t_floor",
+        "r": "t_floor",
+        "F": "t_floor",
+        "t": "t_floor",
+        "M": "t_floor",
+        "A": "t_floor",
+        "s": "t_floor"
       },
       "place_npcs": [
-        { "class": "NPC_VOSKHOD_COMMANDER", "x": 5, "y": 5, "unique_id": "voskhod_commander" },
-        { "class": "NPC_VOSKHOD_GUNSMITH", "x": 17, "y": 5, "unique_id": "voskhod_gunsmith" },
-        { "class": "NPC_VOSKHOD_MEDIC", "x": 5, "y": 15, "unique_id": "voskhod_medic" },
-        { "class": "NPC_VOSKHOD_SOLDIER", "x": 17, "y": 15, "unique_id": "voskhod_soldier" },
-        { "class": "NPC_VOSKHOD_GUARD", "x": 11, "y": 21, "unique_id": "voskhod_guard" }
+        {
+          "class": "NPC_VOSKHOD_COMMANDER",
+          "unique_id": "voskhod_commander",
+          "x": 15,
+          "y": 15
+        },
+        {
+          "class": "NPC_VOSKHOD_GUNSMITH",
+          "unique_id": "voskhod_gunsmith",
+          "x": 16,
+          "y": 3
+        },
+        {
+          "class": "NPC_VOSKHOD_MEDIC",
+          "unique_id": "voskhod_medic",
+          "x": 9,
+          "y": 3
+        },
+        {
+          "class": "NPC_VOSKHOD_SOLDIER",
+          "unique_id": "voskhod_soldier",
+          "x": 11,
+          "y": 9
+        },
+        {
+          "class": "NPC_VOSKHOD_SOLDIER",
+          "unique_id": "voskhod_guard",
+          "x": 4,
+          "y": 21
+        }
       ],
       "place_furniture": [
-        { "furn": "f_table", "x": 4, "y": 4 },
-        { "furn": "f_table", "x": 5, "y": 4 },
-        { "furn": "f_camp_chair", "x": 4, "y": 5 },
-        { "furn": "f_camp_chair", "x": 6, "y": 5 },
-        { "furn": "f_locker", "x": 7, "y": 4 },
-        { "furn": "f_locker", "x": 7, "y": 5 },
-        { "furn": "f_desk", "x": 4, "y": 6 },
-        { "furn": "f_camp_chair", "x": 5, "y": 6 },
-
-        { "furn": "f_rack", "x": 16, "y": 4 },
-        { "furn": "f_rack", "x": 16, "y": 5 },
-        { "furn": "f_rack", "x": 16, "y": 6 },
-        { "furn": "f_crate_c", "x": 19, "y": 4 },
-        { "furn": "f_crate_c", "x": 19, "y": 5 },
-        { "furn": "f_crate_c", "x": 19, "y": 6 },
-        { "furn": "f_workbench", "x": 18, "y": 6 },
-
-        { "furn": "f_table", "x": 10, "y": 10 },
-        { "furn": "f_table", "x": 11, "y": 10 },
-        { "furn": "f_camp_chair", "x": 8, "y": 10 },
-        { "furn": "f_camp_chair", "x": 12, "y": 10 },
-        { "furn": "f_camp_chair", "x": 13, "y": 10 },
-
-        { "furn": "f_bed", "x": 4, "y": 14 },
-        { "furn": "f_bed", "x": 4, "y": 15 },
-        { "furn": "f_table", "x": 6, "y": 14 },
-        { "furn": "f_rack", "x": 7, "y": 14 },
-        { "furn": "f_rack", "x": 7, "y": 15 },
-        { "furn": "f_stool", "x": 5, "y": 14 },
-
-        { "furn": "f_bed", "x": 16, "y": 14 },
-        { "furn": "f_bed", "x": 16, "y": 15 },
-        { "furn": "f_bed", "x": 18, "y": 14 },
-        { "furn": "f_bed", "x": 18, "y": 15 },
-        { "furn": "f_bed", "x": 16, "y": 16 },
-        { "furn": "f_bed", "x": 18, "y": 16 },
-        { "furn": "f_locker", "x": 19, "y": 14 },
-        { "furn": "f_locker", "x": 19, "y": 15 },
-
-        { "furn": "f_fireplace", "x": 11, "y": 19 },
-        { "furn": "f_bench", "x": 10, "y": 19 },
-        { "furn": "f_bench", "x": 12, "y": 19 },
-        { "furn": "f_bench", "x": 10, "y": 20 },
-        { "furn": "f_bench", "x": 12, "y": 20 },
-
-        { "furn": "f_sandbag_half", "x": 10, "y": 21 },
-        { "furn": "f_sandbag_half", "x": 12, "y": 21 },
-        { "furn": "f_sandbag_half", "x": 9, "y": 21 },
-        { "furn": "f_sandbag_half", "x": 13, "y": 21 },
-
-        { "furn": "f_sign", "x": 11, "y": 2 }
+        {
+          "furn": "f_bed",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "furn": "f_bed",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "furn": "f_bed",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "furn": "f_locker",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "furn": "f_locker",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "furn": "f_rack",
+          "x": 9,
+          "y": 3
+        },
+        {
+          "furn": "f_rack",
+          "x": 10,
+          "y": 3
+        },
+        {
+          "furn": "f_rack",
+          "x": 9,
+          "y": 4
+        },
+        {
+          "furn": "f_rack",
+          "x": 10,
+          "y": 4
+        },
+        {
+          "furn": "f_locker",
+          "x": 15,
+          "y": 3
+        },
+        {
+          "furn": "f_locker",
+          "x": 16,
+          "y": 3
+        },
+        {
+          "furn": "f_locker",
+          "x": 17,
+          "y": 3
+        },
+        {
+          "furn": "f_locker",
+          "x": 15,
+          "y": 4
+        },
+        {
+          "furn": "f_locker",
+          "x": 16,
+          "y": 4
+        },
+        {
+          "furn": "f_fireplace",
+          "x": 11,
+          "y": 9
+        },
+        {
+          "furn": "f_bench",
+          "x": 9,
+          "y": 9
+        },
+        {
+          "furn": "f_bench",
+          "x": 13,
+          "y": 9
+        },
+        {
+          "furn": "f_bench",
+          "x": 9,
+          "y": 10
+        },
+        {
+          "furn": "f_bench",
+          "x": 13,
+          "y": 10
+        },
+        {
+          "furn": "f_table",
+          "x": 10,
+          "y": 9
+        },
+        {
+          "furn": "f_table",
+          "x": 12,
+          "y": 9
+        },
+        {
+          "furn": "f_table",
+          "x": 3,
+          "y": 14
+        },
+        {
+          "furn": "f_table",
+          "x": 4,
+          "y": 14
+        },
+        {
+          "furn": "f_table",
+          "x": 5,
+          "y": 14
+        },
+        {
+          "furn": "f_bench",
+          "x": 3,
+          "y": 15
+        },
+        {
+          "furn": "f_bench",
+          "x": 4,
+          "y": 15
+        },
+        {
+          "furn": "f_bench",
+          "x": 5,
+          "y": 15
+        },
+        {
+          "furn": "f_bench",
+          "x": 3,
+          "y": 16
+        },
+        {
+          "furn": "f_bench",
+          "x": 4,
+          "y": 16
+        },
+        {
+          "furn": "f_desk",
+          "x": 14,
+          "y": 14
+        },
+        {
+          "furn": "f_desk",
+          "x": 15,
+          "y": 14
+        },
+        {
+          "furn": "f_camp_chair",
+          "x": 15,
+          "y": 15
+        },
+        {
+          "furn": "f_locker",
+          "x": 14,
+          "y": 16
+        },
+        {
+          "furn": "f_locker",
+          "x": 15,
+          "y": 16
+        },
+        {
+          "furn": "f_safe_c",
+          "x": 16,
+          "y": 16
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 14,
+          "y": 15
+        },
+        {
+          "furn": "f_rack",
+          "x": 10,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 11,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 12,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 13,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 14,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 15,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 16,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 17,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 18,
+          "y": 21
+        },
+        {
+          "furn": "f_rack",
+          "x": 19,
+          "y": 21
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 3,
+          "y": 21
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 4,
+          "y": 21
+        },
+        {
+          "furn": "f_crate_c",
+          "x": 5,
+          "y": 21
+        },
+        {
+          "furn": "f_sandbag_half",
+          "x": 1,
+          "y": 22
+        },
+        {
+          "furn": "f_sandbag_half",
+          "x": 2,
+          "y": 22
+        },
+        {
+          "furn": "f_sandbag_half",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "furn": "f_sandbag_half",
+          "x": 22,
+          "y": 1
+        },
+        {
+          "furn": "f_sandbag_half",
+          "x": 22,
+          "y": 2
+        }
       ],
       "place_items": [
-        { "item": "mil_food", "x": [ 4, 6 ], "y": 4, "chance": 80, "repeat": [ 2, 4 ] },
-        { "item": "mil_armor", "x": [ 16, 19 ], "y": [ 4, 6 ], "chance": 50, "repeat": [ 2, 4 ] },
-        { "item": "guns_rifle_common", "x": [ 16, 16 ], "y": [ 4, 6 ], "chance": 30, "repeat": [ 1, 2 ] },
-        { "item": "softdrugs", "x": [ 6, 7 ], "y": [ 14, 15 ], "chance": 60, "repeat": [ 2, 4 ] },
-        { "item": "mags_military", "x": [ 10, 11 ], "y": 10, "chance": 50, "repeat": [ 1, 3 ] },
-        { "item": "cannedfood", "x": [ 10, 12 ], "y": [ 19, 20 ], "chance": 40, "repeat": [ 1, 3 ] }
+        {
+          "item": "mil_armor",
+          "x": [
+            3,
+            5
+          ],
+          "y": [
+            3,
+            4
+          ],
+          "chance": 75,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "mags_military",
+          "x": [
+            9,
+            10
+          ],
+          "y": [
+            3,
+            4
+          ],
+          "chance": 70,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "ammo_common",
+          "x": [
+            15,
+            17
+          ],
+          "y": [
+            3,
+            4
+          ],
+          "chance": 80,
+          "repeat": [
+            4,
+            8
+          ]
+        },
+        {
+          "item": "guns_rifle_common",
+          "x": [
+            15,
+            17
+          ],
+          "y": [
+            3,
+            4
+          ],
+          "chance": 60,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "mil_food",
+          "x": [
+            9,
+            13
+          ],
+          "y": [
+            8,
+            10
+          ],
+          "chance": 80,
+          "repeat": [
+            3,
+            6
+          ]
+        },
+        {
+          "item": "cannedfood",
+          "x": [
+            9,
+            13
+          ],
+          "y": [
+            8,
+            10
+          ],
+          "chance": 60,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "manuals",
+          "x": [
+            14,
+            16
+          ],
+          "y": [
+            14,
+            16
+          ],
+          "chance": 50,
+          "repeat": [
+            1,
+            3
+          ]
+        },
+        {
+          "item": "maps",
+          "x": [
+            14,
+            15
+          ],
+          "y": [
+            14,
+            14
+          ],
+          "chance": 70,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "mil_food",
+          "x": [
+            3,
+            5
+          ],
+          "y": [
+            14,
+            16
+          ],
+          "chance": 90,
+          "repeat": [
+            4,
+            8
+          ]
+        },
+        {
+          "item": "ammo_common",
+          "x": [
+            10,
+            19
+          ],
+          "y": [
+            21,
+            21
+          ],
+          "chance": 80,
+          "repeat": [
+            5,
+            10
+          ]
+        },
+        {
+          "item": "mil_armor",
+          "x": [
+            10,
+            19
+          ],
+          "y": [
+            21,
+            21
+          ],
+          "chance": 50,
+          "repeat": [
+            2,
+            4
+          ]
+        },
+        {
+          "item": "guns_rifle_common",
+          "x": [
+            10,
+            19
+          ],
+          "y": [
+            21,
+            21
+          ],
+          "chance": 40,
+          "repeat": [
+            1,
+            2
+          ]
+        },
+        {
+          "item": "tools_common",
+          "x": [
+            3,
+            5
+          ],
+          "y": [
+            21,
+            21
+          ],
+          "chance": 60,
+          "repeat": [
+            2,
+            4
+          ]
+        }
       ]
     }
   }

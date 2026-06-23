@@ -1,0 +1,52 @@
+[
+  {
+    "type": "npc",
+    "id": "NPC_SVOBODNYE_ELDER",
+    "name_suffix": "старшина",
+    "class": "NC_SVOBODNYE_ELDER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_SVOBODNYE_MECHANIC",
+    "name_suffix": "механик",
+    "class": "NC_SVOBODNYE_MECHANIC",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_SVOBODNYE_DOCTOR",
+    "name_suffix": "доктор",
+    "class": "NC_SVOBODNYE_DOCTOR",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_SVOBODNYE_SCOUT",
+    "name_suffix": "разведчик",
+    "class": "NC_SVOBODNYE_SCOUT",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  },
+  {
+    "type": "npc",
+    "id": "NPC_SVOBODNYE_COOK",
+    "name_suffix": "повар",
+    "class": "NC_SVOBODNYE_COOK",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_FACTION_CAMP",
+    "faction": "no_faction"
+  }
+]
